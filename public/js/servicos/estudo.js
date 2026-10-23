@@ -24,17 +24,20 @@ async function setupStats(){
   msg.textContent="Você fez o teste sem participar do estudo. Se mudar de ideia, dá pra enviar seu resultado anônimo agora, de acordo com os termos de uso e privacidade.";
   btn.textContent="Participar e enviar";btn.classList.remove("hidden");btn.onclick=()=>{st.study.ok=true;save();sendStats()};
 }
-async function sendStats(){const msg=$("statsMsg"),btn=$("statsBtn");btn.classList.add("hidden");msg.textContent="Enviando seu resultado anônimo pro estudo...";
+async function sendStats(){const msg=$("statsMsg"),btn=$("statsBtn");btn.classList.add("hidden");msg.textContent="Enviando seu resultado anônimo pro estudo. Isso leva cerca de meio minuto.";
   try{if(!st.study.id){st.study.id=novoId();save()}
     const D=st.study.desafio;if(!D||Date.now()-D.t>6*864e5)await pegarDesafio();
     const D2=st.study.desafio;if(!D2)throw new Error("desafio");
     const falta=(D2.espera||30)*1000+2000-(Date.now()-D2.t);if(falta>0)await new Promise(r=>setTimeout(r,falta));
     const prova=await provar();
     const r=await fetch("/api/coletar",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({...studyPayload(),prova})});
-    if(r.status===429){const j=await r.json().catch(()=>({}));st.study.desafio=null;st.study.prova=null;save();throw new Error(j.motivo||"desafio")}if(r.status===403&&SESSAO){sairTeste();msg.textContent="A sessão de teste expirou ou foi encerrada, então este resultado não foi enviado. Abra o modo de teste de novo pelo painel.";return}
-    if(!r.ok)throw new Error(r.status);
+    if(r.status===429){st.study.desafio=null;st.study.prova=null;save();throw new Error("muitos")}if(r.status===403&&SESSAO){sairTeste();msg.textContent="A sessão de teste expirou ou foi encerrada, então este resultado não foi enviado. Abra o modo de teste de novo pelo painel.";return}
+    if(r.status===403){const j=await r.json().catch(()=>({}));if(j.motivo){msg.textContent=`${j.motivo} Seu resultado continua salvo neste aparelho.`;return}}
+    if(!r.ok)throw new Error(r.status>=500?"servidor":"recusado");
     st.study.sent=true;save();msg.textContent="Seu resultado anônimo foi enviado pro estudo. Obrigado por participar!"}
-  catch(e){msg.textContent="Não deu pra enviar seu resultado agora. Confira a sua conexão e tente de novo.";btn.textContent="Tentar de novo";btn.onclick=sendStats;btn.classList.remove("hidden")}}
+  catch(e){const m=e&&e.message;
+    msg.textContent=m==="muitos"?"Chegaram muitos envios seguidos da sua conexão. Espere um minuto e tente de novo.":m==="recusado"?"O servidor não aceitou este envio. Isso pode acontecer quando a página está desatualizada: recarregue a página e tente de novo.":m==="servidor"?"O servidor do estudo está com problema agora. Seu resultado continua salvo neste aparelho: tente de novo mais tarde.":"Não deu pra falar com o servidor do estudo. Confira a sua conexão e tente de novo.";
+    btn.textContent="Tentar de novo";btn.onclick=sendStats;btn.classList.remove("hidden")}}
 
 // ---------- desafio contra envios automáticos (ver conferirProva no servidor)
 const SHA_K=new Uint32Array([0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);

@@ -37,7 +37,7 @@ const GLOSSARIO=[
  {t:"Marco temporal",v:["terras que ocupavam em 1988"],d:"Tese de que os indígenas só teriam direito às terras que ocupavam em 5 de outubro de 1988. O STF a rejeitou em 2023, o Congresso aprovou uma lei com essa regra no mesmo ano, e o tema segue em disputa."},
  {t:"Justiça Eleitoral",v:["Justiça Eleitoral"],d:"Ramo do Judiciário que organiza as eleições, conta os votos e julga casos como candidaturas irregulares e abuso de poder."},
  {t:"Inelegível",v:["inelegível"],d:"Proibido de se candidatar por um período, por exemplo depois de condenação por certos crimes ou por abuso de poder numa eleição (regras da Lei da Ficha Limpa)."},
- {t:"Medidas provisórias",v:["medidas provisórias"],d:"Normas que o presidente pode editar em casos de urgência, valendo como lei na hora. Perdem a validade se o Congresso não aprovar em até 120 dias."},
+ {t:"Medidas provisórias",v:["medidas provisórias"],d:"Normas que o presidente pode editar em casos de urgência, valendo como lei na hora. Perdem a validade se o Congresso não aprovar em até 120 dias, e uma medida rejeitada não pode ser reeditada no mesmo ano legislativo."},
  {t:"Decretos",v:["decretos"],d:"Atos do presidente pra detalhar e aplicar leis que já existem. Não podem criar obrigações que a lei não prevê."},
  {t:"Impeachment",v:["impeachment"],d:"Processo em que o Congresso pode tirar o presidente do cargo por crime de responsabilidade: a Câmara autoriza e o Senado julga."},
  {t:"Polícia Federal",v:["Polícia Federal"],d:"Polícia do governo federal que investiga crimes como corrupção com dinheiro federal, tráfico internacional e lavagem de dinheiro. O diretor é escolhido pelo presidente."},
