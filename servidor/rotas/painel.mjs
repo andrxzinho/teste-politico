@@ -14,8 +14,9 @@ const h = (s) => createHash("sha256").update(String(s)).digest();
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 const VAL = { a: -2, b: -1, c: 0, d: 1, e: 2 };
 
+// PAINEL_SENHA só vale com 16 caracteres ou mais (o mesmo mínimo da credencial criada pelo painel)
 async function credencial() {
-  if (process.env.PAINEL_SENHA) return { env: process.env.PAINEL_SENHA };
+  if (process.env.PAINEL_SENHA && process.env.PAINEL_SENHA.length >= 16) return { env: process.env.PAINEL_SENHA };
   return await banco.lerConfig(CRED);
 }
 function confere(senha, c) {
@@ -27,7 +28,13 @@ async function autorizado(req) {
   if (!c) return new Response("Crie a credencial no painel primeiro.", { status: 503 });
   const auth = req.headers.get("authorization") || "";
   const enviada = auth.startsWith("Bearer ") ? auth.slice(7) : "";
-  if (!enviada || !confere(enviada, c)) { await espera(1200); return new Response("Credencial inválida", { status: 401 }); }
+  if (!enviada || !confere(enviada, c)) {
+    // além do limite por visitante, um limite geral de tentativas erradas por minuto, que não depende do endereço
+    const falhas = await banco.contarPedido("painel-falhas", Math.floor(Date.now() / 60e3));
+    await espera(1200);
+    if (falhas > 60) return new Response("Muitas tentativas erradas. Espere um minuto.", { status: 429 });
+    return new Response("Credencial inválida", { status: 401 });
+  }
   return null;
 }
 const conta = (o, k) => { o[k] = (o[k] || 0) + 1; };
@@ -128,7 +135,7 @@ export default async (req) => {
     if (texto.length > 2000) return new Response("Pedido grande demais", { status: 413 });
     let b; try { b = JSON.parse(texto); } catch { return new Response("JSON inválido", { status: 400 }); }
     if (b?.criar !== undefined) {
-      if (process.env.PAINEL_SENHA) return new Response("A credencial está definida nas configurações do projeto.", { status: 409 });
+      if (process.env.PAINEL_SENHA && process.env.PAINEL_SENHA.length >= 16) return new Response("A credencial está definida nas configurações do projeto.", { status: 409 });
       if (typeof b.criar !== "string" || b.criar.length < 16 || b.criar.length > 200) return new Response("A credencial precisa ter de 16 a 200 caracteres.", { status: 400 });
       const sal = randomBytes(16);
       const gravou = await banco.gravarConfigSeNovo(CRED, { salt: sal.toString("base64"), hash: scryptSync(b.criar, sal, 32).toString("base64") });

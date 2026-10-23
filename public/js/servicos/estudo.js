@@ -15,14 +15,16 @@ function studyPayload(){
     autoid:{espectro:st.si.esp||null,ideologia:st.si.ide||null},confianca:R.conf,desempate:st.tb.length>0,inconsistencias:inc.length,envio:st.study.id||(st.study.id=novoId()),inicio:!!st.study.ini};
 }
 async function setupStats(){
-  const blk=$("statsBlock"),msg=$("statsMsg"),btn=$("statsBtn");blk.classList.add("hidden");btn.classList.add("hidden");
+  const blk=$("statsBlock"),msg=$("statsMsg"),btn=$("statsBtn");blk.classList.add("hidden");btn.classList.add("hidden");btn.disabled=false;$("statsMaiorWrap").classList.add("hidden");
   if(!(await coleta)||st.study.minor)return;
   blk.classList.remove("hidden");
   if(R&&R.respondeu<INSUFICIENTE){msg.textContent="Com tão poucas respostas, este resultado não foi enviado pro estudo.";btn.classList.add("hidden");return}
   if(st.study.sent){msg.textContent="Seu resultado anônimo já foi enviado pro estudo. Obrigado por participar!";return}
   if(st.study.ok){await sendStats();return}
-  msg.textContent="Você fez o teste sem participar do estudo. Se mudar de ideia, dá pra enviar seu resultado anônimo agora, de acordo com os termos de uso e privacidade.";
-  btn.textContent="Participar e enviar";btn.classList.remove("hidden");btn.onclick=()=>{st.study.ok=true;save();sendStats()};
+  msg.textContent="Você fez o teste sem participar do estudo. Se mudar de ideia e tiver 18 anos ou mais, dá pra enviar seu resultado anônimo agora, de acordo com os termos de uso e privacidade.";
+  const maior=$("statsMaior"),wrap=$("statsMaiorWrap");maior.checked=false;wrap.classList.remove("hidden");
+  btn.textContent="Participar e enviar";btn.classList.remove("hidden");btn.disabled=true;maior.onchange=()=>{btn.disabled=!maior.checked};
+  btn.onclick=()=>{if(!maior.checked)return;wrap.classList.add("hidden");st.study.ok=true;save();sendStats()};
 }
 async function sendStats(){const msg=$("statsMsg"),btn=$("statsBtn");btn.classList.add("hidden");msg.textContent="Enviando seu resultado anônimo pro estudo. Isso leva cerca de meio minuto.";
   try{if(!st.study.id){st.study.id=novoId();save()}

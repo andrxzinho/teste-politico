@@ -46,11 +46,19 @@ export function maisCompleto(rs) {
 }
 
 // Limite de pedidos por visitante: o endereço vira um código (hash com um segredo), nunca é guardado como está.
+// O segredo fica numa variável do projeto (LIMITE_SEGREDO), fora do banco, e a chave muda todo dia: com acesso só ao
+// banco, não dá pra descobrir o endereço por trás de um código. As janelas com mais de 5 minutos são apagadas.
+// Sem a variável (testes e prévias), usa um segredo guardado no banco.
+async function chaveDoDia() {
+  const base = process.env.LIMITE_SEGREDO || (await segredo(true, "config/segredo-limite"));
+  return createHmac("sha256", base).update(hoje()).digest();
+}
 export async function passouDoLimite(req, rota, porMinuto = 30) {
   const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || req.headers.get("x-real-ip") || "desconhecido";
-  const seg = await segredo(true, "config/segredo-limite");
-  const chave = createHmac("sha256", seg).update(`${rota}|${ip}`).digest("base64url").slice(0, 22);
-  return (await banco.contarPedido(chave, Math.floor(Date.now() / 60e3))) > porMinuto;
+  const chave = createHmac("sha256", await chaveDoDia()).update(`${rota}|${ip}`).digest("base64url").slice(0, 22);
+  const janela = Math.floor(Date.now() / 60e3), n = await banco.contarPedido(chave, janela);
+  if (n === 1) await banco.limparLimites(janela - 5).catch(() => {});
+  return n > porMinuto;
 }
 
 // Sessões de teste: códigos assinados (HMAC-SHA256) emitidos só pelo painel, com validade de 12 horas.

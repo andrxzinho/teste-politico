@@ -39,24 +39,31 @@ export async function testarServidor() {
   for (const [nome, body] of Object.entries(invalidos)) v.confere((await bruto(body)) >= 400, `${nome} deveria ser recusado`);
   const adulterado = { ...base, envio: randomUUID(), eixos: { ...base.eixos, E: 100, C: 100 } };
   v.confere((await enviar(adulterado))[0] === 422, "eixos adulterados deveriam ser recusados (422)");
+  // página aberta antes da versão 2 do cálculo: o nome antigo da ideologia continua aceito, gravado com o nome novo
+  const antigo = { ...base, envio: randomUUID(), ideologia: "Esquerda radical" };
+  v.confere((await enviar(antigo))[0] === 200, "envio com o nome antigo de uma ideologia deveria ser aceito");
 
   // 3. painel
+  // PAINEL_SENHA curta demais (menos de 16 caracteres) é ignorada
+  const senhaBoa = process.env.PAINEL_SENHA; process.env.PAINEL_SENHA = "curta";
+  v.confere((await (await painel(new Request("https://testepolitico.vercel.app/api/painel?estado"))).json()).configurado === false, "PAINEL_SENHA curta deveria ser ignorada");
+  process.env.PAINEL_SENHA = senhaBoa;
   const H = (senha) => ({ authorization: "Bearer " + senha }), P = "https://testepolitico.vercel.app/api/painel";
   v.confere((await painel(new Request(P + "?conjunto=real", { headers: H("errada") }))).status === 401, "senha errada deveria dar 401");
   const d = await (await painel(new Request(P + "?conjunto=real", { headers: H(process.env.PAINEL_SENHA) }))).json();
-  v.confere(d.total === 7, `painel deveria contar 7 pessoas (deu ${d.total})`);
-  v.confere(JSON.stringify(d.porModo) === JSON.stringify({ essencial: 2, padrao: 3, aprofundado: 2 }), `contagem por modo errada: ${JSON.stringify(d.porModo)}`);
+  v.confere(d.total === 8, `painel deveria contar 8 pessoas, contando o envio com o nome antigo (deu ${d.total})`);
+  v.confere(JSON.stringify(d.porModo) === JSON.stringify({ essencial: 2, padrao: 4, aprofundado: 2 }), `contagem por modo errada: ${JSON.stringify(d.porModo)}`);
   const csv = await (await painel(new Request(P + "?exportar=real", { headers: H(process.env.PAINEL_SENHA) }))).text();
   const cab = csv.split("\n")[0];
-  v.confere(csv.trim().split("\n").length - 1 === 7, "planilha deveria ter 7 linhas");
+  v.confere(csv.trim().split("\n").length - 1 === 8, "planilha deveria ter 8 linhas");
   v.confere(!/envio|"env"|"ip"|"dia"|"data"/i.test(cab), "planilha não pode ter código de envio, IP ou data");
 
-  v.confere((await contagem("real")) === 7, "contagem de pessoas deveria ser 7 (a continuação não conta de novo)");
+  v.confere((await contagem("real")) === 8, "contagem de pessoas deveria ser 8 (a continuação não conta de novo)");
 
   // 4. backup diário: só com o segredo do agendamento; guarda os dados reais e aparece no painel
   v.confere((await backup(new Request("https://testepolitico.vercel.app/api/backup"))).status === 401, "backup sem o segredo deveria ser recusado");
   const rb = await backup(new Request("https://testepolitico.vercel.app/api/backup", { headers: { authorization: "Bearer " + process.env.CRON_SECRET } }));
-  v.confere(rb.status === 200 && (await rb.json()).resultados === 7, "backup deveria guardar as 7 pessoas");
+  v.confere(rb.status === 200 && (await rb.json()).resultados === 8, "backup deveria guardar as 8 pessoas");
   const lista = await (await painel(new Request(P + "?backups", { headers: H(process.env.PAINEL_SENHA) }))).json();
   v.confere(lista.backups.length === 1 && /^\d{4}-\d{2}-\d{2}\.json$/.test(lista.backups[0]), "painel deveria listar o backup");
   const bk = await (await painel(new Request(P + "?backup=" + lista.backups[0], { headers: H(process.env.PAINEL_SENHA) }))).json();

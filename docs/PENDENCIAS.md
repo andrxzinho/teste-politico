@@ -5,12 +5,14 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 
 ## Decisões que dependem do responsável pelo projeto
 
-- [ ] **Achados de segurança e privacidade em aberto.** Estão num relatório privado, fora do repositório, com o
-      responsável pelo projeto. Um deles exige SQL no banco de produção (apaga uma coluna) e só pode ser feito com
-      confirmação explícita. Não descreva esses achados em arquivos públicos.
-- [ ] **Variáveis de ambiente no Vercel:** as chaves já estão como *Sensitive* e só em Production, e o site usa a chave
-      própria `SUPABASE_CHAVE_SITE`. Falta decidir se remove as que o código não usa (criadas pela integração) e tirar as
-      cópias de `CRON_SECRET` e `COLETA_INICIO` dos ambientes Preview e Development.
+- [ ] **Segurança e privacidade:** as correções no código estão no PR de 23/10/2026. Falta o responsável rodar o SQL no
+      Supabase (passado a ele diretamente, fora do repositório) e trocar as chaves antigas da integração.
+- [x] **Variáveis de ambiente no Vercel:** só as cinco que o site usa, todas Sensitive e só em Production (23/10/2026).
+- [ ] **Textos a conferir com fonte atual:** licença-paternidade (X25), marco temporal (C21) e a etapa do acordo
+      Mercosul–União Europeia (N21).
+- [ ] **Prazo de guarda dos dados:** os termos prometem apagar os dados do estudo até 31/12/2027. Decidir se a exclusão
+      será automática (tarefa agendada) ou feita pelo responsável, e anotar a data.
+- [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
 - [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de

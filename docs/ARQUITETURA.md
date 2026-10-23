@@ -86,7 +86,7 @@ Tabelas em `supabase/esquema.sql`, com RLS ligado e sem acesso pras chaves públ
 | `eventos` | Avisos de início e saída, contados por dia, modo e posição |
 | `config` | Credencial do painel (hash scrypt), pesos, segredos dos desafios e das sessões de teste, contagem legada |
 | `desafios_usados` | Desafios anti-robô já usados (cada um vale uma vez) |
-| `limites` | Contagem de pedidos por minuto, por código do IP (HMAC); limpa todo dia |
+| `limites` | Contagem de pedidos por minuto, por código do IP (HMAC com uma chave do dia derivada de `LIMITE_SEGREDO`, que fica fora do banco); janelas com mais de 5 minutos são apagadas |
 | `backups` | Cópia diária (últimos 7 dias), feita pela tarefa agendada `/api/backup` |
 
 `conjunto` é `real` ou `teste`. Envios de fora do endereço oficial ou de uma sessão de teste vão pra `teste`.

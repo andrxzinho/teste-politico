@@ -5,14 +5,15 @@ async function start(mode){
   // teste pela metade: avisa antes de apagar o progresso
   if(!st.done&&st.cur>0&&Object.keys(st.ans).some(id=>st.ans[id]!=="g")&&!confirm(`Você tem um teste em andamento no modo ${nomeModo(st.mode)}. Começar um novo apaga esse progresso. Quer começar mesmo assim?`))return;
   retomarVisivel(false);st=fresh(mode);save();if(ONLINE)pegarDesafio();
-  if(await coleta){$("cOk").checked=false;$("cAge").value="";$("cUf").value="";updConsent();show("consent")}else{show("quiz");render()}
+  if(await coleta){$("cOk").checked=false;$("cMaior").checked=false;$("cAge").value="";$("cUf").value="";updConsent();show("consent")}else{show("quiz");render()}
 }
 const UFS=["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO","Exterior"];
 UFS.forEach(u=>{const o=el("option",null,u==="Exterior"?"Moro fora do Brasil":u);o.value=u;$("cUf").append(o)});
 IDEO.forEach(i=>{const o=el("option",null,i.n);o.value=i.n;$("siIde").append(o)});
-function updConsent(){const minor=$("cAge").value==="<18";$("cMinor").classList.toggle("hidden",!minor);$("cCheckWrap").classList.toggle("hidden",minor);$("cGo").disabled=!minor&&!$("cOk").checked}
-$("cAge").onchange=updConsent;$("cOk").onchange=updConsent;
-$("cGo").onclick=()=>{const minor=$("cAge").value==="<18";Object.assign(st.study,{minor,ok:!minor&&$("cOk").checked,ini:!minor&&$("cOk").checked,idade:minor?"":$("cAge").value,uf:minor?"":$("cUf").value,t0:Date.now()});save();if(st.study.ok)evt("inicio");show("quiz");render()};
+// participar exige confirmar a idade (18 anos ou mais) além de aceitar os termos; quem informa menos de 18 faz o teste sem enviar nada
+function updConsent(){const minor=$("cAge").value==="<18";$("cMinor").classList.toggle("hidden",!minor);$("cCheckWrap").classList.toggle("hidden",minor);$("cMaiorWrap").classList.toggle("hidden",minor);$("cGo").disabled=!minor&&!($("cOk").checked&&$("cMaior").checked)}
+$("cAge").onchange=updConsent;$("cOk").onchange=updConsent;$("cMaior").onchange=updConsent;
+$("cGo").onclick=()=>{const minor=$("cAge").value==="<18",aceitou=!minor&&$("cOk").checked&&$("cMaior").checked;Object.assign(st.study,{minor,ok:aceitou,ini:aceitou,idade:minor?"":$("cAge").value,uf:minor?"":$("cUf").value,t0:Date.now()});save();if(st.study.ok)evt("inicio");show("quiz");render()};
 $("cSkip").onclick=()=>{Object.assign(st.study,{ok:false,minor:$("cAge").value==="<18",idade:"",uf:"",t0:Date.now()});save();show("quiz");render()};
 function showImp(){
   const box=$("impOut");box.innerHTML="";

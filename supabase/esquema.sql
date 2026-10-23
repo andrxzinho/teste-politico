@@ -2,14 +2,15 @@
 -- Só as funções do servidor (com a chave secreta) acessam estas tabelas. O acesso público fica bloqueado:
 -- RLS ligado e nenhuma regra de acesso, e os papéis anon/authenticated sem permissão nenhuma.
 
--- resultados anônimos de quem aceitou participar do estudo (formato compacto, igual ao enviado pelo site)
+-- resultados anônimos de quem aceitou participar do estudo (formato compacto, igual ao enviado pelo site).
+-- Não há coluna de horário de propósito: só o dia. Em bancos criados antes de 23/10/2026, rode
+--   alter table resultados drop column if exists criado;
 create table if not exists resultados (
   id bigint generated always as identity primary key,
   conjunto text not null check (conjunto in ('real', 'teste')),
   dia date not null,                    -- só o dia, no horário de Brasília; nunca a hora
   chave text not null,                  -- código aleatório do envio (repetir o envio não duplica)
   dados jsonb not null,
-  criado timestamptz not null default now(),
   unique (conjunto, chave)
 );
 create index if not exists resultados_conjunto_dia on resultados (conjunto, dia);
