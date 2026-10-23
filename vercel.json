@@ -25,6 +25,18 @@
       "destination": "/metodologia.html"
     }
   ],
+  "redirects": [
+    {
+      "source": "/ideologias/esquerda-radical/",
+      "destination": "/ideologias/extrema-esquerda/",
+      "permanent": true
+    },
+    {
+      "source": "/ideologias/direita-radical/",
+      "destination": "/ideologias/extrema-direita/",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/backup",

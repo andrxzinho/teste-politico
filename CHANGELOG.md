@@ -1,5 +1,20 @@
 # Histórico de versões
 
+## Cálculo, versão 2 (23 de outubro de 2026)
+- Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe mais confiança alta, e o
+  resultado explica por quê.
+- "Esquerda radical" e "Direita radical" viraram "Extrema esquerda" e "Extrema direita", e só aparecem pra quem concorda
+  com as frases de ruptura do próprio lado. Ficar no meio-termo nas frases de democracia não leva mais a elas. As páginas
+  antigas redirecionam pras novas.
+- 20 frases reescritas viraram frases novas (custo explícito, uma ideia por frase, sem pista partidária, pares de
+  simetria com o mesmo texto e só o lado trocado); as antigas saíram dos modos, sem apagar nada dos dados.
+- Pares de coerência que acusavam contradição em posições coerentes foram trocados ou retirados. Marcadores dos extremos
+  corrigidos (golpe militar deixou de contar como fascismo). "Nenhuma das duas" deixou de contar como falta de opinião.
+  Medidas numa epidemia ficam fora dos eixos, como armas.
+- Cada envio do estudo passa a dizer a versão do cálculo. Envios de páginas abertas antes da mudança continuam aceitos.
+- Simulação antes e depois: acerto de 95,2% → 94,2% (Essencial), 97,8% → 96,4% (Padrão) e 97,6% → 96,4% (Aprofundado).
+  Detalhes em `docs/METODOLOGIA.md` e no topo de `docs/AUDITORIA-METODOLOGIA.md`.
+
 ## Leituras conferidas e compartilhar e comparar juntos (23 de outubro de 2026)
 - Leituras: as correções da auditoria bibliográfica foram aplicadas (anos, títulos, justificativas, duas substituições)
   e cada livro passou a mostrar a edição citada e um link conferido, no resultado e nas páginas das ideologias.

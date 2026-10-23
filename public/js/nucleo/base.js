@@ -18,6 +18,7 @@ const {Q,POOL,SUBS,PAIRS}=DATA,LAD=DATA.LAD||[],EXTRA=DATA.EXTRA||[],PERFIS=DATA
 const extreme=o=>o.m.some(g=>g!=="eco");
 const gated=o=>o.k!=="D"&&extreme(o);
 const scored=o=>!o.nm&&!gated(o);
+const RUP_GATE=.35; // as extremas (esquerda e direita) só disputam com concordância média de pelo menos um terço de "Concordo" nas frases de ruptura do próprio lado
 const GATE_AX=20; // as frases de um extremo só aparecem pra quem já está a 20 pontos ou mais daquele lado do eixo
 const TOPIC={"E.imp":"Impostos e benefícios","E.trab":"Trabalho","E.est":"Estado e mercado","A.pol":"Polícia e punição","A.lib":"Liberdades individuais","A.vig":"Vigilância e internet","A.arm":"Armas","C.fam":"Família e gênero","C.rel":"Religião e moral","C.div":"Diversidade e educação","N.com":"Comércio e indústria","N.sob":"Soberania e meio ambiente","N.cul":"Imigração e cultura","D.reg":"Eleições","D.rup":"Poder e governo","D.opo":"Oposição e imprensa"};
 const topicOf=o=>escolha(o)?"Sua posição em resumo":TOPIC[o.k+"."+o.s]||"Instituições";
@@ -40,7 +41,7 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 const OPTS_A=[[2,"Concordo totalmente"],[1,"Concordo"],[0,"Depende / meio-termo"],[-1,"Discordo"],[-2,"Discordo totalmente"]];
 const optsD=o=>[[2,"Totalmente: "+o.la],[1,"Mais pra: "+o.la],[0,"Meio a meio"],[-1,"Mais pra: "+o.lb],[-2,"Totalmente: "+o.lb]];
 const LBL_A={"2":"Concordo totalmente","1":"Concordo","0":"Depende / meio-termo","-1":"Discordo","-2":"Discordo totalmente"};
-const ansLabel=(o,v)=>v==="x"?(o.f==="l"?"Nenhuma chega perto":o.f==="c"?"Nenhuma das duas":"Não tenho opinião"):o.f==="l"?o.o[v+2]:o.f==="c"?(v===-2?o.a:v===2?o.b:"As duas, igualmente"):o.f==="d"?Object.fromEntries(optsD(o))[v]:LBL_A[v];
+const ansLabel=(o,v)=>v==="x"||v==="n"?(o.f==="l"?"Nenhuma chega perto":o.f==="c"?"Nenhuma das duas":"Não tenho opinião"):o.f==="l"?o.o[v+2]:o.f==="c"?(v===-2?o.a:v===2?o.b:"As duas, igualmente"):o.f==="d"?Object.fromEntries(optsD(o))[v]:LBL_A[v];
 const KEY="teste-politico-v7",HKEY="teste-politico-historico",FKEY="teste-politico-amigo";
 const IMPV={pouco:.5,normal:1,muito:2};
 const ONLINE=/^https?:$/.test(location.protocol);

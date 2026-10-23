@@ -11,7 +11,7 @@ O texto completo pro público está em `public/termos.html`. Este documento resu
 ## O que é enviado (só de quem participa)
 
 Ideologia, posição nos eixos em faixas, termômetro dos extremos, resposta a cada frase, quais explicações foram abertas,
-tempo em faixas, confiança, se houve desempate, número de contradições, modo (e de qual modo veio, se continuou),
+tempo em faixas, confiança, se houve desempate, número de contradições, versão do cálculo, modo (e de qual modo veio, se continuou),
 autoidentificação política se respondida, e faixa de idade e estado só se informados.
 
 ## O que nunca é enviado

@@ -2,7 +2,7 @@
 // Não existe nome, IP, navegador nem horário: só o dia e respostas em faixas, numa chave com nome aleatório.
 import Motor, { ITENS } from "../motor.mjs";
 import { banco } from "../banco.mjs";
-import { IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
+import { FRASES_NOVAS_V2, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
 
 const inicio = () => process.env.COLETA_INICIO || "2026-10-01";
 const nul = (v, lista) => v === null || v === undefined || lista.includes(v);
@@ -55,6 +55,11 @@ export default async (req) => {
     return Response.json({ ok: true }, { headers: SEM_CACHE });
   }
   if (b.tipo !== "resultado") return new Response("Tipo inválido", { status: 400 });
+  // páginas abertas antes da versão 2 do cálculo ainda mandam os nomes antigos e a lista de frases sem as 20 novas
+  const ANTIGOS = { "Esquerda radical": "Extrema esquerda", "Direita radical": "Extrema direita" };
+  if (Object.hasOwn(ANTIGOS, b.ideologia)) b.ideologia = ANTIGOS[b.ideologia];
+  if (b.autoid && Object.hasOwn(ANTIGOS, b.autoid.ideologia)) b.autoid.ideologia = ANTIGOS[b.autoid.ideologia];
+  if (typeof b.respostas === "string" && b.respostas.length === IDS.length - FRASES_NOVAS_V2) b.respostas += "_".repeat(FRASES_NOVAS_V2);
 
   const i = IDEOLOGIAS.indexOf(b.ideologia);
   const ax = EIXOS.map((k) => b.eixos?.[k]);
@@ -84,7 +89,9 @@ export default async (req) => {
 
   const reg = { m: modo, i, ax, ex, t: b.tempo, r: b.respostas, x: expl, id: b.idade ?? null, uf: b.uf ?? null,
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,
-    cf: b.confianca, tb: b.desempate, inc: b.inconsistencias, ci: b.inicio ?? null, env: b.envio, de: b.de ? MODO[b.de] : null };
+    cf: b.confianca, tb: b.desempate, inc: b.inconsistencias, ci: b.inicio ?? null, env: b.envio, de: b.de ? MODO[b.de] : null,
+    // versão do cálculo que classificou o resultado (2 = com o filtro das extremas e as frases reescritas em 23/10/2026)
+    cv: b.calculo === 2 ? 2 : 1 };
   // o código do envio é aleatório e gerado no aparelho: se a pessoa reenviar (conexão caiu no meio), não duplica.
   // Quem continua num modo maior grava um segundo registro com o mesmo código; o painel conta só o mais completo.
   const chave = b.de ? `${b.envio}~${modo}` : b.envio;

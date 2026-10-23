@@ -11,9 +11,11 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [ ] **Variáveis de ambiente no Vercel:** as chaves já estão como *Sensitive* e só em Production, e o site usa a chave
       própria `SUPABASE_CHAVE_SITE`. Falta decidir se remove as que o código não usa (criadas pela integração) e tirar as
       cópias de `CRON_SECRET` e `COLETA_INICIO` dos ambientes Preview e Development.
-- [ ] **Propostas da auditoria da metodologia** (`docs/AUDITORIA-METODOLOGIA.md`): 25 reescritas de frases e
-      mudanças na comunicação da porcentagem. Nada disso foi aplicado. Mudar frases ou cálculo exige rodar as
-      simulações antes e depois, atualizar `testes/referencia/` com `npm run test:atualizar` e documentar o efeito.
+- [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
+      `docs/AUDITORIA-METODOLOGIA.md`.
+- [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de
+      perguntas), banco de desempate do Aprofundado, equilíbrio do eixo Instituições, ordem das frases por pessoa e,
+      com dados reais, dimensionalidade dos eixos e calibração da probabilidade.
 
 ## Auditoria pedida em 23/10/2026 (ainda não concluída)
 

@@ -59,3 +59,18 @@ const mud = {};
 for (const k in A.sim) A.sim[k].forEach((x, i) => { const y = D.sim[k][i]; if (y && x.a.top !== y.a.top) { const c = `${x.a.top} → ${y.a.top}`; mud[c] = (mud[c] || 0) + 1; } });
 console.log("\n## Mudanças de 1ª ideologia na simulação (" + Object.values(mud).reduce((a, b) => a + b, 0) + " de " + Object.values(A.sim).flat().length + ")\n");
 Object.entries(mud).sort((a, b) => b[1] - a[1]).slice(0, 25).forEach(([c, n]) => console.log(`- ${c}: ${n}`));
+// acerto por ideologia (depois), pra ver onde estão os erros
+const porIdeo = {};
+for (const k in D.sim) D.sim[k].forEach((x) => { const e = (porIdeo[x.esperada] ||= { n: 0, ok: 0, antes: 0 }); e.n++; if (x.a.top === x.esperada) e.ok++; });
+for (const k in A.sim) A.sim[k].forEach((x) => { const nome = { "Esquerda radical": "Extrema esquerda", "Direita radical": "Extrema direita" }[x.esperada] || x.esperada; if (porIdeo[nome] && (x.a.top === x.esperada)) porIdeo[nome].antes++; });
+console.log("\n## Acerto por ideologia (todos os modos)\n\n| Ideologia | Antes | Depois |\n|---|---|---|");
+Object.entries(porIdeo).forEach(([n, e]) => console.log(`| ${n} | ${Math.round((e.antes / e.n) * 100)}% | ${Math.round((e.ok / e.n) * 100)}% |`));
+// números de calibração no formato de CALIB (public/js/telas/janelas.js), calculados com o cálculo "depois"
+const calib = {};
+for (const [m, fr] of [["quick", "cerca de 65"], ["full", "cerca de 135"], ["deep", "cerca de 210"]]) {
+  const rs = [...D.sim["A_" + m], ...D.sim["B_" + m]], n = rs.length, r3 = (x) => Math.round(x * 1000) / 1000;
+  const conf = {};
+  for (const k of ["alta", "media", "baixa"]) { const g = rs.filter((x) => x.a.conf === k); if (g.length) conf[k] = { parte: r3(g.length / n), acerto: r3(g.filter((x) => x.a.top === x.esperada).length / g.length) }; }
+  calib[m] = { frases: fr, acerto: r3(rs.filter((x) => x.a.top === x.esperada).length / n), top2: r3(rs.filter((x) => x.a.top === x.esperada || x.a.seg === x.esperada).length / n), reteste: r3(rs.filter((x) => x.a.top === x.b.top).length / n), conf };
+}
+console.log("\nCALIB=" + JSON.stringify(calib));

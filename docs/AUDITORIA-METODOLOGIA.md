@@ -4,6 +4,42 @@ Data: 23/10/2026. Escopo: `public/js/dados/frases.js`, `ideologias.js`, `candida
 `public/js/telas/resultado.js`, `extras.js`, `janelas.js`, `candidatos.js`, `pensadores.js`, `perguntas.js`, `public/index.html`,
 `public/metodologia.html`, `public/perguntas-frequentes/index.html`, `README.md`, `docs/METODOLOGIA.md`, `testes/`.
 
+## Situação: versão 2 do cálculo (23 de outubro de 2026)
+
+O responsável pelo projeto autorizou as correções. Simulação antes e depois em `testes/ajuda/comparar_simulacao.mjs`;
+resumo em `docs/METODOLOGIA.md`, seção 10.
+
+**Aplicado:**
+
+- **C2 (não diferenciação):** com 60% ou mais de meio-termo nas frases de concordância, ou concordando (ou discordando)
+  de quase tudo, a confiança não passa de média; com 80% ou mais de meio-termo, ou média bruta de 1 ou mais, é baixa. Os
+  quatro padrões uniformes da seção 6.3 agora saem com confiança baixa nos três modos.
+- **A1 e A7 (eixo Democracia e nome "radical"):** a Extrema esquerda e a Extrema direita (antes "radical") só disputam com
+  concordância média de pelo menos 0,35 nas frases de ruptura do próprio lado ou sem lado. Os casos da seção 6.4 com
+  meio-termo em D deixaram de virar "radical" (Esquerda → Social-democrata; Conservador-nacional → Conservador). As
+  páginas antigas redirecionam pros endereços novos.
+- **A2 (simetria):** os pares agora têm o mesmo texto com o lado trocado (Z1 × Z2, A25 × A26). D20/D21 foram reescritas
+  (item 3 da seção 8) e Y1/Y2 saíram dos modos.
+- **A3 (pares):** C17 × C18 no lugar de C17 × Y3; N1 × N18 e D0 × D17 saíram.
+- **A6 e reescritas da seção 8:** itens 1 a 17, 19 a 21, 24 e 25 viraram frases novas (Z1 a Z20, no fim de `DATA.EXTRA`),
+  e as antigas saíram dos modos (`lv` 9). S9 perdeu o "porque estão podres" (o sentido não muda). A27 (epidemia) saiu da
+  média do eixo e aparece entre os temas fora dos eixos (item 18). C20 saiu dos modos (item 16).
+- **M2 (marcadores):** D1 sem marcador; D3 com comunismo e fascismo; D2 com comunismo e anarquismo.
+- **M3:** "Nenhuma chega perto" e "Nenhuma das duas" contam como resposta, não como falta de opinião.
+- **M10:** metade ou mais sem opinião dá confiança baixa (`<=`).
+- **Textos da seção 7.3:** probabilidade × semelhança, índice dos extremos, compatibilidade sem "%", faixa sem "80% de
+  chance", FAQ "O teste é confiável?" e o aviso de não diferenciação.
+
+**Testado e não adotado:** baixar o limite do desempate (M4) de 20 pra 15. O acerto simulado caiu no Essencial (94,2% →
+93,1%) e quase não mudou nos outros modos.
+
+**Não aplicado (precisa de dados reais ou de mudar a quantidade de perguntas):** A4 (circularidade das simulações), A5
+(eixos parecidos e meio ambiente dentro de Brasil × Mundo), M1 (subtemas do Essencial com uma frase só: o responsável
+decidiu manter as quantidades), M5 (banco de desempate do Aprofundado), M6 (equilíbrio do eixo Instituições), M9 (ordem
+das frases por pessoa), B3 e B4, e as propostas 2 a 4 da seção 6.6. Ficam em `docs/PENDENCIAS.md`.
+
+O texto abaixo é a auditoria original, mantida como registro.
+
 **Como os números foram obtidos.** Todo número abaixo vem de leitura direta do código/dados ou de script executado. Os
 scripts rodaram em Node 22, com o núcleo do site carregado num `vm` (o mesmo jeito do novo `testes/perfis.test.mjs`). O
 recálculo manual (seção 6) usa uma reimplementação independente escrita a partir do texto do código, carregando só os
