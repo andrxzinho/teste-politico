@@ -1,5 +1,16 @@
 # Histórico de versões
 
+## Leituras conferidas e compartilhar e comparar juntos (23 de outubro de 2026)
+- Leituras: as correções da auditoria bibliográfica foram aplicadas (anos, títulos, justificativas, duas substituições)
+  e cada livro passou a mostrar a edição citada e um link conferido, no resultado e nas páginas das ideologias.
+  Edições brasileiras que estavam sem confirmação foram conferidas uma a uma; as que não existem passaram a aparecer com
+  o título original. A capa errada de *A terceira via* saiu, e as capas de Lomborg e Esping-Andersen voltaram a aparecer.
+- "Fonte histórica:" deixou de abrir as justificativas só dos extremos de direita; "mostra" ficou pra resultado
+  consensual e "argumenta" pra tese em debate, nos dois lados.
+- Resultado: "Compartilhar" e "Compare com amigos" viraram um bloco só, "Compartilhar e comparar": o seu link de
+  comparação, os aplicativos, as imagens em quatro formatos e o campo pra colar o link de alguém. A comparação aparece no
+  topo do bloco quando você chega pelo link de um amigo. No topo e no fim do resultado, um botão só leva até ele.
+
 ## Repositório novo e limpeza (23 de outubro de 2026)
 - Repositório recriado do zero, com o projeto atual num commit único.
 - README reescrito: sumário, destaques, privacidade, tecnologias e imagem de abertura nos temas claro e escuro.

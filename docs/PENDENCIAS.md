@@ -17,15 +17,17 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 
 ## Auditoria pedida em 23/10/2026 (ainda não concluída)
 
-- [ ] **Livros:** auditoria feita em `docs/AUDITORIA-LIVROS.md` (168 itens: 11 correções de título/ano, 3 de
-      justificativa, 3 substituições, 6 correções nos créditos). Falta abrir cada link proposto, aplicar as correções em
-      `public/js/dados/leituras.js` e acrescentar os links (5º elemento `{orig, ed, isbn, info, compra}`).
+- [x] **Livros:** correções da auditoria aplicadas e um link conferido em cada obra, no resultado e nas páginas das
+      ideologias (23/10/2026). Detalhes no topo de `docs/AUDITORIA-LIVROS.md`.
+- [ ] **Livros, equilíbrio das listas:** trocar uma crítica de Liberal clássico/contra, de Conservador/contra e de Direita
+      nacional-conservadora/contra por críticas de outro campo, um dos dois Pinker e uma repetição em
+      Anarcocapitalista/contra. Nenhum título substituto foi conferido ainda.
+- [ ] **Livros, Oakeshott:** confirmar a edição brasileira de *Conservadorismo* (ISBN 9788592649081), que reúne o ensaio
+      "Ser conservador", e trocar o item *Sobre ser conservador*, que hoje aparece sem link.
 - [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
       23/10/2026.
 - [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.
-- [ ] **Unificar Compartilhar e Comparar com amigos** numa experiência só. Feito só o ajuste leve (textos que explicam
-      que todo link compartilhado já abre a comparação, aviso de link inválido e de modos diferentes). A fusão num
-      painel único muda o layout do resumo e os testes de interface: proposta no relatório de 23/10/2026.
+- [x] **Compartilhar e comparar** num bloco só no resultado (23/10/2026).
 - [x] **Tema claro:** teclas brancas com contorno pelo token `--branco-borda`. Feito em 23/10/2026.
 - [x] **Consistência de números** entre páginas e código, com o teste `testes/numeros.test.mjs`. Feito em 23/10/2026.
       Os tempos (9/18/30 min) continuam estimativas: medir a mediana real no painel.

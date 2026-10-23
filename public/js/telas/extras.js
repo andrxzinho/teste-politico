@@ -51,7 +51,10 @@ function mostrarLeituras(){
   const abas=el("div","tabs");abas.setAttribute("role","tablist");abas.setAttribute("aria-label","Leituras");[["favor","Pra entender por dentro"],["contra","Pra entender as críticas"]].forEach(([k,t])=>{const b=el("button",null,t);b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",String(k===leiturasAba));b.onclick=()=>{leiturasAba=k;mostrarLeituras()};abas.append(b)});out.append(abas);
   const ext=["Comunista","Anarquista","Anarcocapitalista","Fascista","Direita radical","Esquerda radical"].includes(n);
   out.append(el("p","small",leiturasAba==="favor"?(ext?`Fontes históricas e textos de referência de ${n}, pra entender o que essa tradição defendeu. Não é recomendação.`:`Obras que ajudam a entender ${n} como os próprios defensores a entendem.`):"As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio."));
-  L[leiturasAba].forEach(([t,a,ano,d])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));it.append(capaLivro(t,a),tx);out.append(it)})}
+  L[leiturasAba].forEach(([t,a,ano,d,x])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));if(x)tx.append(linhaEdicao(x));it.append(capaLivro(t,a),tx);out.append(it)})}
+// edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
+function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
+  if(x.link){const a=el("a",null,x.onde);a.href=x.link;a.target="_blank";a.rel="noopener";p.append(a)}return p}
 
 // 4. relatório em PDF (impressão do navegador): abre todas as seções e volta como estava depois
 function relatorioPDF(){

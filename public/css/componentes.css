@@ -107,3 +107,7 @@
 .lista-pagina li{margin-bottom:.55rem}
 .acoes-pagina-linha{grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));max-width:32rem}
 .lista-pagina.diferencas{margin-top:.9rem;font-size:.94rem}
+/* edição citada e link de cada livro (resultado e páginas das ideologias) */
+.livro-ed{display:flex;flex-wrap:wrap;gap:.15rem .7rem;align-items:baseline;margin:.45rem 0 0!important;font-size:.8rem!important;line-height:1.4;color:var(--grafite)}
+.livro-ed a{color:var(--tinta);font-weight:700;text-underline-offset:2px}
+.livro-ed a::after{content:" ↗";font-weight:400}

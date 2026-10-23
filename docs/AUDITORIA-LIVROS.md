@@ -1,7 +1,38 @@
 # Auditoria bibliográfica das leituras recomendadas
 
 Arquivo auditado: `public/js/dados/leituras.js` (constante `LEITURAS`), com apoio de `ferramentas/creditos-imagens.json` (chave `livros`).
-Data: 23 de outubro de 2026. Nenhum arquivo do repositório foi alterado.
+Data: 23 de outubro de 2026.
+
+## Situação: aplicada em 23 de outubro de 2026
+
+- **Correções aplicadas:** anos (Lênin 1918, Luxemburgo 1899, Lomborg 1998, De Maistre 1796, *A controvérsia do
+  planejamento* 1977), títulos (*Os fundamentos da liberdade* no lugar do posfácio de Hayek, *Crítica da filosofia do
+  direito de Hegel*, *The Extreme Centre*, *O Estado moderno* com o subtítulo), as três justificativas e o "mostra" ×
+  "argumenta" nos dois lados (Miliband, Chang, Mazzucato, Anderson, Stanley, Klemperer, D. Friedman), e o rótulo
+  "Fonte histórica:" retirado de todas as justificativas (o aviso dos extremos já aparece acima da lista).
+- **Substituições:** *Sobre a autoridade* (Engels) → *Anarchism and Socialism* (Plekhanov); *Manifesto dos intelectuais
+  fascistas* → *Origini e dottrina del fascismo* (Gentile). O *Manifesto de Outubro* ficou: a conferência achou uma edição
+  própria (Voz do Oeste, 1982).
+- **Edições brasileiras conferidas na Estante Virtual ou na Amazon (página aberta, título e editora conferidos):**
+  *A rebelião das elites* (Ediouro, 1995), *A nova classe* (Agir, 1958), *O personalismo* (Martins Fontes), *A crise de
+  legitimação no capitalismo tardio* (Tempo Brasileiro, 2002), *A decadência do Ocidente* (Zahar, 1964), *Psicologia das
+  multidões* (WMF Martins Fontes), *Factfulness* (Record, 2019), *A terceira via* (Record, 1998), *Liberalismo* de Hobhouse
+  (Jaguatirica, 2024), *Carta da prisão de Birmingham* (Thomas Nelson Brasil, 2026), *A ditadura do proletariado*
+  (Ciências Humanas, 1979), *A anarquia* (Imaginário, 2001).
+- **Sem edição brasileira encontrada, agora com o título original:** *Who Are We?* (o *Quem somos nós?* da Prestígio é de
+  outro autor), *The Price of Inequality*, *Gekaufte Zeit*. Títulos corrigidos pela edição brasileira: *Apocalypse Never*
+  (a LVM manteve o título em inglês) e *Apoio mútuo* (Kropotkin).
+- **Cada livro tem a edição citada e um link conferido** (5º elemento de cada item), no resultado e nas páginas das
+  ideologias: Amazon (página do ISBN), Estante Virtual (página do título) ou, quando não há edição em português, a
+  Wikipédia em inglês, o Marxists.org ou o Internet Archive.
+- **Créditos:** a capa de *A terceira via* era de outro livro e saiu; editora do Rothbard, título da edição da *Doutrina do
+  fascismo* e edição portuguesa do Schmitt corrigidos; as capas de Lomborg e Esping-Andersen voltaram a aparecer (o "ø" e o
+  "ö" geravam um nome de arquivo diferente do que o site procura).
+- **Não aplicado (sugestões de equilíbrio sem título conferido):** trocar uma crítica de Liberal clássico/contra, uma de
+  Conservador/contra, uma de Direita nacional-conservadora/contra, um dos dois Pinker e uma repetição em
+  Anarcocapitalista/contra. Ficam em `docs/PENDENCIAS.md`.
+
+O texto abaixo é a auditoria original, mantida como registro.
 
 ## Resumo
 

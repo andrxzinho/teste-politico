@@ -11,7 +11,9 @@ vm.runInContext(fs.readFileSync("public/js/dados/ideologias.js", "utf8") + ";" +
 const { AX, IDEO, IDEO_GRUPOS, IDEO_RESUMO, LEITURAS } = ctx.D;
 const EXTREMOS = ["Comunista", "Anarquista", "Anarcocapitalista", "Fascista", "Direita radical", "Esquerda radical"];
 const anoObra = (a) => (a < 0 ? `c. ${-a} a.C.` : String(a));
-const livros = (l) => l.map(([t, a, ano, d]) => `<div class="livro"><b>${esc(t)}</b><small>${esc(a)}, ${anoObra(ano)}</small><p>${esc(d)}</p></div>`).join("");
+// edição citada e link conferido de cada livro, como no resultado (linhaEdicao em public/js/telas/extras.js)
+const edicao = (x) => (x ? `<p class="livro-ed">${x.ed ? `<span>${esc(x.ed)}</span>` : ""}${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.onde)}</a>` : ""}</p>` : "");
+const livros = (l) => l.map(([t, a, ano, d, x]) => `<div class="livro"><b>${esc(t)}</b><small>${esc(a)}, ${anoObra(ano)}</small><p>${esc(d)}</p>${edicao(x)}</div>`).join("");
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 export const slug = (n) => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
