@@ -163,7 +163,7 @@
     <p class="lede" id="ideoDesc"></p>
     <figure class="cover-map"><svg id="compassSvg" viewBox="0 0 320 320" role="img" aria-label="Sua posição na bússola política"></svg><figcaption><p class="small">Economia na horizontal, liberdade × ordem na vertical. O retângulo tracejado é a sua faixa provável.</p></figcaption></figure>
   <p class="visor-rodape">O resumo está logo abaixo. O resultado completo fica no fim da página.</p>
-  <div class="cover-acoes"><button type="button" class="secondary" data-clica="redoBtn">Refazer</button><button type="button" class="primary" data-clica="shareBtn">Compartilhar</button><button type="button" class="secondary" data-clica="amigoBtn">Comparar com amigo</button><button type="button" class="secondary pdf" data-clica="pdfBtn">Salvar relatório em PDF</button></div>
+  <div class="cover-acoes"><button type="button" class="secondary" data-clica="redoBtn">Refazer</button><button type="button" class="primary" data-clica="shareBtn">Compartilhar e comparar</button><button type="button" class="secondary pdf" data-clica="pdfBtn">Salvar relatório em PDF</button></div>
   </header>
   <nav class="indice" id="indice" aria-label="Seções do resultado"></nav>
   <p class="note ed-aviso hidden" id="edAviso" role="status" aria-live="polite"></p>
@@ -171,19 +171,25 @@
   <div id="pecasResumo" hidden>
     <section class="resumo-bloco" id="blocoPensadores"><h2>Pensadores e figuras históricas</h2><p class="small">Pensadores clássicos e figuras da história do Brasil, todos já falecidos, mais parecidos com as suas posições. A posição de cada um é uma estimativa a partir das obras e da atuação; pessoas de outras épocas são comparadas só nos eixos em que a posição delas faz sentido hoje.</p><div id="pensOut"></div></section>
     <section class="resumo-bloco" id="blocoLeituras"><h2>Leituras recomendadas</h2><div id="leitOut"></div></section>
-    <section class="resumo-bloco" id="blocoCompartilhar"><h2>Compartilhar</h2><p class="small">Gere a imagem do seu resultado no formato de cada rede ou mande o link direto num aplicativo. Quem abrir o link faz o teste e já vê a comparação com você.</p><div id="partilhaOut"></div></section>
-    <section class="resumo-bloco" id="blocoComparar"><h2>Compare com amigos</h2>
-      <p class="small">Mande o seu código ou o link pra um amigo. Quando ele terminar o teste, os dois resultados aparecem lado a lado. Se ele já fez, cole o código dele aqui. O código leva só a sua ideologia, o modo e a posição nos eixos, nunca as suas respostas.</p>
-      <div class="code" id="myCode"></div>
-      <div class="resumo-acoes"><button type="button" class="secondary" id="copiarLink">Copiar link</button><button type="button" class="secondary" id="sendCode">Enviar meu código</button></div>
-      <div class="inrow"><input id="friendIn" placeholder="Cole o código ou link do amigo" autocomplete="off" aria-label="Código ou link do amigo"><button class="secondary" id="friendGo">Comparar</button></div>
-      <p class="fine" id="friendErr" role="status" aria-live="polite"></p>
+    <section class="resumo-bloco partilha" id="blocoPartilha"><h2>Compartilhar e comparar</h2>
+      <p class="small">Mande o seu link pra quem quiser. Quem abrir faz o teste e, no fim, vê os dois resultados lado a lado. O link leva só a sua ideologia, o modo e a posição nos eixos, nunca as suas respostas.</p>
       <div id="friendOut"></div>
+      <div class="partilha-passo">
+        <p class="rotulo">Seu link de comparação</p>
+        <div class="code" id="myCode"></div>
+        <div class="resumo-acoes"><button type="button" class="secondary" id="copiarLink">Copiar link</button><button type="button" class="secondary" id="sendCode">Enviar link</button></div>
+      </div>
+      <div id="partilhaOut"></div>
+      <div class="partilha-passo partilha-amigo">
+        <p class="rotulo">Recebeu o link de alguém?</p>
+        <p class="small">Cole o link ou o código aqui pra ver os dois resultados lado a lado.</p>
+        <div class="inrow"><input id="friendIn" placeholder="Cole o link ou o código" autocomplete="off" aria-label="Link ou código de comparação"><button class="secondary" id="friendGo">Comparar</button></div>
+        <p class="fine" id="friendErr" role="status" aria-live="polite"></p>
+      </div>
     </section>
   </div>
   <div class="actions">
-      <button class="primary" id="shareBtn">Compartilhar resultado</button>
-      <button class="secondary" id="amigoBtn" type="button">Comparar com amigo</button>
+      <button class="primary" id="shareBtn" type="button">Compartilhar e comparar</button>
       <button class="secondary" id="redoBtn">Refazer o teste</button>
     <button type="button" class="secondary pdf" id="pdfBtn">Salvar relatório em PDF</button></div>
   <button type="button" class="ver-completo" id="verCompleto" aria-expanded="false">Ver resultado completo</button>

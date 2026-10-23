@@ -130,13 +130,12 @@ async function abrirImagem(formato){if(formato&&formato!==shOp.formato){shOp.for
   if(typeof shareSheet.showModal==="function")shareSheet.showModal();else shareSheet.setAttribute("open","");
   $("shZap").href="https://wa.me/?text="+encodeURIComponent(textoCompartilhar());$("shAviso").textContent="";
   if(!shareFile)await mostrarImagem();else{$("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden")}}
-$("shareBtn").onclick=()=>abrirImagem();
 // opções: refazem a imagem
 // única opção da imagem: tema claro ou escuro (formato story, com todas as informações)
 shareSheet.querySelectorAll("[data-tema]").forEach(b=>b.onclick=()=>{shOp.tema=b.dataset.tema;shareSheet.querySelectorAll("[data-tema]").forEach(o=>o.setAttribute("aria-pressed",String(o===b)));mostrarImagem()});
 shareSheet.querySelectorAll("[data-formato]").forEach(b=>b.onclick=()=>{shOp.formato=b.dataset.formato;shareSheet.querySelectorAll("[data-formato]").forEach(o=>o.setAttribute("aria-pressed",String(o===b)));mostrarImagem()});
 
-// bloco "Compartilhar" do resumo: os formatos da imagem (cada um diz onde funciona melhor) e os aplicativos
+// bloco "Compartilhar e comparar" do resumo: os aplicativos que levam o link e os formatos da imagem (cada um diz onde funciona melhor)
 const APPS=[
   ["WhatsApp",(t,u)=>`https://wa.me/?text=${encodeURIComponent(t)}`],
   ["X (Twitter)",(t,u)=>`https://twitter.com/intent/tweet?text=${encodeURIComponent(t.replace(u,"").trim())}&url=${encodeURIComponent(u)}`],
@@ -150,19 +149,19 @@ const REDES_IMAGEM={
 let miniaturasFeitas=false;
 function montarPartilha(){
   const box=$("partilhaOut");box.innerHTML="";miniaturasFeitas=false;
-  box.append(el("p","rotulo","Imagem do resultado"));
-  const fs=el("div","formatos");
-  Object.entries(FORMATOS).forEach(([k,f])=>{const b=el("button","formato");b.type="button";b.dataset.f=k;
-    const m=el("span","formato-molde");m.style.aspectRatio=`${f.w} / ${f.h}`;m.setAttribute("aria-hidden","true");
-    const tx=el("span","formato-txt");tx.append(el("b",null,f.nome),el("small",null,f.uso));b.append(m,tx);b.onclick=()=>abrirImagem(k);fs.append(b)});
-  box.append(fs);
-  box.append(el("p","rotulo","Mandar o link"));
+  box.append(el("p","rotulo","Mandar por um aplicativo"));
   const apps=el("div","apps");const t=textoCompartilhar(),u=myLink();
   APPS.forEach(([n,f])=>{const a=el("a","secondary app",n);a.href=f(t,u);a.target="_blank";a.rel="noopener";apps.append(a)});
   Object.entries(REDES_IMAGEM).forEach(([k,r])=>{const b=el("button","secondary app",r.n);b.type="button";b.dataset.rede=k;b.setAttribute("aria-haspopup","dialog");b.onclick=()=>abrirRede(k);apps.append(b)});
   const bt=el("button","secondary app app-copiar","Copiar texto");bt.type="button";
   bt.onclick=async()=>{try{await navigator.clipboard.writeText(textoCompartilhar());bt.textContent="Texto copiado"}catch(e){bt.textContent="Não deu pra copiar"}setTimeout(()=>bt.textContent="Copiar texto",2000)};
   apps.append(bt);box.append(apps);
+  box.append(el("p","rotulo","Ou publicar a imagem do resultado"));
+  const fs=el("div","formatos");
+  Object.entries(FORMATOS).forEach(([k,f])=>{const b=el("button","formato");b.type="button";b.dataset.f=k;
+    const m=el("span","formato-molde");m.style.aspectRatio=`${f.w} / ${f.h}`;m.setAttribute("aria-hidden","true");
+    const tx=el("span","formato-txt");tx.append(el("b",null,f.nome),el("small",null,f.uso));b.append(m,tx);b.onclick=()=>abrirImagem(k);fs.append(b)});
+  box.append(fs);
   // miniaturas: a imagem de verdade de cada formato, desenhada em segundo plano quando o bloco aparece
   const fazer=()=>{if(miniaturasFeitas)return;miniaturasFeitas=true;desenharMiniaturas(fs)};
   if("IntersectionObserver"in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();fazer()}},{rootMargin:"300px"});io.observe(fs)}else fazer();

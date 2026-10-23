@@ -37,7 +37,7 @@ export async function testarInterface() {
     // resumo primeiro: o principal à vista, o completo sob demanda
     v.confere(await pg.evaluate("!$('results').classList.contains('completo')&&getComputedStyle(document.querySelector('#results .acc-list')).display==='none'"), `${modo}: o resultado deveria abrir no resumo`);
     v.confere((await pg.locator("#resumo .eixo-tipico").count()) === 6 && (await pg.locator("#resumo .resumo-ideo").count()) === 3 && (await pg.locator("#resumo #leitOut .livro").count()) === 4 && (await pg.locator("#resumo #pensOut .pensador").count()) >= 4, `${modo}: o resumo deveria ter 6 eixos, 3 ideologias, pensadores e leituras com 4 obras por aba`);
-    v.confere(await pg.evaluate("[...$('resumo').children].map(e=>e.id).join(',')").then((o) => /blocoPensadores,blocoLeituras,blocoCompartilhar,blocoComparar,blocoCorrigir$/.test(o)), `${modo}: o resumo deveria seguir a ordem pensadores, leituras, compartilhar, comparar`);
+    v.confere(await pg.evaluate("[...$('resumo').children].map(e=>e.id).join(',')").then((o) => /blocoPensadores,blocoLeituras,blocoPartilha,blocoCorrigir$/.test(o)), `${modo}: o resumo deveria seguir a ordem pensadores, leituras, compartilhar e comparar`);
     v.confere((await pg.locator("#resumo .code").count()) === 1 && (await pg.locator("#results .acc-list #friendIn").count()) === 0, `${modo}: a comparação com amigos deveria aparecer uma vez só, no resumo`);
     v.confere((await pg.locator("#partilhaOut .formato").count()) === 4 && (await pg.locator("#partilhaOut .app").count()) === 8, `${modo}: compartilhar deveria ter 4 formatos e os aplicativos`);
     v.confere(await pg.evaluate("document.querySelector('#resumo .code').textContent===myLink().split('comparar=')[1]"), `${modo}: o código de comparação deveria aparecer no resumo, igual ao do link`);
@@ -61,11 +61,11 @@ export async function testarInterface() {
       v.confere(await pg.evaluate("!$('results').classList.contains('completo')"), "depois do PDF, deveria voltar pro resumo");
       v.confere(await pg.evaluate("window.__imprimiu===1&&window.__abertas"), "relatório deveria abrir todas as seções e chamar a impressão");
       v.confere(await pg.evaluate("[...document.querySelectorAll('#results details.acc')].filter(d=>d.open).length<=2"), "depois da impressão, as seções deveriam voltar como estavam");
-      await pg.evaluate("scrollTo(0,0)"); await pg.click("#amigoBtn"); await pg.waitForTimeout(900);
-      v.confere(await pg.evaluate("Math.abs($('blocoComparar').getBoundingClientRect().top)<300"), "Comparar com amigo deveria levar ao bloco de comparação");
+      await pg.evaluate("scrollTo(0,0)"); await pg.click("#shareBtn"); await pg.waitForTimeout(900);
+      v.confere(await pg.evaluate("Math.abs($('blocoPartilha').getBoundingClientRect().top)<300"), "Compartilhar e comparar deveria levar ao bloco de compartilhar e comparar");
     }
     if (modo === "full") {
-      await pg.click("#shareBtn");
+      await pg.click("#partilhaOut .formato");
       await pg.waitForFunction("!!shareFile", null, { timeout: 6000 });
       v.confere((await pg.evaluate("shareFile.size")) > 50000, "imagem de compartilhar vazia ou pequena demais");
       const dims = () => pg.evaluate("new Promise(r=>{const i=new Image();i.onload=()=>r([i.width,i.height]);i.src=shareUrl})");
@@ -161,7 +161,7 @@ export async function testarInterface() {
     v.confere(tx > vx + 300, "no computador, o teclado de respostas deveria ficar à direita do visor");
     v.confere(await pg.evaluate("$('quiz').classList.contains('entra')"), "troca de tela deveria ter transição");
     await pg.evaluate(`buildImage=()=>Promise.reject(new Error('falha simulada'));st=fresh('full');${RESPONDER}(1)`);
-    await pg.waitForTimeout(300); await pg.click('[data-clica="shareBtn"]'); await pg.waitForTimeout(300); // no computador, a tecla fica ao lado do visor
+    await pg.waitForTimeout(300); await pg.evaluate("abrirImagem()"); await pg.waitForTimeout(300);
     v.confere(/Não deu pra gerar/.test(await pg.evaluate("$('shNote').textContent")), "falha na imagem deveria mostrar mensagem clara");
     v.confere(await pg.evaluate("$('shSave').classList.contains('hidden')"), "sem imagem, o botão de salvar não deveria aparecer");
     await pg.keyboard.press("Escape");

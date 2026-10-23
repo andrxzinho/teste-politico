@@ -68,13 +68,13 @@ function renderExtras(){
   const n=tensoesIncomuns();$("s-tensoes").textContent=n?`${n} ${n===1?"ponto":"pontos"} fora do padrão das tradições`:"Nenhuma tensão forte";
   leiturasIdeo=R.ranked[0].n;leiturasAba="favor";mostrarLeituras();
   montarResumo();setCompleto(false);
-  if($("friendOut").children.length)setTimeout(()=>irParaBloco("blocoComparar"),400)} // chegou por link de amigo: mostra a comparação
+  if($("friendOut").children.length)setTimeout(()=>irParaBloco("blocoPartilha"),400)} // chegou por link de amigo: mostra a comparação
 
 // resumo do resultado: o principal à vista; o completo abre pela tecla "Ver resultado completo"
 function setCompleto(on){const r=$("results"),b=$("verCompleto");r.classList.toggle("completo",on);b.textContent=on?"Ver só o resumo":"Ver resultado completo";b.setAttribute("aria-expanded",String(on))}
 function montarResumo(){
-  // blocos fixos (pensadores, leituras, compartilhar, comparar) ficam no HTML e são encaixados aqui, na ordem do resumo
-  const fixos=Object.fromEntries(["blocoPensadores","blocoLeituras","blocoCompartilhar","blocoComparar"].map(id=>[id,$(id)]));
+  // blocos fixos (pensadores, leituras, compartilhar e comparar) ficam no HTML e são encaixados aqui, na ordem do resumo
+  const fixos=Object.fromEntries(["blocoPensadores","blocoLeituras","blocoPartilha"].map(id=>[id,$(id)]));
   const box=$("resumo");box.innerHTML="";const bloco=(t,id)=>{const d=el("section","resumo-bloco");if(id)d.id=id;d.append(el("h2",null,t));box.append(d);return d};
   const eixos=bloco("Seus eixos","blocoEixos"),ex=el("div","eixos-tipicos");
   AXK6.forEach(k=>{const d=el("div","eixo-tipico"),topo=el("div","topo");topo.append(el("b",null,AX[k].name),el("span",null,band(R.s[k],k)));
@@ -96,7 +96,7 @@ function montarResumo(){
       r2.forEach((c,i)=>{const p=el("div","turno2-cand"+(i===0&&!empate?" perto":""));p.append(fotoPessoa(c.n,"grande"),el("b",null,c.n),el("span",null,`Compatibilidade ${matchLab(c.match).toLowerCase()}`));par.append(p)});
       t.append(par,el("p","small",empate?`Você está praticamente na mesma distância dos dois.`:`Você está mais perto de ${r2[0].n}. Não é recomendação de voto.`));d.append(t)}
     if(dest.length){const ul=el("ul","destaques");dest.forEach(x=>ul.append(el("li",null,x)));d.append(ul)}}
-  box.append(fixos.blocoPensadores,fixos.blocoLeituras,fixos.blocoCompartilhar,fixos.blocoComparar);
+  box.append(fixos.blocoPensadores,fixos.blocoLeituras,fixos.blocoPartilha);
   const cr=bloco("Clicou errado?","blocoCorrigir");cr.classList.add("resumo-corrigir");cr.append(el("p","small","Dá pra trocar qualquer resposta e ver o resultado recalculado, sem refazer o teste."));
   const bcr=el("button","secondary","Corrigir respostas");bcr.type="button";bcr.onclick=()=>abrirCorrecao();cr.append(bcr);
   if(window.TP_NAV){TP_NAV.revelar(box.children);TP_NAV.revelar(document.querySelectorAll("#results .acc-list > details.acc"))}
@@ -124,4 +124,4 @@ function montarIndice(){
   addEventListener("scroll",()=>{if(!pedido){pedido=true;requestAnimationFrame(atualizar)}},{passive:true});addEventListener("resize",atualizar)}
 function abrirSecao(id){setCompleto(true);const d=$(id);d.open=true;setTimeout(()=>d.scrollIntoView({block:"start"}),60)}
 $("verCompleto").onclick=()=>{const on=!$("results").classList.contains("completo");setCompleto(on);if(on)setTimeout(()=>$("verCompleto").scrollIntoView({block:"start"}),60)};
-$("amigoBtn").onclick=()=>irParaBloco("blocoComparar");
+$("shareBtn").onclick=()=>irParaBloco("blocoPartilha");

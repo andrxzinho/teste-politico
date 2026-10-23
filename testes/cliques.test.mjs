@@ -16,7 +16,7 @@ const ESTADOS = [
   ["resultado", "/", `st=fresh('full');${RESPONDER}(-1);document.querySelectorAll('#results details').forEach(d=>d.open=true)`],
   ["resultado entre duas", "/", `st=fresh('quick');${RESPONDER}(0);document.querySelectorAll('#results details').forEach(d=>d.open=true)`],
   ["respostas insuficientes", "/", "st=fresh('quick');st.seen=st.bs.map((_,j)=>j);for(const id of st.base)st.ans[id]=gated(ITEMS[id])&&!gateOK(id)?'g':'x';st.cur=seq().length;st.done=true;R=compute(st.ans);show('results');results()"],
-  ["janela de compartilhar", "/", `st=fresh('full');${RESPONDER}(1);$('shareBtn').click()`],
+  ["janela de compartilhar", "/", `st=fresh('full');${RESPONDER}(1);abrirImagem()`],
   ["janela de confiança", "/", `st=fresh('full');${RESPONDER}(1);document.querySelector('#confChip button').click()`],
   ["explicação da frase", "/", "st=fresh('full');st.seen=st.bs.map((_,j)=>j);st.cur=3;show('quiz');render();$('explainBtn').click()"],
   ["link de amigo", "/?comparar=bf51j1n1n1p1i1h", ""],

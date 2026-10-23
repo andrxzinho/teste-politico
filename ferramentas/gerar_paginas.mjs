@@ -157,7 +157,7 @@ const FAQ = [
   ]],
   ["dados", "Dados e privacidade", [
     ["Meus dados são enviados?", ["Só se você aceitar participar do estudo, e sem nada que identifique você: nunca são enviados nome, e-mail, IP ou localização. Quem informa ter menos de 18 anos faz o teste, mas nada é enviado.", "Dá pra fazer o teste inteiro sem participar. Os detalhes estão nos termos de uso e privacidade."]],
-    ["Posso comparar com amigos?", ["Sim. No resumo do resultado, o bloco \"Compare com amigos\" mostra o seu código e um link. Quem abrir vê os dois resultados lado a lado. O código leva só a sua ideologia, o modo e a sua posição nos eixos, sem as respostas de cada frase, e a comparação acontece no aparelho, sem enviar nada."]],
+    ["Posso comparar com amigos?", ["Sim. No resumo do resultado, o bloco \"Compartilhar e comparar\" mostra o seu link de comparação. Quem abrir faz o teste e, no fim, vê os dois resultados lado a lado. Se alguém já mandou o link pra você, é só colar no mesmo bloco. O código leva só a sua ideologia, o modo e a sua posição nos eixos, sem as respostas de cada frase, e a comparação acontece no aparelho, sem enviar nada."]],
   ]],
   ["projeto", "Sobre o projeto", [
     ["Quem fez o teste?", ["É um projeto independente e sem fins lucrativos, sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual é só uma inspiração na urna eletrônica, sem símbolos oficiais."]],

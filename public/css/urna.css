@@ -417,7 +417,7 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .note.amigo > p:last-child{margin-top:.8rem;font-size:.9rem;color:var(--grafite)}
 .pdf::before{content:none!important}
 
-.cover-acoes [data-clica="amigoBtn"],.cover-acoes .pdf{grid-column:1 / -1;background:var(--branco);box-shadow:inset 0 0 0 1px var(--branco-borda),0 5px 0 var(--branco-sombra)}
+.cover-acoes .pdf{grid-column:1 / -1;background:var(--branco);box-shadow:inset 0 0 0 1px var(--branco-borda),0 5px 0 var(--branco-sombra)}
 .so-impressao{display:none}
 /* relatório impresso / PDF: papel branco, sem navegação nem teclas, todas as seções abertas */
 @media print{
@@ -468,8 +468,7 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .ver-completo:active{transform:translateY(4px);box-shadow:0 1px 0 var(--tecla-sombra)}
 .actions{grid-template-columns:1fr 1fr}
 .actions #shareBtn{order:0;grid-column:1 / -1}
-.actions #amigoBtn{order:1}
-.actions .pdf{order:2}
+.actions .pdf{order:2;grid-column:1 / -1}
 .actions #redoBtn{order:3;grid-column:1 / -1}
 @media print{#results .acc-list{display:grid!important}.ver-completo{display:none!important}}
 
@@ -596,8 +595,14 @@ body[data-tela="results"] .menu-btn{display:none}
 .turno2-cand.perto{border:2px solid var(--marca)}
 .turno2-cand.perto span{color:var(--marca);font-weight:700}
 .turno2 + .destaques{margin-top:.9rem}
-/* compartilhar */
-#partilhaOut .rotulo{margin:.9rem 0 .5rem}
+/* compartilhar e comparar */
+#partilhaOut .rotulo,.partilha-passo > .rotulo{margin:1.1rem 0 .5rem}
+.partilha-passo .code{margin-top:0}
+.partilha-amigo{margin-top:1.3rem;padding-top:.2rem;border-top:1px solid var(--linha)}
+.partilha-amigo .small{margin:.1rem 0 0}
+.partilha-amigo .inrow{margin-top:.6rem}
+#friendOut:empty{display:none}
+#friendOut .card{margin-top:.9rem!important}
 .formatos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
 .formato{min-width:0;width:100%;display:flex;gap:.7rem;align-items:center;text-align:left;padding:.65rem;border-radius:8px;border:1px solid var(--linha);background:var(--visor);color:var(--tinta);min-height:84px}
 .formato:hover{border-color:var(--tinta)}

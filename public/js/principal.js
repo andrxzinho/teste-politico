@@ -57,12 +57,12 @@ $("descartarBtn").onclick=()=>{if(!confirm(`Descartar as respostas do modo ${nom
 document.addEventListener("keydown",e=>{if($("quiz").classList.contains("hidden")||sheet.open||shareSheet.open||infoSheet.open)return;if(e.key==="?"){if(!onIntro()&&!escolha(ITEMS[seq()[st.cur]]))openSheet();return}if(busy)return;if(onIntro()){if(e.key==="Enter"){const b=$("answers").querySelector("button");if(b)b.click()}return}const i="12345".indexOf(e.key);if(i>=0)pick(escolha(ITEMS[seq()[st.cur]])?(()=>{const b=$("answers").querySelectorAll("button.ans")[i];return b?+b.dataset.v:null})():[2,1,0,-1,-2][i])});
 // link de comparação recebido
 {const m=location.search.match(/[?&]comparar=([0-9a-z]+)/i);if(m){const fr=decode(m[1]);if(fr){try{localStorage.setItem(FKEY,encode(fr.n,fr.s,fr.m))}catch(e){}
-  cartaoAmigo(fr)}else{const b=$("friendBanner");b.className="note";b.textContent="O link de comparação que você abriu está incompleto ou foi copiado errado, então não deu pra mostrar o resultado de quem mandou. Peça o link de novo ou cole o código dele no fim do seu resultado, em \"Compare com amigos\"."}}}
+  cartaoAmigo(fr)}else{const b=$("friendBanner");b.className="note";b.textContent="O link de comparação que você abriu está incompleto ou foi copiado errado, então não deu pra mostrar o resultado de quem mandou. Peça o link de novo ou cole o link ou o código no seu resultado, no bloco \"Compartilhar e comparar\"."}}}
 // resultado de quem mandou o link, visível mesmo antes de fazer o teste
 function cartaoAmigo(fr){const b=$("friendBanner");b.innerHTML="";b.className="note amigo";
   const t=el("p",null,"Resultado que te mandaram"+(fr.m?` (modo ${nomeModo(fr.m)})`:"")+":");const a=el("a",null,fr.n);a.href="/ideologias/"+slugIdeo(fr.n)+"/";const h=el("h3");h.append(a);
   const ex=el("div","eixos-tipicos");EIXOS5.forEach(k=>{const d=el("div","eixo-tipico"),topo=el("div","topo");topo.append(el("b",null,AX[k].name),el("span",null,band(fr.s[k],k)));const tr=el("div","trilho"),i=el("i");i.style.left=posEsc(fr.s[k])+"%";tr.append(i);d.append(topo,tr);ex.append(d)});
-  b.append(t,h,ex,el("p",null,"Faça o teste pra ver os dois resultados lado a lado, no bloco \"Compare com amigos\" do resultado."))}
+  b.append(t,h,ex,el("p",null,"Faça o teste pra ver os dois resultados lado a lado, no bloco \"Compartilhar e comparar\" do resultado."))}
 // vindo da página de uma ideologia: compara direto, se já houver um teste terminado neste aparelho
 $("pdfBtn").onclick=relatorioPDF;
 heroMap();

@@ -12,9 +12,9 @@ function renderComparar(){
   if(fr)renderFriend(fr);else $("friendOut").innerHTML="";
   renderHistory();
 }
-$("sendCode").onclick=async()=>{const txt=`Fiz o teste político e deu ${R.ranked[0].n}. Faz também e compara com o meu resultado: ${myLink()}`;
+$("sendCode").onclick=async()=>{const b=$("sendCode"),txt=textoCompartilhar();
   try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
-  try{await navigator.clipboard.writeText(txt);$("friendErr").textContent="Link copiado. É só colar na conversa."}catch(e){$("friendErr").textContent=myLink()}};
+  try{await navigator.clipboard.writeText(txt);b.textContent="Copiado: é só colar"}catch(e){b.textContent="Não deu pra copiar"}setTimeout(()=>b.textContent="Enviar link",2500)};
 $("friendGo").onclick=()=>{const fr=decode($("friendIn").value);if(!fr){$("friendErr").textContent="Esse código não parece válido. Confira se copiou tudo.";return}
   $("friendErr").textContent="";try{localStorage.setItem(FKEY,encode(fr.n,fr.s,fr.m))}catch(e){}renderFriend(fr)};
 function renderFriend(fr){
