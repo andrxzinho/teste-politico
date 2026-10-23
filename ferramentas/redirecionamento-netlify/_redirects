@@ -1,0 +1,5 @@
+# O teste mudou de endereço. Só as rotas que páginas antigas ainda abertas usam (envio pro estudo e pesos) são repassadas;
+# o resto (inclusive /api/painel e /api/backup) redireciona, pra o Netlify não virar um segundo caminho até o painel.
+/api/coletar  https://testepolitico.vercel.app/api/coletar  200!
+/api/pesos    https://testepolitico.vercel.app/api/pesos    200!
+/*            https://testepolitico.vercel.app/:splat  301!

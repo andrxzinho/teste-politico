@@ -1,0 +1,6 @@
+testes
+ferramentas
+docs
+*.md
+.env*
+.github

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /painel
+Disallow: /api/
+Sitemap: https://testepolitico.vercel.app/sitemap.xml

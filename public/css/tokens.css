@@ -1,0 +1,19 @@
+/* Cores e medidas do site (identidade inspirada na urna), modo claro e escuro. Usado por todas as páginas públicas.
+   O tema escolhido no menu entra como data-theme="light" ou "dark" no <html>; sem escolha, segue o aparelho. */
+:root{
+  --font:"Arimo",Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --corpo:#E3DED1;--gaveta:#EEEAE0;--gaveta-borda:#C9C4B6;--visor:#F3F5EF;--moldura:#3A3935;--tinta:#151513;--grafite:#5E5A50;--linha:#D3D6CC;
+  --teclado:#2B2A27;--tecla:#1A1A18;--tecla-txt:#F5F5F0;--tecla-sombra:#000000;
+  --branco:#F4F4EF;--branco-sombra:#A9A69C;--branco-borda:#8F8B80;--corrige:#E8732C;--corrige-sombra:#9C4A16;--confirma:#2FA35A;--confirma-sombra:#1B6A39;--marca:#1E6E3B;--marca-txt:#FFFFFF;
+  --perigo:#B3261E;--alerta:#A06A00;--fundo-grade:#E8EBE2;
+  /* nomes usados pelo código existente (desenhos e componentes) */
+  --bg:var(--corpo);--card:var(--visor);--card2:var(--visor);--surface:var(--fundo-grade);--ink:var(--tinta);--muted:var(--grafite);--line:var(--linha);--line2:var(--gaveta-borda);
+  --accent:var(--confirma);--accent-soft:rgba(47,163,90,.12);--accent-line:rgba(30,110,59,.5);--friend:var(--corrige);--bad:var(--perigo);--warn:var(--alerta);--on-accent:#151513;--grad:var(--confirma);--glow1:transparent;--glow2:transparent;--shadow:none;--r:6px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --corpo:#1F1E1B;--gaveta:#262521;--gaveta-borda:#3A3934;--visor:#2A2F29;--moldura:#0E0E0D;--tinta:#E9EDE4;--grafite:#A9AEA3;--linha:#3E443C;
+  --teclado:#121211;--tecla:#2A2A27;--tecla-txt:#F2F2EC;--tecla-sombra:#000000;
+  --branco:#DEDDD6;--branco-sombra:#7E7C75;--branco-borda:transparent;--corrige:#F08240;--corrige-sombra:#8F4518;--confirma:#3BB86A;--confirma-sombra:#1D6B3A;--marca:#3BB86A;--marca-txt:#151513;--perigo:#E5544B;--alerta:#D9A520;
+  --accent-soft:rgba(59,184,106,.14);--accent-line:rgba(59,184,106,.5);--fundo-grade:#313730;color-scheme:dark}}
+:root[data-theme="dark"]{--corpo:#1F1E1B;--gaveta:#262521;--gaveta-borda:#3A3934;--visor:#2A2F29;--moldura:#0E0E0D;--tinta:#E9EDE4;--grafite:#A9AEA3;--linha:#3E443C;--teclado:#121211;--tecla:#2A2A27;--tecla-txt:#F2F2EC;--branco:#DEDDD6;--branco-sombra:#7E7C75;--branco-borda:transparent;--corrige:#F08240;--corrige-sombra:#8F4518;--confirma:#3BB86A;--confirma-sombra:#1D6B3A;--marca:#3BB86A;--marca-txt:#151513;--perigo:#E5544B;--alerta:#D9A520;--fundo-grade:#313730;color-scheme:dark}

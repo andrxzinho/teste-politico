@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Código-fonte público | Teste político</title>
+<meta name="description" content="Todo o código do teste político está publicado no GitHub: as frases, o cálculo, os dados das ideologias e candidatos, o servidor do estudo e os testes.">
+<link rel="canonical" href="https://testepolitico.vercel.app/codigo-aberto/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Código-fonte público | Teste político">
+<meta property="og:description" content="Todo o código do teste político está publicado no GitHub: as frases, o cálculo, os dados das ideologias e candidatos, o servidor do estudo e os testes.">
+<meta property="og:image" content="https://testepolitico.vercel.app/og-urna.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#2B2A27">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/componentes.css">
+<link rel="stylesheet" href="/css/movimento.css">
+<link rel="stylesheet" href="/css/documento.css">
+<script src="/js/navegacao.js"></script>
+<style>body{margin:0;background:var(--corpo);color:var(--tinta);font-family:var(--font);-webkit-font-smoothing:antialiased}*,*::before,*::after{box-sizing:border-box}a{color:inherit;text-underline-offset:3px}</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular pro conteúdo</a>
+<header id="site-cab"></header>
+<main id="conteudo" class="legal">
+<div class="legal-cab">
+<p class="legal-rotulo">Transparência</p>
+<h1>Código-fonte público</h1>
+<ul class="legal-datas"><li><b>Repositório:</b> <a href="https://github.com/andrxzinho/teste-politico" rel="noopener">github.com/andrxzinho/teste-politico</a></li><li><b>Licença:</b> PolyForm Strict 1.0.0</li></ul>
+</div>
+<div class="resumo-legal">
+<h2>Em resumo</h2>
+<ul>
+<li>Tudo o que decide o seu resultado está publicado: as frases, a direção de cada uma, o cálculo e as posições das ideologias.</li>
+<li>O cálculo roda inteiro no seu navegador. O servidor só recebe o resultado de quem aceita participar do estudo.</li>
+<li>Qualquer pessoa pode baixar o código, rodar o teste no próprio computador e conferir os testes automáticos.</li>
+</ul>
+<div class="acoes-pagina acoes-pagina-linha"><a class="ok" href="https://github.com/andrxzinho/teste-politico" rel="noopener">Ver o código no GitHub</a><a class="branco" href="/metodologia.html">Ler a metodologia</a></div>
+</div>
+<div class="legal-corpo">
+<nav class="sumario" aria-labelledby="sumario-t">
+<h2 id="sumario-t">Nesta página</h2>
+<ol>
+<li><a href="#porque">Por que publicar</a></li>
+<li><a href="#onde">Onde fica cada parte</a></li>
+<li><a href="#como">Como o site é feito</a></li>
+<li><a href="#rodar">Rodar no seu computador</a></li>
+<li><a href="#testes">Testes automáticos</a></li>
+<li><a href="#licenca">O que a licença permite</a></li>
+<li><a href="#contribuir">Como contribuir</a></li>
+</ol>
+</nav>
+<div class="texto">
+<section id="porque">
+<h2>Por que publicar</h2>
+<p>Um teste político pede confiança: você responde sobre o que pensa e recebe um rótulo. Se o cálculo ficasse escondido, não daria pra saber se alguma frase ou peso favorece um lado. Com o código publicado, qualquer pessoa pode conferir como cada resposta vira uma posição nos eixos e apontar erros ou vieses.</p>
+<p>A auditoria mais recente do método, com os problemas conhecidos e as propostas de correção, também está publicada: <a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
+</section>
+<section id="onde">
+<h2>Onde fica cada parte</h2>
+<h3>O que decide o resultado</h3>
+<ul>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/dados/frases.js" rel="noopener"><code>public/js/dados/frases.js</code></a>: todas as frases, a direção e o eixo de cada uma, os pares de coerência e os perfis das ideologias por subtema.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/nucleo/motor.js" rel="noopener"><code>public/js/nucleo/motor.js</code></a>: como as respostas viram posição nos eixos, com a margem de erro.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/nucleo/calculo.js" rel="noopener"><code>public/js/nucleo/calculo.js</code></a>: a chance de cada ideologia, o filtro dos extremos, a confiança e a consistência.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/dados/ideologias.js" rel="noopener"><code>public/js/dados/ideologias.js</code></a>: as 21 ideologias, a posição típica de cada uma e as descrições.</li>
+</ul>
+<h3>O que aparece ao lado do resultado</h3>
+<ul>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/dados/candidatos.js" rel="noopener"><code>public/js/dados/candidatos.js</code></a>: a posição estimada de cada candidato e partido, e a conta da compatibilidade.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/dados/pensadores.js" rel="noopener"><code>public/js/dados/pensadores.js</code></a>: pensadores e figuras históricas, com a justificativa de cada posição.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/public/js/dados/leituras.js" rel="noopener"><code>public/js/dados/leituras.js</code></a>: as leituras recomendadas pra cada ideologia, a favor e contra.</li>
+</ul>
+<h3>O estudo</h3>
+<ul>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/servidor/rotas/coletar.mjs" rel="noopener"><code>servidor/rotas/coletar.mjs</code></a>: o que o servidor aceita de quem participa do estudo e o que recusa.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/supabase/esquema.sql" rel="noopener"><code>supabase/esquema.sql</code></a>: as tabelas do banco e as permissões.</li>
+<li><a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/DADOS-E-PRIVACIDADE.md" rel="noopener"><code>docs/DADOS-E-PRIVACIDADE.md</code></a>: o que é coletado, o que nunca é e por quê.</li>
+</ul>
+</section>
+<section id="como">
+<h2>Como o site é feito</h2>
+<ul>
+<li><b>Site:</b> HTML, CSS e JavaScript, sem framework e sem etapa de montagem. O que está na pasta <code>public/</code> é exatamente o que vai pro ar.</li>
+<li><b>Servidor:</b> funções do Vercel em São Paulo, que só recebem os envios do estudo e servem o painel do responsável.</li>
+<li><b>Banco:</b> Postgres no Supabase, em São Paulo, acessado só pelo servidor.</li>
+<li><b>Publicação:</b> cada mudança aprovada no repositório é publicada automaticamente pelo Vercel.</li>
+</ul>
+<p>Os detalhes estão em <a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/ARQUITETURA.md" rel="noopener">docs/ARQUITETURA.md</a>.</p>
+</section>
+<section id="rodar">
+<h2>Rodar no seu computador</h2>
+<p>Precisa do Node.js 20 ou mais recente e do Git.</p>
+<pre class="codigo"><code>git clone https://github.com/andrxzinho/teste-politico.git
+cd teste-politico
+npm ci
+npm run local</code></pre>
+<p>O site abre em <code>http://127.0.0.1:8080</code>. Fora do endereço oficial ele entra em modo teste, e nada é enviado pro estudo.</p>
+</section>
+<section id="testes">
+<h2>Testes automáticos</h2>
+<p>A cada mudança, o GitHub roda os testes abaixo. O resultado de cada rodada fica público na aba <a href="https://github.com/andrxzinho/teste-politico/actions" rel="noopener">Actions</a> do repositório.</p>
+<ul>
+<li><b>Lógica:</b> uma simulação fixa precisa dar exatamente os mesmos resultados de antes. Se o cálculo mudar sem querer, o teste falha.</li>
+<li><b>Perfis sintéticos:</b> respostas artificiais (moderadas, extremas, contraditórias, incompletas) conferem se o cálculo segue as próprias regras. Os casos que hoje não se comportam como deveriam ficam marcados como pendentes.</li>
+<li><b>Interface, páginas e cliques:</b> os três modos do começo ao fim, todos os botões e links, no celular e no computador, nos temas claro e escuro.</li>
+<li><b>Acessibilidade:</b> verificação automática com axe-core (WCAG 2.1, níveis A e AA).</li>
+<li><b>Servidor:</b> envios válidos, recusa de dados inválidos ou adulterados e o painel.</li>
+</ul>
+<p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais: isso depende de dados que ainda não existem.</p>
+<pre class="codigo"><code>npx playwright install chromium
+BANCO=memoria npm test</code></pre>
+</section>
+<section id="licenca">
+<h2>O que a licença permite</h2>
+<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0/" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código pra fins não comerciais, como estudo, pesquisa, ensino ou uso pessoal, inclusive por escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
+<p>Ela não permite usar o código comercialmente, publicar cópias nem criar versões modificadas. Isso evita que circulem testes parecidos com cálculos alterados usando o nome ou a aparência deste. Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative.</p>
+<p>Fotos e capas de livros pertencem aos seus autores e editoras. As licenças estão na página de <a href="/creditos/">créditos</a>.</p>
+</section>
+<section id="contribuir">
+<h2>Como contribuir</h2>
+<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (issue) no repositório, explicando o problema e, se possível, a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
+<p>Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo <a href="https://github.com/andrxzinho/teste-politico/blob/main/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
+<div class="acoes-pagina"><a class="ok" href="https://github.com/andrxzinho/teste-politico/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
+</section>
+</div>
+</div>
+</main>
+<footer id="site-rod"></footer>
+<script src="/js/sumario.js"></script>
+</body>
+</html>

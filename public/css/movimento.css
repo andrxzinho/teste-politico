@@ -1,0 +1,125 @@
+/* Movimento do site: um só padrão de velocidade e curva, sempre em opacidade e transform (ou na posição das
+   marcas dos eixos). Tudo aqui some com "reduzir movimento": a regra no fim e a classe .mov, que só é posta
+   no <html> quando o aparelho aceita animação (navegacao.js). Sem JavaScript, o conteúdo aparece parado. */
+:root{
+  --mov-assenta:cubic-bezier(.16,.84,.28,1); /* chega rápido e assenta devagar */
+  --mov-sai:cubic-bezier(.55,0,1,.45);
+  --mov-mola:cubic-bezier(.34,1.56,.64,1);   /* passa um pouco do ponto e volta */
+  --mov-curta:.14s;--mov-media:.32s;--mov-longa:.85s;
+}
+@keyframes mov-sobe{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mov-aparece{from{opacity:0}to{opacity:1}}
+@keyframes mov-revela-seguro{to{opacity:1;transform:none}}
+
+/* ---------- aparecer ao rolar: o bloco sobe e aparece quando entra na tela ---------- */
+.mov .revela{opacity:0;transform:translateY(16px)}
+.mov .revela.visto{opacity:1;transform:none;transition:opacity .5s var(--mov-assenta),transform .6s var(--mov-assenta);transition-delay:calc(var(--mi,0) * 60ms)}
+/* segurança: se o observador falhar, tudo aparece mesmo assim */
+.mov .revela:not(.visto){animation:mov-revela-seguro 0s 1.6s forwards}
+
+/* ---------- troca de tela dentro do teste e entrada das páginas ---------- */
+.mov .entra{animation:mov-sobe .38s var(--mov-assenta) both}
+.mov .pagina > *{animation:mov-sobe .5s var(--mov-assenta) both}
+.mov .pagina > :nth-child(2){animation-delay:.05s}.mov .pagina > :nth-child(3){animation-delay:.1s}
+.mov .pagina > :nth-child(n+4){animation-delay:.15s}
+
+/* ---------- abertura ---------- */
+.mov #intro.entra{animation:none}
+.mov #intro.entra > *{animation:mov-sobe .5s var(--mov-assenta) both}
+.mov #intro.entra > :nth-child(2){animation-delay:.06s}.mov #intro.entra > :nth-child(3){animation-delay:.1s}
+.mov #intro.entra > :nth-child(4){animation-delay:.14s}.mov #intro.entra > :nth-child(5){animation-delay:.18s}
+.mov #intro.entra > :nth-child(n+6){animation-delay:.22s}
+.mov #intro.entra .modes > .mode{animation:mov-sobe .45s var(--mov-assenta) both}
+.mov #intro.entra .modes > .mode:nth-child(1){animation-delay:.2s}.mov #intro.entra .modes > .mode:nth-child(2){animation-delay:.27s}
+.mov #intro.entra .modes > .mode:nth-child(3){animation-delay:.34s}
+.mov #intro.entra .mode-bar i{animation:mov-barra .7s var(--mov-assenta) .45s both;transform-origin:left}
+@keyframes mov-barra{from{transform:scaleX(0)}to{transform:none}}
+
+/* ---------- perguntas: a frase entra pelo lado da direção ---------- */
+@keyframes mov-q-frente{0%{opacity:0;transform:translateX(22px);filter:brightness(1.5)}40%{opacity:1}100%{opacity:1;transform:none;filter:none}}
+@keyframes mov-q-volta{0%{opacity:0;transform:translateX(-22px);filter:brightness(1.5)}40%{opacity:1}100%{opacity:1;transform:none;filter:none}}
+.mov .qcard.enter[data-dir="frente"]{animation:mov-q-frente .34s var(--mov-assenta) both}
+.mov .qcard.enter[data-dir="volta"]{animation:mov-q-volta .34s var(--mov-assenta) both}
+.mov .answers.enter > *{animation:mov-sobe .3s var(--mov-assenta) both}
+.mov .answers.enter > :nth-child(2){animation-delay:.03s}.mov .answers.enter > :nth-child(3){animation-delay:.06s}
+.mov .answers.enter > :nth-child(4){animation-delay:.09s}.mov .answers.enter > :nth-child(n+5){animation-delay:.12s}
+/* tecla escolhida: o número dá um pulso antes de passar pra próxima */
+@keyframes mov-tecla{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
+.mov .ans.picked::before{animation:mov-tecla .17s var(--mov-mola)}
+
+/* progresso por bloco: cada tema é um trecho da barra; o trecho pulsa quando o bloco termina */
+.track.blocos{display:flex;gap:3px;background:none;overflow:visible}
+.track.blocos > span{flex:1 1 0;height:100%;background:var(--gaveta-borda);border-radius:1px;overflow:hidden}
+.track.blocos > span > i{display:block;height:100%;width:100%;background:var(--tinta);transform:scaleX(var(--f,0));transform-origin:left;transition:transform .45s var(--mov-assenta)}
+.track.blocos > span.cheio > i{background:var(--marca)}
+@keyframes mov-pulso{0%{box-shadow:0 0 0 0 var(--accent-line)}100%{box-shadow:0 0 0 6px transparent}}
+.mov .track.blocos > span.pulsa{animation:mov-pulso .7s ease-out}
+
+/* ---------- resultado ---------- */
+.mov #results.entra{animation:none}
+.mov #results.entra .cover > *{animation:mov-sobe .5s var(--mov-assenta) both}
+.mov #results.entra .cover > :nth-child(2){animation-delay:.06s}.mov #results.entra .cover > :nth-child(3){animation-delay:.12s}
+.mov #results.entra .cover > :nth-child(4){animation-delay:.18s}.mov #results.entra .cover > :nth-child(n+5){animation-delay:.24s}
+/* confiança: os três trechos acendem em sequência */
+@keyframes mov-acende{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.mov #results.entra .chip i{animation:mov-acende .8s steps(3,jump-none) .35s both}
+/* bússola: o ponto sai do centro e vai até a sua posição; a faixa provável aparece depois */
+@keyframes mov-do-centro-svg{from{transform:translate(var(--dx),var(--dy))}}
+.mov .voce-ponto{animation:mov-do-centro-svg 1s var(--mov-assenta) .3s both}
+.mov .voce-faixa{animation:mov-aparece .5s ease-out 1.1s both}
+/* marcas dos eixos: saem do centro (50%) e vão até o valor */
+@keyframes mov-do-centro{from{left:50%}}
+@keyframes mov-faixa{from{left:50%;width:0}}
+.mov .revela.visto .trilho i,.mov details[open] .scale > i{animation:mov-do-centro var(--mov-longa) var(--mov-assenta) both}
+.mov details[open] .scale > .ci{animation:mov-faixa var(--mov-longa) var(--mov-assenta) both}
+.mov .revela.visto .eixo-tipico:nth-child(2) .trilho i{animation-delay:.05s}.mov .revela.visto .eixo-tipico:nth-child(3) .trilho i{animation-delay:.1s}
+.mov .revela.visto .eixo-tipico:nth-child(4) .trilho i{animation-delay:.15s}.mov .revela.visto .eixo-tipico:nth-child(5) .trilho i{animation-delay:.2s}
+.mov .revela.visto .eixo-tipico:nth-child(6) .trilho i{animation-delay:.25s}
+/* barras de semelhança: crescem da esquerda */
+@keyframes mov-cresce{from{transform:scaleX(0)}to{transform:none}}
+.mov .revela.visto .resumo-ideo i::before,.mov details[open] .item .bar i{transform-origin:left;animation:mov-cresce .7s var(--mov-assenta) .1s both}
+.mov .revela.visto .resumo-ideo:nth-of-type(2) i::before{animation-delay:.18s}.mov .revela.visto .resumo-ideo:nth-of-type(3) i::before{animation-delay:.26s}
+/* gavetas: o conteúdo desce suave; o sinal da tecla gira */
+.mov details.acc[open] > .acc-in,.mov .faq details[open] > div,.mov .info-body details[open] > :not(summary){animation:mov-sobe .3s var(--mov-assenta) both}
+details.acc > summary::after,.faq summary::after{transition:transform var(--mov-curta) ease-out,box-shadow var(--mov-curta) ease-out}
+@supports (interpolate-size:allow-keywords){
+  :root{interpolate-size:allow-keywords}
+  .mov details.acc::details-content,.mov .faq details::details-content{height:0;overflow:clip;transition:height .32s var(--mov-assenta),content-visibility .32s allow-discrete}
+  .mov details.acc[open]::details-content,.mov .faq details[open]::details-content{height:auto}
+}
+/* barra de leitura do resultado */
+.leitura{position:fixed;left:0;top:0;z-index:30;height:3px;width:100%;background:var(--marca);transform:scaleX(var(--lido,0));transform-origin:left;pointer-events:none}
+body:not([data-tela="results"]) .leitura{display:none}
+
+/* ---------- menu: os itens entram em cascata ---------- */
+.mov .menu-fundo:not([hidden]){animation:mov-aparece .2s ease-out}
+.mov .menu-fundo:not([hidden]) .menu > *{animation:mov-sobe .32s var(--mov-assenta) both}
+.mov .menu-fundo:not([hidden]) .menu > :nth-child(2){animation-delay:.03s}.mov .menu-fundo:not([hidden]) .menu > :nth-child(3){animation-delay:.06s}
+.mov .menu-fundo:not([hidden]) .menu > :nth-child(4){animation-delay:.09s}.mov .menu-fundo:not([hidden]) .menu > :nth-child(5){animation-delay:.12s}
+.mov .menu-fundo:not([hidden]) .menu > :nth-child(n+6){animation-delay:.15s}
+
+/* ---------- mouse (só computador): cartões levantam, setas andam; teclas continuam afundando ---------- */
+@media (hover:hover) and (pointer:fine){
+  .cartao,.resumo-ideo,.livro,details.acc,.faq details,.ir-secao{transition:transform .22s var(--mov-assenta),box-shadow .22s var(--mov-assenta),border-color .22s}
+  .cartao:hover,.livro:hover{transform:translateY(-3px);box-shadow:0 6px 0 var(--gaveta-borda)}
+  .cartao::after{transition:transform .22s var(--mov-assenta)}
+  .cartao:hover::after{transform:translateX(4px)}
+  details.acc:not([open]):hover,.faq details:not([open]):hover{transform:translateY(-2px);border-color:var(--tinta)}
+  .resumo-ideo:hover b{text-decoration:underline;text-underline-offset:3px}
+  .site-nav a,.menu-item{transition:color .15s,background-color .15s}
+}
+
+/* ---------- troca entre páginas: o cabeçalho fica, o conteúdo troca suave (navegadores que suportam) ---------- */
+@view-transition{navigation:auto}
+#site-cab{view-transition-name:cabecalho}
+::view-transition-old(root){animation:mov-vt-sai .16s var(--mov-sai) both}
+::view-transition-new(root){animation:mov-vt-entra .3s var(--mov-assenta) both}
+@keyframes mov-vt-sai{to{opacity:0}}
+@keyframes mov-vt-entra{from{opacity:0;transform:translateY(10px)}}
+
+@media (prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .leitura{display:none}
+}
+@media print{.leitura{display:none}.mov .revela{opacity:1!important;transform:none!important}}

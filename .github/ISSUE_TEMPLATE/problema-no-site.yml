@@ -1,0 +1,20 @@
+name: Problema no site
+description: Algo que não funciona, aparece errado ou é difícil de usar
+labels: ["site"]
+body:
+  - type: textarea
+    id: oque
+    attributes:
+      label: O que aconteceu
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      placeholder: "1. Abri o modo Essencial\n2. ..."
+  - type: input
+    id: aparelho
+    attributes:
+      label: Aparelho e navegador
+      placeholder: "iPhone 15, Safari / Windows, Chrome"

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Onde você fica na política? Teste político</title>
+<meta name="description" content="Teste em três modos (cerca de 65, 135 ou 210 perguntas), do centro aos extremos. Veja sua posição em 6 eixos e qual das 21 ideologias melhor explica suas respostas.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Onde você fica na política?">
+<meta property="og:description" content="Teste em três modos (cerca de 65, 135 ou 210 perguntas), do centro aos extremos. Veja sua posição em 6 eixos e qual das 21 ideologias melhor explica suas respostas.">
+<meta property="og:image" content="https://testepolitico.vercel.app/og-urna.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#E3DED1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1F1E1B" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/componentes.css">
+<link rel="stylesheet" href="/css/urna.css">
+<link rel="stylesheet" href="/css/movimento.css">
+<script src="/js/navegacao.js"></script>
+</head>
+<body data-tela="intro">
+<header id="site-cab"></header>
+<div class="leitura" aria-hidden="true"></div>
+<div class="wrap">
+
+<section id="intro" class="intro">
+  
+  <div class="intro-visor">
+  <h1 class="hero-title">Onde você fica na política?</h1>
+  <p class="hero-lede">Você responde a frases sobre economia, segurança, costumes, o Brasil no mundo e democracia. No fim, vê a sua posição em seis eixos e qual das 21 tradições políticas melhor explica as suas respostas.</p>
+  <figure class="compass">
+    <svg id="heroSvg" viewBox="0 0 340 236" role="img" aria-label="Mapa com as 21 ideologias do teste, da esquerda à direita e da liberdade à ordem, com um ponto de interrogação marcando onde você pode estar"></svg>
+  </figure>
+  <p class="visor-rodape">Escolha um modo <span class="so-celular">abaixo</span><span class="so-pc">ao lado</span> pra começar.</p>
+  </div>
+  <div class="note hidden" id="friendBanner" style="margin-top:1.25rem"></div>
+  <div class="retomar hidden" id="retomar"><button class="resume hidden" id="resumeBtn"></button><button type="button" class="text-btn descartar" id="descartarBtn">Descartar e começar do zero</button></div>
+  <h2 class="pick-title" id="modos">Escolha quanto tempo quer dedicar</h2>
+  <div class="modes">
+    <button class="mode start" data-mode="quick">
+      <span class="mode-head"><b>Essencial</b><span>Cerca de 65 perguntas, uns 9 min</span></span>
+      <span class="mode-desc">Pra ter uma ideia geral. O resultado é mais aproximado.</span>
+      <span class="mode-bar" aria-hidden="true"><i class="s1"></i></span>
+    </button>
+    <button class="mode start" data-mode="full">
+      <span class="mode-head"><b>Padrão</b><span>Cerca de 135 perguntas, uns 18 min</span></span>
+      <span class="mode-desc">Mede cada tema com mais detalhe e confere a coerência das suas respostas.</span>
+      <span class="mode-bar" aria-hidden="true"><i class="s1"></i><i class="s2"></i></span>
+    </button>
+    <button class="mode start" data-mode="deep">
+      <span class="mode-head"><b>Aprofundado</b><span>Cerca de 210 perguntas, uns 30 min</span></span>
+      <span class="mode-desc">O mais detalhado: mais frases em cada tema, pra quem quer ver cada assunto com calma.</span>
+      <span class="mode-bar" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i></span>
+    </button>
+  </div>
+  <p class="modes-note">Cada modo inclui as frases do anterior: dá pra começar por um menor e continuar no seguinte depois, sem repetir nada. <button type="button" class="text-btn" data-info="modos">Como os modos foram testados</button></p>
+  <p class="garantias"><span>Anônimo, sem cadastro</span><span>Dá pra pausar e voltar depois</span><span><button type="button" class="text-btn" data-info="anonimo">O que é enviado</button></span></p>
+  <section class="home-sec" aria-labelledby="como-t">
+    <h2 class="pick-title" id="como-t">Como funciona</h2>
+    <ol class="passos">
+      <li><b>1</b><span><strong>Responda</strong>Frases curtas, uma por tela, com teclas como as da urna.</span></li>
+      <li><b>2</b><span><strong>Veja onde você fica</strong>Sua posição em 6 eixos, com a faixa provável de cada um, e a ideologia que melhor explica suas respostas.</span></li>
+      <li><b>3</b><span><strong>Compare</strong>Com as 21 ideologias, com amigos e com quem está no 2º turno.</span></li>
+    </ol>
+  </section>
+  <section class="home-fonte" aria-labelledby="fonte-t">
+    <svg class="home-fonte-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="home-fonte-txt">
+      <h2 id="fonte-t">Código-fonte público</h2>
+      <p>As frases, os pesos, o cálculo e o servidor do estudo estão publicados no GitHub. Qualquer pessoa pode conferir como cada resposta vira o resultado e apontar erros ou vieses.</p>
+    </div>
+    <div class="home-fonte-acoes"><a class="secondary" href="https://github.com/andrxzinho/teste-politico" rel="noopener">Ver no GitHub</a><a class="text-btn" href="/codigo-aberto/">Saiba mais</a></div>
+  </section>
+</section>
+
+<section id="consent" class="screen hidden">
+  <h1 class="display">Antes de começar</h1>
+  <p class="lede">Este teste faz parte de um estudo pessoal sobre opiniões políticas. Se você participar, seu resultado é enviado de forma anônima quando terminar.</p>
+  <div class="acc-list consent-acc"><details class="acc"><summary><span class="acc-t">O que é enviado, se você participar</span><span class="acc-s">Ideologia, eixos em faixas e respostas. Nunca nome, e-mail, IP ou localização.</span></summary><div class="acc-in"><div class="card cbox">
+    <b>O que é enviado</b>
+    <ul><li>Sua ideologia e sua posição em cada eixo, em faixas</li><li>Sua resposta a cada frase</li><li>Quais explicações você abriu e quanto tempo levou</li><li>Como você se define politicamente, se responder</li><li>Faixa de idade e estado, só se você informar</li></ul>
+    <b>O que nunca é enviado</b>
+    <ul class="no"><li>Nome, e-mail, IP, navegador ou localização</li><li>Sua compatibilidade com candidatos</li></ul>
+  </div></div></details></div>
+  <label class="field">Faixa de idade (opcional)
+    <select id="cAge"><option value="">Prefiro não dizer</option><option value="<18">Menos de 18</option><option value="18-24">18 a 24</option><option value="25-34">25 a 34</option><option value="35-44">35 a 44</option><option value="45-59">45 a 59</option><option value="60+">60 ou mais</option></select>
+  </label>
+  <label class="field">Estado (opcional)<select id="cUf"><option value="">Prefiro não dizer</option></select></label>
+  <p class="note hidden" id="cMinor" style="margin-top:1rem">Pra menores de 18 anos, o teste funciona normalmente, mas nenhum dado é enviado.</p>
+  <label class="check" id="cCheckWrap"><input type="checkbox" id="cOk"><span>Li e concordo com os <a href='/termos' rel='noopener' target='_blank'>termos de uso e privacidade</a> e quero participar do estudo.</span></label>
+  <button class="primary" id="cGo" disabled>Começar o teste</button>
+  <div class="nav"><button class="text-btn" id="cSkip">Prefiro fazer sem participar do estudo</button></div>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="topbar"><div class="track blocos" id="barTrack" role="progressbar" aria-label="Progresso do teste" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div><button type="button" class="som" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10l-3.5-3h-2.5z" stroke-linejoin="round"></path><path d="M11 5.5c.9.7 1.4 1.5 1.4 2.5s-.5 1.8-1.4 2.5" stroke-linecap="round"></path></svg><span>Som desligado</span></button><button class="exit" id="exitBtn">Sair</button></div>
+  <div class="visor qvisor">
+  <div class="qmeta"><span class="qnum"><b id="qn">1</b><span id="qof">de 100</span></span><span id="tag"></span></div>
+  <div class="qcard" id="qcard">
+  <span class="tbtag hidden" id="tbTag">Desempate</span>
+  <h2 class="stmt" id="stmt"></h2>
+  <div class="glossa hidden" id="glossa" role="region" aria-label="Significado do termo" aria-live="polite"><div class="glossa-topo"><b id="glossaT"></b><button type="button" class="glossa-x" id="glossaX" aria-label="Fechar explicação do termo">×</button></div><p id="glossaD"></p></div>
+  <p class="blkdesc hidden" id="blkDesc"></p>
+  <div class="dil hidden" id="dil"><div><b>1</b><span id="dilA"></span></div><div><b>2</b><span id="dilB"></span></div></div>
+  <button class="explain-btn" id="explainBtn" type="button" aria-haspopup="dialog">
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7.6 7.7a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="14.4" r="1" fill="currentColor"/></svg>
+    <span>O que isso quer dizer?</span>
+  </button>
+  </div>
+  <p class="visor-rodape" id="vRod"></p>
+  </div>
+  <div class="answers" id="answers" role="group" aria-label="Sua resposta"></div>
+  <div class="nav"><button class="text-btn" id="backBtn">Voltar</button><button class="text-btn" id="skipBtn">Não tenho opinião</button></div>
+</section>
+
+<section id="tbintro" class="screen hidden">
+  <h1 class="display">Quase empate</h1>
+  <p class="lede" id="tbText"></p>
+  <button class="primary" id="tbGo">Continuar</button>
+  <div class="nav"><button class="text-btn" id="tbSkip">Pular o desempate</button></div>
+</section>
+
+<section id="imp" class="screen hidden">
+  <h1 class="display">Quase lá</h1>
+  <p class="lede">Duas perguntas rápidas e opcionais antes do resultado.</p>
+  <h2 class="subhead">Quanto cada tema pesa no seu voto?</h2>
+  <p class="small">Isso só muda a compatibilidade com os candidatos.</p>
+  <div id="impOut" style="margin-top:.5rem"></div>
+  <h2 class="subhead">Como você se define?</h2>
+  <p class="small">Serve pra comparar o que você acha com o que o teste diz.</p>
+  <label class="field">No espectro político
+    <select id="siEsp"><option value="">Prefiro não dizer</option><option>Esquerda</option><option>Centro-esquerda</option><option>Centro</option><option>Centro-direita</option><option>Direita</option><option>Não me identifico com nenhum</option></select>
+  </label>
+  <label class="field">Ideologia que mais combina com você
+    <select id="siIde"><option value="">Não sei ou prefiro não dizer</option></select>
+  </label>
+  <button class="primary" id="impGo">Ver meu resultado</button>
+  <div class="nav"><button class="text-btn" id="impBack">Voltar pra última frase</button></div>
+</section>
+
+<section id="results" class="res hidden">
+  <p class="so-impressao" id="soImpressao"></p>
+  <div class="insuf visor" id="insuf">
+    <p class="kicker">Seu resultado</p>
+    <h1 class="display">Respostas insuficientes</h1>
+    <p class="lede" id="insufTxt"></p>
+    <p class="lede">"Não tenho opinião" é uma resposta válida, mas com tão poucas opiniões qualquer ideologia seria um chute.</p>
+    <button type="button" class="secondary" data-clica="redoBtn">Refazer o teste</button>
+  </div>
+  <header class="rhero cover">
+    <p class="kicker">Seu resultado</p>
+    <h1 class="display" id="ideo"></h1>
+    <div id="confChip"></div>
+    <p class="lede" id="ideoDesc"></p>
+    <figure class="cover-map"><svg id="compassSvg" viewBox="0 0 320 320" role="img" aria-label="Sua posição na bússola política"></svg><figcaption><p class="small">Economia na horizontal, liberdade × ordem na vertical. O retângulo tracejado é a sua faixa provável.</p></figcaption></figure>
+  <p class="visor-rodape">O resumo está logo abaixo. O resultado completo fica no fim da página.</p>
+  <div class="cover-acoes"><button type="button" class="secondary" data-clica="redoBtn">Refazer</button><button type="button" class="primary" data-clica="shareBtn">Compartilhar</button><button type="button" class="secondary" data-clica="amigoBtn">Comparar com amigo</button><button type="button" class="secondary pdf" data-clica="pdfBtn">Salvar relatório em PDF</button></div>
+  </header>
+  <nav class="indice" id="indice" aria-label="Seções do resultado"></nav>
+  <p class="note ed-aviso hidden" id="edAviso" role="status" aria-live="polite"></p>
+  <div class="resumo" id="resumo"></div>
+  <div id="pecasResumo" hidden>
+    <section class="resumo-bloco" id="blocoPensadores"><h2>Pensadores e figuras históricas</h2><p class="small">Pensadores clássicos e figuras da história do Brasil, todos já falecidos, mais parecidos com as suas posições. A posição de cada um é uma estimativa a partir das obras e da atuação; pessoas de outras épocas são comparadas só nos eixos em que a posição delas faz sentido hoje.</p><div id="pensOut"></div></section>
+    <section class="resumo-bloco" id="blocoLeituras"><h2>Leituras recomendadas</h2><div id="leitOut"></div></section>
+    <section class="resumo-bloco" id="blocoCompartilhar"><h2>Compartilhar</h2><p class="small">Gere a imagem do seu resultado no formato de cada rede ou mande o link direto num aplicativo. Quem abrir o link faz o teste e já vê a comparação com você.</p><div id="partilhaOut"></div></section>
+    <section class="resumo-bloco" id="blocoComparar"><h2>Compare com amigos</h2>
+      <p class="small">Mande o seu código ou o link pra um amigo. Quando ele terminar o teste, os dois resultados aparecem lado a lado. Se ele já fez, cole o código dele aqui. O código leva só a sua ideologia, o modo e a posição nos eixos, nunca as suas respostas.</p>
+      <div class="code" id="myCode"></div>
+      <div class="resumo-acoes"><button type="button" class="secondary" id="copiarLink">Copiar link</button><button type="button" class="secondary" id="sendCode">Enviar meu código</button></div>
+      <div class="inrow"><input id="friendIn" placeholder="Cole o código ou link do amigo" autocomplete="off" aria-label="Código ou link do amigo"><button class="secondary" id="friendGo">Comparar</button></div>
+      <p class="fine" id="friendErr" role="status" aria-live="polite"></p>
+      <div id="friendOut"></div>
+    </section>
+  </div>
+  <div class="actions">
+      <button class="primary" id="shareBtn">Compartilhar resultado</button>
+      <button class="secondary" id="amigoBtn" type="button">Comparar com amigo</button>
+      <button class="secondary" id="redoBtn">Refazer o teste</button>
+    <button type="button" class="secondary pdf" id="pdfBtn">Salvar relatório em PDF</button></div>
+  <button type="button" class="ver-completo" id="verCompleto" aria-expanded="false">Ver resultado completo</button>
+  <nav class="rtabs hidden" id="rtabs" aria-hidden="true"></nav>
+  <div class="acc-list">
+    <details class="acc" id="a-perfil" open><summary><span class="acc-t">Seu perfil em palavras</span><span class="acc-s" id="s-perfil"></span></summary><div class="acc-in"><div class="prof" id="prof"></div></div></details>
+    <details class="acc" id="a-porque"><summary><span class="acc-t">Por que deu esse resultado</span><span class="acc-s" id="s-porque"></span></summary><div class="acc-in"><p class="why-sum" id="whySum"></p><div class="box" id="why"></div></div></details>
+    <details class="acc" id="a-parecidas"><summary><span class="acc-t">Ideologias mais prováveis</span><span class="acc-s" id="s-parecidas"></span></summary><div class="acc-in"><p class="small">Chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Não é o quanto você concorda com cada uma: pra ver isso, use “Comparar com uma ideologia”, logo abaixo.</p><div class="box" id="matches"></div></div></details>
+    <details class="acc" id="a-compideo"><summary><span class="acc-t">Comparar com uma ideologia</span><span class="acc-s" id="s-compideo"></span></summary><div class="acc-in"><label class="field" for="compIdeoSel">Ideologia<select id="compIdeoSel"></select></label><div id="compIdeoOut"></div></div></details>
+    <details class="acc" id="a-eixos"><summary><span class="acc-t">Eixos e subtemas</span><span class="acc-s" id="s-eixos"></span></summary><div class="acc-in">
+    <div id="highlights"></div>
+    <p class="small" style="margin-top:0">A faixa clara em cada eixo mostra onde você provavelmente está, considerando a variação entre as suas próprias respostas. Quanto mais estreita, mais certeza. Embaixo de cada eixo aparecem os subtemas, que são assuntos menores dentro do mesmo tema (na economia, por exemplo: impostos, trabalho, e Estado e mercado).</p>
+    <div class="box" id="axesOut"></div>
+    <div id="soloOut"></div>
+    <button class="more-btn" id="axesTxt" aria-expanded="false">Ver explicação de cada eixo</button></div></details>
+    <details class="acc" id="a-tensoes"><summary><span class="acc-t">Tensões e posições incomuns</span><span class="acc-s" id="s-tensoes"></span></summary><div class="acc-in"><div id="tensOut" class="box"></div></div></details>
+    <details class="acc" id="a-extremos"><summary><span class="acc-t">Termômetro dos extremos</span><span class="acc-s" id="s-extremos"></span></summary><div class="acc-in">
+    <p class="small" style="margin-top:0">Combina o quanto você concordou com as frases que definem cada extremo com a sua posição nos eixos. O resultado é um índice de 0 a 100, não uma probabilidade. A partir de 50, a afinidade é forte.</p>
+    <div class="box" id="thermoOut"></div></div></details>
+    <details class="acc" id="a-candidatos"><summary><span class="acc-t">Candidatos</span><span class="acc-s" id="s-candidatos"></span></summary><div class="acc-in">
+    <p class="small" style="margin-top:0">Governador e Senado são de São Paulo. Pra deputado, veja os partidos: seu voto conta primeiro pra legenda.</p>
+    <div id="candNote"></div>
+    <div class="tabs" role="tablist" id="candTabs"></div>
+    <div id="candOut"></div>
+    <details class="method"><summary>Como a compatibilidade foi calculada</summary><p class="fine">As posições foram estimadas pelo que cada um fez, e não pelo que diz em campanha: atuação em governos e mandatos, votações, alianças e a classificação ideológica dos partidos feita por cientistas políticos em 2022 (Bolognesi e outros, 2025). Quando a pessoa não tem histórico próprio, a posição foi estimada pelo partido. O mesmo critério vale pra todos. A compatibilidade usa os eixos de Economia, Liberdade × Ordem, Costumes e Brasil × Mundo, com o peso que você deu pra cada tema. Não é recomendação de voto. Pra deputado um por um, o Match Eleitoral da Folha e o Politicando usam respostas dos próprios candidatos.</p></details></div></details>
+    <details class="acc" id="a-notas"><summary><span class="acc-t">Precisão e observações</span><span class="acc-s" id="s-notas"></span></summary><div class="acc-in"><div id="resNotes" class="notes"></div><p class="small corrigir-linha">Clicou errado em alguma frase? <button type="button" class="text-btn" data-corrigir>Corrigir respostas</button></p></div></details>
+    <details class="acc" id="a-hist"><summary><span class="acc-t">Seus resultados anteriores</span><span class="acc-s" id="s-hist"></span></summary><div class="acc-in"><p class="small">Ficam salvos só neste aparelho.</p><div class="box" id="histOut"></div></div></details>
+  </div>
+  <div class="note hidden" id="statsBlock" style="margin-top:2rem"><span id="statsMsg"></span><button class="text-btn hidden" id="statsBtn"></button></div>
+
+  <p class="fine hidden" id="quickNote"><span id="quickNoteTxt"></span> <a href="#" id="quickFull"></a></p>
+  
+</section>
+</div>
+
+<dialog class="sheet" id="sheet" aria-labelledby="exTitle">
+  <div class="sheet-in">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sheet-head"><h3 id="exTitle"></h3><button class="close" id="exClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <p id="exText"></p>
+    <div class="example"><b>Na prática</b><p id="exEx"></p></div>
+    <div class="sides"><div><b id="exCL"></b><p id="exC"></p></div><div><b id="exDL"></b><p id="exD"></p></div></div>
+    <button class="primary" id="exOk">Entendi</button>
+  </div>
+</dialog>
+<dialog class="sheet ed-sheet" id="editSheet" aria-labelledby="edTitle">
+  <div class="sheet-in">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sheet-head"><h3 id="edTitle">Corrigir respostas</h3><button class="close" id="edClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <p class="small">Toque numa frase pra trocar a resposta. O resultado só muda quando você confirmar. Se você participa do estudo, o que já foi enviado continua igual.</p>
+    <div id="edLista" class="ed-lista"></div>
+    <div class="ed-rodape"><button type="button" class="secondary" id="edCancelar">Cancelar</button><button type="button" class="primary" id="edAplicar" disabled>Atualizar resultado</button></div>
+  </div>
+</dialog>
+<dialog class="sheet" id="infoSheet" aria-labelledby="infoTitle">
+  <div class="sheet-in">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sheet-head"><h3 id="infoTitle"></h3><button class="close" id="infoClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <div id="infoBody" class="info-body"></div>
+    <button class="primary" id="infoOk">Entendi</button>
+  </div>
+</dialog>
+<dialog class="sheet" id="shareSheet" aria-labelledby="shTitle">
+  <div class="sheet-in">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sheet-head"><h3 id="shTitle">Compartilhar resultado</h3><button class="close" id="shClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <div class="sh-opcoes">
+      <div class="sh-op"><span>Formato</span><div class="seg seg-formatos" role="group" aria-label="Formato da imagem"><button type="button" data-formato="story" aria-pressed="true">Story 9:16</button><button type="button" data-formato="retrato" aria-pressed="false">Retrato 4:5</button><button type="button" data-formato="quadrado" aria-pressed="false">Quadrado 1:1</button><button type="button" data-formato="paisagem" aria-pressed="false">Paisagem 16:9</button></div></div>
+      <div class="sh-op"><span>Tema da imagem</span><div class="seg" role="group" aria-label="Tema da imagem"><button type="button" data-tema="claro" aria-pressed="true">Claro</button><button type="button" data-tema="escuro" aria-pressed="false">Escuro</button></div></div>
+    </div>
+    <img id="shImg" class="shimg" alt="Imagem do seu resultado no teste político">
+    <div class="sh-carregando hidden" id="shLoad" role="status"><span>Gerando a imagem</span></div>
+    <div class="actions sh-acoes"><button class="primary" id="shShare" type="button">Compartilhar imagem</button><a class="secondary" id="shSave" download="resultado-teste-politico.png">Salvar imagem</a></div>
+    <p class="small" id="shNote"></p>
+    <div class="sh-links"><a class="secondary" id="shZap" target="_blank" rel="noopener">WhatsApp</a><button class="secondary" id="shLink" type="button">Copiar link</button><button class="secondary" id="shTexto" type="button">Copiar texto</button></div>
+    <p class="small" id="shAviso" role="status" aria-live="polite"></p>
+  </div>
+</dialog>
+
+<dialog class="sheet sheet-curta" id="redeSheet" aria-labelledby="redeTitle">
+  <div class="sheet-in">
+    <div class="grab" aria-hidden="true"></div>
+    <div class="sheet-head"><h3 id="redeTitle">Compartilhar</h3><button class="close" id="redeClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <p id="redeTexto"></p>
+    <p class="small" id="redeComo"></p>
+    <div class="actions"><button class="primary" id="redeIr" type="button">Continuar</button><button class="secondary" id="redeCancelar" type="button">Cancelar</button></div>
+  </div>
+</dialog>
+
+<script src="/js/nucleo/motor.js"></script>
+<script src="/js/dados/frases.js"></script>
+<script src="/js/dados/ideologias.js"></script>
+<script src="/js/dados/candidatos.js"></script>
+<script src="/js/dados/leituras.js"></script>
+<script src="/js/dados/glossario.js"></script>
+<script src="/js/dados/pensadores.js"></script>
+<script src="/js/dados/imagens.js"></script>
+<script src="/js/nucleo/base.js"></script>
+<script src="/js/nucleo/estado.js"></script>
+<script src="/js/nucleo/calculo.js"></script>
+<script src="/js/servicos/fotos.js"></script>
+<script src="/js/telas/perguntas.js"></script>
+<script src="/js/telas/inicio.js"></script>
+<script src="/js/telas/resultado.js"></script>
+<script src="/js/telas/candidatos.js"></script>
+<script src="/js/telas/comparar.js"></script>
+<script src="/js/telas/extras.js"></script>
+<script src="/js/telas/corrigir.js"></script>
+<script src="/js/telas/pensadores.js"></script>
+<script src="/js/servicos/estudo.js"></script>
+<script src="/js/servicos/imagem.js"></script>
+<script src="/js/telas/janelas.js"></script>
+<script src="/js/telas/urna.js"></script>
+<script src="/js/principal.js"></script>
+<div class="fim hidden" id="fim" role="status" aria-live="polite"><div class="fim-visor"><b>FIM</b><span>Montando o seu resultado</span></div></div>
+<footer id="site-rod"></footer>
+</body>
+</html>

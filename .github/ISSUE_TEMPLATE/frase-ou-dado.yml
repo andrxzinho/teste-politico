@@ -1,0 +1,27 @@
+name: Frase enviesada ou dado errado
+description: Uma frase do teste, posição de ideologia, candidato, pensador ou livro que parece errada ou tendenciosa
+labels: ["conteúdo"]
+body:
+  - type: input
+    id: onde
+    attributes:
+      label: Onde está
+      description: Texto da frase, nome da ideologia/candidato/livro ou endereço da página
+    validations:
+      required: true
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual é o problema
+      description: Por que a frase favorece um lado, o dado está errado ou a explicação confunde
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Sugestão de correção
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Fonte
+      description: Lei, dado oficial, votação, obra ou outra referência que sustente a correção

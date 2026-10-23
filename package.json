@@ -1,0 +1,34 @@
+{
+  "name": "teste-politico",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "playwright": "^1.64.1"
+  },
+  "scripts": {
+    "test": "node testes/rodar.mjs",
+    "test:logica": "node testes/logica.test.mjs",
+    "test:interface": "node testes/interface.test.mjs",
+    "test:servidor": "node testes/servidor.test.mjs",
+    "test:atualizar": "node testes/logica.test.mjs --atualizar",
+    "listas": "node ferramentas/gerar_listas.mjs",
+    "local": "node ferramentas/servir.mjs",
+    "test:paginas": "node testes/paginas.test.mjs",
+    "paginas": "node ferramentas/gerar_paginas.mjs",
+    "test:acessibilidade": "node testes/acessibilidade.test.mjs",
+    "test:cliques": "node testes/cliques.test.mjs",
+    "test:perfis": "node testes/perfis.test.mjs",
+    "test:numeros": "node testes/numeros.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "description": "Teste de orientação política para o contexto brasileiro: seis eixos, 21 ideologias e um estudo anônimo opcional.",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrxzinho/teste-politico"
+  },
+  "homepage": "https://testepolitico.vercel.app"
+}

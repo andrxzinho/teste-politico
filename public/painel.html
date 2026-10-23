@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<title>Painel do teste político</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F5FA;--card:#FFFFFF;--surface:#EEF0F7;--ink:#0D1018;--muted:#5D6478;--line:rgba(16,22,40,.08);--line2:rgba(16,22,40,.14);
+  --study:linear-gradient(135deg,#7B5CFF 0%,#4D7CFF 100%);--study-solid:#6A4DFF;--study-soft:rgba(106,77,255,.10);--study-line:rgba(106,77,255,.28);
+  --test:linear-gradient(135deg,#F97316 0%,#E5484D 100%);--test-solid:#E2591B;--test-soft:rgba(242,96,40,.10);--test-line:rgba(229,90,50,.32);
+  --err:#E5484D;--err-soft:rgba(229,72,77,.07);--ok:#0E8A75;
+  --s1:#6A4DFF;--s2:#A99BFF;--s3:#C9CDD8;--s4:#7FD1C7;--s5:#14A38B;--s6:#F2B84B;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 10px 30px -12px rgba(16,24,40,.12);
+  --grad:var(--study);--accent:var(--study-solid);--soft:var(--study-soft);--aline:var(--study-line);
+  color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08090D;--card:#12141B;--surface:#1C1F29;--ink:#F2F3F8;--muted:#99A0B4;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+  --study:linear-gradient(135deg,#9A7DFF 0%,#5F8BFF 100%);--study-solid:#9C87FF;--study-soft:rgba(156,135,255,.13);--study-line:rgba(156,135,255,.35);
+  --test:linear-gradient(135deg,#FB8A3C 0%,#F0615F 100%);--test-solid:#FB8A3C;--test-soft:rgba(251,138,60,.12);--test-line:rgba(251,138,60,.38);
+  --err:#FF6B6B;--err-soft:rgba(255,107,107,.08);--ok:#4FD1B8;
+  --s1:#9C87FF;--s2:#6556B8;--s3:#3F4452;--s4:#2F8F84;--s5:#4FD1B8;--s6:#D9A441;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -12px rgba(0,0,0,.6)}}
+/* área de teste: o painel inteiro troca pro laranja do selo "Modo teste" do site */
+body.sp-teste{--grad:var(--test);--accent:var(--test-solid);--soft:var(--test-soft);--aline:var(--test-line);--s1:#E2591B;--s2:#F5A47A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body.sp-teste{--s1:#FB8A3C;--s2:#9A4E2A}}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Arimo",Arial,system-ui,-apple-system,sans-serif;font-size:.98rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(900px 520px at 0% -10%,rgba(124,92,255,.14),transparent 65%),radial-gradient(700px 480px at 100% 0%,rgba(64,140,255,.10),transparent 60%);transition:opacity .4s}
+body.sp-teste::before{background:radial-gradient(900px 520px at 0% -10%,rgba(249,115,22,.14),transparent 65%),radial-gradient(700px 480px at 100% 0%,rgba(229,72,77,.10),transparent 60%)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hidden{display:none!important}
+.wrap{max-width:62rem;margin:0 auto;padding:1.6rem 1.15rem 4rem}
+
+/* cabeçalho */
+.head{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.brand{font-weight:800;letter-spacing:-.03em;font-size:1.35rem;line-height:1.1;margin:0}
+.brand small{display:block;font-size:.8rem;letter-spacing:0;font-weight:600;color:var(--muted);margin-top:.15rem}
+.head-actions{display:flex;gap:.4rem}
+.chip-btn{background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--muted);padding:.45rem .9rem;font-weight:650;font-size:.85rem}
+.chip-btn:hover{color:var(--ink)}
+
+/* troca de área: o elemento principal do painel */
+.spaces{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1.3rem}
+.space{position:relative;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:20px;padding:.85rem 1rem .9rem;box-shadow:var(--shadow);transition:border-color .2s,transform .2s}
+.space .dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.45rem;vertical-align:.05rem}
+.space[data-s="real"] .dot{background:var(--study)}
+.space[data-s="teste"] .dot{background:var(--test)}
+.space b{font-weight:750;font-size:.95rem}
+.space .n{display:block;font-weight:800;font-size:1.65rem;letter-spacing:-.03em;line-height:1.15;margin-top:.25rem;font-variant-numeric:tabular-nums}
+.space .n small{font-size:.8rem;font-weight:600;letter-spacing:0;color:var(--muted);margin-left:.3rem}
+.space[aria-pressed="true"][data-s="real"]{border-color:var(--study-solid);box-shadow:0 0 0 3px var(--study-soft),var(--shadow)}
+.space[aria-pressed="true"][data-s="teste"]{border-color:var(--test-solid);box-shadow:0 0 0 3px var(--test-soft),var(--shadow)}
+.space[aria-pressed="false"]{opacity:.78}
+.space[aria-pressed="false"]:hover{opacity:1}
+
+/* faixa da área de teste */
+.test-band{margin-top:.9rem;border-radius:20px;padding:1rem 1.1rem;background:var(--test-soft);border:1px solid var(--test-line)}
+.test-band h2{margin:0;font-size:1.05rem;font-weight:800;letter-spacing:-.01em}
+.test-band p{margin:.3rem 0 0;font-size:.9rem;color:var(--muted)}
+.session{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--test-line)}
+.session-status{display:flex;align-items:center;gap:.55rem;font-weight:700;font-size:.92rem}
+.pulse{width:.65rem;height:.65rem;border-radius:50%;background:var(--muted);flex:none}
+.pulse.on{background:#22C55E;box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@media (prefers-reduced-motion:reduce){.pulse.on{animation:none}}
+.session-actions{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;border:0;border-radius:13px;padding:.7rem 1.05rem;font-weight:750;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.btn.fill{background:var(--grad);color:#fff;box-shadow:0 10px 22px -12px var(--accent)}
+.btn.line{background:var(--card);border:1px solid var(--line2);color:var(--ink)}
+.btn.ghost{background:none;color:var(--muted);padding-inline:.6rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.fine{font-size:.82rem;color:var(--muted);margin:.7rem 0 0}
+
+/* barra fixa: abas e período */
+.bar-top{position:sticky;top:0;z-index:5;margin:1rem -1.15rem 0;padding:.6rem 1.15rem;background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;justify-content:space-between}
+.ptabs{display:flex;gap:.25rem;background:var(--surface);padding:.25rem;border-radius:14px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.ptabs::-webkit-scrollbar{display:none}
+.ptabs{flex:1 1 22rem}
+.ptabs button{flex:1;border:0;background:none;padding:.45rem .6rem;border-radius:11px;font-weight:700;color:var(--muted);font-size:.86rem;white-space:nowrap}
+.ptabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.period{display:flex;gap:.35rem;align-items:center;font-size:.82rem;color:var(--muted)}
+.period input{padding:.42rem .5rem;font-size:.82rem;border-radius:10px;border:1px solid var(--line2);background:var(--card);width:auto}
+
+/* conteúdo */
+h2.sec{font-weight:800;letter-spacing:-.02em;font-size:1.15rem;margin:2rem 0 .15rem}
+.panel > h2.sec:first-child{margin-top:.6rem}
+.sub{color:var(--muted);margin:0 0 .75rem;font-size:.88rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:1.05rem 1.15rem;box-shadow:var(--shadow)}
+.card > b{font-weight:750}
+.panel{padding-top:.6rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media (max-width:680px){.grid2{grid-template-columns:1fr}}
+
+/* números-chave e dias */
+.kpis{display:grid;grid-template-columns:1.25fr 1fr;gap:.75rem;margin-top:.6rem}
+@media (max-width:720px){.kpis{grid-template-columns:1fr}}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem .9rem}
+.kpi b{display:block;font-weight:800;letter-spacing:-.035em;font-size:2.1rem;line-height:1.05;font-variant-numeric:tabular-nums}
+.kpi:first-child b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi span{display:block;color:var(--muted);font-size:.82rem;font-weight:600;margin-top:.2rem}
+.days{display:flex;align-items:flex-end;gap:3px;height:92px;margin-top:.7rem}
+.days i{flex:1;min-height:3px;border-radius:4px 4px 2px 2px;background:var(--grad);opacity:.9}
+.days i.zero{background:var(--surface);opacity:1}
+.days-ends{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:.35rem;font-weight:600}
+
+.row{display:grid;grid-template-columns:minmax(8.5rem,13rem) 1fr 6.5rem;gap:.8rem;align-items:center;padding:.55rem 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row b{font-weight:650;font-size:.92rem}
+.bar{height:8px;border-radius:8px;background:var(--surface);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:8px;background:var(--grad)}
+.row > span{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.86rem;font-weight:600}
+@media (max-width:520px){.row{grid-template-columns:1fr auto}.row .bar{grid-column:1/-1;order:3}}
+.axis{padding:.85rem 0;border-top:1px solid var(--line)}
+.axis:first-child{border-top:0;padding-top:.2rem}
+.axis .top{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;font-size:.92rem}
+.hist{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;align-items:end;height:56px;margin-top:.55rem}
+.hist i{display:block;background:var(--grad);border-radius:5px 5px 2px 2px;min-height:3px}
+.ends{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted);margin-top:.3rem;font-weight:550}
+.compass{display:block;width:100%;max-width:22rem;height:auto;margin:0 auto}
+.tabs{display:flex;gap:.25rem;overflow-x:auto;margin-bottom:.5rem;padding:.25rem;border-radius:14px;background:var(--surface);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1;background:none;border:0;border-radius:11px;padding:.5rem .6rem;color:var(--muted);font-weight:700;font-size:.84rem;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.q{padding:.9rem 0;border-top:1px solid var(--line)}
+.q:first-child{border-top:0}
+.q p{margin:0;font-weight:650;line-height:1.45;font-size:.95rem}
+.q .meta{display:flex;flex-wrap:wrap;gap:.3rem .5rem;font-size:.76rem;color:var(--muted);margin-top:.5rem}
+.q .meta span{padding:.15rem .55rem;border-radius:999px;background:var(--surface);font-weight:600}
+.stack{display:flex;height:10px;border-radius:6px;overflow:hidden;margin-top:.55rem;background:var(--surface);gap:2px}
+.stack i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:.35rem .9rem;font-size:.76rem;color:var(--muted);margin:.25rem 0 .4rem;font-weight:600}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:.3rem;vertical-align:-1px;background:var(--c)}
+.more-btn{display:inline-flex;margin-top:.8rem;padding:.5rem .95rem;border:1px solid var(--line2);border-radius:999px;background:var(--card);font-weight:650;font-size:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th,td{text-align:left;padding:.5rem;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:650;border-top:0}
+td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.scroll{overflow-x:auto}
+.note{background:var(--soft);border:1px solid var(--aline);border-radius:16px;padding:.75rem 1rem;font-size:.88rem;margin-top:.75rem}
+.note.demo{background:var(--test-soft);border-color:var(--test-line)}
+.pill{display:inline-block;padding:.12rem .6rem;border-radius:999px;font-size:.78rem;font-weight:800;background:var(--surface)}
+.pill.ok{background:rgba(20,163,139,.14);color:#0E8A75}.pill.mid{background:rgba(242,184,75,.18);color:#9A6A00}.pill.bad{background:rgba(229,72,77,.12);color:#C2363B}
+@media (prefers-color-scheme:dark){.pill.ok{color:#4FD1B8}.pill.mid{color:#F2B84B}.pill.bad{color:#FF8A8A}}
+.danger{border-color:rgba(229,72,77,.3);background:var(--err-soft)}
+.danger .btn.fill{background:var(--err);box-shadow:none}
+.msg{margin:.6rem 0 0;min-height:1.4em;font-size:.88rem;color:var(--muted)}
+.msg.err{color:var(--err)}
+input[type=text],input[type=password]{width:100%;padding:.8rem 1rem;border:1px solid var(--line2);border-radius:13px;background:var(--card)}
+.foot{font-size:.8rem;color:var(--muted);margin-top:1.6rem}
+
+/* entrada */
+.gate{min-height:calc(100vh - 6rem);display:grid;place-items:center}
+.gate form{width:100%;max-width:25rem}
+.gate h1{font-weight:800;letter-spacing:-.035em;font-size:2.2rem;line-height:1.05;margin:0}
+.gate h1 span{background:var(--study);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gate p.lead{color:var(--muted);margin:.6rem 0 1.4rem}
+.gate label{display:block;font-weight:650;margin:1rem 0 .4rem;font-size:.9rem}
+.gate .btn{width:100%;margin-top:1rem;padding:.9rem}
+
+/* ===== identidade "urna eletrônica": corpo bege, visor, teclas com relevo; verde = dados reais, laranja = modo de teste ===== */
+:root{--bg:#E3DED1;--card:#F3F5EF;--surface:#D3D6CC;--ink:#151513;--muted:#5E5A50;--line:#D3D6CC;--line2:#C9C4B6;
+  --study:#1E6E3B;--study-solid:#2FA35A;--study-soft:rgba(47,163,90,.12);--study-line:rgba(30,110,59,.5);
+  --test:#B65516;--test-solid:#E8732C;--test-soft:rgba(232,115,44,.12);--test-line:rgba(156,74,22,.5);
+  --err:#B3261E;--err-soft:rgba(179,38,30,.08);--ok:#1E6E3B;--s1:#151513;--s2:#5E5A50;--s3:#B9B5AC;--s4:#2FA35A;--s5:#E8732C;--s6:#8A7F5C;
+  --shadow:none;--grad:#2FA35A;--accent:#1E6E3B;--soft:rgba(47,163,90,.12);--aline:rgba(30,110,59,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1F1E1B;--card:#2A2F29;--surface:#3E443C;--ink:#E9EDE4;--muted:#A9AEA3;--line:#3E443C;--line2:#3A3934;
+  --study:#3BB86A;--study-solid:#3BB86A;--study-soft:rgba(59,184,106,.14);--study-line:rgba(59,184,106,.5);--test:#F08240;--test-solid:#F08240;--test-soft:rgba(240,130,64,.14);--test-line:rgba(240,130,64,.5);
+  --err:#E5544B;--ok:#3BB86A;--s1:#E9EDE4;--s2:#A9AEA3;--s3:#4A5048;--s4:#3BB86A;--s5:#F08240;--s6:#B3A57A;--grad:#3BB86A;--accent:#3BB86A;--soft:rgba(59,184,106,.14);--aline:rgba(59,184,106,.5)}}
+body::before,body.sp-teste::before{display:none!important}
+body{font-family:"Arimo",Arial,sans-serif}
+.gate h1 span{background:none!important;-webkit-text-fill-color:currentColor;color:inherit}
+.card,.kpi,.space,.test-band,.session,.note,.danger,.gate form,.btn,.chip-btn{box-shadow:none!important}
+.card{border:1px solid var(--line2);border-radius:8px;background:var(--card)}
+.space,.note,.msg,.test-band,.session,.danger,.period input,input[type=text],input[type=password]{border-radius:6px!important}
+.btn,.chip-btn{border:0!important;border-radius:6px!important;background:#1A1A18!important;color:#F5F5F0!important;box-shadow:0 4px 0 #000!important;margin-bottom:4px;transition:transform .06s,box-shadow .06s}
+.btn:active,.chip-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #000!important}
+.btn.fill{background:#2FA35A!important;color:#151513!important;box-shadow:0 4px 0 #1B6A39!important}
+.danger .btn.fill{background:#E8732C!important;box-shadow:0 4px 0 #9C4A16!important}
+.ptabs{gap:6px!important;padding:6px!important;border-radius:8px!important;background:#2B2A27!important;border:0!important}
+.ptabs button{border:0!important;border-radius:5px!important;background:#1A1A18!important;color:#F5F5F0!important;box-shadow:0 4px 0 #000!important;margin-bottom:4px}
+.ptabs button[aria-selected="true"]{background:#2FA35A!important;color:#151513!important;transform:translateY(3px);box-shadow:0 1px 0 #1B6A39!important}
+.bar i,.hist i,.days i,.stack i{border-radius:0}
+h2.sec{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#quickN{font-size:1.35rem;line-height:1.2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="gate" id="gate">
+    <form id="setup" class="hidden">
+      <h1>Painel do <span>teste</span></h1>
+      <p class="lead">Primeiro acesso. Crie a credencial do painel: ela só pode ser criada uma vez e fica guardada apenas como hash.</p>
+      <label for="new1">Credencial (mínimo de 16 caracteres)</label><input id="new1" type="password" autocomplete="new-password" required minlength="16" maxlength="200">
+      <label for="new2">Repita a credencial</label><input id="new2" type="password" autocomplete="new-password" required minlength="16" maxlength="200">
+      <button class="btn fill" type="submit">Criar credencial</button><p class="msg err" id="err2" role="alert"></p>
+    </form>
+    <form id="login" class="hidden" autocomplete="on">
+      <h1>Painel do <span>teste</span></h1>
+      <p class="lead">Resultados do estudo e acesso ao modo de teste.</p>
+      <label for="cred">Credencial</label><input id="cred" name="password" type="password" autocomplete="current-password" required minlength="16">
+      <button class="btn fill" type="submit">Entrar</button><p class="msg err" id="err" role="alert"></p>
+    </form>
+  </div>
+
+  <div id="dash" class="hidden">
+    <header class="head">
+      <p class="brand">Painel do teste<small id="when">Carregando...</small></p>
+      <div class="head-actions"><button class="chip-btn" id="refresh">Atualizar</button><button class="chip-btn" id="logout">Sair</button></div>
+    </header>
+
+    <div class="spaces" role="group" aria-label="Área do painel">
+      <button class="space" data-s="real" aria-pressed="true"><b><span class="dot"></span>Estudo</b><span class="n"><span id="nReal">–</span><small>participantes</small></span></button>
+      <button class="space" data-s="teste" aria-pressed="false"><b><span class="dot"></span>Modo de teste</b><span class="n"><span id="nTeste">–</span><small>envios</small></span></button>
+    </div>
+
+    <section class="test-band hidden" id="testBand" aria-labelledby="tbTitle">
+      <h2 id="tbTitle">Você está na área de teste</h2>
+      <p>Os números abaixo são só dos envios de teste e nunca se misturam com o estudo.</p>
+      <div class="session">
+        <div class="session-status"><span class="pulse" id="sDot"></span><span id="sText">Nenhuma sessão de teste neste navegador</span></div>
+        <div class="session-actions">
+          <a class="btn fill hidden" id="sOpen" href="/" target="_blank" rel="noopener">Abrir o teste</a>
+          <button class="btn fill" id="sStart">Iniciar sessão de teste</button>
+          <button class="btn ghost hidden" id="sEnd">Encerrar</button>
+        </div>
+      </div>
+      <p class="fine" id="sHelp">A sessão vale por 12 horas, só neste navegador. Enquanto ela estiver ativa, o teste mostra o selo “Modo teste” e envia os resultados pra cá. Pra testar em outro aparelho, entre no painel por ele.</p>
+      <p class="msg" id="sMsg" role="status"></p>
+    </section>
+
+    <div class="bar-top">
+      <nav class="ptabs" id="ptabs" role="tablist" aria-label="Seções"></nav>
+      <div class="period"><input type="date" id="de" aria-label="De"><span>até</span><input type="date" id="ate" aria-label="Até"></div>
+    </div>
+    <div id="notes"></div>
+
+    <div class="panel" id="t-geral">
+      <div class="kpis">
+        <div class="card kpi-grid">
+          <div class="kpi"><b id="total">0</b><span id="totalLbl">participantes</span></div>
+          <div class="kpi"><b id="today">0</b><span>hoje</span></div>
+          <div class="kpi"><b id="rate">–</b><span>taxa de conclusão</span></div>
+          <div class="kpi"><b id="quickN">0</b><span>Essencial / Padrão / Aprofundado</span></div>
+        </div>
+        <div class="card"><b>Por dia</b><p class="sub" style="margin:.1rem 0 0" id="daysSub">Últimos 14 dias.</p><div class="days" id="days" aria-hidden="true"></div><div class="days-ends"><span id="d0"></span><span>hoje</span></div></div>
+      </div>
+      <h2 class="sec">Ideologias</h2><p class="sub">Resultado principal de cada participante.</p><div class="card" id="ideos"></div>
+      <div class="grid2" style="margin-top:.75rem">
+        <div class="card"><b>Bússola</b><p class="sub" style="margin:.2rem 0 .5rem">Mais intenso = mais gente. O ponto é a média.</p><svg class="compass" id="compass" viewBox="0 0 340 340" role="img" aria-label="Mapa de calor da bússola"></svg></div>
+        <div class="card"><b>Selo do resultado</b><div id="conf" style="margin-top:.5rem"></div></div>
+      </div>
+      <h2 class="sec">Eixos</h2><p class="sub">Quantas pessoas caíram em cada faixa.</p><div class="card" id="axes"></div>
+      <h2 class="sec">Termômetro dos extremos</h2><p class="sub">Afinidade média com cada ideologia extrema.</p><div class="card" id="ext"></div>
+      <div class="grid2" style="margin-top:2rem">
+        <div><h2 class="sec" style="margin-top:0">Onde as pessoas saem</h2><p class="sub">Saídas no meio do teste, por trecho.</p><div class="card" id="exits"></div></div>
+        <div><h2 class="sec" style="margin-top:0">Tempo pra terminar</h2><p class="sub">Faixa informada no fim do teste.</p><div class="card" id="time"></div></div>
+      </div>
+    </div>
+
+    <div class="panel hidden" id="t-frases">
+      <div class="card">
+        <div class="tabs" id="qtabs" role="tablist"></div>
+        <p class="sub" style="margin:.2rem 0 .5rem">Divididas: as que mais separam as pessoas. Consenso: as com mais acordo. Sem opinião: as que mais confundem. Dúvidas: as com mais explicações abertas.</p>
+        <div class="legend"><span style="--c:var(--s1)">Discordo totalmente</span><span style="--c:var(--s2)">Discordo</span><span style="--c:var(--s3)">Depende</span><span style="--c:var(--s4)">Concordo</span><span style="--c:var(--s5)">Concordo totalmente</span><span style="--c:var(--s6)">Sem opinião</span></div>
+        <div id="qlist"></div>
+      </div>
+    </div>
+
+    <div class="panel hidden" id="t-perfil">
+      <h2 class="sec">Autoidentificação</h2><p class="sub" id="autoSub"></p>
+      <div class="grid2"><div class="card"><b>Como se definem</b><div id="esp" style="margin-top:.5rem"></div></div><div class="card"><b>Economia média por grupo</b><p class="sub" style="margin:.2rem 0 .4rem">De -100 (esquerda) a +100 (direita).</p><div id="espE"></div></div></div>
+      <div class="card" style="margin-top:.75rem"><b>O que a pessoa disse × o que o teste deu</b><p class="sub" style="margin:.2rem 0 .5rem">Cada linha é a ideologia escolhida pela pessoa. Grupos com menos de 5 aparecem como “&lt;5”.</p><div class="scroll" id="autoMat"></div></div>
+      <h2 class="sec">Idade e estado</h2><p class="sub" id="demoSub"></p>
+      <div class="grid2"><div class="card"><b>Faixa de idade</b><div id="age" style="margin-top:.5rem"></div></div><div class="card"><b>Estado</b><div id="uf" style="margin-top:.5rem"></div></div></div>
+      <div class="card" style="margin-top:.75rem"><b>Ideologia por faixa de idade</b><div class="scroll" id="cross" style="margin-top:.5rem"></div></div>
+    </div>
+
+    <div class="panel hidden" id="t-qualidade">
+      <h2 class="sec">Coerência dos eixos</h2><p class="sub">Alfa de Cronbach, com quem fez os modos Padrão ou Aprofundado. Acima de 0,7 é bom; abaixo de 0,6, o eixo mistura coisas que as pessoas não respondem de forma parecida.</p>
+      <div class="card" id="alpha"></div>
+      <h2 class="sec">Frases que menos combinam com o próprio eixo</h2><p class="sub">Correlação de cada frase com o resto do eixo. Abaixo de 0,2, a frase mede outra coisa e pode ser revisada.</p>
+      <div class="card" id="weak"></div>
+      <h2 class="sec">Pesos das frases</h2>
+      <div class="card"><p id="wInfo" style="margin:0"></p><div class="session-actions" style="margin-top:.8rem"><button class="btn fill" id="wApply">Calcular e aplicar pesos</button><button class="btn line" id="wRemove">Voltar todas pro peso 1</button></div><p class="msg" id="wMsg" role="status"></p></div>
+    </div>
+
+    <div class="panel hidden" id="t-dados">
+      <div class="grid2">
+        <div class="card"><b>Exportar</b><p class="sub" style="margin:.3rem 0 .8rem">CSV com uma linha por participante, sem dia, idade e estado, em ordem embaralhada. Usa o período selecionado.</p><button class="btn line" id="export">Baixar CSV</button></div>
+        <div class="card" id="bkCard"><b>Backups diários</b><p class="sub" style="margin:.3rem 0 .6rem">Cópia automática dos dados do estudo, guardada por 7 dias.</p><div id="bk" class="session-actions"></div></div>
+      </div>
+      <div class="card danger" style="margin-top:.75rem">
+        <b id="fmtTitle">Apagar os dados do estudo</b>
+        <p style="margin:.3rem 0 0;font-size:.9rem" id="fmtText">Apaga todos os resultados do estudo, de qualquer período. Não dá pra desfazer. Digite APAGAR pra confirmar.</p>
+        <input type="text" id="fmtConfirm" autocomplete="off" placeholder="APAGAR" style="margin-top:.7rem">
+        <button class="btn fill" id="fmtBtn" style="margin-top:.7rem" disabled>Apagar dados do estudo</button><p class="msg" id="fmtMsg" role="status"></p>
+      </div>
+    </div>
+    <p class="foot">Estes números representam só quem fez o teste e aceitou participar, não a população.</p>
+  </div>
+</div>
+
+<script src="/js/painel.js"></script>
+</body>
+</html>

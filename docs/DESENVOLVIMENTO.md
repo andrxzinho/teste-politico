@@ -1,0 +1,72 @@
+# Desenvolvimento
+
+## Regras de ouro
+
+1. **Frases novas só no fim de `DATA.EXTRA`.** Nunca reordene nem apague frases: a ordem é a chave dos dados gravados.
+2. **Depois de mudar frases ou o motor, rode** `node ferramentas/gerar_listas.mjs`. Ele atualiza as listas do servidor e
+   gera `servidor/motor.mjs`.
+3. **Mudou o significado dos dados** (cálculo, formato do envio)? Avalie subir a versão dos dados (`r6` → `r7`) pra não
+   misturar resultados antigos e novos no painel.
+4. **Mudança só visual** deve deixar os resultados idênticos. Confira com a mesma simulação antes e depois.
+
+## Tarefas comuns
+
+- **Mudar o texto de uma frase:** edite o campo em `DATA` (`public/js/dados/frases.js`). Mudar o sentido de uma frase é, na prática, uma
+  frase nova: acrescente outra no fim e tire a antiga dos modos (`lv` acima de 3 não aparece em nenhum modo).
+- **Acrescentar frases:** acrescente no fim de `DATA.EXTRA`, com todos os campos (veja Arquitetura).
+- **Páginas de ideologias e perguntas frequentes:** depois de mudar `js/dados/ideologias.js` ou as perguntas em
+  `ferramentas/gerar_paginas.mjs`, rode `npm run paginas`.
+- **Perfis das ideologias:** posição de cada ideologia nos eixos em `public/js/dados/ideologias.js` e nos 15 subtemas
+  em `public/js/dados/frases.js`. Mudar perfis é mudança metodológica: proponha antes, com simulação (veja `CONTRIBUTING.md`).
+- **Candidatos:** `public/js/dados/candidatos.js`; revise a cada eleição (desistências, resultados, campo `st` com a situação).
+- **Ver o site no computador:** `npm run local` serve `public/` em http://127.0.0.1:8080 (sem as funções do servidor;
+  o site entra em modo teste e nada é enviado).
+
+## Variáveis de ambiente (Vercel)
+
+Veja `.env.example`. As principais:
+
+| Variável | Efeito |
+|---|---|
+| `SUPABASE_URL`, `SUPABASE_CHAVE_SITE` | Banco do estudo (obrigatórias em produção). `SUPABASE_CHAVE_SITE` é uma chave secreta criada só pro site; sem ela, vale `SUPABASE_SECRET_KEY`, criada pela integração do Supabase |
+| `CRON_SECRET` | Protege a tarefa diária de backup |
+| `PAINEL_SENHA` | Senha do painel. Sem ela, o painel pede pra criar uma credencial no primeiro acesso |
+| `COLETA_INICIO` | Data (AAAA-MM-DD) a partir da qual os resultados reais entram nas estatísticas |
+
+## Testes
+
+```bash
+npm ci
+npx playwright install chromium   # uma vez; ou CHROMIUM_PATH=/caminho/do/chrome
+BANCO=memoria npm test
+```
+
+| Comando | O que verifica |
+|---|---|
+| `npm run test:logica` | A mesma simulação (21 ideologias × 3 estilos × reteste, dois geradores, sorteio fixado) dá os mesmos resultados de `testes/referencia/logica.json` (números comparados com 12 algarismos significativos, pra ignorar diferenças de 1e-16 entre versões do Chromium), e o acerto de cada modo não cai abaixo de 85% |
+| `npm run test:perfis` | Perfis sintéticos no núcleo (sem navegador): propriedades que as regras do código declaram. Defeitos conhecidos aparecem como PENDENTE e não contam como falha |
+| `npm run test:numeros` | Os números publicados na metodologia, nas perguntas frequentes, na página inicial e no README batem com o código (perguntas por modo, ideologias, `CALIB`) |
+| `npm run test:cliques` | Todos os botões e links de cada tela, no celular e no computador |
+| `npm run test:interface` | Os 3 modos no navegador: teclas, número da pergunta, FIM, 9 seções do resultado, imagem, códigos de comparação, retomar, aviso ao trocar de modo e nada rolando pros lados em 320 e 1280 px, claro e escuro |
+| `npm run test:paginas` | As 21 páginas de ideologia existem, nenhum link interno quebrado, menu (abrir, Esc, tecla numerada), tema salvo entre páginas, filtro da lista e nada rolando pros lados em 320, 768 e 1280 px |
+| `npm run test:acessibilidade` | axe-core (WCAG 2.1 A e AA) no início, consentimento, pergunta, resultado, páginas de ideologia, perguntas frequentes e metodologia, nos dois temas |
+| `npm run test:servidor` | Envios gerados pelo site, continuação de modo, recusa de dados inválidos e adulterados, senha do painel, contas do painel, planilha e compactação |
+
+Se uma mudança na lógica for **intencional**, rode `npm run test:atualizar`, revise a diferença da referência no git e
+explique a mudança no histórico. Mudanças só visuais nunca devem alterar a referência.
+
+## Publicação
+
+O projeto do Vercel está ligado ao GitHub:
+
+1. Trabalhe numa branch e abra um pull request. O Vercel cria uma prévia (Preview) com endereço próprio; os envios
+   dela vão pro conjunto de teste.
+2. O GitHub Actions roda `npm audit`, confere se as páginas geradas e as listas do servidor estão em dia e roda
+   `npm test` em cada pull request.
+3. Ao juntar na `main`, o Vercel publica em produção automaticamente.
+4. Confira o endereço oficial sem participar do estudo, pra não misturar testes com dados reais.
+
+O endereço antigo (testepolitico.netlify.app) só redireciona pro Vercel (`ferramentas/redirecionamento-netlify/`).
+
+A imagem `og.png` fica guardada em cache pelas redes sociais. Se mudar a imagem, mude também o nome do arquivo
+(e o `og:image` em `index.html`) pra forçar a atualização.

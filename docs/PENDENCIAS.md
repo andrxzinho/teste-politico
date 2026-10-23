@@ -1,0 +1,42 @@
+# Pendências
+
+Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
+Última revisão: 23 de outubro de 2026.
+
+## Decisões que dependem do responsável pelo projeto
+
+- [ ] **Achados de segurança e privacidade em aberto.** Estão num relatório privado, fora do repositório, com o
+      responsável pelo projeto. Um deles exige SQL no banco de produção (apaga uma coluna) e só pode ser feito com
+      confirmação explícita. Não descreva esses achados em arquivos públicos.
+- [ ] **Variáveis de ambiente no Vercel:** as chaves já estão como *Sensitive* e só em Production, e o site usa a chave
+      própria `SUPABASE_CHAVE_SITE`. Falta decidir se remove as que o código não usa (criadas pela integração) e tirar as
+      cópias de `CRON_SECRET` e `COLETA_INICIO` dos ambientes Preview e Development.
+- [ ] **Propostas da auditoria da metodologia** (`docs/AUDITORIA-METODOLOGIA.md`): 25 reescritas de frases e
+      mudanças na comunicação da porcentagem. Nada disso foi aplicado. Mudar frases ou cálculo exige rodar as
+      simulações antes e depois, atualizar `testes/referencia/` com `npm run test:atualizar` e documentar o efeito.
+
+## Auditoria pedida em 23/10/2026 (ainda não concluída)
+
+- [ ] **Livros:** auditoria feita em `docs/AUDITORIA-LIVROS.md` (168 itens: 11 correções de título/ano, 3 de
+      justificativa, 3 substituições, 6 correções nos créditos). Falta abrir cada link proposto, aplicar as correções em
+      `public/js/dados/leituras.js` e acrescentar os links (5º elemento `{orig, ed, isbn, info, compra}`).
+- [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
+      23/10/2026.
+- [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.
+- [ ] **Unificar Compartilhar e Comparar com amigos** numa experiência só. Feito só o ajuste leve (textos que explicam
+      que todo link compartilhado já abre a comparação, aviso de link inválido e de modos diferentes). A fusão num
+      painel único muda o layout do resumo e os testes de interface: proposta no relatório de 23/10/2026.
+- [x] **Tema claro:** teclas brancas com contorno pelo token `--branco-borda`. Feito em 23/10/2026.
+- [x] **Consistência de números** entre páginas e código, com o teste `testes/numeros.test.mjs`. Feito em 23/10/2026.
+      Os tempos (9/18/30 min) continuam estimativas: medir a mediana real no painel.
+- [x] **Resultado:** probabilidade e semelhança com nomes diferentes. Feito em 23/10/2026. Os eixos que aproximam ou
+      afastam já aparecem em "Comparar com uma ideologia"; nas páginas das ideologias entrou o que separa cada vizinha.
+- [x] **Quantidade de perguntas:** decidido em 23/10/2026 pelo responsável: **manter as quantidades atuais**. Reavaliar
+      só com dados reais.
+
+## Depois, com dados reais ou com a eleição
+
+- [ ] Ferramenta pra simular conjuntos diferentes de perguntas por modo, antes de qualquer mudança na quantidade.
+- [ ] Com pelo menos 500 respostas reais: análise fatorial, IRT, recalibrar os perfis e a temperatura da probabilidade.
+- [ ] Medir no painel a mediana de tempo e o ponto de abandono de cada modo (os 9, 18 e 30 minutos são estimativas).
+- [ ] Atualizar os candidatos depois da eleição de 2026.

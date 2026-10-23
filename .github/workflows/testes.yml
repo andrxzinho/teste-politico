@@ -1,0 +1,33 @@
+name: Testes
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Dependências sem vulnerabilidade alta ou crítica
+        run: npm audit --audit-level=high
+      - name: Páginas geradas e listas do servidor em dia com os dados
+        run: |
+          npm run paginas
+          npm run listas
+          git diff --exit-code -- public servidor || { echo "::error::Rode npm run paginas e npm run listas e inclua os arquivos gerados."; exit 1; }
+      - run: npx playwright install --with-deps chromium
+      - name: Todos os testes (lógica, perfis, números, interface, servidor, páginas, acessibilidade, cliques)
+        run: npm test
+        env:
+          BANCO: memoria

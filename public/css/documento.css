@@ -1,0 +1,52 @@
+/* Páginas de documento (termos, metodologia, perguntas frequentes): cabeçalho, resumo, sumário lateral fixo e texto
+   em seções numeradas. O sumário marca a seção que está na tela (js/sumario.js). */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:84px}
+body{margin:0;background:var(--corpo);color:var(--tinta);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.legal{max-width:72rem;margin:0 auto;padding:1.4rem 1rem 4.5rem}
+.legal-cab{padding-bottom:1.4rem;border-bottom:1px solid var(--linha)}
+.legal-rotulo{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grafite)}
+.legal h1{margin:.45rem 0 0;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.08;font-weight:700;max-width:22ch}
+.legal-datas{display:flex;flex-wrap:wrap;gap:.3rem 1.6rem;margin:.9rem 0 0;padding:0;list-style:none;font-size:.86rem;color:var(--grafite)}
+.legal-datas b{color:var(--tinta)}
+.resumo-legal{margin-top:1.4rem;padding:1.1rem 1.2rem;border-radius:10px;background:var(--visor);border:1px solid var(--linha)}
+.resumo-legal h2{margin:0 0 .5rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grafite)}
+.resumo-legal ul{margin:0;padding:0;list-style:none;display:grid;gap:.55rem}
+.resumo-legal li{position:relative;padding-left:1.3rem;font-size:.95rem;line-height:1.5}
+.resumo-legal li::before{content:"";position:absolute;left:0;top:.45em;width:.6rem;height:.6rem;border-radius:2px;background:var(--confirma)}
+.legal-corpo{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;margin-top:1.8rem}
+.sumario{font-size:.9rem}
+.sumario h2{margin:0 0 .5rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grafite)}
+.sumario ol{margin:0;padding:0;list-style:none;counter-reset:s;border-left:2px solid var(--linha)}
+.sumario li{counter-increment:s}
+.sumario a{display:block;padding:.28rem 0 .28rem .8rem;margin-left:-2px;border-left:2px solid transparent;text-decoration:none;color:var(--grafite);line-height:1.35}
+.sumario a::before{content:counter(s) ". ";font-variant-numeric:tabular-nums}
+.sumario a:hover{color:var(--tinta)}
+.sumario a[aria-current="true"]{color:var(--tinta);font-weight:700;border-left-color:var(--tinta)}
+.texto{max-width:44rem;counter-reset:sec}
+.texto section{scroll-margin-top:84px;padding-top:.4rem;margin-bottom:2.2rem}
+.texto h2{counter-increment:sec;margin:0 0 .6rem;font-size:1.28rem;line-height:1.25}
+.texto h2::before{content:counter(sec) ". ";color:var(--grafite)}
+.texto h3{margin:1.2rem 0 .3rem;font-size:1rem}
+.texto p{margin:.7rem 0 0}
+.texto ul{margin:.6rem 0 0;padding-left:1.2rem}
+.texto li{margin:.35rem 0}
+.tabela{width:100%;border-collapse:collapse;margin-top:.8rem;font-size:.92rem}
+.tabela th,.tabela td{text-align:left;vertical-align:top;padding:.6rem .7rem;border-bottom:1px solid var(--linha)}
+.tabela th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grafite);font-weight:700}
+.tabela-wrap{overflow-x:auto}
+.legal-fim{margin-top:1rem;padding-top:1.2rem;border-top:1px solid var(--linha);font-size:.86rem;color:var(--grafite)}
+.legal-fim a{font-weight:700}
+@media (max-width:640px){.tabela thead{display:none}.tabela tr{display:block;padding:.6rem 0;border-bottom:1px solid var(--linha)}.tabela td{display:block;border:0;padding:.15rem 0}.tabela td:first-child{font-weight:700}}
+@media (min-width:960px){
+  .legal{padding-top:2.2rem}
+  .legal-corpo{grid-template-columns:15rem minmax(0,1fr);gap:3.2rem}
+  .sumario{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 100px);overflow:auto}
+}
+@media print{#site-cab,#site-rod,.sumario,.pular{display:none!important}.legal-corpo{display:block}body{background:#fff;color:#000}}
+.texto code{overflow-wrap:anywhere;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.88em;padding:.08em .3em;border-radius:4px;background:var(--fundo-grade)}
+.texto a code{background:none;padding:0}
+.codigo{margin:.8rem 0 0;padding:.9rem 1rem;border-radius:8px;background:var(--teclado);color:var(--tecla-txt);overflow-x:auto;font-size:.88rem;line-height:1.55}
+.codigo code{background:none;padding:0;color:inherit;font-size:inherit}
+.resumo-legal .acoes-pagina{margin-top:1rem}

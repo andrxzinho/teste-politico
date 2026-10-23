@@ -1,0 +1,13 @@
+# Avisa quando há versões novas das ferramentas de teste e das ações do GitHub (o site não tem dependências em produção).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
