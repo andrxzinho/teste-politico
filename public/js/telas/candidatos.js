@@ -7,7 +7,7 @@ function renderCands(){
   for(const k in CAND)candRanked[k]=CAND[k].list.map(c=>({...c,match:candMatch(R.s,c.p,iw)})).sort((a,b)=>b.match-a.match);
   const cn=$("candNote");cn.innerHTML="";const now=Date.now();
   if(now>=Date.parse("2026-10-26T03:00:00Z"))cn.append(el("div","note","As eleições de 2026 já terminaram. A lista mostra os candidatos do primeiro turno."));
-  else if(now>=Date.parse("2026-10-05T03:00:00Z"))cn.append(el("div","note","O 1º turno foi em 4 de outubro. Pra presidente, haverá 2º turno em 25 de outubro; em São Paulo, governador e senadores já foram eleitos."));
+  else if(now>=Date.parse("2026-10-05T03:00:00Z"))cn.append(el("div","note","O 1º turno foi em 4 de outubro. Pra presidente, o 2º turno é em 25 de outubro. Em São Paulo, governador e senadores já foram eleitos."));
   cn.append(el("div","note","A compatibilidade compara a sua posição com uma estimativa da posição de cada candidato, e as duas têm margem de erro. Diferenças pequenas entre candidatos não querem dizer muito. Não é recomendação de voto."));
   candTab="pres";renderCand();
 }

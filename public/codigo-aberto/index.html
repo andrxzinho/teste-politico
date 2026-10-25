@@ -59,8 +59,9 @@
 <div class="texto">
 <section id="porque">
 <h2>Por que publicar</h2>
-<p>Um teste político pede confiança: você responde sobre o que pensa e recebe um rótulo. Se o cálculo ficasse escondido, não daria pra saber se alguma frase ou peso favorece um lado. Com o código publicado, qualquer pessoa pode conferir como cada resposta vira uma posição nos eixos e apontar erros ou vieses.</p>
-<p>A auditoria mais recente do método, com os problemas conhecidos e as propostas de correção, também está publicada: <a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
+<p>Um teste político pede confiança: você conta o que pensa e recebe um rótulo. Se o cálculo ficasse escondido, não daria pra saber se alguma frase ou peso favorece um lado.</p>
+<p>Com o código publicado, qualquer pessoa pode conferir como cada resposta vira uma posição nos eixos. E pode apontar erros ou favorecimentos a um lado.</p>
+<p>A auditoria mais recente do método (uma revisão com os problemas conhecidos e as propostas de correção) também está publicada: <a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
 </section>
 <section id="onde">
 <h2>Onde fica cada parte</h2>
@@ -87,9 +88,9 @@
 <section id="como">
 <h2>Como o site é feito</h2>
 <ul>
-<li><b>Site:</b> HTML, CSS e JavaScript, sem framework e sem etapa de montagem. O que está na pasta <code>public/</code> é exatamente o que vai pro ar.</li>
-<li><b>Servidor:</b> funções do Vercel em São Paulo, que só recebem os envios do estudo e servem o painel do responsável.</li>
-<li><b>Banco:</b> Postgres no Supabase, em São Paulo, acessado só pelo servidor.</li>
+<li><b>Site:</b> feito em HTML, CSS e JavaScript puros, sem framework (pacote pronto de código) e sem etapa de montagem. O que está na pasta <code>public/</code> é exatamente o que vai pro ar.</li>
+<li><b>Servidor:</b> funções do Vercel em São Paulo. Elas só recebem os envios do estudo e mostram o painel do responsável.</li>
+<li><b>Banco de dados:</b> Postgres no Supabase, em São Paulo. Só o servidor tem acesso.</li>
 <li><b>Publicação:</b> cada mudança aprovada no repositório é publicada automaticamente pelo Vercel.</li>
 </ul>
 <p>Os detalhes estão em <a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/ARQUITETURA.md" rel="noopener">docs/ARQUITETURA.md</a>.</p>
@@ -101,31 +102,32 @@
 cd teste-politico
 npm ci
 npm run local</code></pre>
-<p>O site abre em <code>http://127.0.0.1:8080</code>. Fora do endereço oficial ele entra em modo teste, e nada é enviado pro estudo.</p>
+<p>O site abre em <code>http://127.0.0.1:8080</code>. Fora do endereço oficial, ele entra em modo de teste, e nada é enviado pro estudo.</p>
 </section>
 <section id="testes">
 <h2>Testes automáticos</h2>
 <p>A cada mudança, o GitHub roda os testes abaixo. O resultado de cada rodada fica público na aba <a href="https://github.com/andrxzinho/teste-politico/actions" rel="noopener">Actions</a> do repositório.</p>
 <ul>
 <li><b>Lógica:</b> uma simulação fixa precisa dar exatamente os mesmos resultados de antes. Se o cálculo mudar sem querer, o teste falha.</li>
-<li><b>Perfis sintéticos:</b> respostas artificiais (moderadas, extremas, contraditórias, incompletas) conferem se o cálculo segue as próprias regras. Os casos que hoje não se comportam como deveriam ficam marcados como pendentes.</li>
-<li><b>Interface, páginas e cliques:</b> os três modos do começo ao fim, todos os botões e links, no celular e no computador, nos temas claro e escuro.</li>
-<li><b>Acessibilidade:</b> verificação automática com axe-core (WCAG 2.1, níveis A e AA).</li>
-<li><b>Servidor:</b> envios válidos, recusa de dados inválidos ou adulterados e o painel.</li>
+<li><b>Perfis simulados:</b> respostas criadas pelo computador (moderadas, extremas, contraditórias, incompletas) conferem se o cálculo segue as próprias regras. Os casos que hoje não funcionam como deveriam ficam marcados como pendentes.</li>
+<li><b>Telas, páginas e cliques:</b> os três modos do começo ao fim e todos os botões e links. Tudo no celular e no computador, nos temas claro e escuro.</li>
+<li><b>Acessibilidade:</b> a ferramenta axe-core confere se o site pode ser usado por pessoas com deficiência, pelas regras WCAG 2.1, níveis A e AA.</li>
+<li><b>Servidor:</b> aceita envios válidos, recusa dados inválidos ou adulterados e confere o painel.</li>
 </ul>
-<p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais: isso depende de dados que ainda não existem.</p>
+<p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais. Isso depende de dados que ainda não existem.</p>
 <pre class="codigo" tabindex="0"><code>npx playwright install chromium
 BANCO=memoria npm test</code></pre>
 </section>
 <section id="licenca">
 <h2>O que a licença permite</h2>
-<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código pra fins não comerciais, como estudo, pesquisa, ensino ou uso pessoal, inclusive por escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
-<p>Ela não permite usar o código comercialmente, publicar cópias nem criar versões modificadas. Isso evita que circulem testes parecidos com cálculos alterados usando o nome ou a aparência deste. Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative.</p>
+<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código sem fins comerciais: estudo, pesquisa, ensino ou uso pessoal. Isso vale também pra escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
+<p>Ela não permite usar o código pra ganhar dinheiro, publicar cópias nem criar versões modificadas. Assim, não circulam testes parecidos, com o nome ou a aparência deste, mas com cálculos alterados.</p>
+<p>Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative (a organização que define o termo).</p>
 <p>Fotos e capas de livros pertencem aos seus autores e editoras. As licenças estão na página de <a href="/creditos/">créditos</a>.</p>
 </section>
 <section id="contribuir">
 <h2>Como contribuir</h2>
-<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (issue) no repositório, explicando o problema e, se possível, a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
+<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
 <p>Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo <a href="https://github.com/andrxzinho/teste-politico/blob/main/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
 <div class="acoes-pagina"><a class="ok" href="https://github.com/andrxzinho/teste-politico/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
 </section>

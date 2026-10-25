@@ -7,6 +7,14 @@
 - Nenhum resultado mudou de ideologia na simulação; só a confiança. Números de calibração atualizados.
 - Cada envio do estudo passa a dizer a versão 3 do cálculo.
 
+## Linguagem mais simples no site (25 de outubro de 2026)
+- Textos da tela de resultado, das janelas de explicação (confiança e como os modos foram testados), das telas do teste,
+  da metodologia, das perguntas frequentes, das páginas das ideologias, do código-fonte e dos créditos reescritos em
+  linguagem mais simples: frases curtas, termos técnicos explicados, sem mudar o sentido nem os números.
+- Glossário, candidatos, pensadores e justificativas dos livros com termos explicados entre parênteses.
+- A janela da confiança deixou de dizer que respostas no meio-termo podem dar confiança alta (isso mudou no cálculo,
+  versão 2).
+
 ## Privacidade e segurança, e revisão dos textos (23 de outubro de 2026)
 - Participar do estudo passa a exigir confirmar "Tenho 18 anos ou mais", no início e no envio depois do resultado.
 - A fonte do site passou a ser servida pelo próprio site: nenhuma página faz mais pedidos ao Google.

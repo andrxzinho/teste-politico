@@ -91,7 +91,7 @@
       rod.className = "site-rod";
       const nav = el("nav"); nav.setAttribute("aria-label", "Rodapé");
       PAGINAS.slice(2).forEach((p) => { const a = link(p); a.textContent = p.t; nav.append(a); });
-      rod.append(nav, el("p", null, "Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual é só uma inspiração na urna eletrônica. Não é recomendação de voto."));
+      rod.append(nav, el("p", null, "Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual só se inspira na urna eletrônica. Não é recomendação de voto."));
     }
   }
   // ---------- som da urna, sintetizado no navegador (nenhuma gravação é usada). O de confirmação foi recriado a partir de

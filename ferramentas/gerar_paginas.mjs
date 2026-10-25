@@ -31,7 +31,7 @@ function rotulo(v, k) {
 const DIFERE = { E: ["mais à esquerda na economia", "mais à direita na economia"], A: ["dá mais peso à liberdade", "dá mais peso à ordem"], D: ["com mais compromisso democrático", "aceita mais rupturas com a democracia"] };
 function diferenca(o, v) {
   const ds = EIXOS.map((k) => [k, (o.p[k] ?? 0) - (v.p[k] ?? 0)]).filter(([, d]) => Math.abs(d) >= 15).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 2);
-  if (!ds.length) return "posições típicas muito parecidas; o teste separa as duas por poucos subtemas.";
+  if (!ds.length) return "posições típicas muito parecidas. O teste separa as duas só em poucos subtemas.";
   // nos costumes e no Brasil × Mundo, quando as duas estão do mesmo lado, "menos progressista" diz melhor que "mais conservadora"
   const ADJ = { C: ["progressista", "conservadora", "nos costumes"], N: ["aberta à cooperação com o mundo", "nacionalista", ""] };
   const t = ds.map(([k, d]) => {
@@ -95,7 +95,7 @@ const urls = ["/", "/metodologia.html", "/termos.html"];
     descricao: "O que defende cada uma das 21 tradições políticas usadas no teste, do centro aos extremos, e onde cada uma fica nos eixos.",
     scripts: ["/js/paginas/ideologias.js"],
     corpo: `<h1 class="titulo-pagina">As 21 ideologias</h1>
-<p class="intro-pagina">As tradições políticas com que o teste compara as suas respostas. Toque numa pra ver o que defende, onde fica em cada eixo e quais são as vizinhas.</p>
+<p class="intro-pagina">As tradições políticas que o teste compara com as suas respostas. Toque numa pra ver o que ela defende, onde fica em cada eixo e quais são as vizinhas (as mais parecidas com ela).</p>
 <div class="filtros" role="group" aria-label="Filtrar por família">${filtros}</div>
 <p class="contagem" aria-live="polite">${IDEO.length} ideologias</p>
 <div class="lista-ideo">
@@ -120,12 +120,12 @@ for (const o of IDEO) {
 <div class="eixos-tipicos">
 ${eixos}
 </div>
-<p class="intro-pagina" style="margin-top:.6rem;font-size:.88rem">Posição típica da tradição, usada pelo teste como referência. Pessoas de uma mesma ideologia variam em torno dela.</p>
+<p class="intro-pagina" style="margin-top:.6rem;font-size:.88rem">É onde ficaria alguém típico dessa tradição. O teste usa esse ponto como referência. Pessoas da mesma ideologia ficam espalhadas em volta dele.</p>
 <h2 class="rotulo-secao">Pra entender por dentro</h2>
 <p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">${EXTREMOS.includes(n) ? `Fontes históricas e textos de referência de ${esc(n)}, pra entender o que essa tradição defendeu. Não é recomendação.` : `Obras que ajudam a entender ${esc(n)} como os próprios defensores a entendem.`}</p>
 <div class="livros">${livros(LEITURAS[n].favor)}</div>
 <h2 class="rotulo-secao">Pra entender as críticas</h2>
-<p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio.</p>
+<p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">As críticas mais fortes, vindas de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o seu.</p>
 <div class="livros">${livros(LEITURAS[n].contra)}</div>
 <h2 class="rotulo-secao">Ideologias vizinhas</h2>
 <div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
@@ -139,30 +139,30 @@ ${eixos}
 // perguntas frequentes: agrupadas por tema, no mesmo formato dos termos e da metodologia (sumário lateral fixo)
 const FAQ = [
   ["resultado", "Sobre o resultado", [
-    ["O que quer dizer a porcentagem ao lado de cada ideologia?", ["É a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. As porcentagens somam 100%.", "Ela não é o quanto você concorda com a ideologia. Pra ver o quanto as suas posições se parecem com uma ideologia, use \"Comparar com uma ideologia\" no resultado completo."]],
-    ["O que significa confiança alta, média ou baixa?", ["É uma regra que junta três coisas: o quanto a primeira ideologia ficou à frente das outras, a precisão da sua posição nos eixos (que depende de quantas frases você respondeu) e a coerência das suas respostas. Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe confiança alta.", "Ela diz quão claro o resultado ficou dentro das regras do teste. Não diz se o teste acertou sobre você, porque isso ainda não foi verificado com pessoas reais."]],
-    ["Por que apareceram duas ideologias?", ["Quando a segunda ideologia tem pelo menos 60% da chance da primeira, o teste mostra as duas. Isso pode acontecer porque você está entre as duas tradições ou porque poucas frases do teste separam as duas. Às vezes ele faz algumas frases extras pra desempatar."]],
-    ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser moderação de verdade ou falta de opinião formada sobre muitos temas, e o teste não consegue separar as duas coisas. Nesse caso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Veja nos eixos onde você pendeu pra algum lado."]],
-    ["Por que o resultado pode mudar se eu refizer?", ["Respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos deixam o resultado menos firme. Mudar de ideia em poucas frases também pode trocar a ideologia quando duas estão próximas."]],
-    ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta. O termômetro dos extremos mostra um índice de 0 a 100, que não é uma probabilidade."]],
-    ["A compatibilidade com candidatos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada candidato, feita pelo histórico público de cada um, e as duas têm margem de erro. Diferenças pequenas não querem dizer muito."]],
+    ["O que quer dizer a porcentagem ao lado de cada ideologia?", ["É a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Todas juntas somam 100%.", "Ela não mostra o quanto você concorda com a ideologia. Pra ver o quanto as suas posições se parecem com uma ideologia, use \"Comparar com uma ideologia\" no resultado completo."]],
+    ["O que significa confiança alta, média ou baixa?", ["Ela mostra o quanto o resultado ficou claro, dentro das regras do teste. Não diz se o teste acertou sobre você, porque isso ainda não foi conferido com pessoas reais.", "A confiança junta três coisas: o quanto a primeira ideologia ficou à frente das outras, a precisão da sua posição nos eixos (que depende de quantas frases você respondeu) e a coerência das suas respostas.", "Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe confiança alta."]],
+    ["Por que apareceram duas ideologias?", ["Quando a segunda ideologia tem pelo menos 60% da chance da primeira, o teste mostra as duas. Isso pode acontecer porque você está entre as duas tradições, ou porque o teste tem poucas frases que separam as duas. Às vezes ele faz algumas perguntas extras pra desempatar."]],
+    ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser que você seja moderado de verdade. Ou pode ser que ainda não tenha opinião formada sobre muitos temas. O teste não consegue saber qual das duas.", "Por isso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Olhe os eixos pra ver onde você pendeu pra algum lado."]],
+    ["Por que o resultado pode mudar se eu refizer?", ["Algumas coisas deixam o resultado menos firme: muitas respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos. Além disso, quando duas ideologias estão próximas, mudar de ideia em poucas frases já pode trocar o resultado."]],
+    ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta.", "O termômetro dos extremos mostra um índice de 0 a 100. Ele não é uma probabilidade (chance)."]],
+    ["A compatibilidade com candidatos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada candidato, feita a partir do que cada um fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
   ]],
   ["teste", "Sobre o teste", [
-    ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com respondentes simulados, criados a partir das posições típicas das 21 ideologias: nessas simulações, a ideologia certa aparece em primeiro em cerca de 96 de cada 100 casos no modo Padrão.", "Mas os simulados foram criados com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
-    ["O teste é científico?", ["Ele usa técnicas da psicometria (a área que estuda como medir opiniões e traços com questionários), como perguntas de escolha pra corrigir o jeito de responder e pares de frases pra medir a coerência. Mas ainda não foi validado com uma amostra grande de pessoas reais; isso depende dos dados do estudo."]],
-    ["Quanto tempo leva?", ["Essencial: de 62 a 70 perguntas, uns 9 minutos. Padrão: de 128 a 139, uns 18 minutos. Aprofundado: de 205 a 216, uns 30 minutos. Os tempos são estimativas. O número de perguntas varia porque algumas frases só aparecem pra quem já está perto de um extremo.", "Dá pra pausar e continuar depois no mesmo aparelho, e quem termina um modo menor pode continuar no seguinte sem repetir nada."]],
-    ["Qual modo devo escolher?", ["O Essencial dá uma ideia geral. O Padrão mede cada tema com mais detalhe e confere melhor a coerência das respostas. O Aprofundado tem mais frases em cada tema, mas, nas simulações, não acerta a ideologia mais que o Padrão."]],
-    ["O que são os 6 eixos?", ["Economia (mais Estado ou mais mercado), Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições (confiança no sistema). Os cinco primeiros são divididos em subtemas; Instituições não tem subtemas e não entra na escolha da ideologia. O resultado mostra a sua posição e a faixa provável em cada eixo."]],
-    ["Quem decidiu onde fica cada ideologia?", ["O autor do projeto, a partir da teoria política. As posições estão publicadas no código e na página de cada ideologia, e serão revisadas com os dados do estudo. A auditoria publicada no repositório aponta os pontos mais discutíveis."]],
+    ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 96 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
+    ["O teste é científico?", ["Ele usa técnicas da psicometria, a área que estuda como medir opiniões e traços de personalidade com questionários. Por exemplo: perguntas de escolha pra corrigir o jeito de responder, e pares de frases pra medir a coerência.", "Mas ainda não foi conferido com um grupo grande de pessoas reais. Isso depende dos dados do estudo."]],
+    ["Quanto tempo leva?", ["Essencial: de 62 a 70 perguntas, uns 9 minutos. Padrão: de 128 a 139, uns 18 minutos. Aprofundado: de 205 a 216, uns 30 minutos. Os tempos são estimativas.", "O número de perguntas varia porque algumas frases só aparecem pra quem já está perto de um extremo.", "Dá pra pausar e continuar depois no mesmo aparelho. E quem termina um modo menor pode seguir pro próximo sem repetir nada."]],
+    ["Qual modo devo escolher?", ["O Essencial dá uma ideia geral. O Padrão mede cada tema com mais detalhe e confere melhor se as suas respostas combinam entre si. O Aprofundado tem mais frases em cada tema, mas, nas simulações, não acerta a ideologia mais que o Padrão."]],
+    ["O que são os 6 eixos?", ["Eixos são os grandes temas em que o teste coloca você, cada um com duas pontas opostas. São seis: Economia (mais Estado ou mais mercado), Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições (confiança no sistema).", "Os cinco primeiros são divididos em subtemas (assuntos menores dentro do tema). Instituições não tem subtemas e não entra na escolha da ideologia. O resultado mostra a sua posição em cada eixo e a faixa provável, que é o trecho onde ela provavelmente está."]],
+    ["Quem decidiu onde fica cada ideologia?", ["O autor do projeto, a partir da teoria política. As posições estão publicadas no código e na página de cada ideologia, e serão revisadas com os dados do estudo. A auditoria publicada no repositório (uma revisão do método) aponta os pontos mais discutíveis."]],
   ]],
   ["dados", "Dados e privacidade", [
-    ["Meus dados são enviados?", ["Só se você aceitar participar do estudo, e sem nada que identifique você: nunca são enviados nome, e-mail, IP ou localização. Quem informa ter menos de 18 anos faz o teste, mas nada é enviado.", "Dá pra fazer o teste inteiro sem participar. Os detalhes estão nos termos de uso e privacidade."]],
-    ["Posso comparar com amigos?", ["Sim. No resumo do resultado, o bloco \"Compartilhar e comparar\" mostra o seu link de comparação. Quem abrir faz o teste e, no fim, vê os dois resultados lado a lado. Se alguém já mandou o link pra você, é só colar no mesmo bloco. O código leva só a sua ideologia, o modo e a sua posição nos eixos, sem as respostas de cada frase, e a comparação acontece no aparelho, sem enviar nada."]],
+    ["Meus dados são enviados?", ["Só se você aceitar participar do estudo. E nada que identifique você é enviado: nunca vão nome, e-mail, IP (o endereço da sua conexão) ou localização. Quem informa ter menos de 18 anos faz o teste, mas nada é enviado.", "Dá pra fazer o teste inteiro sem participar. Os detalhes estão nos termos de uso e privacidade."]],
+    ["Posso comparar com amigos?", ["Sim. No resumo do resultado, o bloco \"Compartilhar e comparar\" mostra o seu link de comparação. Quem abrir o link faz o teste e, no fim, vê os dois resultados lado a lado. Se alguém já mandou um link pra você, é só colar no mesmo bloco.", "O link leva só a sua ideologia, o modo e a sua posição nos eixos. Ele não leva a sua resposta em cada frase. A comparação acontece no aparelho, sem enviar nada."]],
   ]],
   ["projeto", "Sobre o projeto", [
-    ["Quem fez o teste?", ["É um projeto independente e sem fins lucrativos, sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual é só uma inspiração na urna eletrônica, sem símbolos oficiais."]],
-    ["Posso ver o código?", ["Sim. O código-fonte está publicado no GitHub, inclusive as frases, o cálculo e os testes. Veja a página Código-fonte público."]],
-    ["Achei uma frase enviesada ou um erro. Como aviso?", ["Abra um aviso (issue) no repositório do projeto, explicando o problema e, se puder, a fonte. Falhas de segurança ou privacidade não devem ser abertas em público: use o canal indicado no arquivo SECURITY.md."]],
+    ["Quem fez o teste?", ["Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual só se inspira na urna eletrônica, sem símbolos oficiais. Não é recomendação de voto."]],
+    ["Posso ver o código?", ["Sim. O código-fonte (as instruções que fazem o site funcionar) está publicado no GitHub, inclusive as frases, o cálculo e os testes. Veja a página Código-fonte público."]],
+    ["Achei uma frase enviesada ou um erro. Como aviso?", ["Abra um aviso (uma \"issue\") no repositório do projeto no GitHub. Explique o problema e, se puder, mande a fonte. Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo SECURITY.md."]],
   ]],
 ];
 gravar("public/perguntas-frequentes/index.html", pagina({
@@ -171,7 +171,7 @@ gravar("public/perguntas-frequentes/index.html", pagina({
   corpo: `<div class="legal-cab">
 <p class="legal-rotulo">Ajuda</p>
 <h1>Perguntas frequentes</h1>
-<ul class="legal-datas"><li><b>Última atualização:</b> 23 de outubro de 2026</li></ul>
+<ul class="legal-datas"><li><b>Última atualização:</b> 25 de outubro de 2026</li></ul>
 </div>
 <div class="legal-corpo">
 <nav class="sumario" aria-labelledby="sumario-t">
@@ -208,7 +208,8 @@ gravar("public/creditos/index.html", pagina({
   descricao: "Autores e licenças das fotos e capas usadas no teste político.",
   corpo: `<div class="pagina-estreita">
 <h1 class="titulo-pagina">Créditos das imagens</h1>
-<p class="intro-pagina">As fotos de pessoas vêm do Wikimedia Commons, em domínio público ou licença livre (Creative Commons), e do Portal de Dados Abertos do TSE, no caso das fotos oficiais de candidatura (licença CC BY). Todas foram recortadas e reduzidas. As capas de livros mostram, sempre que possível, a edição brasileira; vêm do Open Library, de catálogos de livrarias pelo ISBN da edição e, para obras antigas, do Wikimedia Commons. Elas servem só pra identificar as obras, e os direitos são das editoras. Quando não há imagem, o site mostra as iniciais ou uma capa tipográfica.</p>
+<p class="intro-pagina">As fotos de pessoas vêm do Wikimedia Commons, em domínio público ou com licença livre (Creative Commons). As fotos oficiais de candidatura vêm do Portal de Dados Abertos do TSE (licença CC BY). Todas foram recortadas e reduzidas.</p>
+<p class="intro-pagina">As capas de livros mostram a edição brasileira sempre que possível. Elas vêm do Open Library, de catálogos de livrarias (pelo ISBN, o número de cada edição) e, pra obras antigas, do Wikimedia Commons. As capas servem só pra identificar as obras, e os direitos são das editoras. Quando não há imagem, o site mostra as iniciais ou uma capa feita só com texto.</p>
 <h2 class="rotulo-secao">Fotos de pessoas</h2>
 <ul class="creditos">${linhasP}</ul>
 <h2 class="rotulo-secao">Capas de livros</h2>
@@ -253,8 +254,9 @@ gravar("public/codigo-aberto/index.html", pagina({
 <div class="texto">
 <section id="porque">
 <h2>Por que publicar</h2>
-<p>Um teste político pede confiança: você responde sobre o que pensa e recebe um rótulo. Se o cálculo ficasse escondido, não daria pra saber se alguma frase ou peso favorece um lado. Com o código publicado, qualquer pessoa pode conferir como cada resposta vira uma posição nos eixos e apontar erros ou vieses.</p>
-<p>A auditoria mais recente do método, com os problemas conhecidos e as propostas de correção, também está publicada: <a href="${REPO}/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
+<p>Um teste político pede confiança: você conta o que pensa e recebe um rótulo. Se o cálculo ficasse escondido, não daria pra saber se alguma frase ou peso favorece um lado.</p>
+<p>Com o código publicado, qualquer pessoa pode conferir como cada resposta vira uma posição nos eixos. E pode apontar erros ou favorecimentos a um lado.</p>
+<p>A auditoria mais recente do método (uma revisão com os problemas conhecidos e as propostas de correção) também está publicada: <a href="${REPO}/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
 </section>
 <section id="onde">
 <h2>Onde fica cada parte</h2>
@@ -281,9 +283,9 @@ ${ARQ("docs/DADOS-E-PRIVACIDADE.md", "o que é coletado, o que nunca é e por qu
 <section id="como">
 <h2>Como o site é feito</h2>
 <ul>
-<li><b>Site:</b> HTML, CSS e JavaScript, sem framework e sem etapa de montagem. O que está na pasta <code>public/</code> é exatamente o que vai pro ar.</li>
-<li><b>Servidor:</b> funções do Vercel em São Paulo, que só recebem os envios do estudo e servem o painel do responsável.</li>
-<li><b>Banco:</b> Postgres no Supabase, em São Paulo, acessado só pelo servidor.</li>
+<li><b>Site:</b> feito em HTML, CSS e JavaScript puros, sem framework (pacote pronto de código) e sem etapa de montagem. O que está na pasta <code>public/</code> é exatamente o que vai pro ar.</li>
+<li><b>Servidor:</b> funções do Vercel em São Paulo. Elas só recebem os envios do estudo e mostram o painel do responsável.</li>
+<li><b>Banco de dados:</b> Postgres no Supabase, em São Paulo. Só o servidor tem acesso.</li>
 <li><b>Publicação:</b> cada mudança aprovada no repositório é publicada automaticamente pelo Vercel.</li>
 </ul>
 <p>Os detalhes estão em <a href="${REPO}/blob/main/docs/ARQUITETURA.md" rel="noopener">docs/ARQUITETURA.md</a>.</p>
@@ -295,31 +297,32 @@ ${ARQ("docs/DADOS-E-PRIVACIDADE.md", "o que é coletado, o que nunca é e por qu
 cd teste-politico
 npm ci
 npm run local</code></pre>
-<p>O site abre em <code>http://127.0.0.1:8080</code>. Fora do endereço oficial ele entra em modo teste, e nada é enviado pro estudo.</p>
+<p>O site abre em <code>http://127.0.0.1:8080</code>. Fora do endereço oficial, ele entra em modo de teste, e nada é enviado pro estudo.</p>
 </section>
 <section id="testes">
 <h2>Testes automáticos</h2>
 <p>A cada mudança, o GitHub roda os testes abaixo. O resultado de cada rodada fica público na aba <a href="${REPO}/actions" rel="noopener">Actions</a> do repositório.</p>
 <ul>
 <li><b>Lógica:</b> uma simulação fixa precisa dar exatamente os mesmos resultados de antes. Se o cálculo mudar sem querer, o teste falha.</li>
-<li><b>Perfis sintéticos:</b> respostas artificiais (moderadas, extremas, contraditórias, incompletas) conferem se o cálculo segue as próprias regras. Os casos que hoje não se comportam como deveriam ficam marcados como pendentes.</li>
-<li><b>Interface, páginas e cliques:</b> os três modos do começo ao fim, todos os botões e links, no celular e no computador, nos temas claro e escuro.</li>
-<li><b>Acessibilidade:</b> verificação automática com axe-core (WCAG 2.1, níveis A e AA).</li>
-<li><b>Servidor:</b> envios válidos, recusa de dados inválidos ou adulterados e o painel.</li>
+<li><b>Perfis simulados:</b> respostas criadas pelo computador (moderadas, extremas, contraditórias, incompletas) conferem se o cálculo segue as próprias regras. Os casos que hoje não funcionam como deveriam ficam marcados como pendentes.</li>
+<li><b>Telas, páginas e cliques:</b> os três modos do começo ao fim e todos os botões e links. Tudo no celular e no computador, nos temas claro e escuro.</li>
+<li><b>Acessibilidade:</b> a ferramenta axe-core confere se o site pode ser usado por pessoas com deficiência, pelas regras WCAG 2.1, níveis A e AA.</li>
+<li><b>Servidor:</b> aceita envios válidos, recusa dados inválidos ou adulterados e confere o painel.</li>
 </ul>
-<p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais: isso depende de dados que ainda não existem.</p>
+<p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais. Isso depende de dados que ainda não existem.</p>
 <pre class="codigo" tabindex="0"><code>npx playwright install chromium
 BANCO=memoria npm test</code></pre>
 </section>
 <section id="licenca">
 <h2>O que a licença permite</h2>
-<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código pra fins não comerciais, como estudo, pesquisa, ensino ou uso pessoal, inclusive por escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
-<p>Ela não permite usar o código comercialmente, publicar cópias nem criar versões modificadas. Isso evita que circulem testes parecidos com cálculos alterados usando o nome ou a aparência deste. Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative.</p>
+<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código sem fins comerciais: estudo, pesquisa, ensino ou uso pessoal. Isso vale também pra escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
+<p>Ela não permite usar o código pra ganhar dinheiro, publicar cópias nem criar versões modificadas. Assim, não circulam testes parecidos, com o nome ou a aparência deste, mas com cálculos alterados.</p>
+<p>Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative (a organização que define o termo).</p>
 <p>Fotos e capas de livros pertencem aos seus autores e editoras. As licenças estão na página de <a href="/creditos/">créditos</a>.</p>
 </section>
 <section id="contribuir">
 <h2>Como contribuir</h2>
-<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (issue) no repositório, explicando o problema e, se possível, a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
+<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
 <p>Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo <a href="${REPO}/blob/main/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
 <div class="acoes-pagina"><a class="ok" href="${REPO}/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
 </section>

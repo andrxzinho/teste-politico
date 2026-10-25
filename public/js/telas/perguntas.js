@@ -22,7 +22,7 @@ function render(){
   $("backBtn").style.visibility=st.cur===0?"hidden":"visible";
   // tela de abertura de cada bloco
   if(b>=0&&st.cur===st.bs[b]&&!st.seen.includes(b)){
-    const [nm,ds]=BLK[st.bk[b]];visorNum(b+1,true,st.bs.length);$("vRod").textContent="Aperte a tecla pra começar o bloco.";$("qof").textContent="de "+st.bs.length;
+    const [nm,ds]=BLK[st.bk[b]];visorNum(b+1,true,st.bs.length);$("vRod").textContent="Aperte o botão abaixo pra começar o bloco.";$("qof").textContent="de "+st.bs.length;
     desenharBarra();direcao();$("tag").textContent="";$("tag").style.display="none";$("tbTag").classList.add("hidden");
     fecharTermo();$("stmt").textContent=nm;$("blkDesc").textContent=ds;$("blkDesc").classList.remove("hidden");
     $("dil").classList.add("hidden");$("explainBtn").classList.add("hidden");$("skipBtn").classList.add("hidden");
