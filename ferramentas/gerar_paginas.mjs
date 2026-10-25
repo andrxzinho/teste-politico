@@ -291,7 +291,7 @@ ${ARQ("docs/DADOS-E-PRIVACIDADE.md", "o que é coletado, o que nunca é e por qu
 <section id="rodar">
 <h2>Rodar no seu computador</h2>
 <p>Precisa do Node.js 20 ou mais recente e do Git.</p>
-<pre class="codigo"><code>git clone ${REPO}.git
+<pre class="codigo" tabindex="0"><code>git clone ${REPO}.git
 cd teste-politico
 npm ci
 npm run local</code></pre>
@@ -308,12 +308,12 @@ npm run local</code></pre>
 <li><b>Servidor:</b> envios válidos, recusa de dados inválidos ou adulterados e o painel.</li>
 </ul>
 <p>Esses testes conferem se o código faz o que promete. Eles não mostram se o teste acerta a ideologia de pessoas reais: isso depende de dados que ainda não existem.</p>
-<pre class="codigo"><code>npx playwright install chromium
+<pre class="codigo" tabindex="0"><code>npx playwright install chromium
 BANCO=memoria npm test</code></pre>
 </section>
 <section id="licenca">
 <h2>O que a licença permite</h2>
-<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0/" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código pra fins não comerciais, como estudo, pesquisa, ensino ou uso pessoal, inclusive por escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
+<p>O código usa a licença <a href="https://polyformproject.org/licenses/strict/1.0.0" rel="noopener">PolyForm Strict 1.0.0</a>. Ela permite ler, baixar e rodar o código pra fins não comerciais, como estudo, pesquisa, ensino ou uso pessoal, inclusive por escolas, universidades, órgãos públicos e organizações sem fins lucrativos.</p>
 <p>Ela não permite usar o código comercialmente, publicar cópias nem criar versões modificadas. Isso evita que circulem testes parecidos com cálculos alterados usando o nome ou a aparência deste. Por isso, ele é um código-fonte público, e não "código aberto" no sentido estrito da definição da Open Source Initiative.</p>
 <p>Fotos e capas de livros pertencem aos seus autores e editoras. As licenças estão na página de <a href="/creditos/">créditos</a>.</p>
 </section>
