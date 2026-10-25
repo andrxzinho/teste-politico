@@ -72,7 +72,7 @@ function profile(){
     dev.slice(0,3).forEach(x=>{const li=el("li",null,stmtOf(x.o));li.append(el("span",null,"Você: "+ansLabel(x.o,x.v)));ul.append(li)});d.append(ul);box.append(d)}
   box.append(el("p","fine","O rótulo ideológico é só a tradição política mais próxima. Este perfil descreve melhor a combinação das suas respostas."));
 }
-const SYMTXT={D20:"um presidente governando por decreto pra contornar o Congresso",A25:"um bloqueio de rodovia num protesto pacífico"};
+const SYMTXT={Z1:"um presidente reeditando medidas provisórias rejeitadas pelo Congresso",A25:"um bloqueio de rodovia num protesto pacífico"};
 function renderResumo(){
   const {s,ranked,margin,unsure,noop,inc,weak,ten,sym,cons,flat,fast}=R,top=ranked[0],notes=$("resNotes");notes.innerHTML="";
   const nb=(txt,btn)=>{const d=el("div",null,txt);if(btn){const b=el("button","text-btn",btn[0]);b.onclick=btn[1];d.append(b)}notes.append(d);return d};
@@ -95,8 +95,10 @@ function renderResumo(){
   if(symAns.length&&!sym.length&&!careless)nb(`Você julgou do mesmo jeito ${symAns.length>1?"as situações que apareceram":"a situação que apareceu"} com o lado político trocado. Isso indica que você avalia o comportamento, e não quem o pratica.`);
   if(flat)nb("Você deu a mesma resposta em muitas frases seguidas. Se foi no automático, o resultado pode não refletir bem o que você pensa.");
   if(fast)nb("Você respondeu muito rápido na maior parte das frases. O resultado pode estar menos preciso.");
+  if(Math.abs(R.aquiesc)>=.7)nb(`Você ${R.aquiesc>0?"concordou com a maior parte":"discordou da maior parte"} das frases, inclusive das que puxam pra lados opostos. Isso costuma indicar um jeito de responder, e não uma posição política, por isso a confiança do resultado ficou ${R.conf==="baixa"?"baixa":"no máximo média"}.`);
   if(noop>.25)nb(`Você marcou “Não tenho opinião” em ${Math.round(noop*100)}% das perguntas, então o resultado pode estar menos definido que o normal.`);
-  else if(unsure-noop>=.6&&top.n==="Centrista")nb(`Você ficou no meio-termo em ${Math.round((unsure-noop)*100)}% das frases. Por isso o resultado caiu no centro. Isso pode ser moderação de verdade ou falta de opinião formada sobre muitos temas, e o teste não consegue separar as duas coisas. Aqui, o rótulo Centrista diz pouco: veja nos eixos onde você pendeu pra algum lado.`);
+  else if(unsure-noop>=.6&&top.n==="Centrista")nb(`Você ficou no meio-termo em ${Math.round((unsure-noop)*100)}% das frases. Por isso o resultado caiu no centro. Isso pode ser moderação de verdade ou falta de opinião formada sobre muitos temas, e o teste não consegue separar as duas coisas. Aqui, o rótulo Centrista diz pouco, e a confiança do resultado não pode ser alta: veja nos eixos onde você pendeu pra algum lado.`);
+  else if(R.neutro>=.6)nb(`Você ficou no meio-termo em ${Math.round(R.neutro*100)}% das frases de concordância. Isso pode ser moderação ou falta de opinião formada sobre muitos temas, e o teste não consegue separar as duas coisas, por isso a confiança do resultado não pode ser alta.`);
   else if(unsure>.4)nb(`Você ficou no meio-termo em boa parte das frases. Isso não conta como falta de opinião: só indica que, em muitos temas, você não pende pra nenhum lado.`);
   const prox=PROX[st.mode];$("quickNote").classList.toggle("hidden",!prox);
   if(prox){const ja=new Set(Object.keys(st.ans).filter(id=>st.ans[id]!=="g")),falta=order(prox,ja).L.length;

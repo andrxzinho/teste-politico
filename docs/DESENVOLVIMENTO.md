@@ -28,9 +28,10 @@ Veja `.env.example`. As principais:
 
 | Variável | Efeito |
 |---|---|
-| `SUPABASE_URL`, `SUPABASE_CHAVE_SITE` | Banco do estudo (obrigatórias em produção). `SUPABASE_CHAVE_SITE` é uma chave secreta criada só pro site; sem ela, vale `SUPABASE_SECRET_KEY`, criada pela integração do Supabase |
+| `SUPABASE_URL`, `SUPABASE_CHAVE_SITE` | Banco do estudo (obrigatórias em produção). `SUPABASE_CHAVE_SITE` é uma chave secreta criada só pro site, guardada como Sensitive e só em Production |
+| `LIMITE_SEGREDO` | Segredo do limite de pedidos por visitante, fora do banco (Sensitive, só em Production). Sem ela, o servidor usa um segredo guardado no banco |
 | `CRON_SECRET` | Protege a tarefa diária de backup |
-| `PAINEL_SENHA` | Senha do painel. Sem ela, o painel pede pra criar uma credencial no primeiro acesso |
+| `PAINEL_SENHA` | Senha do painel, com 16 caracteres ou mais (mais curta, é ignorada). Sem ela, o painel pede pra criar uma credencial no primeiro acesso |
 | `COLETA_INICIO` | Data (AAAA-MM-DD) a partir da qual os resultados reais entram nas estatísticas |
 
 ## Testes

@@ -15,8 +15,8 @@ Este documento explica como as respostas viram um resultado. A versão para o p�
 | S | Instituições | Confia | Desconfia | (sem subtemas) |
 
 Cada eixo vai de −100 a +100. O eixo Instituições aparece no resultado, mas não entra na escolha da ideologia, porque a
-desconfiança existe em todos os lados. Armas ficam fora dos eixos: no Brasil o tema não se encaixa em nenhum deles, e a
-resposta aparece à parte.
+desconfiança existe em todos os lados. Armas e as medidas numa epidemia ficam fora dos eixos: no Brasil esses temas não
+se encaixam em nenhum deles (o sinal partidário de cada um é diferente do resto do eixo), e as respostas aparecem à parte.
 
 ## 2. Tipos de pergunta
 
@@ -60,7 +60,9 @@ dois sempre calculam igual.
    corresponderia a 80% numa distribuição normal, mas a margem é heurística (piso de 35, erro de estilo de 30%) e a
    cobertura real da faixa nunca foi medida; por isso o site não fala em "80% de chance".
 
-"Não tenho opinião" fica fora da conta. "Depende / meio-termo" conta como posição do meio.
+"Não tenho opinião" fica fora da conta. "Depende / meio-termo" conta como posição do meio. "Nenhuma chega perto" e
+"Nenhuma das duas", nas perguntas de escolha, também ficam fora da conta, mas contam como resposta (não como falta de
+opinião).
 
 ## 5. Escolha da ideologia
 
@@ -72,6 +74,13 @@ dois sempre calculam igual.
   frases dos extremos (a ideologia extrema espera +1,5, todas as outras −1,5; σ = 0,8).
 - **Filtros:** um extremo só entra na disputa se a adesão às suas frases, combinada com a posição nos eixos, chegar a 50.
   Concordar em média ("concordo") já vale 2/3 da adesão. O ecologismo usa três frases sobre floresta e clima.
+- **Filtro das extremas:** a Extrema esquerda e a Extrema direita só disputam se a concordância média com as frases de
+  ruptura do eixo Democracia (de −2 a 2) chegar a 0,35. Cada uma é medida pelas rupturas do próprio lado (`ld` nas
+  frases: revolução e presidente de esquerda governando por cima do Congresso, de um lado; intervenção militar, líder
+  sem limites, fechar o STF e presidente de direita, do outro) mais as sem lado. Ficar no meio-termo nas frases de
+  democracia (média 0) não leva a elas. Antes do filtro, quem ficava no meio-termo nesse eixo e estava perto delas nos
+  outros eixos recebia "radical" com confiança alta. O nome "radical" virou "extrema" pelo mesmo motivo: na ciência
+  política, radical não quer dizer antidemocrático.
 - **Rótulo duplo:** quando a segunda ideologia tem pelo menos 60% da probabilidade da primeira.
 - **Desempate:** nesse caso, se algum eixo que separa as duas tiver diferença ponderada de 20 ou mais entre as posições
   típicas e meia-largura de faixa de 12 ou mais, o teste faz até 5 (Essencial) ou 6 perguntas extras desses eixos. No
@@ -86,8 +95,12 @@ dois sempre calculam igual.
 - **Média:** probabilidade ≥ 35% e consistência ≥ 50.
 - **Baixa:** nos demais casos.
 
-Quem dá opinião em menos da metade das perguntas tem confiança baixa (no código, `respondeu < 0,5`: exatamente metade
-ainda pode dar média); com opinião em menos de três quartos, no máximo média.
+Quem dá opinião em metade das perguntas ou menos tem confiança baixa; com opinião em menos de três quartos, no máximo
+média.
+
+**Não diferenciação:** com 60% ou mais das frases de concordância no meio-termo, ou com a média bruta das respostas
+(sem considerar o lado de cada frase) igual ou acima de 0,7 em valor absoluto (concordar ou discordar de quase tudo), a
+confiança não passa de média. Com 80% ou mais no meio-termo, ou média bruta de 1 ou mais, é baixa.
 Com opinião em menos de 20% das perguntas, o teste não mostra uma ideologia ("Respostas insuficientes").
 
 ## 7. Consistência
@@ -119,11 +132,15 @@ usando dois geradores:
 
 | Modo | Acerto | Certa entre as 2 primeiras | Mesma ideologia no reteste |
 |---|---|---|---|
-| Essencial | 95,2% | 99,6% | 94,8% |
-| Padrão | 97,8% | 99,8% | 97,8% |
-| Aprofundado | 97,6% | 99,8% | 97,8% |
+| Essencial | 94,2% | 98,4% | 93,3% |
+| Padrão | 96,4% | 98,2% | 96,4% |
+| Aprofundado | 96,4% | 98,4% | 96,0% |
 
-Média dos dois geradores, 1.008 respondentes por modo. A fonte é `CALIB` em `public/js/telas/janelas.js`, que é o que o
+Média dos dois geradores, 1.008 respondentes por modo, com o cálculo da versão 2 (23/10/2026). Antes dela, os números
+eram 95,2%, 97,8% e 97,6% de acerto. A queda vem quase toda da Extrema esquerda e da Extrema direita (de 100% pra cerca de
+85%): o simulador supõe que quem é dessas tradições não concorda com as frases de revolução e de golpe, que definem os
+extremos, e com isso parte deles não passa pelo filtro de ruptura. Com pessoas reais, isso só se resolve com dados.
+`testes/ajuda/comparar_simulacao.mjs` roda a mesma simulação antes e depois de uma mudança no cálculo. A fonte é `CALIB` em `public/js/telas/janelas.js`, que é o que o
 site exibe; `testes/paginas.test.mjs` confere que a metodologia pública mostra esses mesmos números arredondados.
 
 **Sensibilidade (experimento da auditoria):** com os perfis "verdadeiros" dos simulados perturbados em 20 pontos por
@@ -134,7 +151,8 @@ continua acima de 0,86. Ou seja, a probabilidade exibida é confiante demais qua
 
 - As simulações partem dos perfis teóricos (são circulares): medem o funcionamento do cálculo, não o quanto as frases
   captam o que pessoas reais pensam. Com pessoas reais, o acerto deve ser menor.
-- Problemas conhecidos e propostas de correção estão em `docs/AUDITORIA-METODOLOGIA.md` (nenhuma foi aplicada ao cálculo).
+- Problemas conhecidos e propostas de correção estão em `docs/AUDITORIA-METODOLOGIA.md`. O que foi aplicado na versão 2
+  do cálculo (23/10/2026) está no topo desse documento.
 - Respondentes simulados são coerentes; na prática, confiança média e baixa serão mais comuns.
 - O grupo conservador (Conservador, Democracia cristã e Direita nacional-conservadora) é o que mais se confunde. No
   Essencial, isso faz o acerto de quem é de direita (cerca de 89%) ficar abaixo do de quem é de esquerda (cerca de 98%),

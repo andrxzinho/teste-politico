@@ -42,7 +42,7 @@ function render(){
     b.append(el("span",null,l));if(!lad){const m=el("span","meter");m.setAttribute("aria-hidden","true");m.innerHTML="<i></i><i></i><i></i><i></i><i></i>";b.append(m)}
     b.onclick=()=>{if(busy)return;busy=true;box.querySelectorAll(".ans").forEach(x=>x.classList.remove("sel"));b.classList.add("picked");setTimeout(()=>{busy=false;pick(v)},170)};
     box.append(b)});
-  $("skipBtn").classList.toggle("sel",st.ans[id]==="x");
+  $("skipBtn").classList.toggle("sel",st.ans[id]==="x"||st.ans[id]==="n");
   shownAt=Date.now();
   for(const e of [$("qcard"),box]){e.classList.remove("enter");void e.offsetWidth;e.classList.add("enter")}
   {const n=box.querySelectorAll("button.ans").length,tm=$("stmt").querySelector(".termo");$("vRod").textContent=(n?`Aperte uma tecla de 1 a ${n}.`:"")+(tm?" Toque nos termos sublinhados pra ver o que significam.":"")}

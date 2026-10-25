@@ -149,12 +149,13 @@ export async function testarPerfis() {
     v.confere(conc.cons < 70, `tudo "concordo"/${m}: consistência devia ficar abaixo de 70 (veio ${conc.cons})`);
     v.confere(conc.conf !== "alta", `tudo "concordo"/${m}: confiança não podia ser alta`);
     v.confere(disc.flat, `tudo "discordo"/${m}: devia gerar aviso de respostas sempre iguais`);
+    // discordar de tudo, qualquer que seja o lado da frase, é não diferenciação: a confiança não pode ser alta
+    v.confere(disc.conf !== "alta", `tudo "discordo"/${m}: confiança não podia ser alta (veio ${disc.conf})`);
     // no Essencial só 3 pares de frases opostas podem ser comparados; discordar de tudo quase não forma contradições
-    (m === "quick" ? pendente : v.confere)(disc.conf !== "alta" && disc.cons < 70, `tudo "discordo"/${m}: confiança não alta e consistência < 70 (veio ${disc.conf}, ${disc.cons})`,
+    (m === "quick" ? pendente : v.confere)(disc.cons < 70, `tudo "discordo"/${m}: consistência < 70 (veio ${disc.cons})`,
       "discordar de tudo quase não forma pares contraditórios; só a sequência igual desconta 15 pontos");
     v.confere(meio.flat, `tudo "meio-termo"/${m}: devia gerar aviso de respostas sempre iguais`);
-    pendente(meio.conf !== "alta", `tudo "meio-termo"/${m}: confiança não devia ser alta (veio ${meio.conf}, Centrista ${Math.round(meio.ranked[0].prob * 100)}%)`,
-      "o meio-termo conta como posição; a confiança só olha a probabilidade, a consistência (perde 15) e a largura das faixas");
+    v.confere(meio.conf === "baixa", `tudo "meio-termo"/${m}: confiança devia ser baixa (veio ${meio.conf}, Centrista ${Math.round(meio.ranked[0].prob * 100)}%)`);
   }
 
   // 6. sem opinião, incompleto e respostas faltando
@@ -179,8 +180,7 @@ export async function testarPerfis() {
     perg.forEach((id, i) => { if (i % 2) T.st.ans[id] = "x"; });
     const metade = T.compute(T.st.ans);
     v.confere(metade.respondeu === 0.5, `metade "não tenho opinião"/${m}: montagem do caso devia dar respondeu = 0,5 (deu ${metade.respondeu})`);
-    pendente(metade.conf === "baixa", `metade "não tenho opinião"/${m}: a metodologia diz que pular metade ou mais dá confiança baixa (veio ${metade.conf}, respondeu ${metade.respondeu.toFixed(3)})`,
-      "o código usa respondeu < 0,5; com exatamente metade, a regra não se aplica");
+    v.confere(metade.conf === "baixa", `metade "não tenho opinião"/${m}: pular metade ou mais dá confiança baixa (veio ${metade.conf}, respondeu ${metade.respondeu.toFixed(3)})`);
   }
 
   // 7. contraditório: concordar totalmente com as duas frases de cada par oposto reduz a consistência
@@ -190,7 +190,7 @@ export async function testarPerfis() {
     v.confere(r.inc.length > 0 && r.cons <= Math.max(0, 100 - 12 * r.inc.length) && r.cons < base.cons, `contraditório/${m}: pares contraditórios deviam descontar 12 pontos cada (inc=${r.inc.length}, cons ${base.cons}→${r.cons})`);
     v.confere(r.conf !== "alta" || r.inc.length < 3, `contraditório/${m}: com ${r.inc.length} contradições a confiança não podia ser alta`);
     // simetria partidária: julgar diferente o mesmo caso conforme o lado gera o aviso
-    const s = responder(T, m, (o, id) => (id === "D20" ? 2 : id === "Y1" ? -2 : id === "A25" ? 2 : id === "Y2" ? -2 : f(o)));
+    const s = responder(T, m, (o, id) => (id === "Z1" ? 2 : id === "Z2" ? -2 : id === "A25" ? 2 : id === "A26" ? -2 : f(o)));
     const vistos = T.PAIRS.filter((p) => p.t === "simetria" && typeof T.st.ans[p.a] === "number" && typeof T.st.ans[p.b] === "number").length;
     v.confere(s.sym.length === vistos, `simetria/${m}: respostas opostas no mesmo caso com lados trocados deviam ser apontadas (${s.sym.length} de ${vistos})`);
   }

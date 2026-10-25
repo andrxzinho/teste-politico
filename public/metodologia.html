@@ -11,9 +11,7 @@
 <meta name="description" content="Como o teste político transforma respostas em posição nos eixos e em ideologia, o que significam a porcentagem e a confiança, e quais são os limites do método.">
 <link rel="canonical" href="https://testepolitico.vercel.app/metodologia.html">
 <meta name="theme-color" content="#2B2A27">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/fontes.css">
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/componentes.css">
 <link rel="stylesheet" href="/css/movimento.css">
@@ -138,8 +136,9 @@
         <ul>
           <li><b>Contrastes:</b> cada resposta de contraste aumenta a chance da ideologia cuja posição típica está do lado da frase escolhida.</li>
           <li><b>Extremos:</b> comunismo, anarquismo, fascismo e anarcocapitalismo só entram na disputa se você concordar, em média, com as frases que definem cada um e se a sua posição nos eixos também combinar. Marcar "concordo" na maioria delas já pode bastar; "concordo totalmente" conta mais. O ecologismo também depende de três frases sobre floresta e desmatamento (numa delas, sobre asfaltar a BR-319, concordar conta contra).</li>
-          <li><b>Frases que definem os extremos</b> também contam como evidência: a ideologia extrema concorda com elas e todas as outras discordam igualmente. Isso separa, por exemplo, quem é fascista de quem é de direita radical. Vale igual pros quatro extremos.</li>
-          <li><b>Eixo Democracia:</b> todas as tradições democráticas, da esquerda à direita, têm a mesma posição típica nesse eixo. Na prática, ele só separa essas tradições de Esquerda radical, Direita radical e dos extremos, que no modelo aceitam romper com a democracia.</li>
+          <li><b>Frases que definem os extremos</b> também contam como evidência: a ideologia extrema concorda com elas e todas as outras discordam igualmente. Isso separa, por exemplo, quem é fascista de quem é de extrema direita. Vale igual pros quatro extremos.</li>
+          <li><b>Eixo Democracia:</b> todas as tradições democráticas, da esquerda à direita, têm a mesma posição típica nesse eixo. Na prática, ele só separa essas tradições da Extrema esquerda, da Extrema direita e dos extremos, que no modelo aceitam romper com a democracia.</li>
+          <li><b>Filtro das extremas:</b> a Extrema esquerda e a Extrema direita só disputam o resultado quando você concorda, em média, com as frases de ruptura do próprio lado ou sem lado (por exemplo, uma revolução ou um presidente que passa por cima do Congresso, de um lado; uma intervenção militar, do outro). Ficar no meio-termo nas frases de democracia não leva a elas. O nome "radical" foi trocado por "extrema" porque, na ciência política, radical não quer dizer antidemocrático, e essas duas ideologias são justamente as que aceitam romper as regras.</li>
           <li><b>Entre duas ideologias:</b> quando a segunda tem pelo menos 60% da chance da primeira, o resultado mostra as duas. Isso pode acontecer porque você está entre as duas tradições ou porque poucas frases do teste separam as duas.</li>
           <li><b>Desempate:</b> nesse caso, se o eixo que mais separa as duas ainda tem uma faixa larga, o teste faz algumas perguntas extras desse eixo. Pros pares de ideologias mais parecidos (como Conservador e Democracia cristã), o desempate quase nunca é acionado.</li>
           <li><b>Extremos não perguntados:</b> se as frases de uma ideologia extrema não apareceram pra você, o resultado diz "não perguntado" em vez de mostrar 0.</li>
@@ -165,16 +164,16 @@
           <li><b>Alta:</b> a primeira ideologia tem pelo menos 60% de chance, a consistência é de pelo menos 70 e a precisão dos eixos não é baixa.</li>
           <li><b>Média:</b> a primeira tem pelo menos 35% de chance e a consistência é de pelo menos 50.</li>
           <li><b>Baixa:</b> fora desses casos.</li>
-          <li>Quem deu opinião em menos da metade das perguntas tem confiança baixa. Quem deu opinião em menos de três quartos não passa de média. Com opinião em menos de 20%, o teste não mostra ideologia.</li>
+          <li>Quem deu opinião em metade das perguntas ou menos tem confiança baixa. Quem deu opinião em menos de três quartos não passa de média. Com opinião em menos de 20%, o teste não mostra ideologia. "Nenhuma chega perto" e "Nenhuma das duas", nas perguntas de escolha, contam como resposta, não como falta de opinião.</li>
+          <li><b>Respostas que não diferenciam os temas:</b> com 60% ou mais das frases de concordância no meio-termo, a confiança não passa de média; com 80% ou mais, é baixa. O mesmo vale pra quem concorda (ou discorda) de quase tudo, inclusive de frases que puxam pra lados opostos. Nesses casos as respostas dizem pouco sobre a posição, e o resultado mostra um aviso.</li>
         </ul>
-        <p>Um caso conhecido: quem responde quase tudo "meio-termo" recebe Centrista com confiança alta, porque o teste não consegue separar moderação de falta de opinião formada. Nesse caso, o resultado mostra um aviso.</p>
       </section>
 
       <section id="ideologias">
         <h2>As 21 ideologias</h2>
-        <p><b>Esquerda:</b> Comunista, Anarquista, Esquerda radical, Socialista democrático, Social-democrata, Esquerda progressista, Ecologista, Esquerda conservadora e Nacional-desenvolvimentista.</p>
+        <p><b>Esquerda:</b> Comunista, Anarquista, Extrema esquerda, Socialista democrático, Social-democrata, Esquerda progressista, Ecologista, Esquerda conservadora e Nacional-desenvolvimentista.</p>
         <p><b>Centro:</b> Centrista, Social-liberal e Democracia cristã.</p>
-        <p><b>Direita:</b> Liberal progressista, Liberal clássico, Libertário, Anarcocapitalista, Liberal-conservador, Conservador, Direita nacional-conservadora, Direita radical e Fascista.</p>
+        <p><b>Direita:</b> Liberal progressista, Liberal clássico, Libertário, Anarcocapitalista, Liberal-conservador, Conservador, Direita nacional-conservadora, Extrema direita e Fascista.</p>
         <p>O que cada uma defende e onde fica em cada eixo está na página <a href="/ideologias/">As 21 ideologias</a>. Algumas são muito próximas no modelo e se confundem com facilidade: Conservador, Democracia cristã e Direita nacional-conservadora; Socialista democrático e Social-democrata; Social-liberal, Liberal clássico e Centrista.</p>
       </section>
 
@@ -190,9 +189,9 @@
         <div class="tabela-wrap"><table class="tabela">
           <thead><tr><th>Modo</th><th>Ideologia certa em 1º</th><th>Certa entre as 2 primeiras</th><th>Mesma ideologia ao refazer</th></tr></thead>
           <tbody>
-            <tr><td>Essencial</td><td>95 de 100</td><td>mais de 99 de 100</td><td>95 de 100</td></tr>
-            <tr><td>Padrão</td><td>98 de 100</td><td>mais de 99 de 100</td><td>98 de 100</td></tr>
-            <tr><td>Aprofundado</td><td>98 de 100</td><td>mais de 99 de 100</td><td>98 de 100</td></tr>
+            <tr><td>Essencial</td><td>94 de 100</td><td>98 de 100</td><td>93 de 100</td></tr>
+            <tr><td>Padrão</td><td>96 de 100</td><td>98 de 100</td><td>96 de 100</td></tr>
+            <tr><td>Aprofundado</td><td>96 de 100</td><td>98 de 100</td><td>96 de 100</td></tr>
           </tbody>
         </table></div>
         <p><b>O que isso prova:</b> que o cálculo faz o que promete com as suas próprias regras e que nenhum erro de programação embaralha os resultados.</p>
@@ -205,11 +204,9 @@
         <p>Uma auditoria completa do método, com os problemas encontrados e propostas de correção, está publicada no repositório (<a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>). Os pontos principais:</p>
         <ul>
           <li><b>Sem validação com pessoas reais.</b> A direção de cada frase, as posições típicas das ideologias e os perfis por subtema foram definidos pelo autor, com base em teoria política. Nada disso foi estimado com dados.</li>
-          <li><b>Meio-termo vira centro.</b> Quem responde quase tudo no meio recebe Centrista com confiança alta. O teste avisa, mas não muda o rótulo.</li>
+          <li><b>Meio-termo vira centro.</b> Quem responde quase tudo no meio continua recebendo Centrista, agora com confiança baixa e um aviso. O rótulo, nesse caso, diz pouco.</li>
           <li><b>Eixos parecidos.</b> No modelo, as posições típicas das ideologias em Liberdade × Ordem, Costumes e Brasil × Mundo andam quase juntas. Por isso a mesma informação pesa três vezes, e a porcentagem da primeira ideologia tende a sair alta demais.</li>
-          <li><b>Eixo Democracia sensível.</b> Ficar no meio-termo nas frases de democracia pode levar a Esquerda radical ou Direita radical pra quem já está perto delas nos outros eixos.</li>
           <li><b>Subtemas desequilibrados.</b> No Essencial, alguns subtemas têm uma frase só, ou frases que puxam todas pro mesmo lado. Isso faz a concordância automática pesar em alguns subtemas.</li>
-          <li><b>Pares imperfeitos.</b> Alguns pares de coerência podem acusar contradição em posições que fazem sentido, e os pares de simetria não têm redação idêntica.</li>
           <li><b>Contexto da época.</b> Várias frases tratam de assuntos de 2022 a 2026 (urnas, inelegibilidade, bloqueios, redes sociais). A leitura delas pode mudar com o tempo.</li>
         </ul>
         <p>As correções que mudam frases ou cálculo só entram depois de propostas, testadas com simulações antes e depois e documentadas no histórico de mudanças.</p>

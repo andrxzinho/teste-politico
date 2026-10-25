@@ -100,7 +100,7 @@ body:not([data-tela="results"]) .leitura{display:none}
 
 /* ---------- mouse (só computador): cartões levantam, setas andam; teclas continuam afundando ---------- */
 @media (hover:hover) and (pointer:fine){
-  .cartao,.resumo-ideo,.livro,details.acc,.faq details,.ir-secao{transition:transform .22s var(--mov-assenta),box-shadow .22s var(--mov-assenta),border-color .22s}
+  .cartao,.resumo-ideo,.livro,details.acc,.faq details{transition:transform .22s var(--mov-assenta),box-shadow .22s var(--mov-assenta),border-color .22s}
   .cartao:hover,.livro:hover{transform:translateY(-3px);box-shadow:0 6px 0 var(--gaveta-borda)}
   .cartao::after{transition:transform .22s var(--mov-assenta)}
   .cartao:hover::after{transform:translateX(4px)}

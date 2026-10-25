@@ -106,7 +106,7 @@ Detalhes na [política de privacidade](https://testepolitico.vercel.app/termos.h
 | Servidor | Quatro funções no [Vercel](https://vercel.com), região São Paulo (`api/` → `servidor/rotas/`) |
 | Banco | Postgres no [Supabase](https://supabase.com), em São Paulo, acessado só pelo servidor (`supabase/esquema.sql`) |
 | Testes | Node.js, [Playwright](https://playwright.dev) e [axe-core](https://github.com/dequelabs/axe-core) |
-| Outros | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT) e a fonte [Arimo](https://fonts.google.com/specimen/Arimo) (Apache 2.0) |
+| Outros | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT) e a fonte [Arimo](https://github.com/googlefonts/arimo) (SIL Open Font License 1.1), servida pelo próprio site |
 
 ## Rodar no computador
 

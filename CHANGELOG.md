@@ -1,5 +1,35 @@
 # Histórico de versões
 
+## Privacidade e segurança, e revisão dos textos (23 de outubro de 2026)
+- Participar do estudo passa a exigir confirmar "Tenho 18 anos ou mais", no início e no envio depois do resultado.
+- A fonte do site passou a ser servida pelo próprio site: nenhuma página faz mais pedidos ao Google.
+- Limite de pedidos com uma chave secreta fora do banco, que muda todo dia, e contagens apagadas em minutos. Painel com
+  limite geral de tentativas erradas e senha de pelo menos 16 caracteres. Banco sem a coluna de horário dos resultados.
+  Variáveis do Vercel reduzidas às que o site usa, todas só em produção.
+- Termos de uso e privacidade, versão 3.2: confirmação de idade, operadores (sem o Google Fonts) e o limite de pedidos.
+- Textos das frases revisados: 53 ajustes nas explicações, nos exemplos e nos argumentos dos dois lados (fatos
+  atualizados, como a isenção do Imposto de Renda até R$ 5 mil, a Lei de Cotas com quilombolas e a reserva de 30% nos
+  concursos federais; argumentos com a mesma força dos dois lados). Nenhuma frase do teste mudou de sentido.
+- Descrições das 20 ideologias reescritas no mesmo padrão: os quatro extremos com "Suas respostas batem com as ideias
+  centrais de...", e as demais com a posição em cada tema que as separa das vizinhas.
+- Mensagens de erro do envio ao estudo dizem o que aconteceu (conexão, servidor, página desatualizada ou excesso de
+  envios). Glossário com a regra de reedição das medidas provisórias.
+
+## Cálculo, versão 2 (23 de outubro de 2026)
+- Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe mais confiança alta, e o
+  resultado explica por quê.
+- "Esquerda radical" e "Direita radical" viraram "Extrema esquerda" e "Extrema direita", e só aparecem pra quem concorda
+  com as frases de ruptura do próprio lado. Ficar no meio-termo nas frases de democracia não leva mais a elas. As páginas
+  antigas redirecionam pras novas.
+- 20 frases reescritas viraram frases novas (custo explícito, uma ideia por frase, sem pista partidária, pares de
+  simetria com o mesmo texto e só o lado trocado); as antigas saíram dos modos, sem apagar nada dos dados.
+- Pares de coerência que acusavam contradição em posições coerentes foram trocados ou retirados. Marcadores dos extremos
+  corrigidos (golpe militar deixou de contar como fascismo). "Nenhuma das duas" deixou de contar como falta de opinião.
+  Medidas numa epidemia ficam fora dos eixos, como armas.
+- Cada envio do estudo passa a dizer a versão do cálculo. Envios de páginas abertas antes da mudança continuam aceitos.
+- Simulação antes e depois: acerto de 95,2% → 94,2% (Essencial), 97,8% → 96,4% (Padrão) e 97,6% → 96,4% (Aprofundado).
+  Detalhes em `docs/METODOLOGIA.md` e no topo de `docs/AUDITORIA-METODOLOGIA.md`.
+
 ## Leituras conferidas e compartilhar e comparar juntos (23 de outubro de 2026)
 - Leituras: as correções da auditoria bibliográfica foram aplicadas (anos, títulos, justificativas, duas substituições)
   e cada livro passou a mostrar a edição citada e um link conferido, no resultado e nas páginas das ideologias.

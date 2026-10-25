@@ -11,9 +11,7 @@
 <meta name="description" content="Termos de uso e política de privacidade do Teste Político 2026: o que é coletado de quem participa do estudo, o que nunca é coletado, onde os dados ficam e quais são os seus direitos pela LGPD.">
 <link rel="canonical" href="https://testepolitico.vercel.app/termos.html">
 <meta name="theme-color" content="#2B2A27">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/fontes.css">
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/componentes.css">
 <link rel="stylesheet" href="/css/movimento.css">
@@ -29,7 +27,7 @@
     <h1>Termos de uso e política de privacidade</h1>
     <ul class="legal-datas">
       <li><b>Última atualização:</b> 23 de outubro de 2026</li>
-      <li><b>Versão:</b> 3.1</li>
+      <li><b>Versão:</b> 3.2</li>
       <li><b>Aplica-se a:</b> testepolitico.vercel.app</li>
     </ul>
   </div>
@@ -108,7 +106,7 @@
         <table class="tabela">
           <thead><tr><th>Dado</th><th>Detalhe</th></tr></thead>
           <tbody>
-            <tr><td>Resultado</td><td>Ideologia mais próxima, posição em cada eixo arredondada em faixas, resultado do termômetro dos extremos, grau de confiança, se houve desempate e quantos pares de respostas se contradizem.</td></tr>
+            <tr><td>Resultado</td><td>Ideologia mais próxima, posição em cada eixo arredondada em faixas, resultado do termômetro dos extremos, grau de confiança, se houve desempate, quantos pares de respostas se contradizem e a versão do cálculo que gerou o resultado.</td></tr>
             <tr><td>Respostas</td><td>A resposta dada a cada frase e quais explicações de frases foram abertas.</td></tr>
             <tr><td>Uso do teste</td><td>O modo (Essencial, Padrão ou Aprofundado), de qual modo você veio se continuou de um menor, o tempo gasto em faixas e em que momento você aceitou participar.</td></tr>
             <tr><td>Autodefinição</td><td>Como você se define politicamente, se responder.</td></tr>
@@ -166,13 +164,12 @@
           <thead><tr><th>Serviço</th><th>Função</th><th>O que recebe</th></tr></thead>
           <tbody>
             <tr><td>Supabase</td><td>Banco de dados do estudo, com servidores em São Paulo.</td><td>Os envios descritos na seção 5.</td></tr>
-            <tr><td>Vercel</td><td>Hospedagem do site e do servidor do teste. Pode usar servidores fora do Brasil.</td><td>Dados técnicos de acesso, como o endereço IP, mantidos pela própria Vercel pra operar o serviço.</td></tr>
-            <tr><td>Google Fonts</td><td>Entrega da fonte usada no site.</td><td>Dados técnicos do pedido da fonte, como o endereço IP.</td></tr>
+            <tr><td>Vercel</td><td>Hospedagem do site e do servidor do teste. O servidor roda em São Paulo; as páginas podem ser entregues de servidores fora do Brasil.</td><td>Os envios descritos na seção 5, no caminho até o banco, e dados técnicos de acesso, como o endereço IP, mantidos pela própria Vercel pra operar o serviço.</td></tr>
           </tbody>
         </table>
         </div>
-        <p>Os registros técnicos da Vercel e do Google seguem as políticas dessas empresas e não fazem parte dos dados do estudo. Quando esses serviços tratam dados fora do Brasil, a transferência segue as garantias previstas nos contratos deles (LGPD, art. 33).</p>
-        <p>Pra impedir envios em massa, o servidor conta quantos pedidos chegam de cada origem por minuto. O endereço IP é transformado num código embaralhado (hash) que não permite recuperar o endereço, e essas contagens são apagadas em até um dia.</p>
+        <p>A fonte do site é servida pelo próprio site, sem pedidos a outros serviços. Os registros técnicos da Vercel seguem as políticas da empresa e não fazem parte dos dados do estudo. Quando esses serviços tratam dados fora do Brasil, a transferência segue as garantias previstas nos contratos deles (LGPD, art. 33).</p>
+        <p>Pra impedir envios em massa, o servidor conta quantos pedidos chegam de cada origem por minuto. O endereço IP é transformado num código embaralhado (hash), com uma chave secreta que muda todo dia e fica fora do banco de dados, o que não permite recuperar o endereço. Essas contagens são apagadas em poucos minutos.</p>
       </section>
 
       <section id="retencao">
@@ -188,7 +185,7 @@
 
       <section id="menores">
         <h2>Menores de 18 anos</h2>
-        <p>Quem informa ter menos de 18 anos pode fazer o teste normalmente, mas nenhum dado é enviado ao estudo.</p>
+        <p>O estudo é só pra maiores de 18 anos. Pra participar, você precisa confirmar que tem 18 anos ou mais, tanto no início do teste quanto ao enviar o resultado depois. Quem informa ter menos de 18 anos pode fazer o teste normalmente, mas nenhum dado é enviado ao estudo.</p>
       </section>
 
       <section id="direitos">

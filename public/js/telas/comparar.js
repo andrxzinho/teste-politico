@@ -15,7 +15,7 @@ function renderComparar(){
 $("sendCode").onclick=async()=>{const b=$("sendCode"),txt=textoCompartilhar();
   try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
   try{await navigator.clipboard.writeText(txt);b.textContent="Copiado: é só colar"}catch(e){b.textContent="Não deu pra copiar"}setTimeout(()=>b.textContent="Enviar link",2500)};
-$("friendGo").onclick=()=>{const fr=decode($("friendIn").value);if(!fr){$("friendErr").textContent="Esse código não parece válido. Confira se copiou tudo.";return}
+$("friendGo").onclick=()=>{const fr=decode($("friendIn").value);if(!fr){$("friendErr").textContent="Esse link ou código não parece válido. Confira se copiou tudo, do começo ao fim.";return}
   $("friendErr").textContent="";try{localStorage.setItem(FKEY,encode(fr.n,fr.s,fr.m))}catch(e){}renderFriend(fr)};
 function renderFriend(fr){
   const box=$("friendOut");box.innerHTML="";const s=R.s;

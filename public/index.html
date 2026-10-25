@@ -8,6 +8,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Onde você fica na política? Teste político</title>
+<link rel="canonical" href="https://testepolitico.vercel.app/">
 <meta name="description" content="Teste em três modos (cerca de 65, 135 ou 210 perguntas), do centro aos extremos. Veja sua posição em 6 eixos e qual das 21 ideologias melhor explica suas respostas.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Onde você fica na política?">
@@ -18,9 +19,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#E3DED1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1F1E1B" media="(prefers-color-scheme: dark)">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/fontes.css">
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/componentes.css">
 <link rel="stylesheet" href="/css/urna.css">
@@ -96,6 +95,7 @@
   </label>
   <label class="field">Estado (opcional)<select id="cUf"><option value="">Prefiro não dizer</option></select></label>
   <p class="note hidden" id="cMinor" style="margin-top:1rem">Pra menores de 18 anos, o teste funciona normalmente, mas nenhum dado é enviado.</p>
+  <label class="check" id="cMaiorWrap"><input type="checkbox" id="cMaior"><span>Tenho 18 anos ou mais.</span></label>
   <label class="check" id="cCheckWrap"><input type="checkbox" id="cOk"><span>Li e concordo com os <a href='/termos' rel='noopener' target='_blank'>termos de uso e privacidade</a> e quero participar do estudo.</span></label>
   <button class="primary" id="cGo" disabled>Começar o teste</button>
   <div class="nav"><button class="text-btn" id="cSkip">Prefiro fazer sem participar do estudo</button></div>
@@ -218,7 +218,7 @@
     <details class="acc" id="a-notas"><summary><span class="acc-t">Precisão e observações</span><span class="acc-s" id="s-notas"></span></summary><div class="acc-in"><div id="resNotes" class="notes"></div><p class="small corrigir-linha">Clicou errado em alguma frase? <button type="button" class="text-btn" data-corrigir>Corrigir respostas</button></p></div></details>
     <details class="acc" id="a-hist"><summary><span class="acc-t">Seus resultados anteriores</span><span class="acc-s" id="s-hist"></span></summary><div class="acc-in"><p class="small">Ficam salvos só neste aparelho.</p><div class="box" id="histOut"></div></div></details>
   </div>
-  <div class="note hidden" id="statsBlock" style="margin-top:2rem"><span id="statsMsg"></span><button class="text-btn hidden" id="statsBtn"></button></div>
+  <div class="note hidden" id="statsBlock" style="margin-top:2rem"><span id="statsMsg"></span><label class="check hidden" id="statsMaiorWrap"><input type="checkbox" id="statsMaior"><span>Tenho 18 anos ou mais.</span></label><button class="text-btn hidden" id="statsBtn"></button></div>
 
   <p class="fine hidden" id="quickNote"><span id="quickNoteTxt"></span> <a href="#" id="quickFull"></a></p>
   
@@ -255,7 +255,7 @@
 <dialog class="sheet" id="shareSheet" aria-labelledby="shTitle">
   <div class="sheet-in">
     <div class="grab" aria-hidden="true"></div>
-    <div class="sheet-head"><h3 id="shTitle">Compartilhar resultado</h3><button class="close" id="shClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+    <div class="sheet-head"><h3 id="shTitle">Imagem do seu resultado</h3><button class="close" id="shClose" aria-label="Fechar"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
     <div class="sh-opcoes">
       <div class="sh-op"><span>Formato</span><div class="seg seg-formatos" role="group" aria-label="Formato da imagem"><button type="button" data-formato="story" aria-pressed="true">Story 9:16</button><button type="button" data-formato="retrato" aria-pressed="false">Retrato 4:5</button><button type="button" data-formato="quadrado" aria-pressed="false">Quadrado 1:1</button><button type="button" data-formato="paisagem" aria-pressed="false">Paisagem 16:9</button></div></div>
       <div class="sh-op"><span>Tema da imagem</span><div class="seg" role="group" aria-label="Tema da imagem"><button type="button" data-tema="claro" aria-pressed="true">Claro</button><button type="button" data-tema="escuro" aria-pressed="false">Escuro</button></div></div>

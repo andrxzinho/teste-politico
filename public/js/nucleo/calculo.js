@@ -13,6 +13,8 @@ const marcaEsperada=(o,g)=>o.g===g?1.5:-1.5; // escolhidos pelo pior caso entre 
 function compute(A){
   const mk={com:[],anq:[],fas:[],anc:[],eco:[]};let unsure=0,asked=0,noop=0;const ids=seq();
   for(const id of ids){const o=ITEMS[id],v=A[id];if(v==="g"||v===undefined)continue;asked++;
+    // "Nenhuma chega perto" e "Nenhuma das duas" (n) são resposta, não falta de opinião: só não entram no cálculo
+    if(v==="n")continue;
     if(typeof v!=="number"){unsure++;noop++;continue}if(v===0&&!escolha(o))unsure++;
     o.m.forEach(g=>mk[g]&&mk[g].push(o.mi?-v:v))}
   const M=Motor.calcular(A,ITEMS,ids,WEIGHTS),s=M.s,ci=M.ci,hw=M.hw,gam=M.gam;
@@ -29,7 +31,12 @@ function compute(A){
     // mas não concordam igual com essas frases
     ["com","anq","fas","anc"].forEach(g=>{if(!mk[g].length)return;const avg=mk[g].reduce((x,y)=>x+y,0)/mk[g].length,d=avg-marcaEsperada(o,g);L-=d*d/(2*CLS.marcadoras*CLS.marcadoras)});
     return {o,L,z:nd?z/nd:0}});
-  const elig=ll.filter(q=>!q.o.g||ext[q.o.g]>=GATE),mx=Math.max(...elig.map(q=>q.L)),tot=elig.reduce((a,q)=>a+Math.exp(q.L-mx),0);
+  // adesão às frases de ruptura do eixo Democracia (de -2 a 2): as extremas só disputam com concordância explícita,
+  // e não por ficar no meio-termo nas frases de democracia. Algumas rupturas têm lado (ld: uma revolução, a esquerda;
+  // uma intervenção militar, a direita): cada extrema é medida pelas rupturas do próprio lado mais as sem lado.
+  const rupDe=l=>{const v=ids.filter(id=>{const o=ITEMS[id];return o.k==="D"&&o.s==="rup"&&!escolha(o)&&(!o.ld||o.ld===l)&&typeof A[id]==="number"}).map(id=>A[id]*ITEMS[id].d);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0};
+  const ruptura={e:rupDe("e"),d:rupDe("d")};
+  const elig=ll.filter(q=>(!q.o.g||ext[q.o.g]>=GATE)&&(!q.o.rup||ruptura[q.o.rup]>=RUP_GATE)),mx=Math.max(...elig.map(q=>q.L)),tot=elig.reduce((a,q)=>a+Math.exp(q.L-mx),0);
   const dc=o=>Math.hypot(o.p.E,o.p.A,o.p.C,o.p.N,o.p.D+65); // distância da posição típica ao centro democrático
   let ranked=elig.map(q=>{const p=Math.exp(q.L-mx)/tot;return {...q.o,prob:p,match:Math.round(p*100),z:q.z}}).sort((a,b)=>(b.prob-a.prob)||(dc(a)-dc(b)));
   if(!ranked.length)ranked=[{...IDEO.find(o=>o.n==="Centrista"),prob:1,match:100,z:0}];
@@ -56,9 +63,15 @@ function compute(A){
   const prec=hwAvg<=20?"alta":hwAvg<=32?"média":"baixa",P1=ranked[0].prob,lab=two?"entre duas":P1>=.6?"clara":"razoável";
   // quem pulou muitas frases ("não tenho opinião") não pode ter confiança alta, por mais que as poucas respostas apontem pra um lado
   const respondeu=asked?1-noop/asked:0;
+  // não diferenciação: quase tudo no meio-termo, ou concordar (ou discordar) de quase tudo, qualquer que seja o lado
+  // da frase. Nos dois casos as respostas dizem pouco sobre a posição, e a confiança não pode ser alta.
+  const lik=ids.filter(id=>!escolha(ITEMS[id])&&typeof A[id]==="number").map(id=>A[id]);
+  const neutro=lik.length?lik.filter(v=>v===0).length/lik.length:0,aquiesc=lik.length?lik.reduce((a,b)=>a+b,0)/lik.length:0;
+  const naoDif=neutro>=.6||Math.abs(aquiesc)>=.7;
   let conf=P1>=.6&&cons>=70&&prec!=="baixa"?"alta":P1>=.35&&cons>=50?"media":"baixa";
-  if(respondeu<.5)conf="baixa";else if(respondeu<.75&&conf==="alta")conf="media";
-  return {s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop};
+  if(respondeu<=.5)conf="baixa";else if(respondeu<.75&&conf==="alta")conf="media";
+  if(neutro>=.8||Math.abs(aquiesc)>=1)conf="baixa";else if(naoDif&&conf==="alta")conf="media";
+  return {s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop,neutro,aquiesc,naoDif,ruptura};
 }
 // posição provisória num eixo, usada pra decidir se as frases de um extremo aparecem
 function axisNow(k){return Motor.calcular(st.ans,ITEMS,seq(),WEIGHTS).raw[k]}

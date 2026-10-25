@@ -6,7 +6,7 @@ let edMudou={}; // id -> nova resposta, só aplicada ao confirmar
 // opções de resposta de uma frase, na ordem natural (a mesma lógica da tela de perguntas, sem a inversão aleatória)
 function opcoesFrase(o){
   const base=o.f==="l"?o.o.map((t,i)=>[i-2,t]):o.f==="c"?[[-2,o.a],[0,"As duas, igualmente"],[2,o.b]]:o.f==="d"?optsD(o):OPTS_A;
-  return [...base,["x",ansLabel(o,"x")]];
+  const sem=escolha(o)?"n":"x";return [...base,[sem,ansLabel(o,sem)]];
 }
 // frases que a pessoa de fato viu e respondeu (as de extremo que não abriram ficam de fora)
 function frasesRespondidas(){

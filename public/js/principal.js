@@ -48,7 +48,7 @@ document.querySelectorAll(".start").forEach(b=>b.onclick=()=>start(b.dataset.mod
 $("resumeBtn").onclick=()=>{show("quiz");render()};
 $("exitBtn").onclick=()=>{save();showResume();show("intro")};
 $("backBtn").onclick=()=>{if(busy)return;if(st.cur>0){st.cur=prevIdx();save();render()}};
-$("skipBtn").onclick=()=>{if(!busy)pick("x")};
+$("skipBtn").onclick=()=>{if(!busy)pick(escolha(ITEMS[seq()[st.cur]])?"n":"x")};
 $("redoBtn").onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){}st=fresh("full");retomarVisivel(false);show("intro")};
 // teste pela metade: dá pra jogar fora o progresso e começar do zero (o resultado de quem participa do estudo não é afetado)
 function retomarVisivel(on){$("retomar").classList.toggle("hidden",!on);$("resumeBtn").classList.toggle("hidden",!on)}

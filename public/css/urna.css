@@ -21,7 +21,7 @@ h1,h2,h3{margin:0;font-weight:700}
 .muted{color:var(--grafite)}
 .small{font-size:.86rem;color:var(--grafite);margin:.35rem 0 0}
 .fine{font-size:.82rem;color:var(--grafite);line-height:1.5}
-.site-name,.kicker,.rotulo{margin:0;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grafite)}
+.kicker,.rotulo{margin:0;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grafite)}
 /* ---------- visor ---------- */
 .visor,.screen,.cover,.intro-visor{background:var(--visor);border:9px solid var(--moldura);border-radius:12px;padding:1.1rem 1rem 1rem;color:var(--tinta)}
 .visor-rodape{margin-top:.9rem;padding-top:.55rem;border-top:1px solid var(--linha);font-size:.78rem;color:var(--grafite)}
@@ -59,7 +59,6 @@ h1,h2,h3{margin:0;font-weight:700}
 .som[aria-pressed="true"]{color:var(--tinta)}
 /* ---------- abertura ---------- */
 .intro{padding-top:.4rem}
-.intro-top{display:flex;justify-content:space-between;align-items:center;min-height:2.4rem}
 .intro-visor{margin-top:.6rem}
 .hero-title{margin:0;font-size:clamp(2.3rem,11vw,3.4rem);line-height:1;font-weight:700;letter-spacing:-.015em;max-width:11ch}
 .hero-lede{margin:.8rem 0 0;font-size:1rem;line-height:1.5;color:var(--grafite)}
@@ -455,13 +454,6 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .destaques{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
 .destaques li{position:relative;padding-left:1.2rem;font-size:.93rem;line-height:1.45}
 .destaques li::before{content:"";position:absolute;left:0;top:.45em;width:.55rem;height:.55rem;border-radius:2px;background:var(--marca)}
-.livro-curto{padding:.6rem 0;border-top:1px solid var(--linha)}
-.livro-curto:first-of-type{border-top:0;padding-top:0}
-.livro-curto .tipo{display:inline-block;margin-bottom:.2rem;padding:.05rem .4rem;border-radius:3px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--linha);color:var(--tinta)}
-.livro-curto .tipo.contra{background:var(--corrige);color:#151513}
-.livro-curto b{display:block;font-size:.96rem}
-.livro-curto small{display:block;color:var(--grafite);font-size:.82rem}
-.livro-curto p{margin:.25rem 0 0;font-size:.88rem;line-height:1.45;color:var(--grafite)}
 .ver-completo{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;min-height:3.4rem;margin:1.2rem 0 5px;border:0;border-radius:6px;background:var(--tecla);color:var(--tecla-txt);font:700 1rem var(--font);box-shadow:0 5px 0 var(--tecla-sombra);cursor:pointer;transition:transform .06s,box-shadow .06s}
 .ver-completo::after{content:"+";font-size:1.3rem;line-height:1}
 #results.completo .ver-completo::after{content:"−"}
@@ -482,10 +474,6 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .shimg[data-formato="paisagem"]{max-width:100%}
 .shimg[data-formato="quadrado"],.shimg[data-formato="retrato"]{max-width:340px}
 
-.livros-grupo{margin-top:.8rem}
-.livros-grupo > .tipo{display:inline-block;margin-bottom:.35rem;padding:.08rem .45rem;border-radius:3px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--linha);color:var(--tinta)}
-.livros-grupo > .tipo.contra{background:var(--corrige);color:#151513}
-.livros-grupo .livro-curto{padding:.4rem 0}
 
 .resumo-acoes{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
 .resumo-acoes .secondary{min-height:2.9rem;font-size:.88rem;padding:.4rem}

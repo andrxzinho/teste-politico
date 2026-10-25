@@ -25,6 +25,18 @@
       "destination": "/metodologia.html"
     }
   ],
+  "redirects": [
+    {
+      "source": "/ideologias/esquerda-radical/",
+      "destination": "/ideologias/extrema-esquerda/",
+      "permanent": true
+    },
+    {
+      "source": "/ideologias/direita-radical/",
+      "destination": "/ideologias/extrema-direita/",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/backup",
@@ -45,7 +57,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
         },
         {
           "key": "X-Frame-Options",

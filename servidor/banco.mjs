@@ -4,10 +4,10 @@
 const MEMORIA = process.env.BANCO === "memoria";
 
 // ---------- Supabase (PostgREST)
-const URL_BASE = () => (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
-// SUPABASE_CHAVE_SITE: chave secreta criada só pro site (tem prioridade). As outras duas são as que a integração
-// do Supabase com o Vercel cria e pode trocar sozinha; ficam como alternativa.
-const CHAVE = () => process.env.SUPABASE_CHAVE_SITE || process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const URL_BASE = () => (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+// SUPABASE_CHAVE_SITE: chave secreta criada só pro site. As chaves que a integração do Supabase com o Vercel cria não
+// são usadas, pra que só uma chave, guardada só em Production, dê acesso ao banco.
+const CHAVE = () => process.env.SUPABASE_CHAVE_SITE || "";
 function configurado() { if (!URL_BASE() || !CHAVE()) throw new Error("Banco não configurado: faltam SUPABASE_URL e a chave secreta nas variáveis do projeto."); }
 async function rest(caminho, { metodo = "GET", corpo, prefer, contar } = {}) {
   configurado();
@@ -17,7 +17,7 @@ async function rest(caminho, { metodo = "GET", corpo, prefer, contar } = {}) {
   const p = [prefer, contar ? "count=exact" : null].filter(Boolean).join(",");
   if (p) h.prefer = p;
   const r = await fetch(`${URL_BASE()}/rest/v1/${caminho}`, { method: metodo, headers: h, body: corpo === undefined ? undefined : JSON.stringify(corpo) });
-  if (!r.ok) throw new Error(`Banco respondeu ${r.status} em ${metodo} ${caminho.split("?")[0]}: ${(await r.text()).slice(0, 200)}`);
+  if (!r.ok) throw new Error(`Banco respondeu ${r.status} em ${metodo} ${caminho.split("?")[0]}`);
   const total = contar ? Number((r.headers.get("content-range") || "").split("/")[1]) : undefined;
   const texto = metodo === "HEAD" ? "" : await r.text();
   return { dados: texto ? JSON.parse(texto) : null, total };
@@ -102,6 +102,11 @@ export const banco = {
   async contarPedido(chave, janela) {
     if (MEMORIA) { const k = `${chave}|${janela}`; M.limites.set(k, (M.limites.get(k) || 0) + 1); return M.limites.get(k); }
     const { dados } = await rest("rpc/contar_pedido", { metodo: "POST", corpo: { p_chave: chave, p_janela: janela } }); return Number(dados);
+  },
+  // apaga as janelas de limite mais antigas que a indicada (chamado a cada visitante novo na janela)
+  async limparLimites(antesDe) {
+    if (MEMORIA) { for (const k of M.limites.keys()) if (Number(k.split("|")[1]) < antesDe) M.limites.delete(k); return; }
+    await rest(`limites?janela=lt.${antesDe}`, { metodo: "DELETE", prefer: "return=minimal" });
   },
   async gravarBackup(dia, conteudo) {
     if (MEMORIA) { M.backups.set(dia, conteudo); return; }
