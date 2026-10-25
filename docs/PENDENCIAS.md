@@ -1,12 +1,13 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 23 de outubro de 2026.
+Última revisão: 25 de outubro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
-- [ ] **Segurança e privacidade:** as correções no código estão no PR de 23/10/2026. Falta o responsável rodar o SQL no
-      Supabase (passado a ele diretamente, fora do repositório) e trocar as chaves antigas da integração.
+- [ ] **Segurança e privacidade:** as correções no código estão no ar desde 25/10/2026. Falta o responsável rodar o SQL
+      no Supabase (passado a ele diretamente, fora do repositório), trocar as chaves antigas da integração e remover a
+      integração Supabase–Vercel.
 - [x] **Variáveis de ambiente no Vercel:** só as cinco que o site usa, todas Sensitive e só em Production (23/10/2026).
 - [ ] **Textos a conferir com fonte atual:** licença-paternidade (X25), marco temporal (C21) e a etapa do acordo
       Mercosul–União Europeia (N21).
@@ -19,7 +20,7 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       perguntas), banco de desempate do Aprofundado, equilíbrio do eixo Instituições, ordem das frases por pessoa e,
       com dados reais, dimensionalidade dos eixos e calibração da probabilidade.
 
-## Auditoria pedida em 23/10/2026 (ainda não concluída)
+## Auditoria pedida em 23/10/2026
 
 - [x] **Livros:** correções da auditoria aplicadas e um link conferido em cada obra, no resultado e nas páginas das
       ideologias (23/10/2026). Detalhes no topo de `docs/AUDITORIA-LIVROS.md`.
