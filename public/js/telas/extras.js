@@ -36,11 +36,11 @@ function tensoesIncomuns(){
     itens.push(["Posição incomum",`Em ${nomeSub(x.key).toLowerCase()}, você fica bem mais pro lado "${lado.toLowerCase()}" do que qualquer uma das 21 tradições. A mais próxima é ${x.n}.`])}
   let pior=null;for(let i=0;i<EIXOS5.length;i++)for(let j=i+1;j<EIXOS5.length;j++){const a=EIXOS5[i],b=EIXOS5[j];
     const md=Math.min(...IDEO.map(o=>Math.hypot(R.s[a]-(o.p[a]||0),R.s[b]-(o.p[b]||0))));if(!pior||md>pior.md)pior={a,b,md}}
-  if(pior&&pior.md>=35)itens.push(["Combinação rara",`Você combina ${band(R.s[pior.a],pior.a).toLowerCase()} em ${AX[pior.a].name.toLowerCase()} com ${band(R.s[pior.b],pior.b).toLowerCase()} em ${AX[pior.b].name.toLowerCase()}, uma combinação que nenhuma das 21 tradições tem de forma típica.`]);
+  if(pior&&pior.md>=35)itens.push(["Combinação rara",`Você combina ${band(R.s[pior.a],pior.a).toLowerCase()} em ${AX[pior.a].name.toLowerCase()} com ${band(R.s[pior.b],pior.b).toLowerCase()} em ${AX[pior.b].name.toLowerCase()}. Nenhuma das 21 tradições costuma ter essa combinação.`]);
   ultimasTensoes=itens.slice();
-  if(!itens.length)itens.push(["Sem tensões fortes","Suas posições se combinam de um jeito comum entre as tradições políticas: nenhuma combinação rara e nenhum tema muito fora do padrão."]);
+  if(!itens.length)itens.push(["Sem tensões fortes","Suas posições se combinam de um jeito comum entre as tradições políticas. Nenhuma combinação é rara e nenhum tema fica muito fora do padrão."]);
   itens.forEach(([t,x])=>{const d=el("div","item");d.append(el("b",null,t),el("p",null,x));out.append(d)});
-  out.append(el("p","small","A comparação é com as posições típicas das 21 ideologias, não com outras pessoas. Quando o estudo tiver dados suficientes, poderá ser com quem fez o teste."));
+  out.append(el("p","small","A comparação é com as posições típicas das 21 ideologias, não com outras pessoas. Quando o estudo tiver dados suficientes, ela poderá ser feita com quem fez o teste."));
   return itens[0][0]==="Sem tensões fortes"?0:itens.length}
 
 // 3. leituras: obras da tradição e as críticas mais fortes a ela

@@ -56,7 +56,7 @@ async function buildImage(d,op=shOp){
   if((op.ext||op.cand)&&y<limite){x.strokeStyle=K.LINHA;x.lineWidth=2;x.beginPath();x.moveTo(L,y-24);x.lineTo(L+W,y-24);x.stroke()}
   if(op.ext&&y<limite){const ex=Object.entries(d.ext).filter(([g])=>EXT[g]&&(!d.extAsked||d.extAsked[g])).sort((p,q)=>q[1]-p[1]);
     x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("EXTREMOS",L,y);x.font=`400 24px ${F}`;x.fillStyle=K.GRAF;
-    x.fillText(!ex.length?"Frases dos extremos não perguntadas":ex[0][1]>=GATE?`${EXT[ex[0][0]].n}: ${ex[0][1]} de 100`:"Nenhum com índice acima de 50",L+170,y);y+=46}
+    x.fillText(!ex.length?"Frases dos extremos não perguntadas":ex[0][1]>=GATE?`${EXT[ex[0][0]].n}: ${ex[0][1]} de 100`:"Nenhum chega a 50 de 100",L+170,y);y+=46}
   if(op.cand&&y+48<limite){x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("MAIS COMPATÍVEIS",L,y);y+=10;
     const linhas=story||alto?[["pres","Presidente, 2º turno"],["gov","Governador SP"],["sen","Senado SP"],["part","Partido"]]:[["pres","Presidente, 2º turno"]];
     linhas.forEach(([k,l])=>{if(y+38>limite)return;const c0=k==="pres"?(d.cand.pres.find(c=>c.st==="2º turno")||d.cand.pres[0]):d.cand[k][0];y+=38;x.fillStyle=K.GRAF;x.font=`400 22px ${F}`;x.fillText(l,L,y);

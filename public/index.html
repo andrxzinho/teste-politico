@@ -52,7 +52,7 @@
     </button>
     <button class="mode start" data-mode="full">
       <span class="mode-head"><b>Padrão</b><span>Cerca de 135 perguntas, uns 18 min</span></span>
-      <span class="mode-desc">Mede cada tema com mais detalhe e confere a coerência das suas respostas.</span>
+      <span class="mode-desc">Mede cada tema com mais detalhe e confere se as suas respostas combinam entre si.</span>
       <span class="mode-bar" aria-hidden="true"><i class="s1"></i><i class="s2"></i></span>
     </button>
     <button class="mode start" data-mode="deep">
@@ -61,7 +61,7 @@
       <span class="mode-bar" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i></span>
     </button>
   </div>
-  <p class="modes-note">Cada modo inclui as frases do anterior: dá pra começar por um menor e continuar no seguinte depois, sem repetir nada. <button type="button" class="text-btn" data-info="modos">Como os modos foram testados</button></p>
+  <p class="modes-note">Cada modo já tem as frases do anterior. Dá pra começar por um menor e seguir pro próximo depois, sem repetir nada. <button type="button" class="text-btn" data-info="modos">Como os modos foram testados</button></p>
   <p class="garantias"><span>Anônimo, sem cadastro</span><span>Dá pra pausar e voltar depois</span><span><button type="button" class="text-btn" data-info="anonimo">O que é enviado</button></span></p>
   <section class="home-sec" aria-labelledby="como-t">
     <h2 class="pick-title" id="como-t">Como funciona</h2>
@@ -83,10 +83,10 @@
 
 <section id="consent" class="screen hidden">
   <h1 class="display">Antes de começar</h1>
-  <p class="lede">Este teste faz parte de um estudo pessoal sobre opiniões políticas. Se você participar, seu resultado é enviado de forma anônima quando terminar.</p>
-  <div class="acc-list consent-acc"><details class="acc"><summary><span class="acc-t">O que é enviado, se você participar</span><span class="acc-s">Ideologia, eixos em faixas e respostas. Nunca nome, e-mail, IP ou localização.</span></summary><div class="acc-in"><div class="card cbox">
+  <p class="lede">Este teste faz parte de um estudo pessoal sobre opiniões políticas. Se você participar, seu resultado é enviado de forma anônima quando você terminar.</p>
+  <div class="acc-list consent-acc"><details class="acc"><summary><span class="acc-t">O que é enviado, se você participar</span><span class="acc-s">Ideologia, posição aproximada nos eixos e respostas. Nunca nome, e-mail, IP ou localização.</span></summary><div class="acc-in"><div class="card cbox">
     <b>O que é enviado</b>
-    <ul><li>Sua ideologia e sua posição em cada eixo, em faixas</li><li>Sua resposta a cada frase</li><li>Quais explicações você abriu e quanto tempo levou</li><li>Como você se define politicamente, se responder</li><li>Faixa de idade e estado, só se você informar</li></ul>
+    <ul><li>Sua ideologia e sua posição aproximada em cada eixo (uma faixa, não o número exato)</li><li>Sua resposta a cada frase</li><li>Quais explicações você abriu e quanto tempo levou</li><li>Como você se define politicamente, se responder</li><li>Faixa de idade e estado, só se você informar</li></ul>
     <b>O que nunca é enviado</b>
     <ul class="no"><li>Nome, e-mail, IP, navegador ou localização</li><li>Sua compatibilidade com candidatos</li></ul>
   </div></div></details></div>
@@ -169,7 +169,7 @@
   <p class="note ed-aviso hidden" id="edAviso" role="status" aria-live="polite"></p>
   <div class="resumo" id="resumo"></div>
   <div id="pecasResumo" hidden>
-    <section class="resumo-bloco" id="blocoPensadores"><h2>Pensadores e figuras históricas</h2><p class="small">Pensadores clássicos e figuras da história do Brasil, todos já falecidos, mais parecidos com as suas posições. A posição de cada um é uma estimativa a partir das obras e da atuação; pessoas de outras épocas são comparadas só nos eixos em que a posição delas faz sentido hoje.</p><div id="pensOut"></div></section>
+    <section class="resumo-bloco" id="blocoPensadores"><h2>Pensadores e figuras históricas</h2><p class="small">Pensadores clássicos e figuras da história do Brasil (todos já falecidos) mais parecidos com as suas posições. A posição de cada um foi estimada pelo que escreveu e pelo que fez. Quem viveu em outra época só é comparado nos eixos em que a posição dele faz sentido hoje.</p><div id="pensOut"></div></section>
     <section class="resumo-bloco" id="blocoLeituras"><h2>Leituras recomendadas</h2><div id="leitOut"></div></section>
     <section class="resumo-bloco partilha" id="blocoPartilha"><h2>Compartilhar e comparar</h2>
       <p class="small">Mande o seu link pra quem quiser. Quem abrir faz o teste e, no fim, vê os dois resultados lado a lado. O link leva só a sua ideologia, o modo e a posição nos eixos, nunca as suas respostas.</p>
@@ -201,20 +201,20 @@
     <details class="acc" id="a-compideo"><summary><span class="acc-t">Comparar com uma ideologia</span><span class="acc-s" id="s-compideo"></span></summary><div class="acc-in"><label class="field" for="compIdeoSel">Ideologia<select id="compIdeoSel"></select></label><div id="compIdeoOut"></div></div></details>
     <details class="acc" id="a-eixos"><summary><span class="acc-t">Eixos e subtemas</span><span class="acc-s" id="s-eixos"></span></summary><div class="acc-in">
     <div id="highlights"></div>
-    <p class="small" style="margin-top:0">A faixa clara em cada eixo mostra onde você provavelmente está, considerando a variação entre as suas próprias respostas. Quanto mais estreita, mais certeza. Embaixo de cada eixo aparecem os subtemas, que são assuntos menores dentro do mesmo tema (na economia, por exemplo: impostos, trabalho, e Estado e mercado).</p>
+    <p class="small" style="margin-top:0">A faixa clara em cada eixo mostra onde você provavelmente está. Ela leva em conta o quanto as suas respostas variam entre si. Quanto mais estreita, mais certeza. Embaixo de cada eixo aparecem os subtemas: assuntos menores dentro do mesmo tema (na economia, por exemplo: impostos, trabalho, e Estado e mercado).</p>
     <div class="box" id="axesOut"></div>
     <div id="soloOut"></div>
     <button class="more-btn" id="axesTxt" aria-expanded="false">Ver explicação de cada eixo</button></div></details>
     <details class="acc" id="a-tensoes"><summary><span class="acc-t">Tensões e posições incomuns</span><span class="acc-s" id="s-tensoes"></span></summary><div class="acc-in"><div id="tensOut" class="box"></div></div></details>
     <details class="acc" id="a-extremos"><summary><span class="acc-t">Termômetro dos extremos</span><span class="acc-s" id="s-extremos"></span></summary><div class="acc-in">
-    <p class="small" style="margin-top:0">Combina o quanto você concordou com as frases que definem cada extremo com a sua posição nos eixos. O resultado é um índice de 0 a 100, não uma probabilidade. A partir de 50, a afinidade é forte.</p>
+    <p class="small" style="margin-top:0">Junta duas coisas: o quanto você concordou com as frases que definem cada extremo e a sua posição nos eixos. O resultado é um índice de 0 a 100, não uma chance. A partir de 50, a afinidade é forte.</p>
     <div class="box" id="thermoOut"></div></div></details>
     <details class="acc" id="a-candidatos"><summary><span class="acc-t">Candidatos</span><span class="acc-s" id="s-candidatos"></span></summary><div class="acc-in">
-    <p class="small" style="margin-top:0">Governador e Senado são de São Paulo. Pra deputado, veja os partidos: seu voto conta primeiro pra legenda.</p>
+    <p class="small" style="margin-top:0">Governador e Senado são de São Paulo. Pra deputado, veja os partidos: seu voto conta primeiro pro partido (a legenda).</p>
     <div id="candNote"></div>
     <div class="tabs" role="tablist" id="candTabs"></div>
     <div id="candOut"></div>
-    <details class="method"><summary>Como a compatibilidade foi calculada</summary><p class="fine">As posições foram estimadas pelo que cada um fez, e não pelo que diz em campanha: atuação em governos e mandatos, votações, alianças e a classificação ideológica dos partidos feita por cientistas políticos em 2022 (Bolognesi e outros, 2025). Quando a pessoa não tem histórico próprio, a posição foi estimada pelo partido. O mesmo critério vale pra todos. A compatibilidade usa os eixos de Economia, Liberdade × Ordem, Costumes e Brasil × Mundo, com o peso que você deu pra cada tema. Não é recomendação de voto. Pra deputado um por um, o Match Eleitoral da Folha e o Politicando usam respostas dos próprios candidatos.</p></details></div></details>
+    <details class="method"><summary>Como a compatibilidade foi calculada</summary><p class="fine">A posição de cada um foi estimada pelo que fez, e não pelo que diz na campanha. Contam a atuação em governos e mandatos, as votações, as alianças e a classificação ideológica dos partidos feita por cientistas políticos em 2022 (Bolognesi e outros, 2025). Quem não tem histórico próprio teve a posição estimada pelo partido. O critério é o mesmo pra todos. A compatibilidade usa os eixos Economia, Liberdade × Ordem, Costumes e Brasil × Mundo, com o peso que você deu a cada tema. Não é recomendação de voto. Pra comparar com cada deputado, o Match Eleitoral da Folha e o Politicando usam respostas dos próprios candidatos.</p></details></div></details>
     <details class="acc" id="a-notas"><summary><span class="acc-t">Precisão e observações</span><span class="acc-s" id="s-notas"></span></summary><div class="acc-in"><div id="resNotes" class="notes"></div><p class="small corrigir-linha">Clicou errado em alguma frase? <button type="button" class="text-btn" data-corrigir>Corrigir respostas</button></p></div></details>
     <details class="acc" id="a-hist"><summary><span class="acc-t">Seus resultados anteriores</span><span class="acc-s" id="s-hist"></span></summary><div class="acc-in"><p class="small">Ficam salvos só neste aparelho.</p><div class="box" id="histOut"></div></div></details>
   </div>
