@@ -16,9 +16,6 @@ c = c.replace(/export const IDS = \[.*?\];/s, `export const IDS = ${JSON.stringi
      .replace(/export const META = \{.*?\};/s, `export const META = ${JSON.stringify(META)};`);
 if (!c.includes("export const NAO_PONTUA")) c = c.replace(/(export const META = .*?;\n)/s, `$1// frases que não entram na média do eixo (marcadores de extremos fora do eixo Democracia e temas avulsos)\nexport const NAO_PONTUA = [];\n`);
 c = c.replace(/export const NAO_PONTUA = \[.*?\];/s, `export const NAO_PONTUA = ${JSON.stringify(NAO)};`);
-const LAD = Object.fromEntries((DATA.LAD || []).map((o) => [o.id, [o.k, o.v]]));
-if (!c.includes("export const ESCADAS")) c = c.replace(/(export const NAO_PONTUA = .*?;\n)/s, `$1// perguntas de escolha forçada: eixo e posição de cada opção (usadas na correção do estilo de resposta)\nexport const ESCADAS = {};\n`);
-c = c.replace(/export const ESCADAS = \{.*?\};/s, `export const ESCADAS = ${JSON.stringify(LAD)};`);
 fs.writeFileSync("servidor/comum.mjs", c);
 // motor do servidor: o mesmo arquivo do site, com as frases no formato que ele usa
 const ITENS = Object.fromEntries(ITEMS.map((o) => [o.id, { k: o.k, s: o.s || null, d: o.d, f: o.f, sc: scored(o) && !escolha(o), ...(o.f === "l" ? { v: o.v } : {}), ...(o.f === "c" ? { va: o.va, vb: o.vb } : {}), lv: o.lv || 2 }]));
