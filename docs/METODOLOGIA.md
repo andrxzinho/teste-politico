@@ -101,6 +101,15 @@ média.
 **Não diferenciação:** com 60% ou mais das frases de concordância no meio-termo, ou com a média bruta das respostas
 (sem considerar o lado de cada frase) igual ou acima de 0,7 em valor absoluto (concordar ou discordar de quase tudo), a
 confiança não passa de média. Com 80% ou mais no meio-termo, ou média bruta de 1 ou mais, é baixa.
+
+**Respostas espalhadas:** em cada eixo (E, A, C, N) com pelo menos 4 frases de concordância respondidas, calcula-se a
+variância das respostas já orientadas pelo lado de cada frase (resposta × direção, de -2 a 2). Se a média dessas
+variâncias for 1,7 ou mais, a confiança não passa de média; com 2 ou mais, é baixa (`ESPALHADO_MEDIA` e
+`ESPALHADO_BAIXA` em `js/nucleo/base.js`). Respostas ao acaso dão variância perto de 2 e média perto do centro, o que
+antes resultava em "Centrista, confiança alta" em cerca de 85% dos casos. Simulação: com respostas aleatórias, a
+confiança alta caiu pra 43% (Essencial), 12% (Padrão) e 2% (Aprofundado); nos respondentes simulados, o acerto não
+mudou e a parte com confiança alta foi de 91% → 81% (Essencial), 94% → 90% (Padrão) e 93% → 89% (Aprofundado). No
+Essencial, com poucas frases por eixo, a separação entre resposta ao acaso e opinião variada é mais fraca.
 Com opinião em menos de 20% das perguntas, o teste não mostra uma ideologia ("Respostas insuficientes").
 
 ## 7. Consistência

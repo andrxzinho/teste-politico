@@ -68,10 +68,16 @@ function compute(A){
   const lik=ids.filter(id=>!escolha(ITEMS[id])&&typeof A[id]==="number").map(id=>A[id]);
   const neutro=lik.length?lik.filter(v=>v===0).length/lik.length:0,aquiesc=lik.length?lik.reduce((a,b)=>a+b,0)/lik.length:0;
   const naoDif=neutro>=.6||Math.abs(aquiesc)>=.7;
+  // respostas espalhadas: no mesmo eixo, as respostas vão pros dois lados com força (variância alta das respostas já
+  // orientadas pelo lado de cada frase). É o padrão de quem responde ao acaso, cuja média cai no centro e parece moderação.
+  const porEixo={};ids.forEach(id=>{const o=ITEMS[id],v=A[id];if(typeof v!=="number"||escolha(o)||!["E","A","C","N"].includes(o.k))return;(porEixo[o.k]||(porEixo[o.k]=[])).push(v*(o.d||1))});
+  const vars=Object.values(porEixo).filter(a=>a.length>=4).map(a=>{const m=a.reduce((x,y)=>x+y,0)/a.length;return a.reduce((x,y)=>x+(y-m)**2,0)/a.length});
+  const espalhado=vars.length?vars.reduce((a,b)=>a+b,0)/vars.length:0;
   let conf=P1>=.6&&cons>=70&&prec!=="baixa"?"alta":P1>=.35&&cons>=50?"media":"baixa";
   if(respondeu<=.5)conf="baixa";else if(respondeu<.75&&conf==="alta")conf="media";
   if(neutro>=.8||Math.abs(aquiesc)>=1)conf="baixa";else if(naoDif&&conf==="alta")conf="media";
-  return {s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop,neutro,aquiesc,naoDif,ruptura};
+  if(espalhado>=ESPALHADO_BAIXA)conf="baixa";else if(espalhado>=ESPALHADO_MEDIA&&conf==="alta")conf="media";
+  return {s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop,neutro,aquiesc,naoDif,espalhado,ruptura};
 }
 // posição provisória num eixo, usada pra decidir se as frases de um extremo aparecem
 function axisNow(k){return Motor.calcular(st.ans,ITEMS,seq(),WEIGHTS).raw[k]}

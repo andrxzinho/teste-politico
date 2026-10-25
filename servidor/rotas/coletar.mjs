@@ -91,7 +91,7 @@ export default async (req) => {
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,
     cf: b.confianca, tb: b.desempate, inc: b.inconsistencias, ci: b.inicio ?? null, env: b.envio, de: b.de ? MODO[b.de] : null,
     // versão do cálculo que classificou o resultado (2 = com o filtro das extremas e as frases reescritas em 23/10/2026)
-    cv: b.calculo === 2 ? 2 : 1 };
+    cv: [2, 3].includes(b.calculo) ? b.calculo : 1 };
   // o código do envio é aleatório e gerado no aparelho: se a pessoa reenviar (conexão caiu no meio), não duplica.
   // Quem continua num modo maior grava um segundo registro com o mesmo código; o painel conta só o mais completo.
   const chave = b.de ? `${b.envio}~${modo}` : b.envio;
