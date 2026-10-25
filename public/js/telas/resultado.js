@@ -138,8 +138,10 @@ function compass(s){
   const x=160+s.E*1.3,y=160-s.A*1.3,line=css("--line"),muted=css("--muted"),surface=css("--surface"),accent=css("--accent"),card=css("--card");
   let g="";for(let i=1;i<8;i++){const p=30+i*32.5;if(i!==4)g+=`<line x1="${p}" y1="30" x2="${p}" y2="290" stroke="${line}" stroke-width=".6"/><line x1="30" y1="${p}" x2="290" y2="${p}" stroke="${line}" stroke-width=".6"/>`}
   const T=(x,y,t,a="middle")=>`<text x="${x}" y="${y}" text-anchor="${a}" font-size="12" fill="${muted}" font-family="Arimo,Arial,sans-serif">${t}</text>`;
-  const ci=R&&R.ci?R.ci:null,rx=ci?160+ci.E[0]*1.3:0,rw=ci?(ci.E[1]-ci.E[0])*1.3:0,ry=ci?160-ci.A[1]*1.3:0,rh=ci?(ci.A[1]-ci.A[0])*1.3:0;
-  const box=ci?`<rect class="voce-faixa" x="${rx}" y="${ry}" width="${rw}" height="${rh}" rx="10" fill="${accent}" fill-opacity=".12" stroke="${accent}" stroke-opacity=".45" stroke-dasharray="4 3"/>`:"";
+  const ci=R&&R.ci?R.ci:null;let rx=ci?160+ci.E[0]*1.3:0,rw=ci?(ci.E[1]-ci.E[0])*1.3:0,ry=ci?160-ci.A[1]*1.3:0,rh=ci?(ci.A[1]-ci.A[0])*1.3:0;
+  // a faixa nunca fica menor que o ponto, senão some atrás dele
+  if(ci){const M=38;if(rw<M){rx-=(M-rw)/2;rw=M}if(rh<M){ry-=(M-rh)/2;rh=M}rx=Math.max(30,Math.min(290-rw,rx));ry=Math.max(30,Math.min(290-rh,ry))}
+  const box=ci?`<rect class="voce-faixa" x="${rx}" y="${ry}" width="${rw}" height="${rh}" rx="${Math.min(10,rw/5,rh/5).toFixed(1)}" fill="${accent}" fill-opacity=".12" stroke="${accent}" stroke-opacity=".7" stroke-dasharray="4 3"/>`:"";
   $("compassSvg").innerHTML=`<defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${accent}"/><stop offset="1" stop-color="${accent}"/></linearGradient><radialGradient id="cgl"><stop offset="0" stop-color="${accent}" stop-opacity=".35"/><stop offset="1" stop-color="${accent}" stop-opacity="0"/></radialGradient></defs><rect x="30" y="30" width="260" height="260" rx="3" fill="${surface}"/>${g}<line x1="160" y1="30" x2="160" y2="290" stroke="${muted}" stroke-width="1.2"/><line x1="30" y1="160" x2="290" y2="160" stroke="${muted}" stroke-width="1.2"/>${T(160,20,"Mais ordem")}${T(160,309,"Mais liberdade")}${T(36,153,"Esquerda","start")}${T(284,153,"Direita","end")}${box}<g class="voce-ponto" style="--dx:${(160-x).toFixed(1)}px;--dy:${(160-y).toFixed(1)}px"><circle cx="${x}" cy="${y}" r="11" fill="url(#cg)" stroke="${card}" stroke-width="3.5"/></g>`;
 }
 function renderEixos(){
