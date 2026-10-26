@@ -1,5 +1,12 @@
 # Histórico de versões
 
+## Posição do fascismo na economia (26 de outubro de 2026)
+- A posição típica do fascismo na economia passou de 0 (centro) pra 25 (centro-direita): o fascismo manteve a
+  propriedade privada e a aliança com grandes empresários, combateu sindicatos independentes e o socialismo, mesmo com
+  forte intervenção do Estado (corporativismo). No mapa da página inicial ele deixa de aparecer no centro da economia.
+- O mapa da página inicial ganhou legenda: economia na horizontal, liberdade × ordem na vertical.
+- Simulação antes e depois: nenhuma pessoa simulada mudou de ideologia (0 de 1.512); acerto, reteste e confiança iguais.
+
 ## Resultado da eleição (26 de outubro de 2026)
 - Candidatos atualizados com o 2º turno: Lula (PT) reeleito com 51,79% dos votos válidos, contra 48,21% de Flávio
   Bolsonaro (PL). A comparação "No 2º turno, mais perto de..." continua no resultado, com os dois que disputaram.
