@@ -29,7 +29,7 @@ const IDEO = [
  {n:"Conservador", p:{E:20,A:35,C:60,N:30,D:-65}, d:"Você valoriza tradição, família, religião e ordem, prefere que as mudanças aconteçam devagar e aceita o mercado com algum papel do Estado."},
  {n:"Direita nacional-conservadora", p:{E:30,A:50,C:65,N:60,D:-65}, d:"Você combina valores tradicionais, ordem e segurança com os interesses do país em primeiro lugar: no comércio, nas fronteiras e na política externa. Tudo isso dentro das regras democráticas."},
  {n:"Extrema direita", rup:"d", p:{E:35,A:70,C:80,N:75,D:45}, d:"Você combina nacionalismo forte, costumes muito conservadores e governo duro. Também concordou com frases que aceitam romper as regras democráticas pra chegar lá, como uma intervenção militar ou calar a oposição."},
- {n:"Fascista", g:"fas", p:{E:0,A:90,C:60,N:95,D:85}, d:"Suas respostas batem com as ideias centrais do fascismo: a nação acima de tudo, um líder forte sem limites e o fim da oposição e da democracia. O exemplo histórico principal é a Itália de Mussolini."}
+ {n:"Fascista", g:"fas", p:{E:25,A:90,C:60,N:95,D:85}, d:"Suas respostas batem com as ideias centrais do fascismo: a nação acima de tudo, um líder forte sem limites e o fim da oposição e da democracia. O exemplo histórico principal é a Itália de Mussolini."}
 ];
 const EXT = {
  com:{n:"Comunismo", d:"Fim da propriedade privada das empresas, economia planejada e partido único dos trabalhadores."},
