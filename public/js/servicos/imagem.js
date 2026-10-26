@@ -59,7 +59,7 @@ async function buildImage(d,op=shOp){
     x.fillText(!ex.length?"Frases dos extremos não perguntadas":ex[0][1]>=GATE?`${EXT[ex[0][0]].n}: ${ex[0][1]} de 100`:"Nenhum chega a 50 de 100",L+170,y);y+=46}
   if(op.cand&&y+48<limite){x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("MAIS COMPATÍVEIS",L,y);y+=10;
     const linhas=story||alto?[["pres","Presidente, 2º turno"],["gov","Governador SP"],["sen","Senado SP"],["part","Partido"]]:[["pres","Presidente, 2º turno"]];
-    linhas.forEach(([k,l])=>{if(y+38>limite)return;const c0=k==="pres"?(d.cand.pres.find(c=>c.st==="2º turno")||d.cand.pres[0]):d.cand[k][0];y+=38;x.fillStyle=K.GRAF;x.font=`400 22px ${F}`;x.fillText(l,L,y);
+    linhas.forEach(([k,l])=>{if(y+38>limite)return;const c0=k==="pres"?(d.cand.pres.find(c=>c.t2)||d.cand.pres[0]):d.cand[k][0];y+=38;x.fillStyle=K.GRAF;x.font=`400 22px ${F}`;x.fillText(l,L,y);
       x.fillStyle=K.TINTA;x.font=`700 23px ${F}`;let nm=c0.n;while(x.measureText(nm).width>W-380&&nm.length>4)nm=nm.slice(0,-2)+"…";x.fillText(nm,L+250,y);x.textAlign="right";x.fillStyle=K.VERDE2;x.fillText(matchLab(c0.match),L+W,y);x.textAlign="left"})}
   const aviso=op.cand?"Compatibilidade estimada pelo histórico de cada um. Não é recomendação de voto.":"Resultado aproximado do teste. Não é recomendação de voto.";
   x.fillStyle=K.GRAF;x.font=`400 20px ${F}`;x.textAlign="center";x.fillText(aviso,540,vis.y+vis.h+(story?44:34));x.textAlign="left";
@@ -98,7 +98,7 @@ async function desenharPaisagem(d,op){
   x.font=`700 24px ${F}`;x.fillText("CONFIANÇA",L,y);for(let k=0;k<3;k++){x.fillStyle=k<nivel?K.VERDE2:K.LINHA;x.fillRect(L+158+k*40,y-19,34,19)}
   x.fillStyle=K.TINTA;x.fillText(d.conf.replace(/^Confiança /,"").replace(/^./,m=>m.toUpperCase()),L+290,y);y+=48;
   x.fillStyle=K.GRAF;x.font=`400 24px ${F}`;y+=wrapText(x,`Também perto de ${d.ranked.slice(d.two?2:1,d.two?4:3).map(o=>o.n).join(" e ")}.`,L,y,W,34)*34+18;
-  if(op.cand){const c0=d.cand.pres.find(c=>c.st==="2º turno")||d.cand.pres[0];x.fillStyle=K.TINTA;x.font=`700 22px ${F}`;x.fillText("PRESIDENTE, 2º TURNO",L,y+10);x.font=`400 22px ${F}`;x.fillStyle=K.GRAF;x.fillText(`${c0.n}: ${matchLab(c0.match).toLowerCase()}`,L+290,y+10)}
+  if(op.cand){const c0=d.cand.pres.find(c=>c.t2)||d.cand.pres[0];x.fillStyle=K.TINTA;x.font=`700 22px ${F}`;x.fillText("PRESIDENTE, 2º TURNO",L,y+10);x.font=`400 22px ${F}`;x.fillStyle=K.GRAF;x.fillText(`${c0.n}: ${matchLab(c0.match).toLowerCase()}`,L+290,y+10)}
   const S=250,cx=960,cy=200;x.fillStyle=K.GRADE;x.fillRect(cx,cy,S,S);x.strokeStyle=K.LINHA;x.lineWidth=2;x.strokeRect(cx,cy,S,S);x.lineWidth=1.5;for(let i=1;i<6;i++){const p=i*S/6;x.beginPath();x.moveTo(cx+p,cy);x.lineTo(cx+p,cy+S);x.moveTo(cx,cy+p);x.lineTo(cx+S,cy+p);x.stroke()}
   x.strokeStyle=K.TINTA;x.lineWidth=3;x.beginPath();x.moveTo(cx+S/2,cy);x.lineTo(cx+S/2,cy+S);x.moveTo(cx,cy+S/2);x.lineTo(cx+S,cy+S/2);x.stroke();
   x.fillStyle=K.GRAF;x.font=`400 18px ${F}`;x.textAlign="center";x.fillText("Mais ordem",cx+S/2,cy-10);x.fillText("Mais liberdade",cx+S/2,cy+S+26);x.textAlign="left";

@@ -1,7 +1,7 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 25 de outubro de 2026.
+Última revisão: 26 de outubro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
@@ -14,6 +14,9 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [ ] **Prazo de guarda dos dados:** os termos prometem apagar os dados do estudo até 31/12/2027. Decidir se a exclusão
       será automática (tarefa agendada) ou feita pelo responsável, e anotar a data.
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
+- [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
+- [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).
+- [x] **Candidatos depois do 2º turno** atualizados (26/10/2026). Na próxima eleição, trocar a lista inteira.
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
 - [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de

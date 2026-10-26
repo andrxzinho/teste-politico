@@ -90,7 +90,7 @@ function montarResumo(){
     a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a)});
   prox.append(linhaDistante());
   // destaques: o 2º turno com foto dos dois, afinidade forte com extremos e a principal tensão
-  const r2=(candRanked.pres||[]).filter(c=>c.st==="2º turno"),dest=[];
+  const r2=(candRanked.pres||[]).filter(c=>c.t2),dest=[];
   Object.keys(EXT).filter(g=>R.extAsked&&R.extAsked[g]&&R.ext[g]>=GATE).forEach(g=>dest.push(`Afinidade forte com ${EXT[g].n.toLowerCase()}: índice ${R.ext[g]} de 100.`));
   if(ultimasTensoes.length)dest.push(ultimasTensoes[0][1]);
   if(r2.length===2||dest.length){const d=bloco("Destaques","blocoDestaques");

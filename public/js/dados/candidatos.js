@@ -1,9 +1,9 @@
-// Candidatos e partidos de 2026 (CAND) com posição estimada e situação depois do 1º turno.
+// Candidatos e partidos de 2026 (CAND) com posição estimada e situação depois do 2º turno (t2: disputou o 2º turno).
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 const CAND = {
  pres:{label:"Presidente", list:[
-  {n:"Lula (PT)",st:"2º turno",p:[-45,5,-25,10],s:2.68,b:"Presidente desde 2023 e de 2003 a 2010. No governo atual, criou o arcabouço fiscal, regra que limita o aumento dos gastos. Também sancionou a isenção do Imposto de Renda até R$ 5 mil, com imposto mínimo pra rendas altas, ampliou o Bolsa Família e aumentou o IOF (imposto sobre operações financeiras)."},
-  {n:"Flávio Bolsonaro (PL)",st:"2º turno",p:[50,75,85,40],s:8.80,b:"Senador pelo Rio de Janeiro desde 2019 e filho de Jair Bolsonaro. Apoia as pautas do governo do pai, como facilitar o acesso a armas, penas mais duras e valores conservadores, e propõe cortar impostos e reduzir a estrutura do governo."},
+  {n:"Lula (PT)",st:"Eleito",t2:1,p:[-45,5,-25,10],s:2.68,b:"Reeleito presidente no 2º turno de 2026, com 51,79% dos votos válidos. Presidente desde 2023 e de 2003 a 2010. No governo atual, criou o arcabouço fiscal, regra que limita o aumento dos gastos. Também sancionou a isenção do Imposto de Renda até R$ 5 mil, com imposto mínimo pra rendas altas, ampliou o Bolsa Família e aumentou o IOF (imposto sobre operações financeiras)."},
+  {n:"Flávio Bolsonaro (PL)",st:"2º turno",t2:1,p:[50,75,85,40],s:8.80,b:"Senador pelo Rio de Janeiro desde 2019 e filho de Jair Bolsonaro. Apoia as pautas do governo do pai, como facilitar o acesso a armas, penas mais duras e valores conservadores, e propõe cortar impostos e reduzir a estrutura do governo."},
   {n:"Romeu Zema (Novo)",st:"Fora do 2º turno",p:[80,30,40,-10],s:8.67,b:"Governou Minas Gerais de 2019 a 2026. Propôs privatizar estatais como Cemig e Copasa e fez do corte de gastos sua principal bandeira."},
   {n:"Ronaldo Caiado (PSD)",st:"Fora do 2º turno",p:[45,80,60,25],s:6.94,b:"Governou Goiás de 2019 a 2026, com a segurança pública como principal bandeira. Antes, foi deputado e senador ligado ao setor rural, passando por DEM e União Brasil."},
   {n:"Renan Santos (Missão)",st:"Fora do 2º turno",p:[65,75,30,15],s:null,b:"Fundador do MBL, movimento que organizou protestos pelo impeachment de Dilma. Nunca teve mandato. Propõe um ajuste rígido nas contas do governo e penas mais duras contra facções."},
@@ -14,7 +14,7 @@ const CAND = {
   {n:"Edmilson Costa (PCB)",st:"Fora do 2º turno",p:[-90,30,-45,40],s:0.69,b:"Economista e secretário-geral do PCB. O programa registrado no TSE é revolucionário e anticapitalista. Propõe jornada de 30 horas e a volta de empresas privatizadas pro controle do governo."},
   {n:"Hertz Dias (PSTU)",st:"Fora do 2º turno",p:[-92,-10,-65,-15],s:0.51,b:"Professor e militante do PSTU, partido trotskista que defende uma revolução socialista."},
   {n:"Rui Costa Pimenta (PCO)",st:"Fora do 2º turno",p:[-90,-40,-15,40],s:0.55,b:"Presidente do PCO, partido trotskista que defende uma revolução operária e costuma criticar a censura e as pautas identitárias."}
- ], extra:"O 2º turno, em 25 de outubro, será entre Flávio Bolsonaro (PL), que teve 47,03% dos votos válidos no 1º turno, e Lula (PT), que teve 45,16%. Os outros 10 candidatos ficaram de fora, mas continuam aqui pra comparação."},
+ ], extra:"Eleição encerrada: Lula (PT) foi reeleito no 2º turno, em 25 de outubro, com 51,79% dos votos válidos, contra 48,21% de Flávio Bolsonaro (PL). No 1º turno, Flávio teve 47,03% e Lula, 45,16%. Os outros 10 candidatos continuam aqui pra comparação."},
  gov:{label:"Governador", list:[
   {n:"Tarcísio de Freitas (Republicanos)",st:"Eleito",p:[60,75,55,15],s:8.33,b:"Governador de SP desde 2023 e ministro da Infraestrutura de 2019 a 2022. Privatizou a Sabesp, criou o programa de escolas cívico-militares e priorizou operações policiais contra o crime organizado."},
   {n:"Fernando Haddad (PT)",st:"Não eleito",p:[-35,-5,-35,0],s:2.68,b:"Ministro da Fazenda de 2023 a 2026 e prefeito de SP de 2013 a 2016. Na Fazenda, criou o arcabouço fiscal (regra que limita o aumento dos gastos) e conduziu a reforma tributária. Na prefeitura, ampliou ciclovias e corredores de ônibus."},

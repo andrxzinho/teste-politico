@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## Resultado da eleição (26 de outubro de 2026)
+- Candidatos atualizados com o 2º turno: Lula (PT) reeleito com 51,79% dos votos válidos, contra 48,21% de Flávio
+  Bolsonaro (PL). A comparação "No 2º turno, mais perto de..." continua no resultado, com os dois que disputaram.
+- Explicações das frases (67 trechos) e descrições de 10 ideologias em linguagem mais simples, sem mudar o sentido.
+
 ## Cálculo, versão 3: respostas espalhadas (25 de outubro de 2026)
 - Quem responde com força pros dois lados dentro do mesmo tema (o padrão de quem clica ao acaso) não recebe mais
   confiança alta, e o resultado explica por quê. Antes, respostas aleatórias davam "Centrista, confiança alta" em cerca
