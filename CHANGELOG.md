@@ -1,5 +1,12 @@
 # Histórico de versões
 
+## Cálculo, versão 3: respostas espalhadas (25 de outubro de 2026)
+- Quem responde com força pros dois lados dentro do mesmo tema (o padrão de quem clica ao acaso) não recebe mais
+  confiança alta, e o resultado explica por quê. Antes, respostas aleatórias davam "Centrista, confiança alta" em cerca
+  de 85% dos casos; agora, 43% no Essencial, 12% no Padrão e 2% no Aprofundado.
+- Nenhum resultado mudou de ideologia na simulação; só a confiança. Números de calibração atualizados.
+- Cada envio do estudo passa a dizer a versão 3 do cálculo.
+
 ## Linguagem mais simples no site (25 de outubro de 2026)
 - Textos da tela de resultado, das janelas de explicação (confiança e como os modos foram testados), das telas do teste,
   da metodologia, das perguntas frequentes, das páginas das ideologias, do código-fonte e dos créditos reescritos em
