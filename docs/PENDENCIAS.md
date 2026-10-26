@@ -5,9 +5,12 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 
 ## Decisões que dependem do responsável pelo projeto
 
-- [ ] **Segurança e privacidade:** as correções no código estão no ar desde 25/10/2026. Falta o responsável rodar o SQL
-      no Supabase (passado a ele diretamente, fora do repositório), trocar as chaves antigas da integração e remover a
-      integração Supabase–Vercel.
+- [ ] **Segurança e privacidade:** as correções no código estão no ar desde 25/10/2026, e o site usa uma chave própria
+      nova desde 26/10/2026. Falta o responsável rodar o SQL no Supabase (passado a ele diretamente, fora do
+      repositório), desativar as chaves antigas (legacy) e trocar a senha do banco.
+- [ ] **Não desinstalar a integração Supabase–Vercel:** o projeto do Supabase foi criado pelo Vercel, e desinstalar a
+      integração apaga a organização inteira do Supabase, com o banco e os backups (que ficam no mesmo banco). As
+      variáveis que ela cria no Vercel (SUPABASE_SECRET_KEY, POSTGRES_* e outras) não são usadas pelo site.
 - [x] **Variáveis de ambiente no Vercel:** só as cinco que o site usa, todas Sensitive e só em Production (23/10/2026).
 - [ ] **Textos a conferir com fonte atual:** licença-paternidade (X25), marco temporal (C21) e a etapa do acordo
       Mercosul–União Europeia (N21).
