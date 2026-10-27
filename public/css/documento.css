@@ -4,7 +4,8 @@
 html{scroll-padding-top:84px}
 body{margin:0;background:var(--corpo);color:var(--tinta);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-underline-offset:3px}
-.legal{max-width:72rem;margin:0 auto;padding:1.4rem 1rem 4.5rem}
+/* mesmas margens laterais do cabeçalho (.site-cab): o conteúdo começa na mesma linha do logo */
+.legal{padding:1.4rem max(16px,calc((100vw - 74rem)/2)) 4.5rem}
 .legal-cab{padding-bottom:1.4rem;border-bottom:1px solid var(--linha)}
 .legal-rotulo{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grafite)}
 .legal h1{margin:.45rem 0 0;font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.08;font-weight:700;max-width:22ch}
@@ -43,6 +44,16 @@ a{color:inherit;text-underline-offset:3px}
   .legal{padding-top:2.2rem}
   .legal-corpo{grid-template-columns:15rem minmax(0,1fr);gap:3.2rem}
   .sumario{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 100px);overflow:auto}
+}
+/* tela larga: índice | texto | resumo fixo ao lado, pra não sobrar metade da tela vazia */
+@media (min-width:1200px){
+  .legal{display:grid;grid-template-columns:13rem minmax(0,1fr) 16rem;grid-template-areas:"cab cab cab" "sum txt res";column-gap:2.5rem;row-gap:1.8rem;align-items:start}
+  .legal-cab{grid-area:cab}
+  .legal-corpo{display:contents}
+  .sumario{grid-area:sum}
+  .texto{grid-area:txt;max-width:none}
+  .resumo-legal{grid-area:res;margin-top:0;position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto}
+  .resumo-legal .acoes-pagina{grid-template-columns:1fr}
 }
 @media print{#site-cab,#site-rod,.sumario,.pular{display:none!important}.legal-corpo{display:block}body{background:#fff;color:#000}}
 .texto code{overflow-wrap:anywhere;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.88em;padding:.08em .3em;border-radius:4px;background:var(--fundo-grade)}

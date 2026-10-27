@@ -131,24 +131,30 @@ for (const o of IDEO) {
       isPartOf: { "@id": `${SITE}/#site` }, primaryImageOfPage: `${SITE}/img/og/${slug(n)}.png`, author: AUTOR,
       about: { "@type": "DefinedTerm", name: n, description: IDEO_RESUMO[n], inDefinedTermSet: { "@id": `${SITE}/ideologias/#lista` } },
     }, trilhaLd([["Início", "/"], ["Ideologias", "/ideologias/"], [n, `/ideologias/${slug(n)}/`]])],
-    corpo: `<div class="pagina-estreita">
+    corpo: `<div class="ideo">
 <nav class="trilha" aria-label="Você está em"><a href="/ideologias/">Ideologias</a> / ${esc(n)}</nav>
+<div class="ideo-grade">
+<div class="ideo-principal">
 <div class="visor-pagina"><span class="familia">Família: ${esc(g)}</span><h1>${esc(n)}</h1><p>${esc(IDEO_RESUMO[n])}</p></div>
 <h2 class="rotulo-secao">Posição típica nos eixos</h2>
 <div class="eixos-tipicos">
 ${eixos}
 </div>
 <p class="intro-pagina" style="margin-top:.6rem;font-size:.88rem">É onde ficaria alguém típico dessa tradição. O teste usa esse ponto como referência. Pessoas da mesma ideologia ficam espalhadas em volta dele.</p>
+<h2 class="rotulo-secao">Ideologias vizinhas</h2>
+<div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
+<ul class="lista-pagina diferencas">${viz.map((v) => `<li>Comparada com <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
+<div class="acoes-pagina"><a class="ok" href="/?ideologia=${slug(n)}">Comparar com o meu resultado</a><a class="branco" href="/#modos">Fazer o teste</a></div>
+</div>
+<div class="ideo-livros">
 <h2 class="rotulo-secao">Pra entender por dentro</h2>
 <p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">${EXTREMOS.includes(n) ? `Fontes históricas e textos de referência de ${esc(n)}, pra entender o que essa tradição defendeu. Não é recomendação.` : `Obras que ajudam a entender ${esc(n)} como os próprios defensores a entendem.`}</p>
 <div class="livros">${livros(LEITURAS[n].favor)}</div>
 <h2 class="rotulo-secao">Pra entender as críticas</h2>
 <p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">As críticas mais fortes, vindas de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o seu.</p>
 <div class="livros">${livros(LEITURAS[n].contra)}</div>
-<h2 class="rotulo-secao">Ideologias vizinhas</h2>
-<div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
-<ul class="lista-pagina diferencas">${viz.map((v) => `<li>Comparada com <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
-<div class="acoes-pagina"><a class="ok" href="/?ideologia=${slug(n)}">Comparar com o meu resultado</a><a class="branco" href="/#modos">Fazer o teste</a></div>
+</div>
+</div>
 </div>`,
   }));
   urls.push(`/ideologias/${slug(n)}/`);
@@ -191,6 +197,15 @@ gravar("public/perguntas-frequentes/index.html", pagina({
 <h1>Perguntas frequentes</h1>
 <ul class="legal-datas"><li><b>Última atualização:</b> 25 de outubro de 2026</li></ul>
 </div>
+<div class="resumo-legal">
+<h2>Não achou a resposta?</h2>
+<ul>
+<li>A metodologia explica o cálculo, os eixos e os limites do teste.</li>
+<li>Os termos dizem o que é coletado de quem participa do estudo e o que nunca é.</li>
+<li>Dúvidas e sugestões podem ir pros avisos do repositório.</li>
+</ul>
+<div class="acoes-pagina acoes-pagina-linha"><a class="ok" href="/#modos">Fazer o teste</a><a class="branco" href="/metodologia.html">Ler a metodologia</a></div>
+</div>
 <div class="legal-corpo">
 <nav class="sumario" aria-labelledby="sumario-t">
 <h2 id="sumario-t">Nesta página</h2>
@@ -211,9 +226,11 @@ urls.push("/perguntas-frequentes/");
 
 // créditos das fotos e capas (licenças livres do Wikimedia Commons e capas do Open Library)
 const CRED = fs.existsSync("ferramentas/creditos-imagens.json") ? JSON.parse(fs.readFileSync("ferramentas/creditos-imagens.json", "utf8")) : { pessoas: {}, livros: {} };
+// os nomes de licença vêm do Wikimedia Commons em inglês
+const licencaPt = (l) => (l === "Public domain" ? "domínio público" : l === "Attribution" ? "licença de atribuição" : `licença ${esc(l)}`);
 const temImg = (d, k) => fs.existsSync(`public/img/${d}/${k}.webp`);
 const linhasP = Object.entries(CRED.pessoas).filter(([k]) => temImg("p", k)).sort((a, b) => a[1].n.localeCompare(b[1].n, "pt"))
-  .map(([k, c]) => `<li><b>${esc(c.n)}</b>: ${esc(c.autor)}, licença ${esc(c.licenca)}. <a href="${esc(c.fonte)}" rel="noopener">Fonte</a></li>`).join("\n");
+  .map(([k, c]) => `<li><b>${esc(c.n)}</b>: ${esc(c.autor)}, ${licencaPt(c.licenca)}. <a href="${esc(c.fonte)}" rel="noopener">Fonte</a></li>`).join("\n");
 const linhasL = Object.entries(CRED.livros).filter(([k]) => temImg("l", k)).sort((a, b) => a[1].t.localeCompare(b[1].t, "pt"))
   .map(([k, c]) => {
     const ed = c.edicao ? ` Edição: ${esc(c.edicao)}${c.isbn ? `, ISBN ${esc(c.isbn)}` : ""}.` : c.titulo_ol && !c.fonte ? "" : "";
@@ -224,7 +241,7 @@ const linhasL = Object.entries(CRED.livros).filter(([k]) => temImg("l", k)).sort
 gravar("public/creditos/index.html", pagina({
   caminho: "/creditos/", titulo: "Créditos das imagens | Teste político",
   descricao: "Autores e licenças das fotos e capas usadas no teste político.",
-  corpo: `<div class="pagina-estreita">
+  corpo: `<div class="creditos-pagina">
 <h1 class="titulo-pagina">Créditos das imagens</h1>
 <p class="intro-pagina">As fotos de pessoas vêm do Wikimedia Commons, em domínio público ou com licença livre (Creative Commons). As fotos oficiais de candidatura vêm do Portal de Dados Abertos do TSE (licença CC BY). Todas foram recortadas e reduzidas.</p>
 <p class="intro-pagina">As capas de livros mostram a edição brasileira sempre que possível. Elas vêm do Open Library, de catálogos de livrarias (pelo ISBN, o número de cada edição) e, pra obras antigas, do Wikimedia Commons. As capas servem só pra identificar as obras, e os direitos são das editoras. Quando não há imagem, o site mostra as iniciais ou uma capa feita só com texto.</p>

@@ -8,6 +8,11 @@
 - Dados estruturados (JSON-LD) na página inicial, na lista de ideologias e em cada ideologia, e uma imagem de
   compartilhamento própria pra cada uma das 21 ideologias, com a posição dela no mapa.
 - Fonte, imagens e ícones guardados por mais tempo no navegador; HTML, JS e CSS continuam sempre atualizados.
+- Páginas internas no computador: o conteúdo começa na mesma linha do logo em todas as páginas. Nos documentos (termos,
+  metodologia, perguntas frequentes, código-fonte e sobre), o resumo fica fixo ao lado do texto; nas ideologias, os eixos
+  ficam à esquerda e as leituras à direita; os créditos ficam em duas colunas. No celular, nada muda além da ordem da
+  página de ideologia (vizinhas antes das leituras).
+- Créditos das fotos sem textos repetidos ou em inglês ("Autor desconhecido", "domínio público").
 
 ## Repositório em ordem, versão 1.0.0 (27 de outubro de 2026)
 - Capturas de tela do README atualizadas com o site atual (mapa com a legenda e a posição nova do fascismo).
