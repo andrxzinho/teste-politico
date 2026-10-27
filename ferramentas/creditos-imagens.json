@@ -1,5 +1,61 @@
 {
  "pessoas": {
+  "jose-sarney": {
+   "n": "José Sarney",
+   "pagina": "José Sarney",
+   "arquivo": "Foto_Oficial_Sarney_EBC.jpg",
+   "autor": "Autor desconhecido (EBC)",
+   "licenca": "CC BY 3.0 br",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Foto_Oficial_Sarney_EBC.jpg"
+  },
+  "fernando-collor": {
+   "n": "Fernando Collor",
+   "pagina": "Fernando Collor",
+   "arquivo": "Foto_oficial_do_presidente_Fernando_Collor_de_Melo._(38405801411).jpg",
+   "autor": "Ubirajara Dettimar/Presidência da República",
+   "licenca": "CC BY-SA 2.0",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Foto_oficial_do_presidente_Fernando_Collor_de_Melo._(38405801411).jpg"
+  },
+  "itamar-franco": {
+   "n": "Itamar Franco",
+   "pagina": "Itamar Franco",
+   "arquivo": "Itamar_Franco_Faixa_Presidencial_(cropped).jpg",
+   "autor": "Getúlio Gurgel",
+   "licenca": "Public domain",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Itamar_Franco_Faixa_Presidencial_(cropped).jpg"
+  },
+  "fernando-henrique-cardoso": {
+   "n": "Fernando Henrique Cardoso",
+   "pagina": "Fernando Henrique Cardoso",
+   "arquivo": "Fernando_Henrique_Cardoso_(1999).jpg",
+   "autor": "Agência Brasil",
+   "licenca": "CC BY 3.0 br",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Fernando_Henrique_Cardoso_(1999).jpg"
+  },
+  "dilma-rousseff": {
+   "n": "Dilma Rousseff",
+   "pagina": "Dilma Rousseff",
+   "arquivo": "Dilma_Rousseff_-_foto_oficial_2011-01-09.jpg",
+   "autor": "Roberto Stuckert Filho/Presidência da República",
+   "licenca": "Attribution",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Dilma_Rousseff_-_foto_oficial_2011-01-09.jpg"
+  },
+  "michel-temer": {
+   "n": "Michel Temer",
+   "pagina": "Michel Temer",
+   "arquivo": "Michel_Temer_(foto_oficial)_(cropped_2).jpg",
+   "autor": "Beto Barata/PR",
+   "licenca": "CC BY 2.0",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Michel_Temer_(foto_oficial)_(cropped_2).jpg"
+  },
+  "jair-bolsonaro": {
+   "n": "Jair Bolsonaro",
+   "pagina": "Jair Bolsonaro",
+   "arquivo": "Jair_Bolsonaro_2019_Portrait_(3x4_cropped_center).jpg",
+   "autor": "Isac Nóbrega/PR",
+   "licenca": "CC BY 2.0",
+   "fonte": "https://commons.wikimedia.org/wiki/File:Jair_Bolsonaro_2019_Portrait_(3x4_cropped_center).jpg"
+  },
   "lula": {
    "n": "Lula (PT)",
    "pagina": "Luiz Inácio Lula da Silva",
