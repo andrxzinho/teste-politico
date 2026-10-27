@@ -1,6 +1,9 @@
 # Histórico de versões
 
 ## Design e acessibilidade (27 de outubro de 2026)
+- Livros: 18 dos 25 que estavam só com link de loja ganharam a página do livro na editora (ou no Ipea, no Instituto
+  Mises Brasil e na Wikipédia), todas abertas e conferidas. Edições corrigidas pelas páginas das editoras: Marshall
+  (Unesp, 2021, e não 2026) e Harvey (Loyola, 2008, e não 2014).
 - Menu sem "Fazer o teste", que levava praticamente pro mesmo lugar que "Início" e que o botão do cabeçalho. Os atalhos
   numerados do menu mudam: Ideologias passa a ser a tecla 2.
 - Resultado no computador: quando o cartão da esquerda é mais alto que a tela, ele rola junto até mostrar os botões

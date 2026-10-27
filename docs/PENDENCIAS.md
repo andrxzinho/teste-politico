@@ -40,8 +40,11 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Livros, Oakeshott** (27/10/2026): *Conservadorismo* (Âyiné, 2020), que reúne "Ser conservador", com link.
 - [x] **Capas:** oito das onze que faltavam (27/10/2026). Continuam sem capa *A terceira via* (Giddens, Record, 1998),
       *Populações meridionais do Brasil* (Oliveira Vianna, 1938) e *O Estado moderno* (Miguel Reale, 1934).
-- [x] **Links informativos dos livros** (27/10/2026). 25 obras ficaram só com o link de loja (lista no CHANGELOG da
-      fase e no relatório da sessão); dá pra procurar a página da editora brasileira de cada uma.
+- [x] **Links informativos dos livros** (27/10/2026).
+- [ ] **Sete livros só com link de loja:** O que há de errado com o mundo (Chesterton, Ecclesiae: site bloqueia acesso
+      automático), O que é conservadorismo (Scruton) e A política da prudência (Kirk), da É Realizações (site fora do ar
+      na conferência), A terceira via (Giddens), Quatro ensaios sobre a liberdade (Berlin), O homem e o Estado (Maritain)
+      e O Estado moderno (Reale), que não têm página de editora nem artigo na Wikipédia.
 - [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
       23/10/2026.
 - [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.
