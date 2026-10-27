@@ -11,8 +11,9 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       integração apaga a organização inteira do Supabase, com o banco e os backups (que ficam no mesmo banco). As
       variáveis que ela cria no Vercel (SUPABASE_SECRET_KEY, POSTGRES_* e outras) não são usadas pelo site.
 - [x] **Variáveis de ambiente no Vercel:** só as cinco que o site usa, todas Sensitive e só em Production (23/10/2026).
-- [ ] **Textos a conferir com fonte atual:** licença-paternidade (X25), marco temporal (C21) e a etapa do acordo
-      Mercosul–União Europeia (N21).
+- [x] **Textos conferidos com fonte atual** (27/10/2026): licença-paternidade (X25, Lei 15.371/2026), marco temporal
+      (C21, decisão do STF de dezembro de 2025 e PEC 48 na Câmara) e acordo Mercosul–União Europeia (N21, assinado em
+      janeiro de 2026 e em vigor provisório desde maio). Conferir de novo se o acordo ou a PEC avançarem.
 - [ ] **Prazo de guarda dos dados:** os termos prometem apagar os dados do estudo até 31/12/2027. Decidir se a exclusão
       será automática (tarefa agendada) ou feita pelo responsável, e anotar a data.
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.

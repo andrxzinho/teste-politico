@@ -1,6 +1,8 @@
 # Histórico de versões
 
 ## Chaves e banco (27 de outubro de 2026)
+- Explicações atualizadas com fatos de 2025 e 2026: lei que amplia a licença-paternidade, decisão do STF sobre o marco
+  temporal e a PEC no Congresso, e a assinatura e o início provisório do acordo Mercosul–União Europeia.
 - O site passou a usar uma chave própria nova do Supabase; as chaves antigas foram desativadas e a senha do banco, trocada.
 
 ## Posição do fascismo na economia (26 de outubro de 2026)
