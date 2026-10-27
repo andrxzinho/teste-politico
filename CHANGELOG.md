@@ -1,5 +1,11 @@
 # Histórico de versões
 
+## Repositório em ordem, versão 1.0.0 (27 de outubro de 2026)
+- Capturas de tela do README atualizadas com o site atual (mapa com a legenda e a posição nova do fascismo).
+- Imagem de pré-visualização do repositório (`docs/img/previa-github.png`, 1280×640) no estilo da urna, com o mapa das
+  21 ideologias.
+- Primeira versão publicada: v1.0.0.
+
 ## Conteúdo, dados e chaves (27 de outubro de 2026)
 - Explicações atualizadas com fatos de 2025 e 2026: lei que amplia a licença-paternidade, decisão do STF sobre o marco
   temporal e a PEC no Congresso, e a assinatura e o início provisório do acordo Mercosul–União Europeia.
