@@ -55,7 +55,7 @@
     if (cab && !cab.firstChild) {
       cab.className = "site-cab";
       const marca = el("a", "site-marca"); marca.href = "/";
-      marca.append(el("b", null, "TESTE POLÍTICO"), " ", el("span", null, "2026"));
+      marca.append(el("b", null, "TESTE POLÍTICO"));
       const dir = el("div", "site-cab-dir"), nav = el("nav", "site-nav"); nav.setAttribute("aria-label", "Principal");
       PAGINAS.filter((p) => p.cab).forEach((p) => { const a = link(p); a.textContent = p.t; nav.append(a); });
       const ok = el("a", "tecla-ok", "Fazer o teste"); ok.href = "/#modos"; nav.append(ok);

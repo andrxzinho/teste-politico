@@ -32,7 +32,7 @@ async function buildImage(d,op=shOp){
   x.fillStyle=K.FUNDO;x.fillRect(0,0,W0,H0);
   const bx=story?{y:80,h:1740}:{y:30,h:H0-50};
   rr(60,bx.y+16,960,bx.h,46,K.SOMBRA);rr(60,bx.y,960,bx.h,46,K.CORPO);
-  x.fillStyle=K.GRAF;x.font=`700 26px ${F}`;x.fillText("TESTE POLÍTICO 2026",110,bx.y+70);x.textAlign="right";x.fillText("MODO "+String(d.modo).toUpperCase(),970,bx.y+70);x.textAlign="left";
+  x.fillStyle=K.GRAF;x.font=`700 26px ${F}`;x.fillText("TESTE POLÍTICO",110,bx.y+70);x.textAlign="right";x.fillText("MODO "+String(d.modo).toUpperCase(),970,bx.y+70);x.textAlign="left";
   const vis=story?{y:180,h:1060}:{y:110,h:H0-280};
   rr(100,vis.y,880,vis.h,30,K.MOLD);rr(126,vis.y+26,828,vis.h-52,12,K.VISOR);
   const L=166,W=748;let y=vis.y+88;
@@ -57,11 +57,10 @@ async function buildImage(d,op=shOp){
   if(op.ext&&y<limite){const ex=Object.entries(d.ext).filter(([g])=>EXT[g]&&(!d.extAsked||d.extAsked[g])).sort((p,q)=>q[1]-p[1]);
     x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("EXTREMOS",L,y);x.font=`400 24px ${F}`;x.fillStyle=K.GRAF;
     x.fillText(!ex.length?"Frases dos extremos não perguntadas":ex[0][1]>=GATE?`${EXT[ex[0][0]].n}: ${ex[0][1]} de 100`:"Nenhum chega a 50 de 100",L+170,y);y+=46}
-  if(op.cand&&y+48<limite){x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("MAIS COMPATÍVEIS",L,y);y+=10;
-    const linhas=story||alto?[["pres","Presidente, 2º turno"],["gov","Governador SP"],["sen","Senado SP"],["part","Partido"]]:[["pres","Presidente, 2º turno"]];
-    linhas.forEach(([k,l])=>{if(y+38>limite)return;const c0=k==="pres"?(d.cand.pres.find(c=>c.t2)||d.cand.pres[0]):d.cand[k][0];y+=38;x.fillStyle=K.GRAF;x.font=`400 22px ${F}`;x.fillText(l,L,y);
-      x.fillStyle=K.TINTA;x.font=`700 23px ${F}`;let nm=c0.n;while(x.measureText(nm).width>W-380&&nm.length>4)nm=nm.slice(0,-2)+"…";x.fillText(nm,L+250,y);x.textAlign="right";x.fillStyle=K.VERDE2;x.fillText(matchLab(c0.match),L+W,y);x.textAlign="left"})}
-  const aviso=op.cand?"Compatibilidade estimada pelo histórico de cada um. Não é recomendação de voto.":"Resultado aproximado do teste. Não é recomendação de voto.";
+  if(op.cand&&y+48<limite&&d.cand.part&&d.cand.part.length){const c0=d.cand.part[0];
+    x.fillStyle=K.TINTA;x.font=`700 24px ${F}`;x.fillText("PARTIDO",L,y);x.font=`400 24px ${F}`;x.fillStyle=K.GRAF;
+    x.fillText(`Mais perto: ${c0.n}`,L+170,y);x.textAlign="right";x.fillStyle=K.VERDE2;x.font=`700 23px ${F}`;x.fillText(matchLab(c0.match),L+W,y);x.textAlign="left";y+=46}
+  const aviso=op.cand?"Compatibilidade estimada pela atuação de cada partido. Não é recomendação de voto.":"Resultado aproximado do teste. Não é recomendação de voto.";
   x.fillStyle=K.GRAF;x.font=`400 20px ${F}`;x.textAlign="center";x.fillText(aviso,540,vis.y+vis.h+(story?44:34));x.textAlign="left";
   const link=d.link||("https://"+SITE+"/");
   if(story){
@@ -87,7 +86,7 @@ async function desenharPaisagem(d,op){
     :{FUNDO:"#2B2A27",CORPO:"#E3DED1",SOMBRA:"#A9A496",VISOR:"#F3F5EF",MOLD:"#3A3935",TINTA:"#151513",GRAF:"#5E5A50",LINHA:"#D3D6CC",GRADE:"#E8EBE2",VERDE:"#2FA35A",VERDE2:"#1E6E3B"};
   const rr=(X,Y,W,H,R,fill)=>{x.beginPath();x.roundRect?x.roundRect(X,Y,W,H,R):x.rect(X,Y,W,H);x.fillStyle=fill;x.fill()};
   x.fillStyle=K.FUNDO;x.fillRect(0,0,W0,H0);rr(40,46,1520,820,40,K.SOMBRA);rr(40,30,1520,820,40,K.CORPO);
-  x.fillStyle=K.GRAF;x.font=`700 24px ${F}`;x.fillText("TESTE POLÍTICO 2026",90,90);x.textAlign="right";x.fillText("MODO "+String(d.modo).toUpperCase(),1510,90);x.textAlign="left";
+  x.fillStyle=K.GRAF;x.font=`700 24px ${F}`;x.fillText("TESTE POLÍTICO",90,90);x.textAlign="right";x.fillText("MODO "+String(d.modo).toUpperCase(),1510,90);x.textAlign="left";
   rr(80,120,1440,600,26,K.MOLD);rr(102,142,1396,556,10,K.VISOR);
   const L=142,W=760;let y=200;
   x.fillStyle=K.GRAF;x.font=`700 22px ${F}`;x.fillText("MEU RESULTADO",L,y);
@@ -98,7 +97,7 @@ async function desenharPaisagem(d,op){
   x.font=`700 24px ${F}`;x.fillText("CONFIANÇA",L,y);for(let k=0;k<3;k++){x.fillStyle=k<nivel?K.VERDE2:K.LINHA;x.fillRect(L+158+k*40,y-19,34,19)}
   x.fillStyle=K.TINTA;x.fillText(d.conf.replace(/^Confiança /,"").replace(/^./,m=>m.toUpperCase()),L+290,y);y+=48;
   x.fillStyle=K.GRAF;x.font=`400 24px ${F}`;y+=wrapText(x,`Também perto de ${d.ranked.slice(d.two?2:1,d.two?4:3).map(o=>o.n).join(" e ")}.`,L,y,W,34)*34+18;
-  if(op.cand){const c0=d.cand.pres.find(c=>c.t2)||d.cand.pres[0];x.fillStyle=K.TINTA;x.font=`700 22px ${F}`;x.fillText("PRESIDENTE, 2º TURNO",L,y+10);x.font=`400 22px ${F}`;x.fillStyle=K.GRAF;x.fillText(`${c0.n}: ${matchLab(c0.match).toLowerCase()}`,L+290,y+10)}
+  if(op.cand&&d.cand.part&&d.cand.part.length){const c0=d.cand.part[0];x.fillStyle=K.TINTA;x.font=`700 22px ${F}`;x.fillText("PARTIDO MAIS PERTO",L,y+10);x.font=`400 22px ${F}`;x.fillStyle=K.GRAF;x.fillText(`${c0.n}: ${matchLab(c0.match).toLowerCase()}`,L+290,y+10)}
   const S=250,cx=960,cy=200;x.fillStyle=K.GRADE;x.fillRect(cx,cy,S,S);x.strokeStyle=K.LINHA;x.lineWidth=2;x.strokeRect(cx,cy,S,S);x.lineWidth=1.5;for(let i=1;i<6;i++){const p=i*S/6;x.beginPath();x.moveTo(cx+p,cy);x.lineTo(cx+p,cy+S);x.moveTo(cx,cy+p);x.lineTo(cx+S,cy+p);x.stroke()}
   x.strokeStyle=K.TINTA;x.lineWidth=3;x.beginPath();x.moveTo(cx+S/2,cy);x.lineTo(cx+S/2,cy+S);x.moveTo(cx,cy+S/2);x.lineTo(cx+S,cy+S/2);x.stroke();
   x.fillStyle=K.GRAF;x.font=`400 18px ${F}`;x.textAlign="center";x.fillText("Mais ordem",cx+S/2,cy-10);x.fillText("Mais liberdade",cx+S/2,cy+S+26);x.textAlign="left";
@@ -111,8 +110,8 @@ async function desenharPaisagem(d,op){
 }
 // textos de compartilhar: o do link (aplicativos e "Copiar texto") e o que acompanha a imagem
 function perfilCompartilhar(){return shareData.two?`entre ${shareData.top.n} e ${shareData.ranked[1].n}`:shareData.top.n}
-function textoCompartilhar(){return `Meu resultado no Teste Político 2026: ${perfilCompartilhar()}. O teste mede seis eixos, mostra o grau de confiança do resultado e não recomenda voto. Faça o seu e compare com o meu: ${myLink()}`}
-function textoImagem(){return `Meu resultado no Teste Político 2026: ${perfilCompartilhar()}. Faça o seu e compare com o meu: ${myLink()}`}
+function textoCompartilhar(){return `Meu resultado no Teste Político: ${perfilCompartilhar()}. O teste mede seis eixos, mostra o grau de confiança do resultado e não recomenda voto. Faça o seu e compare com o meu: ${myLink()}`}
+function textoImagem(){return `Meu resultado no Teste Político: ${perfilCompartilhar()}. Faça o seu e compare com o meu: ${myLink()}`}
 async function prepareShare(){shareFile=null;if(shareUrl){URL.revokeObjectURL(shareUrl);shareUrl=null}
   try{const blob=await buildImage({...shareData,link:myLink()},shOp);if(!blob)return false;shareFile=new File([blob],`resultado-teste-politico-${shOp.formato}.png`,{type:"image/png"});shareUrl=URL.createObjectURL(blob);
     $("shImg").src=shareUrl;$("shImg").dataset.formato=shOp.formato;$("shSave").href=shareUrl;$("shSave").download=shareFile.name;return true}catch(e){console.error(e);return false}}
@@ -189,7 +188,7 @@ async function publicarImagem(r){
   if(shareUrl){const a=document.createElement("a");a.href=shareUrl;a.download=shareFile?shareFile.name:"resultado-teste-politico.png";document.body.append(a);a.click();a.remove()}
   window.open(r.site,"_blank","noopener");
 }
-$("shShare").onclick=async()=>{try{await navigator.share({files:[shareFile],text:textoImagem(),title:"Meu resultado no Teste Político 2026"})}catch(e){}};
+$("shShare").onclick=async()=>{try{await navigator.share({files:[shareFile],text:textoImagem(),title:"Meu resultado no Teste Político"})}catch(e){}};
 async function copiar(t,msg){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.append(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}$("shAviso").textContent=msg}
 $("shLink").onclick=()=>copiar(myLink(),"Link de comparação copiado.");
 $("shTexto").onclick=()=>copiar(textoImagem(),"Texto copiado, com o link pra comparar.");

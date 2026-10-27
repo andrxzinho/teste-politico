@@ -11,9 +11,9 @@ o servidor só recebe os envios de quem aceita participar do estudo.
 | `index.html` | Todas as telas (abertura, consentimento, perguntas, desempate, importância, FIM, resultado, janelas) |
 | `css/urna.css` | Estilo |
 | `js/nucleo/motor.js` | Cálculo dos eixos (ver Metodologia, seção 4). O mesmo arquivo roda no servidor |
-| `js/dados/frases.js`, `ideologias.js`, `candidatos.js` | Dados: frases (`DATA`), ideologias (`IDEO`), candidatos (`CAND`) |
+| `js/dados/frases.js`, `ideologias.js`, `candidatos.js` | Dados: frases (`DATA`), ideologias (`IDEO`), partidos (`CAND`) |
 | `js/nucleo/base.js`, `estado.js`, `calculo.js` | Montagem da lista de frases, estado do teste, classificação e confiança |
-| `js/telas/*.js` | Perguntas, início, resultado, candidatos, comparação, janelas, visor da urna |
+| `js/telas/*.js` | Perguntas, início, resultado, partidos, comparação, janelas, visor da urna |
 | `js/servicos/estudo.js`, `imagem.js` | Envio pro estudo e imagem de compartilhar |
 | `js/principal.js` | Abertura e ligação dos botões |
 | `painel.html`, `js/painel.js` | Painel administrativo |

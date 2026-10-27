@@ -610,3 +610,4 @@ body[data-tela="results"] .menu-btn{display:none}
 .item.livro.com-capa .capa-tipo b,.item.livro.com-capa .capa-tipo small{color:var(--tecla-txt);margin:0;font-size:.5rem;display:-webkit-box}
 .item.livro.com-capa .capa-tipo small{font-size:.45rem;opacity:1}
 .resumo-bloco .nota-prob{margin:0 0 .7rem;line-height:1.45}
+#candOut{margin-top:.8rem}

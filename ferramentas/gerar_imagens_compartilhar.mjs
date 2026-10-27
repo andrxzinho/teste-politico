@@ -1,6 +1,7 @@
-// Gera a imagem de compartilhamento (1200×630) de cada ideologia em public/img/og/<nome>.png, no estilo da urna:
-// nome, família e resumo no visor e, ao lado, o mapa das 21 ideologias com a posição típica dela em destaque.
-// Rode da raiz do projeto depois de mudar ideologias.js: node ferramentas/gerar_imagens_ideologias.mjs
+// Gera as imagens de prévia de links (1200×630), no estilo da urna:
+//   public/og-urna.png: a do site (visor com o título e o teclado);
+//   public/img/og/<nome>.png: a de cada ideologia (nome, família e resumo no visor e o mapa com a posição típica dela).
+// Rode da raiz do projeto depois de mudar ideologias.js: node ferramentas/gerar_imagens_compartilhar.mjs
 // (precisa do Chromium do Playwright; CHROMIUM_PATH aponta pra um já instalado)
 import fs from "node:fs";
 import vm from "node:vm";
@@ -61,13 +62,46 @@ p{font-size:23px;line-height:1.38;color:#3A3935;margin-top:18px}
 </div></body></html>`;
 }
 
+// imagem geral do site: visor com o título e o teclado da urna (sem símbolos oficiais)
+function htmlGeral() {
+  const tecla = (t, cls = "") => `<div class="tecla ${cls}">${t}</div>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Arimo;src:url(data:font/woff2;base64,${fonte}) format("woff2");font-weight:400 700}
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:630px;background:#2B2A27;font-family:Arimo,Arial,sans-serif;display:grid;place-items:center}
+.urna{width:1120px;height:552px;background:#E3DED1;border-radius:30px;box-shadow:0 12px 0 #A9A69C;padding:30px;display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-rows:100%;gap:28px}
+.visor{background:#3A3935;border-radius:14px;padding:14px;min-height:0}
+.tela{background:#F3F5EF;border-radius:4px;height:100%;padding:0 36px;display:flex;flex-direction:column;justify-content:center}
+.nome{font-size:19px;font-weight:700;letter-spacing:.14em;color:#5E5A50}
+h1{font-size:68px;line-height:1.02;font-weight:700;color:#151513;margin-top:16px}
+p{font-size:25px;line-height:1.35;color:#3A3935;margin-top:20px}
+.dig{display:flex;align-items:center;gap:8px;margin-top:28px}
+.dig span{display:inline-flex;align-items:center;justify-content:center;width:40px;height:50px;border:3px solid #151513;border-radius:4px;font-size:26px;font-weight:700;color:#151513}
+.dig i{width:3px;height:34px;background:#151513;margin-left:4px}
+.teclado{background:#2B2A27;border-radius:14px;padding:62px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-content:center}
+.tecla{height:52px;border-radius:6px;background:#1A1A18;box-shadow:0 5px 0 #000;color:#F5F5F0;font-size:22px;font-weight:700;display:grid;place-items:center}
+.larga{grid-column:1/-1;font-size:16px;letter-spacing:.04em;color:#151513}
+.branco{background:#F4F4EF;box-shadow:0 5px 0 #A9A69C}.corrige{background:#E8732C;box-shadow:0 5px 0 #9C4A16}.confirma{background:#2FA35A;box-shadow:0 5px 0 #1B6A39}
+</style></head><body><div class="urna">
+<div class="visor"><div class="tela">
+<div class="nome">TESTE POLÍTICO</div>
+<h1>Onde você fica na política?</h1>
+<p>Três modos, de 65 a 210 perguntas. Sua posição em 6 eixos e a mais próxima de 21 ideologias.</p>
+<div class="dig"><span>0</span><span>1</span><i></i></div>
+</div></div>
+<div class="teclado">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => tecla(n)).join("")}${tecla("BRANCO", "larga branco")}${tecla("CORRIGE", "larga corrige")}${tecla("CONFIRMA", "larga confirma")}</div>
+</div></body></html>`;
+}
+
 fs.mkdirSync("public/img/og", { recursive: true });
 const nav = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const pg = await nav.newPage({ viewport: { width: 1200, height: 630 } });
+await pg.setContent(htmlGeral(), { waitUntil: "load" }); await pg.evaluate(() => document.fonts.ready);
+await pg.screenshot({ path: "public/og-urna.png" });
 for (const o of IDEO) {
   await pg.setContent(html(o), { waitUntil: "load" });
   await pg.evaluate(() => document.fonts.ready);
   await pg.screenshot({ path: `public/img/og/${slug(o.n)}.png` });
 }
 await nav.close();
-console.log(`${IDEO.length} imagens em public/img/og/`);
+console.log(`public/og-urna.png e ${IDEO.length} imagens em public/img/og/`);

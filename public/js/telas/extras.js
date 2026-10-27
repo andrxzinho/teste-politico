@@ -89,16 +89,11 @@ function montarResumo(){
     const pc=el("span",null,p<1?"menos de 1%":p+"%");if(p>=1){pc.dataset.conta=p;pc.dataset.sufixo="%"}
     a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a)});
   prox.append(linhaDistante());
-  // destaques: o 2º turno com foto dos dois, afinidade forte com extremos e a principal tensão
-  const r2=(candRanked.pres||[]).filter(c=>c.t2),dest=[];
+  // destaques: afinidade forte com extremos e a principal tensão
+  const dest=[];
   Object.keys(EXT).filter(g=>R.extAsked&&R.extAsked[g]&&R.ext[g]>=GATE).forEach(g=>dest.push(`Afinidade forte com ${EXT[g].n.toLowerCase()}: índice ${R.ext[g]} de 100.`));
   if(ultimasTensoes.length)dest.push(ultimasTensoes[0][1]);
-  if(r2.length===2||dest.length){const d=bloco("Destaques","blocoDestaques");
-    if(r2.length===2){const empate=Math.abs(r2[0].match-r2[1].match)<3,t=el("div","turno2");
-      t.append(el("p","rotulo","2º turno pra presidente"));const par=el("div","turno2-par");
-      r2.forEach((c,i)=>{const p=el("div","turno2-cand"+(i===0&&!empate?" perto":""));p.append(fotoPessoa(c.n,"grande"),el("b",null,c.n),el("span",null,`Compatibilidade ${matchLab(c.match).toLowerCase()}`));par.append(p)});
-      t.append(par,el("p","small",empate?`Você está praticamente na mesma distância dos dois.`:`Você está mais perto de ${r2[0].n}. Não é recomendação de voto.`));d.append(t)}
-    if(dest.length){const ul=el("ul","destaques");dest.forEach(x=>ul.append(el("li",null,x)));d.append(ul)}}
+  if(dest.length){const d=bloco("Destaques","blocoDestaques");const ul=el("ul","destaques");dest.forEach(x=>ul.append(el("li",null,x)));d.append(ul)}
   box.append(fixos.blocoPensadores,fixos.blocoLeituras,fixos.blocoPartilha);
   const cr=bloco("Clicou errado?","blocoCorrigir");cr.classList.add("resumo-corrigir");cr.append(el("p","small","Dá pra trocar qualquer resposta e ver o resultado recalculado, sem refazer o teste."));
   const bcr=el("button","secondary","Corrigir respostas");bcr.type="button";bcr.onclick=()=>abrirCorrecao();cr.append(bcr);

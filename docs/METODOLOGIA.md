@@ -118,11 +118,13 @@ A nota (0 a 100) desconta: pares de frases opostas respondidas pros dois lados, 
 entre temas, 12 ou mais respostas iguais seguidas (só nas frases de concordância), tempo muito curto por frase e excesso
 de "não tenho opinião". Pares de simetria (a mesma situação com lados políticos trocados) medem viés partidário.
 
-## 8. Candidatos
+## 8. Partidos
 
-A compatibilidade compara a posição da pessoa nos eixos com uma estimativa da posição de cada candidato, feita a partir do
-histórico público de cada um, com pesos pela importância que a pessoa dá a cada tema. É uma estimativa com margem de erro
-e não é recomendação de voto. A lista de candidatos precisa ser revisada a cada eleição.
+A compatibilidade compara a posição da pessoa nos eixos com uma estimativa da posição de cada partido, feita a partir da
+classificação ideológica de cientistas políticos (Bolognesi, Ribeiro, Codato e Silva, 2025) e do histórico público de
+cada um, com pesos pela importância que a pessoa dá a cada tema. É uma estimativa com margem de erro e não é
+recomendação de voto. Os candidatos da eleição de 2026 saíram do teste depois do 2º turno (27 de outubro de 2026); a
+lista antiga está no histórico do repositório.
 
 ## 9. Pesos por frase
 

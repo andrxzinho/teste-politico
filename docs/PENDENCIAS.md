@@ -22,7 +22,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
 - [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
 - [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).
-- [x] **Candidatos depois do 2º turno** atualizados (26/10/2026). Na próxima eleição, trocar a lista inteira.
+- [x] **Candidatos depois do 2º turno** atualizados (26/10/2026) e retirados em 27/10/2026, com o "2026" do nome.
+- [ ] **Presidentes desde 1985** no resultado, no lugar dos candidatos (proposta aprovada; em rascunho).
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
 - [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de
@@ -55,4 +56,4 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [ ] Ferramenta pra simular conjuntos diferentes de perguntas por modo, antes de qualquer mudança na quantidade.
 - [ ] Com pelo menos 500 respostas reais: análise fatorial, IRT, recalibrar os perfis e a temperatura da probabilidade.
 - [ ] Medir no painel a mediana de tempo e o ponto de abandono de cada modo (os 9, 18 e 30 minutos são estimativas).
-- [ ] Atualizar os candidatos depois da eleição de 2026.
+- [x] Candidatos de 2026 retirados depois da eleição; ficam os partidos (27/10/2026).

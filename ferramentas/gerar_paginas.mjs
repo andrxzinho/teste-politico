@@ -169,7 +169,7 @@ const FAQ = [
     ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser que você seja moderado de verdade. Ou pode ser que ainda não tenha opinião formada sobre muitos temas. O teste não consegue saber qual das duas.", "Por isso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Olhe os eixos pra ver onde você pendeu pra algum lado."]],
     ["Por que o resultado pode mudar se eu refizer?", ["Algumas coisas deixam o resultado menos firme: muitas respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos. Além disso, quando duas ideologias estão próximas, mudar de ideia em poucas frases já pode trocar o resultado."]],
     ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta.", "O termômetro dos extremos mostra um índice de 0 a 100. Ele não é uma probabilidade (chance)."]],
-    ["A compatibilidade com candidatos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada candidato, feita a partir do que cada um fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
+    ["A compatibilidade com partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada partido, feita a partir da classificação de cientistas políticos e do que o partido fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
   ]],
   ["teste", "Sobre o teste", [
     ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 96 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
@@ -243,7 +243,7 @@ gravar("public/creditos/index.html", pagina({
   descricao: "Autores e licenças das fotos e capas usadas no teste político.",
   corpo: `<div class="creditos-pagina">
 <h1 class="titulo-pagina">Créditos das imagens</h1>
-<p class="intro-pagina">As fotos de pessoas vêm do Wikimedia Commons, em domínio público ou com licença livre (Creative Commons). As fotos oficiais de candidatura vêm do Portal de Dados Abertos do TSE (licença CC BY). Todas foram recortadas e reduzidas.</p>
+<p class="intro-pagina">As fotos de pessoas vêm do Wikimedia Commons, em domínio público ou com licença livre (Creative Commons). Todas foram recortadas e reduzidas.</p>
 <p class="intro-pagina">As capas de livros mostram a edição brasileira sempre que possível. Elas vêm do Open Library, de catálogos de livrarias (pelo ISBN, o número de cada edição) e, pra obras antigas, do Wikimedia Commons. As capas servem só pra identificar as obras, e os direitos são das editoras. Quando não há imagem, o site mostra as iniciais ou uma capa feita só com texto.</p>
 <h2 class="rotulo-secao">Fotos de pessoas</h2>
 <ul class="creditos">${linhasP}</ul>
@@ -258,7 +258,7 @@ urls.push("/creditos/");
 const ARQ = (caminho, texto) => `<li><a href="${REPO}/blob/main/${caminho}" rel="noopener"><code>${esc(caminho)}</code></a>: ${texto}</li>`;
 gravar("public/codigo-aberto/index.html", pagina({
   caminho: "/codigo-aberto/", titulo: "Código-fonte público | Teste político", doc: true, scripts: ["/js/sumario.js"],
-  descricao: "Todo o código do teste político está publicado no GitHub: as frases, o cálculo, os dados das ideologias e candidatos, o servidor do estudo e os testes.",
+  descricao: "Todo o código do teste político está publicado no GitHub: as frases, o cálculo, os dados das ideologias e partidos, o servidor do estudo e os testes.",
   corpo: `<div class="legal-cab">
 <p class="legal-rotulo">Transparência</p>
 <h1>Código-fonte público</h1>
@@ -304,7 +304,7 @@ ${ARQ("public/js/dados/ideologias.js", "as 21 ideologias, a posição típica de
 </ul>
 <h3>O que aparece ao lado do resultado</h3>
 <ul>
-${ARQ("public/js/dados/candidatos.js", "a posição estimada de cada candidato e partido, e a conta da compatibilidade.")}
+${ARQ("public/js/dados/candidatos.js", "a posição estimada de cada partido e a conta da compatibilidade.")}
 ${ARQ("public/js/dados/pensadores.js", "pensadores e figuras históricas, com a justificativa de cada posição.")}
 ${ARQ("public/js/dados/leituras.js", "as leituras recomendadas pra cada ideologia, a favor e contra.")}
 </ul>
@@ -357,7 +357,7 @@ BANCO=memoria npm test</code></pre>
 </section>
 <section id="contribuir">
 <h2>Como contribuir</h2>
-<p>Achou uma frase enviesada, um erro no cálculo, uma posição de candidato mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
+<p>Achou uma frase enviesada, um erro no cálculo, uma posição de partido ou pensador mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
 <p>Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo <a href="${REPO}/blob/main/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
 <div class="acoes-pagina"><a class="ok" href="${REPO}/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
 </section>

@@ -1,5 +1,12 @@
 # Histórico de versões
 
+## Depois da eleição (27 de outubro de 2026)
+- O site passou a se chamar só "Teste Político", sem o "2026": cabeçalho, imagens e textos de compartilhar, imagem de
+  prévia dos links e termos de uso (versão 3.3, sem mudança no tratamento dos dados).
+- Os candidatos de 2026 (presidente, governador e Senado de SP) saíram do resultado, da imagem de compartilhar e da página
+  inicial, com as 31 fotos que só eles usavam. A seção virou "Partidos", que continuam valendo fora das eleições.
+- O destaque "2º turno pra presidente" saiu do resumo do resultado.
+
 ## Cara de site profissional (27 de outubro de 2026)
 - Rodapé em todas as páginas com "© 2026 André Leal", a licença, os créditos das imagens e a data da última atualização.
 - Página nova "Sobre o projeto": quem faz, por que existe, independência, como o teste é feito, como contribuir e contato.
