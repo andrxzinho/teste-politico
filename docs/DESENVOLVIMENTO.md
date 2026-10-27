@@ -27,8 +27,8 @@
   pra aparecer pra quem já visitou; se precisar que apareça na hora, dê outro nome ao arquivo.
 - **Perfis das ideologias:** posição de cada ideologia nos eixos em `public/js/dados/ideologias.js` e nos 15 subtemas
   em `public/js/dados/frases.js`. Mudar perfis é mudança metodológica: proponha antes, com simulação (veja `CONTRIBUTING.md`).
-- **Partidos:** `public/js/dados/candidatos.js` (`CAND.part`). Cada lista em `CAND` vira uma aba na seção do resultado;
-  com uma lista só, as abas ficam escondidas.
+- **Presidentes e partidos:** `public/js/dados/candidatos.js` (`CAND.pres` e `CAND.part`). Cada lista vira uma aba na seção
+  do resultado. A cada novo presidente, acrescente-o no fim de `CAND.pres`, com a posição estimada pelo que fez no governo.
 - **Ver o site no computador:** `npm run local` serve `public/` em http://127.0.0.1:8080 (sem as funções do servidor;
   o site entra em modo teste e nada é enviado).
 

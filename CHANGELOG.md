@@ -1,6 +1,9 @@
 # Histórico de versões
 
 ## Depois da eleição (27 de outubro de 2026)
+- Presidentes desde 1985 no resultado (Sarney, Collor, Itamar, FHC, Lula, Dilma, Temer e Bolsonaro), com a posição de
+  cada um estimada pelo que fez no governo, ao lado dos partidos; no resumo, o presidente mais perto. Termos de uso,
+  versão 3.4 (só a menção aos presidentes).
 - O site passou a se chamar só "Teste Político", sem o "2026": cabeçalho, imagens e textos de compartilhar, imagem de
   prévia dos links e termos de uso (versão 3.3, sem mudança no tratamento dos dados).
 - Os candidatos de 2026 (presidente, governador e Senado de SP) saíram do resultado, da imagem de compartilhar e da página

@@ -169,7 +169,7 @@ const FAQ = [
     ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser que você seja moderado de verdade. Ou pode ser que ainda não tenha opinião formada sobre muitos temas. O teste não consegue saber qual das duas.", "Por isso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Olhe os eixos pra ver onde você pendeu pra algum lado."]],
     ["Por que o resultado pode mudar se eu refizer?", ["Algumas coisas deixam o resultado menos firme: muitas respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos. Além disso, quando duas ideologias estão próximas, mudar de ideia em poucas frases já pode trocar o resultado."]],
     ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta.", "O termômetro dos extremos mostra um índice de 0 a 100. Ele não é uma probabilidade (chance)."]],
-    ["A compatibilidade com partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada partido, feita a partir da classificação de cientistas políticos e do que o partido fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
+    ["A compatibilidade com presidentes e partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada presidente desde 1985, feita pelo que ele fez no governo, e de cada partido, feita pela classificação de cientistas políticos e pelo que o partido fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
   ]],
   ["teste", "Sobre o teste", [
     ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 96 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
@@ -304,7 +304,7 @@ ${ARQ("public/js/dados/ideologias.js", "as 21 ideologias, a posição típica de
 </ul>
 <h3>O que aparece ao lado do resultado</h3>
 <ul>
-${ARQ("public/js/dados/candidatos.js", "a posição estimada de cada partido e a conta da compatibilidade.")}
+${ARQ("public/js/dados/candidatos.js", "a posição estimada de cada presidente desde 1985 e de cada partido, e a conta da compatibilidade.")}
 ${ARQ("public/js/dados/pensadores.js", "pensadores e figuras históricas, com a justificativa de cada posição.")}
 ${ARQ("public/js/dados/leituras.js", "as leituras recomendadas pra cada ideologia, a favor e contra.")}
 </ul>
@@ -357,7 +357,7 @@ BANCO=memoria npm test</code></pre>
 </section>
 <section id="contribuir">
 <h2>Como contribuir</h2>
-<p>Achou uma frase enviesada, um erro no cálculo, uma posição de partido ou pensador mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
+<p>Achou uma frase enviesada, um erro no cálculo, uma posição de presidente, partido ou pensador mal justificada ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se possível, mande a fonte. Há modelos prontos pra problemas no site e pra frases ou dados.</p>
 <p>Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo <a href="${REPO}/blob/main/SECURITY.md" rel="noopener">SECURITY.md</a>.</p>
 <div class="acoes-pagina"><a class="ok" href="${REPO}/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
 </section>

@@ -26,7 +26,7 @@ function preencherSumario(){if(!R)return;const t=(id,v)=>{const e=$(id);if(e)e.t
   const EXN={com:"comunismo",anq:"anarquismo",fas:"fascismo",anc:"anarcocapitalismo"},perg=Object.keys(EXN).filter(g=>R.extAsked[g]);
   const alto=perg.filter(g=>R.ext[g]>=50).sort((x,y)=>R.ext[y]-R.ext[x]);
   t("s-extremos",!perg.length?"Frases dos extremos não perguntadas":alto.length?`Afinidade forte com o ${EXN[alto[0]]} (índice ${R.ext[alto[0]]} de 100)`:"Nenhum com índice acima de 50");
-  const p1=(candRanked.part||[])[0];t("s-candidatos",p1?`Mais perto: ${p1.n}`:"");
+  const pr1=(candRanked.pres||[])[0],p1=(candRanked.part||[])[0];t("s-candidatos",[pr1&&`Mais perto: ${pr1.n}`,p1&&`partido ${p1.n}`].filter(Boolean).join("; "));
   const nn=$("resNotes").children.length,cf={alta:"Confiança alta",media:"Confiança média",baixa:"Confiança baixa"}[R.conf];t("s-notas",`${cf}. ${nn} ${nn===1?"observação":"observações"}`);
   const nh=$("histOut").querySelectorAll(".hist-item").length;t("s-hist",nh?`${nh} ${nh===1?"resultado salvo":"resultados salvos"} neste aparelho`:"");
 }

@@ -46,7 +46,7 @@ export async function testarInterface() {
     v.confere((await pg.locator("#results details.acc").count()) === 10, `${modo}: resultado completo deveria ter 10 seções`);
     v.confere(await pg.evaluate("[...document.querySelectorAll('#results .acc-list > details.acc')].slice(0,2).map(d=>d.id).join()") === "a-perfil,a-porque", `${modo}: "Por que deu esse resultado" deveria vir logo depois do perfil`);
     v.confere((await pg.evaluate("$('ideo').textContent")).length > 3, `${modo}: ideologia vazia`);
-    v.confere(/^Mais perto: /.test(await pg.evaluate("$('s-candidatos').textContent")), `${modo}: resumo de partidos sem o partido mais perto`);
+    v.confere(/^Mais perto: .+; partido /.test(await pg.evaluate("$('s-candidatos').textContent")), `${modo}: resumo sem o presidente e o partido mais perto`);
     v.confere((await pg.evaluate("$('myCode').textContent")).startsWith({ quick: "bq", full: "bf", deep: "bd" }[modo]), `${modo}: código de comparação deveria indicar o modo`);
     // etapa C: comparar com uma ideologia, tensões, leituras e relatório
     v.confere((await pg.locator("#compIdeoOut > div.box > .axis").count()) === 5, `${modo}: comparação com ideologia deveria ter 5 eixos`);

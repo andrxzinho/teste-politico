@@ -27,7 +27,7 @@
 > [!NOTE]
 > Projeto independente e sem fins lucrativos, sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral.
 > O visual se inspira na urna eletrônica, sem usar símbolos oficiais. O resultado é uma aproximação feita por um modelo
-> estatístico, não um diagnóstico, e a compatibilidade com partidos não é recomendação de voto.
+> estatístico, não um diagnóstico, e a compatibilidade com presidentes e partidos não é recomendação de voto.
 
 ## Sumário
 
@@ -52,7 +52,7 @@ segurança, costumes, o Brasil no mundo, democracia e instituições, e recebe:
 - as **ideologias que melhor explicam as suas respostas**, entre 21 tradições políticas, com a probabilidade relativa
   de cada uma dentro do modelo e um indicador de confiança (alta, média ou baixa);
 - as tensões e possíveis contradições nas suas respostas;
-- a compatibilidade estimada com partidos, pensadores e figuras históricas;
+- a compatibilidade estimada com os presidentes desde 1985, os partidos, pensadores e figuras históricas;
 - leituras recomendadas a favor e contra a tradição mais próxima;
 - uma imagem e um link para comparar o resultado com amigos.
 
@@ -161,7 +161,7 @@ Os testes conferem se o código faz o que promete. Eles **não** mostram que o t
 public/                 site estático, publicado como está
   index.html            telas do teste e do resultado
   js/nucleo/            motor de cálculo, classificação e estado
-  js/dados/             frases, ideologias, partidos, pensadores, leituras e glossário
+  js/dados/             frases, ideologias, presidentes e partidos, pensadores, leituras e glossário
   js/telas/             perguntas, resultado, partidos, comparar, compartilhar...
   js/servicos/          envio ao estudo, imagem de compartilhar, fotos e capas
   ideologias/ ...       páginas geradas (npm run paginas)

@@ -17,7 +17,7 @@ autoidentificação política se respondida, e faixa de idade e estado só se in
 
 ## O que nunca é enviado
 
-Nome, e-mail, IP, navegador, localização e a compatibilidade com partidos.
+Nome, e-mail, IP, navegador, localização e a compatibilidade com presidentes e partidos.
 
 ## O que fica só no aparelho
 

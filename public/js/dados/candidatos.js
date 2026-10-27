@@ -1,7 +1,19 @@
-// Partidos (CAND.part) com posição estimada nos eixos e a nota na escala ideológica de cientistas políticos (s, de 0 a 10).
+// Presidentes desde 1985 (CAND.pres) e partidos (CAND.part), com posição estimada em Economia, Liberdade × Ordem, Costumes
+// e Brasil × Mundo (p, de -100 a 100). Presidentes: estimada pelo que cada um fez no governo, com o mesmo critério pra todos
+// (st = anos de mandato). Partidos: s é a nota na escala ideológica de cientistas políticos (0 = esquerda, 10 = direita).
 // Os candidatos da eleição de 2026 saíram depois do 2º turno; estão no histórico do repositório.
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 const CAND = {
+ pres:{label:"Presidentes",quem:"Presidente",list:[
+  {n:"José Sarney",st:"1985–1990",p:[-15,10,25,35],b:"Primeiro presidente civil depois do regime militar, pelo PMDB, eleito como vice de Tancredo Neves. Lançou o Plano Cruzado, que congelou preços, declarou moratória da dívida externa em 1987 e governou durante a Assembleia Constituinte, que aprovou a Constituição de 1988."},
+  {n:"Fernando Collor",st:"1990–1992",p:[35,20,20,-30],b:"Eleito pelo PRN na primeira eleição direta depois do regime militar. Abriu a economia às importações, começou o programa de privatizações e bloqueou o dinheiro das cadernetas de poupança no Plano Collor. Renunciou durante o processo de impeachment, em 1992."},
+  {n:"Itamar Franco",st:"1992–1994",p:[0,5,10,30],b:"Vice de Collor, assumiu depois da renúncia. Lançou o Plano Real, que acabou com a hiperinflação. Continuou parte das privatizações, como a da CSN e a da Embraer, mas com discurso nacionalista e de defesa das estatais estratégicas."},
+  {n:"Fernando Henrique Cardoso",st:"1995–2002",p:[35,0,-10,-35],b:"Dois mandatos pelo PSDB. Consolidou o Plano Real, privatizou estatais como a Vale e o sistema Telebras, criou a Lei de Responsabilidade Fiscal e programas de transferência de renda como o Bolsa Escola."},
+  {n:"Lula",st:"2003–2010 e desde 2023",p:[-45,5,-25,10],b:"Pelo PT, reeleito em 2026. Criou o Bolsa Família e ampliou os gastos sociais e o crédito de bancos públicos. No governo atual, criou o arcabouço fiscal, regra que limita o aumento dos gastos, e a isenção do Imposto de Renda até R$ 5 mil, com imposto mínimo pra rendas altas."},
+  {n:"Dilma Rousseff",st:"2011–2016",p:[-50,10,-15,25],b:"Pelo PT. Ampliou a presença do Estado na economia, com controle dos preços de energia e combustíveis, desoneração de impostos de setores escolhidos e crédito de bancos públicos, além de regras de conteúdo nacional na indústria. Sofreu impeachment em 2016."},
+  {n:"Michel Temer",st:"2016–2018",p:[50,35,20,-10],b:"Pelo MDB, vice de Dilma, assumiu depois do impeachment. Aprovou o teto de gastos, a reforma trabalhista e a reforma do ensino médio, e decretou a intervenção federal na segurança do Rio de Janeiro."},
+  {n:"Jair Bolsonaro",st:"2019–2022",p:[45,75,85,40],b:"Eleito pelo PSL e depois filiado ao PL. Aprovou a reforma da Previdência e a autonomia do Banco Central, privatizou a Eletrobras, facilitou o acesso a armas e defendeu pautas conservadoras nos costumes e o discurso de soberania sobre a Amazônia."}
+ ], extra:"Todos os presidentes desde a volta da democracia, em 1985. Tancredo Neves foi eleito, mas morreu antes de tomar posse e está em Pensadores e figuras históricas."},
  part:{label:"Partidos", list:[
   {n:"PSTU",p:[-92,-10,-65,-15],s:0.51},{n:"PCO",p:[-90,-40,-15,40],s:0.55},{n:"PCB",p:[-90,30,-45,40],s:0.69},{n:"PSOL",p:[-70,-35,-80,-30],s:1.41},
   {n:"UP",p:[-85,20,-65,35],s:1.63},{n:"PCdoB",p:[-60,15,-45,30],s:1.78},{n:"PT",p:[-45,5,-30,10],s:2.68},{n:"PSB",p:[-25,5,-25,0],s:3.59},
