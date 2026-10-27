@@ -394,6 +394,68 @@
   }
  },
  "livros": {
+  "origini-e-dottrina-del-fascismo-giovanni-gentile": {
+   "t": "Origini e dottrina del fascismo",
+   "a": "Giovanni Gentile",
+   "fonte": "https://archive.org/details/origini-e-dottrina-del-fascismo_20260121",
+   "licenca": "domínio público",
+   "edicao": "Istituto Nazionale Fascista di Cultura, Roma (exemplar da Universidade de Michigan, digitalizado pelo Google)"
+  },
+  "anarchism-and-socialism-gueorgui-plekhanov": {
+   "t": "Anarchism and Socialism",
+   "a": "Gueorgui Plekhanov",
+   "fonte": "https://archive.org/details/anarchismsociali00plek",
+   "licenca": "domínio público",
+   "edicao": "Charles H. Kerr & Company, Chicago, tradução de Eleanor Marx Aveling"
+  },
+  "o-fim-da-historia-e-o-ultimo-homem-francis-fukuyama": {
+   "t": "O fim da história e o último homem",
+   "a": "Francis Fukuyama",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/853250129X.01.L.jpg",
+   "isbn": "9788532501295",
+   "edicao": "Rocco, 2015",
+   "titulo_ed": "O fim da história e o último homem"
+  },
+  "o-que-e-conservadorismo-roger-scruton": {
+   "t": "O que é conservadorismo",
+   "a": "Roger Scruton",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/858033196X.01.L.jpg",
+   "isbn": "9788580331967",
+   "edicao": "É Realizações, 2015",
+   "titulo_ed": "O que é conservadorismo"
+  },
+  "conservadorismo-michael-oakeshott": {
+   "t": "Conservadorismo",
+   "a": "Michael Oakeshott",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8592649080.01.L.jpg",
+   "isbn": "9788592649081",
+   "edicao": "Âyiné, 2020",
+   "titulo_ed": "Conservadorismo"
+  },
+  "a-sujeicao-das-mulheres-john-stuart-mill": {
+   "t": "A sujeição das mulheres",
+   "a": "John Stuart Mill",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/6557131419.01.L.jpg",
+   "isbn": "9786557131411",
+   "edicao": "Vozes de Bolso, 2021",
+   "titulo_ed": "A sujeição das mulheres"
+  },
+  "governo-onipotente-ludwig-von-mises": {
+   "t": "Governo onipotente",
+   "a": "Ludwig von Mises",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8595072221.01.L.jpg",
+   "isbn": "9788595072220",
+   "edicao": "Vide Editorial, 2024",
+   "titulo_ed": "Governo onipotente"
+  },
+  "a-logica-da-acao-coletiva-mancur-olson": {
+   "t": "A lógica da ação coletiva",
+   "a": "Mancur Olson",
+   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8531405033.01.L.jpg",
+   "isbn": "9788531405037",
+   "edicao": "Edusp, 2015",
+   "titulo_ed": "A lógica da ação coletiva"
+  },
   "o-estado-e-a-revolucao-vladimir-lenin": {
    "t": "O Estado e a revolução",
    "a": "Vladimir Lênin",

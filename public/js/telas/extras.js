@@ -53,13 +53,15 @@ function mostrarLeituras(){
   out.append(el("p","small",leiturasAba==="favor"?(ext?`Fontes históricas e textos de referência de ${n}, pra entender o que essa tradição defendeu. Não é recomendação.`:`Obras que ajudam a entender ${n} como os próprios defensores a entendem.`):"As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio."));
   L[leiturasAba].forEach(([t,a,ano,d,x])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));if(x)tx.append(linhaEdicao(x));it.append(capaLivro(t,a),tx);out.append(it)})}
 // edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
+// edição citada, link informativo (Wikipédia, editora ou Open Library) e, menor, a loja (mesma linha em ferramentas/gerar_paginas.mjs)
 function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
-  if(x.link){const a=el("a",null,x.onde);a.href=x.link;a.target="_blank";a.rel="noopener";p.append(a)}return p}
+  if(x.link){const a=el("a",null,x.onde);a.href=x.link;a.target="_blank";a.rel="noopener";p.append(a)}
+  if(x.loja){const a=el("a","loja",`Loja: ${x.lojaNome}`);a.href=x.loja;a.target="_blank";a.rel="noopener";p.append(a)}return p}
 
 // 4. relatório em PDF (impressão do navegador): abre todas as seções e volta como estava depois
 function relatorioPDF(){
   const ds=[...document.querySelectorAll("#results details")],estado=ds.map(d=>d.open),eraCompleto=$("results").classList.contains("completo");ds.forEach(d=>d.open=true);setCompleto(true);
-  $("soImpressao").textContent=`Teste político 2026. Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} no modo ${nomeModo(st.mode)}. testepolitico.vercel.app`;
+  $("soImpressao").textContent=`Teste Político. Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} no modo ${nomeModo(st.mode)}. testepolitico.vercel.app`;
   const fim=()=>{ds.forEach((d,i)=>d.open=estado[i]);setCompleto(eraCompleto);removeEventListener("afterprint",fim)};addEventListener("afterprint",fim);setTimeout(()=>window.print(),60)}
 
 function renderExtras(){

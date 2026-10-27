@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## Livros (27 de outubro de 2026)
+- Capas de oito livros que estavam sem: seis edições brasileiras (Fukuyama, Scruton, Oakeshott, Mill, Mises e Olson) e as
+  edições originais digitalizadas de Gentile e Plekhanov (Internet Archive, domínio público), com crédito.
+- O relatório em PDF deixou de dizer "Teste político 2026".
+
 ## Depois da eleição (27 de outubro de 2026)
 - Presidentes desde 1985 no resultado (Sarney, Collor, Itamar, FHC, Lula, Dilma, Temer e Bolsonaro), com a posição de
   cada um estimada pelo que fez no governo, ao lado dos partidos; no resumo, o presidente mais perto. Termos de uso,
