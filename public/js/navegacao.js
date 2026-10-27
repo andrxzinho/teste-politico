@@ -14,10 +14,10 @@
   }
   aplicarTema();
 
-  // páginas do site: a mesma lista alimenta o cabeçalho, o menu e o rodapé
+  // páginas do site: a mesma lista alimenta o menu (numerado, na ordem) e o rodapé (sem o Início). "Fazer o teste" fica só
+  // no botão do cabeçalho, que já leva aos modos
   const PAGINAS = [
     { h: "/", t: "Início" },
-    { h: "/#modos", t: "Fazer o teste" },
     { h: "/ideologias/", t: "Ideologias" },
     { h: "/metodologia.html", t: "Metodologia" },
     { h: "/perguntas-frequentes/", t: "Perguntas frequentes" },
@@ -68,7 +68,7 @@
       const topo = el("div", "menu-topo"), fx = el("button", "menu-fechar", "×");
       fx.type = "button"; fx.setAttribute("aria-label", "Fechar menu"); fx.onclick = fechar;
       topo.append(el("span", "menu-rot", "MENU"), fx); menu.append(topo);
-      PAGINAS.forEach((p, i) => { const a = link(p, "menu-item"); a.append(el("b", null, String(i + 1)), el("span", null, p.t)); a.onclick = () => { if (p.h.includes("#")) fechar(); }; menu.append(a); });
+      PAGINAS.forEach((p, i) => { const a = link(p, "menu-item"); a.append(el("b", null, String(i + 1)), el("span", null, p.t)); menu.append(a); });
       const cfg = el("div", "menu-cfg");
       cfg.append(el("span", "menu-rot", "CONFIGURAÇÕES"));
       const lSom = el("div", "linha"), bSom = el("button", "chave"); bSom.type = "button";
@@ -93,7 +93,7 @@
     if (rod && !rod.firstChild) {
       rod.className = "site-rod";
       const nav = el("nav"); nav.setAttribute("aria-label", "Rodapé");
-      PAGINAS.slice(2).forEach((p) => { const a = link(p); a.textContent = p.t; nav.append(a); });
+      PAGINAS.slice(1).forEach((p) => { const a = link(p); a.textContent = p.t; nav.append(a); });
       const legal = el("p", "site-rod-legal"), lic = el("a", null, "Licença PolyForm Strict"), cred = el("a", null, "ver créditos");
       lic.href = LICENCA; lic.rel = "noopener"; cred.href = "/creditos/"; if (ehAtual(cred.getAttribute("href"))) cred.setAttribute("aria-current", "page");
       const img = el("span", null, "Imagens: "); img.append(cred);

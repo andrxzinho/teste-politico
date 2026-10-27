@@ -83,7 +83,7 @@ function montarResumo(){
   const box=$("resumo");box.innerHTML="";const bloco=(t,id)=>{const d=el("section","resumo-bloco");if(id)d.id=id;d.append(el("h2",null,t));box.append(d);return d};
   const eixos=bloco("Seus eixos","blocoEixos"),ex=el("div","eixos-tipicos");
   AXK6.forEach(k=>{const d=el("div","eixo-tipico"),topo=el("div","topo");topo.append(el("b",null,AX[k].name),el("span",null,band(R.s[k],k)));
-    const tr=el("div","trilho"),i=el("i");i.style.left=posEsc(R.s[k])+"%";tr.append(i);const pts=el("div","pontas");pts.append(el("span",null,AX[k].left),el("span",null,AX[k].right));d.append(topo,tr,pts);ex.append(d)});
+    const tr=el("div","trilho"),i=el("i");i.style.left=posEsc(R.s[k])+"%";tr.append(i);const pts=el("div","pontas");pts.setAttribute("aria-hidden","true");pts.append(el("span",null,AX[k].left),el("span",null,AX[k].right));d.append(topo,tr,pts);ex.append(d)});
   eixos.append(ex);
   const prox=bloco("Ideologias que melhor explicam suas respostas","blocoIdeologias");
   prox.append(el("p","small nota-prob","A porcentagem é a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Não é o quanto você concorda com ela."));

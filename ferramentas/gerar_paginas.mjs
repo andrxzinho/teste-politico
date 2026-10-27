@@ -121,7 +121,7 @@ ${cartoes}
 for (const o of IDEO) {
   const n = o.n, g = grupoDe(n);
   const viz = IDEO.filter((x) => x.n !== n).sort((a, b) => dist(o, a) - dist(o, b)).slice(0, 3);
-  const eixos = EIXOS.map((k) => `<div class="eixo-tipico"><div class="topo"><b>${esc(AX[k].name)}</b><span>${esc(rotulo(o.p[k] ?? 0, k))}</span></div><div class="trilho"><i style="left:${((o.p[k] ?? 0) + 100) / 2}%"></i></div><div class="pontas"><span>${esc(AX[k].left)}</span><span>${esc(AX[k].right)}</span></div></div>`).join("\n");
+  const eixos = EIXOS.map((k) => `<div class="eixo-tipico"><div class="topo"><b>${esc(AX[k].name)}</b><span>${esc(rotulo(o.p[k] ?? 0, k))}</span></div><div class="trilho"><i style="left:${((o.p[k] ?? 0) + 100) / 2}%"></i></div><div class="pontas" aria-hidden="true"><span>${esc(AX[k].left)}</span><span>${esc(AX[k].right)}</span></div></div>`).join("\n");
   gravar(`public/ideologias/${slug(n)}/index.html`, pagina({
     caminho: `/ideologias/${slug(n)}/`, titulo: `${n}: o que defende | Teste político`,
     descricao: `${IDEO_RESUMO[n]} Veja onde fica em cada eixo e as ideologias vizinhas.`,

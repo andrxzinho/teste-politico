@@ -44,15 +44,15 @@ export async function testarPaginas() {
   await pg.goto(s.url + "/ideologias/social-democrata/"); await pg.waitForTimeout(150);
   v.confere((await pg.locator(".livro").count()) === 8, "página de ideologia deveria ter 8 leituras (4 por dentro, 4 críticas)");
   v.confere((await pg.locator('a[href="/?ideologia=social-democrata"]').count()) === 1, "página de ideologia deveria ter o atalho pra comparar");
-  // menu: abre, fecha com Esc, tecla 3 leva às ideologias, foco volta ao botão
+  // menu: abre, fecha com Esc, tecla 2 leva às ideologias, foco volta ao botão
   await pg.goto(s.url + "/"); await pg.waitForTimeout(150);
   await pg.click(".menu-btn");
   v.confere(await pg.evaluate("!document.querySelector('.menu-fundo').hidden"), "menu deveria abrir");
   v.confere(await pg.evaluate("document.activeElement.classList.contains('menu-item')"), "foco deveria ir pro primeiro item do menu");
   await pg.keyboard.press("Escape");
   v.confere(await pg.evaluate("document.querySelector('.menu-fundo').hidden&&document.activeElement.classList.contains('menu-btn')"), "Esc deveria fechar o menu e devolver o foco");
-  await pg.click(".menu-btn"); await pg.keyboard.press("3"); await pg.waitForURL("**/ideologias/");
-  v.confere(true, "tecla 3 leva às ideologias");
+  await pg.click(".menu-btn"); await pg.keyboard.press("2"); await pg.waitForURL("**/ideologias/");
+  v.confere(true, "tecla 2 leva às ideologias");
   // tema escolhido no menu vale pra todas as páginas e sobrevive à recarga
   await pg.click(".menu-btn"); await pg.click('.seg3 button[data-tema="escuro"]');
   v.confere((await pg.evaluate("document.documentElement.dataset.theme")) === "dark", "tema escuro deveria ser aplicado");

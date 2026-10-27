@@ -25,6 +25,20 @@ export async function testarAcessibilidade({ detalhar = true } = {}) {
     v.confere(!r.length, `${tema} ${nome}: ${r.length} problema(s) de acessibilidade`);
     await pg.close();
   }
+  // só teclado: começar pelo Enter, responder com as teclas e chegar ao resultado, com o foco no título de cada tela
+  {
+    const pg = await b.newPage({ viewport: { width: 1280, height: 860 } });
+    await pg.goto(s.url + "/"); await pg.evaluate(() => localStorage.clear()); await pg.reload(); await pg.waitForTimeout(300);
+    await pg.focus('button.mode[data-mode="quick"]'); await pg.keyboard.press("Enter"); await pg.waitForTimeout(500);
+    if (await pg.evaluate("document.body.dataset.tela==='consent'")) { await pg.focus("#cSkip"); await pg.keyboard.press("Enter"); await pg.waitForTimeout(400); }
+    const noTitulo = () => pg.evaluate("document.activeElement&&document.activeElement.id==='stmt'");
+    v.confere(await noTitulo(), "teclado: ao começar, o foco deveria ir pro título do bloco");
+    await pg.keyboard.press("Enter"); await pg.waitForTimeout(450); await pg.keyboard.press("2"); await pg.waitForTimeout(500);
+    v.confere(await noTitulo(), "teclado: depois de responder, o foco deveria ir pro enunciado da nova pergunta");
+    await pg.evaluate(`(()=>{st.seen=st.bs.map((_,j)=>j);for(const id of st.base)st.ans[id]=1;st.cur=seq().length;st.done=true;show('results');results()})()`); await pg.waitForTimeout(400);
+    v.confere(await pg.evaluate("document.activeElement&&document.activeElement.id==='ideo'"), "teclado: no resultado, o foco deveria ir pro nome da ideologia");
+    await pg.close();
+  }
   await b.close(); await s.fechar();
   return v.fim();
 }

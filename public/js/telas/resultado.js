@@ -43,8 +43,13 @@ function results(){
   if(!st.hist){saveHistory(top);st.hist=true}st.done=true;save();
   renderComparar();
   shareData={top,two:!!two,ranked,s:R.s,ext:R.ext,extAsked:R.extAsked,cand:candRanked,modo:nomeModo(st.mode),conf:lv[0]};shareFile=null;prepareShare();montarPartilha();
-  setupStats();show("results");fitTitle();
+  setupStats();show("results");fitTitle();requestAnimationFrame(ajustarCapa);
 }
+// computador: o cartão da esquerda fica fixo enquanto a página rola. Se for mais alto que a tela, ele rola junto até
+// mostrar o fim (os botões) e só então fica fixo pela base, em vez de esconder a parte de baixo.
+function ajustarCapa(){const c=document.querySelector("#results > .cover");if(!c)return;
+  const h=c.getBoundingClientRect().height,livre=innerHeight-76-16;c.style.top=h>livre?`${Math.round(innerHeight-h-16)}px`:""}
+addEventListener("resize",()=>{if(document.body.dataset.tela==="results")ajustarCapa()});
 // ---------- perfil em palavras
 const PROF=[
  {n:"Desenvolvimentista soberano",w:s=>s.E<=-15&&s.N>=25&&Math.abs(s.C)<25,d:"Você quer um Estado que conduza a economia, proteja a indústria e as empresas estratégicas e negocie com o mundo sem abrir mão da soberania. Nos costumes, fica perto do meio.",t:"No protecionismo e na soberania, você está mais perto de parte da direita nacionalista do que de liberais de qualquer lado."},

@@ -1,5 +1,15 @@
 # Histórico de versões
 
+## Design e acessibilidade (27 de outubro de 2026)
+- Menu sem "Fazer o teste", que levava praticamente pro mesmo lugar que "Início" e que o botão do cabeçalho. Os atalhos
+  numerados do menu mudam: Ideologias passa a ser a tecla 2.
+- Resultado no computador: quando o cartão da esquerda é mais alto que a tela, ele rola junto até mostrar os botões
+  (Refazer, Compartilhar, PDF) e só então fica fixo; antes, a parte de baixo ficava escondida.
+- Teclado e leitor de tela: a cada troca de tela o foco vai pro título da tela nova, e a cada resposta vai pro enunciado
+  da pergunta seguinte, que é lido em seguida. Antes, o foco se perdia. Os rótulos das pontas dos eixos deixaram de ser
+  lidos em duplicidade. Teste automático novo pro fluxo só com o teclado.
+- Desfeito o fundo escuro atrás da página (Fase 2), que escurecia a parte de baixo da tela de pergunta no computador.
+
 ## Livros (27 de outubro de 2026)
 - Link principal de cada livro passou a ser informativo: Wikipédia em português (69 obras), em inglês (44) ou Open
   Library (23), cada um aberto e conferido. A loja (Amazon ou Estante Virtual) virou um segundo link, menor e

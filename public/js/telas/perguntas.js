@@ -27,7 +27,7 @@ function render(){
     fecharTermo();$("stmt").textContent=nm;$("blkDesc").textContent=ds;$("blkDesc").classList.remove("hidden");
     $("dil").classList.add("hidden");$("explainBtn").classList.add("hidden");$("skipBtn").classList.add("hidden");
     const go=el("button","primary",b===0?"Começar":"Continuar");go.style.marginTop="0";go.onclick=()=>{st.seen.push(b);save();render()};box.append(go);
-    for(const e of [$("qcard"),box]){e.classList.remove("enter");void e.offsetWidth;e.classList.add("enter")}return}
+    for(const e of [$("qcard"),box]){e.classList.remove("enter");void e.offsetWidth;e.classList.add("enter")}focarPergunta();return}
   const shown=ids.filter((x,i)=>i<st.base.length&&st.ans[x]!=="g"&&!(gated(ITEMS[x])&&st.ans[x]===undefined&&i!==st.cur));
   const total=inTb?st.tb.length:shown.length,pos=inTb?st.cur-st.base.length:ids.slice(0,st.cur).filter(x=>st.ans[x]!=="g").length;
   visorNum(pos+1,false,total);$("qof").textContent="de "+total;
@@ -45,8 +45,12 @@ function render(){
   $("skipBtn").classList.toggle("sel",st.ans[id]==="x"||st.ans[id]==="n");
   shownAt=Date.now();
   for(const e of [$("qcard"),box]){e.classList.remove("enter");void e.offsetWidth;e.classList.add("enter")}
+  focarPergunta();
   {const n=box.querySelectorAll("button.ans").length,tm=$("stmt").querySelector(".termo");$("vRod").textContent=(n?`Aperte uma tecla de 1 a ${n}.`:"")+(tm?" Toque nos termos sublinhados pra ver o que significam.":"")}
 }
+// leitor de tela: quando o botão apertado some (nova pergunta), o foco vai pro enunciado, que é lido em seguida
+function focarPergunta(){const a=document.activeElement;if(!interagiu||$("quiz").classList.contains("hidden"))return;
+  if(!a||a===document.body||!a.isConnected||a===$("stmt")||$("answers").contains(a))focarSemRolar($("stmt"))}
 const onIntro=()=>{const b=blockOf(st.cur);return b>=0&&st.cur===st.bs[b]&&!st.seen.includes(b)};
 // próxima frase: as frases de um extremo só aparecem se a posição no eixo já aponta pra aquele lado
 function nextIdx(){const ids=seq();let i=st.cur+1;

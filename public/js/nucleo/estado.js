@@ -32,7 +32,11 @@ let st=fresh("full"),busy=false;
 const seq=()=>st.base.concat(st.tb);
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.base)&&Array.isArray(s.bs)&&s.base.every(id=>ITEMS[id])&&(s.tb||[]).every(id=>ITEMS[id])){st=s;return true}}catch(e){}return false}
-function show(id){for(const s of ["intro","consent","quiz","tbintro","imp","results"])$(s).classList.toggle("hidden",s!==id);document.body.dataset.tela=id;botaoCabecalho(id);const t=$(id);t.classList.remove("entra");void t.offsetWidth;t.classList.add("entra");window.scrollTo(0,0)}
+function show(id){for(const s of ["intro","consent","quiz","tbintro","imp","results"])$(s).classList.toggle("hidden",s!==id);document.body.dataset.tela=id;botaoCabecalho(id);const t=$(id);t.classList.remove("entra");void t.offsetWidth;t.classList.add("entra");window.scrollTo(0,0);
+  // teclado e leitor de tela: a cada troca de tela (depois que a pessoa já interagiu), o foco vai pro título da tela nova
+  if(interagiu){const h=[...t.querySelectorAll("h1,h2")].find(x=>x.offsetParent!==null);if(h)focarSemRolar(h)}}
+let interagiu=false;["keydown","pointerdown"].forEach(ev=>addEventListener(ev,()=>{interagiu=true},{once:true,capture:true}));
+function focarSemRolar(e){if(!e.hasAttribute("tabindex"))e.setAttribute("tabindex","-1");if(document.activeElement===e)e.blur();e.focus({preventScroll:true})}
 
 
 // tecla verde do cabeçalho: no resultado vira "Refazer teste" (o mesmo que a tecla CORRIGE), nas outras telas leva aos modos

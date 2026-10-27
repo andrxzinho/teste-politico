@@ -32,8 +32,6 @@
 .seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .seg3 button{min-height:42px;border:0;border-radius:5px;background:#1A1A18;color:#F5F5F0;font:700 .84rem var(--font);box-shadow:0 3px 0 #000;margin-bottom:3px;cursor:pointer}
 .seg3 button[aria-pressed="true"]{background:#2FA35A;color:#151513;box-shadow:0 1px 0 #1B6A39;transform:translateY(2px)}
-/* fundo atrás da página com a cor do rodapé: em página curta, a sobra embaixo continua o rodapé (o body tem a cor própria) */
-html{background:#2B2A27}
 .site-rod{margin-top:3rem;padding:24px max(16px,calc((100vw - 74rem)/2)) calc(28px + env(safe-area-inset-bottom,0px));background:#2B2A27;color:#CFCBC0;font-size:.88rem;display:flex;flex-direction:column;gap:10px}
 .site-rod nav{display:flex;flex-wrap:wrap;gap:0 1.4rem}
 .site-rod a{color:#F5F5F0;font-weight:700;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}

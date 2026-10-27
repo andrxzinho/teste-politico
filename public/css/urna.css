@@ -611,3 +611,5 @@ body[data-tela="results"] .menu-btn{display:none}
 .item.livro.com-capa .capa-tipo small{font-size:.45rem;opacity:1}
 .resumo-bloco .nota-prob{margin:0 0 .7rem;line-height:1.45}
 #candOut{margin-top:.8rem}
+/* títulos que recebem foco pelo código (troca de tela, nova pergunta): sem contorno, já que não são clicáveis */
+[tabindex="-1"]:focus{outline:none}
