@@ -1,5 +1,14 @@
 # Histórico de versões
 
+## Cara de site profissional (27 de outubro de 2026)
+- Rodapé em todas as páginas com "© 2026 André Leal", a licença, os créditos das imagens e a data da última atualização.
+- Página nova "Sobre o projeto": quem faz, por que existe, independência, como o teste é feito, como contribuir e contato.
+- Página de erro (404) no estilo da urna, com atalhos pro teste e pro início.
+- `/.well-known/security.txt` apontando pro relato privado do GitHub.
+- Dados estruturados (JSON-LD) na página inicial, na lista de ideologias e em cada ideologia, e uma imagem de
+  compartilhamento própria pra cada uma das 21 ideologias, com a posição dela no mapa.
+- Fonte, imagens e ícones guardados por mais tempo no navegador; HTML, JS e CSS continuam sempre atualizados.
+
 ## Repositório em ordem, versão 1.0.0 (27 de outubro de 2026)
 - Capturas de tela do README atualizadas com o site atual (mapa com a legenda e a posição nova do fascismo).
 - Imagem de pré-visualização do repositório (`docs/img/previa-github.png`, 1280×640) no estilo da urna, com o mapa das

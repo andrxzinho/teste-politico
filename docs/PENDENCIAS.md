@@ -16,6 +16,9 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       janeiro de 2026 e em vigor provisório desde maio). Conferir de novo se o acordo ou a PEC avançarem.
 - [x] **Prazo de guarda dos dados:** exclusão automática em 31/12/2027: a coleta para e a tarefa diária apaga os dados
       e os backups (27/10/2026). Ver `docs/DADOS-E-PRIVACIDADE.md`.
+- [ ] **E-mail de contato:** ainda não existe. Quando houver, pôr no rodapé, na página Sobre, nos termos (seção 16), no
+      `SECURITY.md` e no `security.txt`. Até lá, o contato é pelos avisos do GitHub e pelo relato privado.
+- [ ] **security.txt:** renovar a data de validade (`Expires`) até 27 de outubro de 2027.
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
 - [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
 - [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).

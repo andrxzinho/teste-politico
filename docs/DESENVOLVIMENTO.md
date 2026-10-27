@@ -15,7 +15,16 @@
   frase nova: acrescente outra no fim e tire a antiga dos modos (`lv` acima de 3 não aparece em nenhum modo).
 - **Acrescentar frases:** acrescente no fim de `DATA.EXTRA`, com todos os campos (veja Arquitetura).
 - **Páginas de ideologias e perguntas frequentes:** depois de mudar `js/dados/ideologias.js` ou as perguntas em
-  `ferramentas/gerar_paginas.mjs`, rode `npm run paginas`.
+  `ferramentas/gerar_paginas.mjs`, rode `npm run paginas`. Isso também gera as páginas Sobre (`/sobre/`) e de erro
+  (`404.html`), o sitemap e os dados estruturados (JSON-LD) das páginas de ideologia.
+- **Imagens de compartilhamento das ideologias** (`public/img/og/<nome>.png`, 1200×630): depois de mudar nome, família,
+  resumo ou posição de uma ideologia, rode `node ferramentas/gerar_imagens_ideologias.mjs`.
+- **Rodapé:** a data de "Atualizado em" fica em `ATUALIZADO` (`public/js/navegacao.js`) e precisa ser a da entrada mais
+  recente do `CHANGELOG.md` (o teste de páginas confere).
+- **security.txt** (`public/.well-known/security.txt`): renove o `Expires` antes de vencer (o teste avisa 30 dias antes).
+- **Cache:** fonte guardada por 1 ano; fotos, capas e imagens de compartilhamento por 7 dias (com atualização em segundo
+  plano); ícones por 30 dias; HTML, JS e CSS sempre conferidos (`vercel.json`). Uma imagem trocada pode levar até 7 dias
+  pra aparecer pra quem já visitou; se precisar que apareça na hora, dê outro nome ao arquivo.
 - **Perfis das ideologias:** posição de cada ideologia nos eixos em `public/js/dados/ideologias.js` e nos 15 subtemas
   em `public/js/dados/frases.js`. Mudar perfis é mudança metodológica: proponha antes, com simulação (veja `CONTRIBUTING.md`).
 - **Candidatos:** `public/js/dados/candidatos.js`; revise a cada eleição (desistências, resultados, campo `st` com a situação).

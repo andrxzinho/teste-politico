@@ -43,7 +43,14 @@ function diferenca(o, v) {
 }
 const dist = (a, b) => Math.hypot(...EIXOS.map((k) => (a.p[k] ?? 0) - (b.p[k] ?? 0)));
 
-function pagina({ caminho, titulo, descricao, corpo, scripts = [], doc = false }) {
+// dados estruturados (JSON-LD) pros buscadores: bloco de dados, não é executado, então a CSP (script-src 'self') não se aplica
+const AUTOR = { "@type": "Person", name: "André Leal" };
+const SITE_LD = { "@type": "WebSite", "@id": `${SITE}/#site`, name: "Teste Político", url: `${SITE}/`, inLanguage: "pt-BR" };
+const jsonld = (grafo) => `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": grafo }).replace(/</g, "\\u003c")}</script>\n`;
+const trilhaLd = (itens) => ({ "@type": "BreadcrumbList", itemListElement: itens.map(([name, u], i) => ({ "@type": "ListItem", position: i + 1, name, item: SITE + u })) });
+
+function pagina({ caminho, titulo, descricao, corpo, scripts = [], doc = false, indexar = true, imagem = null, dados = null }) {
+  const img = imagem || { url: "/og-urna.png", w: 1200, h: 630 };
   return `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -51,11 +58,13 @@ function pagina({ caminho, titulo, descricao, corpo, scripts = [], doc = false }
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(titulo)}</title>
 <meta name="description" content="${esc(descricao)}">
-<link rel="canonical" href="${SITE}${caminho}">
+${indexar ? `<link rel="canonical" href="${SITE}${caminho}">` : `<meta name="robots" content="noindex">`}
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(titulo)}">
 <meta property="og:description" content="${esc(descricao)}">
-<meta property="og:image" content="${SITE}/og-urna.png">
+<meta property="og:url" content="${SITE}${caminho}">
+<meta property="og:image" content="${SITE}${img.url}">
+<meta property="og:image:width" content="${img.w}"><meta property="og:image:height" content="${img.h}">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#2B2A27">
@@ -68,7 +77,7 @@ function pagina({ caminho, titulo, descricao, corpo, scripts = [], doc = false }
 <link rel="stylesheet" href="/css/componentes.css">
 <link rel="stylesheet" href="/css/movimento.css">
 ${doc ? `<link rel="stylesheet" href="/css/documento.css">
-` : ""}<script src="/js/navegacao.js"></script>
+` : ""}${dados ? jsonld(dados) : ""}<script src="/js/navegacao.js"></script>
 <style>body{margin:0;background:var(--corpo);color:var(--tinta);font-family:var(--font);-webkit-font-smoothing:antialiased}*,*::before,*::after{box-sizing:border-box}a{color:inherit;text-underline-offset:3px}</style>
 </head>
 <body>
@@ -94,6 +103,9 @@ const urls = ["/", "/metodologia.html", "/termos.html"];
     caminho: "/ideologias/", titulo: "As 21 ideologias do teste político",
     descricao: "O que defende cada uma das 21 tradições políticas usadas no teste, do centro aos extremos, e onde cada uma fica nos eixos.",
     scripts: ["/js/paginas/ideologias.js"],
+    dados: [SITE_LD, { "@type": "DefinedTermSet", "@id": `${SITE}/ideologias/#lista`, name: "As 21 ideologias do teste político", url: `${SITE}/ideologias/`, inLanguage: "pt-BR",
+      hasDefinedTerm: IDEO.map((o) => ({ "@type": "DefinedTerm", name: o.n, description: IDEO_RESUMO[o.n], url: `${SITE}/ideologias/${slug(o.n)}/` })) },
+      trilhaLd([["Início", "/"], ["Ideologias", "/ideologias/"]])],
     corpo: `<h1 class="titulo-pagina">As 21 ideologias</h1>
 <p class="intro-pagina">As tradições políticas que o teste compara com as suas respostas. Toque numa pra ver o que ela defende, onde fica em cada eixo e quais são as vizinhas (as mais parecidas com ela).</p>
 <div class="filtros" role="group" aria-label="Filtrar por família">${filtros}</div>
@@ -113,6 +125,12 @@ for (const o of IDEO) {
   gravar(`public/ideologias/${slug(n)}/index.html`, pagina({
     caminho: `/ideologias/${slug(n)}/`, titulo: `${n}: o que defende | Teste político`,
     descricao: `${IDEO_RESUMO[n]} Veja onde fica em cada eixo e as ideologias vizinhas.`,
+    imagem: { url: `/img/og/${slug(n)}.png`, w: 1200, h: 630 },
+    dados: [SITE_LD, {
+      "@type": "WebPage", "@id": `${SITE}/ideologias/${slug(n)}/`, url: `${SITE}/ideologias/${slug(n)}/`, name: `${n}: o que defende`, description: IDEO_RESUMO[n], inLanguage: "pt-BR",
+      isPartOf: { "@id": `${SITE}/#site` }, primaryImageOfPage: `${SITE}/img/og/${slug(n)}.png`, author: AUTOR,
+      about: { "@type": "DefinedTerm", name: n, description: IDEO_RESUMO[n], inDefinedTermSet: { "@id": `${SITE}/ideologias/#lista` } },
+    }, trilhaLd([["Início", "/"], ["Ideologias", "/ideologias/"], [n, `/ideologias/${slug(n)}/`]])],
     corpo: `<div class="pagina-estreita">
 <nav class="trilha" aria-label="Você está em"><a href="/ideologias/">Ideologias</a> / ${esc(n)}</nav>
 <div class="visor-pagina"><span class="familia">Família: ${esc(g)}</span><h1>${esc(n)}</h1><p>${esc(IDEO_RESUMO[n])}</p></div>
@@ -330,6 +348,96 @@ BANCO=memoria npm test</code></pre>
 </div>`,
 }));
 urls.push("/codigo-aberto/");
+
+// sobre o projeto: quem faz, por que existe, independência, como o teste é feito, como contribuir e contato
+gravar("public/sobre/index.html", pagina({
+  caminho: "/sobre/", titulo: "Sobre o projeto | Teste político", doc: true, scripts: ["/js/sumario.js"],
+  descricao: "Quem faz o teste político, por que ele existe, como é feito, de onde vem o dinheiro (de lugar nenhum) e como contribuir ou entrar em contato.",
+  corpo: `<div class="legal-cab">
+<p class="legal-rotulo">O projeto</p>
+<h1>Sobre o projeto</h1>
+<ul class="legal-datas"><li><b>Feito por:</b> André Leal</li></ul>
+</div>
+<div class="resumo-legal">
+<h2>Em resumo</h2>
+<ul>
+<li>Um teste de orientação política feito pro Brasil, com frases sobre temas daqui.</li>
+<li>Independente: sem partido, sem candidato, sem patrocínio e sem anúncios.</li>
+<li>Tudo o que decide o resultado está publicado, e qualquer pessoa pode apontar erros.</li>
+</ul>
+<div class="acoes-pagina acoes-pagina-linha"><a class="ok" href="/#modos">Fazer o teste</a><a class="branco" href="/metodologia.html">Ler a metodologia</a></div>
+</div>
+<div class="legal-corpo">
+<nav class="sumario" aria-labelledby="sumario-t">
+<h2 id="sumario-t">Nesta página</h2>
+<ol>
+<li><a href="#quem">Quem faz</a></li>
+<li><a href="#porque">Por que existe</a></li>
+<li><a href="#independencia">Independência</a></li>
+<li><a href="#como">Como o teste é feito</a></li>
+<li><a href="#contribuir">Como contribuir</a></li>
+<li><a href="#contato">Contato</a></li>
+</ol>
+</nav>
+<div class="texto">
+<section id="quem">
+<h2>Quem faz</h2>
+<p>O teste é um projeto pessoal de André Leal. Não há empresa, instituto ou equipe por trás.</p>
+<p>As frases, as posições das ideologias e o cálculo foram escritos a partir da teoria política e de fontes públicas, e revisados em auditorias publicadas no repositório.</p>
+</section>
+<section id="porque">
+<h2>Por que existe</h2>
+<p>Os testes políticos mais conhecidos foram feitos pra outros países. Eles falam de temas que não são os nossos e deixam de fora assuntos que dividem o Brasil, como o papel do STF, as cotas ou a reforma agrária.</p>
+<p>Este teste foi feito pro contexto brasileiro. Cada frase vem com uma explicação, um exemplo e o melhor argumento de cada lado, pra você responder sabendo do que se trata.</p>
+<p>Ele também mostra o que não sabe: a margem de erro de cada eixo, a confiança do resultado e as contradições nas respostas.</p>
+</section>
+<section id="independencia">
+<h2>Independência</h2>
+<ul>
+<li><b>Sem ligação política:</b> o projeto não tem ligação com partidos, candidatos, governos, empresas ou a Justiça Eleitoral.</li>
+<li><b>Sem dinheiro de fora:</b> não recebe doações, patrocínio nem verba pública, e não tem anúncios.</li>
+<li><b>Sem rastreamento:</b> o site não usa cookies nem ferramentas de rastreamento, e o cálculo roda no seu aparelho.</li>
+<li><b>Mesmos critérios pra todos os lados:</b> as frases seguem regras de neutralidade publicadas no repositório, iguais pra esquerda, centro e direita.</li>
+</ul>
+<p>O visual só se inspira na urna eletrônica, sem símbolos oficiais. O resultado não é recomendação de voto.</p>
+</section>
+<section id="como">
+<h2>Como o teste é feito</h2>
+<p>Você responde a frases sobre economia, segurança, costumes, o Brasil no mundo, democracia e instituições. O teste calcula a sua posição em seis eixos e compara com a posição típica de 21 tradições políticas.</p>
+<p>O cálculo foi testado com pessoas simuladas pelo computador. Isso confere se ele faz o que promete, mas não mostra se acerta com pessoas reais. É pra isso que serve o estudo anônimo, do qual você pode participar se quiser.</p>
+<p>Os detalhes estão na <a href="/metodologia.html">metodologia</a>. Os problemas conhecidos e as propostas de melhoria estão na <a href="${REPO}/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>.</p>
+</section>
+<section id="contribuir">
+<h2>Como contribuir</h2>
+<p>Achou uma frase enviesada, um dado errado, um livro mal escolhido ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se puder, mande a fonte.</p>
+<p>Antes de sugerir mudanças em frases ou no cálculo, leia as <a href="${REPO}/blob/main/CONTRIBUTING.md" rel="noopener">regras de contribuição</a>. Elas explicam os critérios de neutralidade e o que precisa de proposta antes.</p>
+<div class="acoes-pagina"><a class="ok" href="${REPO}/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
+</section>
+<section id="contato">
+<h2>Contato</h2>
+<p>Dúvidas, sugestões e pedidos sobre os seus dados podem ser enviados pelos <a href="${REPO}/issues" rel="noopener">avisos do repositório</a>.</p>
+<p>Falhas de segurança ou de privacidade não devem ir pra um aviso público. Use o <a href="${REPO}/security/advisories/new" rel="noopener">relato privado do GitHub</a>, que só o responsável pelo projeto vê.</p>
+</section>
+</div>
+</div>`,
+}));
+urls.push("/sobre/");
+
+// página de erro: o Vercel mostra public/404.html pra qualquer endereço que não existe (fora do sitemap)
+gravar("public/404.html", pagina({
+  caminho: "/404.html", titulo: "Página não encontrada | Teste político", indexar: false,
+  descricao: "Este endereço não existe no teste político.",
+  corpo: `<div class="pagina-estreita erro-pagina">
+<div class="visor-pagina">
+<span class="familia">Erro</span>
+<p class="erro-numero" aria-hidden="true"><span>4</span><span>0</span><span>4</span><i></i></p>
+<h1>Página não encontrada</h1>
+<p>Esse endereço não existe ou mudou de lugar. Confira se digitou certo ou escolha um caminho abaixo.</p>
+</div>
+<div class="acoes-pagina acoes-pagina-linha"><a class="ok" href="/#modos">Fazer o teste</a><a class="branco" href="/">Ir pro início</a></div>
+<p class="intro-pagina erro-links">Você também pode ver <a href="/ideologias/">as 21 ideologias</a>, a <a href="/metodologia.html">metodologia</a> ou as <a href="/perguntas-frequentes/">perguntas frequentes</a>.</p>
+</div>`,
+}));
 
 fs.writeFileSync("public/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u}</loc></url>`).join("\n")}\n</urlset>\n`);
 fs.writeFileSync("public/robots.txt", `User-agent: *\nDisallow: /painel\nDisallow: /api/\nSitemap: ${SITE}/sitemap.xml\n`);

@@ -1,0 +1,7 @@
+# Relatos de falhas de segurança ou de privacidade do Teste Político.
+# Não abra um aviso (issue) público: use o relato privado do GitHub.
+Contact: https://github.com/andrxzinho/teste-politico/security/advisories/new
+Expires: 2027-10-27T03:00:00.000Z
+Preferred-Languages: pt, en
+Canonical: https://testepolitico.vercel.app/.well-known/security.txt
+Policy: https://github.com/andrxzinho/teste-politico/blob/main/SECURITY.md

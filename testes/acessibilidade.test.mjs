@@ -12,7 +12,7 @@ export async function testarAcessibilidade({ detalhar = true } = {}) {
     ["resultado", "/", `st=fresh('full');${RESPONDER}(-1);document.querySelectorAll('#results details').forEach(d=>d.open=true)`],
     ["glossário aberto", "/", "st=fresh('full');st.seen=st.bs.map((_,j)=>j);st.base.splice(0,0,'D16');st.cur=0;show('quiz');render();document.querySelector('#stmt .termo').click()"],
     ["corrigir respostas", "/", `st=fresh('full');${RESPONDER}(-1);save();results();abrirCorrecao();document.querySelectorAll('.ed-frase')[0].click()`],
-    ["ideologia", "/ideologias/social-democrata/", null], ["lista", "/ideologias/", null],
+    ["ideologia", "/ideologias/social-democrata/", null], ["lista", "/ideologias/", null], ["sobre", "/sobre/", null], ["página não encontrada", "/404.html", null],
     ["perguntas frequentes", "/perguntas-frequentes/", "document.querySelectorAll('details').forEach(d=>d.open=true)"], ["metodologia", "/metodologia.html", "document.querySelectorAll('details').forEach(d=>d.open=true)"],
   ];
   for (const tema of ["light", "dark"]) for (const [nome, url, js] of telas) {

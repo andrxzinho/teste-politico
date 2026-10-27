@@ -21,10 +21,13 @@
     { h: "/ideologias/", t: "Ideologias" },
     { h: "/metodologia.html", t: "Metodologia" },
     { h: "/perguntas-frequentes/", t: "Perguntas frequentes" },
+    { h: "/sobre/", t: "Sobre o projeto" },
     { h: "/codigo-aberto/", t: "Código-fonte" },
     { h: "/termos.html", t: "Privacidade e termos" },
-    { h: "/creditos/", t: "Créditos das imagens", rodape: true },
   ];
+  // data da última atualização, mostrada no rodapé: a mesma da entrada mais recente do CHANGELOG.md (conferido nos testes)
+  const ATUALIZADO = "27 de outubro de 2026";
+  const LICENCA = "https://github.com/andrxzinho/teste-politico/blob/main/LICENSE";
   const caminho = () => location.pathname.replace(/index\.html$/, "");
   const ehAtual = (h) => !h.includes("#") && (h === "/" ? caminho() === "/" : caminho().startsWith(h.replace(/\/$/, "")));
   function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
@@ -65,7 +68,7 @@
       const topo = el("div", "menu-topo"), fx = el("button", "menu-fechar", "×");
       fx.type = "button"; fx.setAttribute("aria-label", "Fechar menu"); fx.onclick = fechar;
       topo.append(el("span", "menu-rot", "MENU"), fx); menu.append(topo);
-      PAGINAS.filter((p) => !p.rodape).forEach((p, i) => { const a = link(p, "menu-item"); a.append(el("b", null, String(i + 1)), el("span", null, p.t)); a.onclick = () => { if (p.h.includes("#")) fechar(); }; menu.append(a); });
+      PAGINAS.forEach((p, i) => { const a = link(p, "menu-item"); a.append(el("b", null, String(i + 1)), el("span", null, p.t)); a.onclick = () => { if (p.h.includes("#")) fechar(); }; menu.append(a); });
       const cfg = el("div", "menu-cfg");
       cfg.append(el("span", "menu-rot", "CONFIGURAÇÕES"));
       const lSom = el("div", "linha"), bSom = el("button", "chave"); bSom.type = "button";
@@ -91,7 +94,11 @@
       rod.className = "site-rod";
       const nav = el("nav"); nav.setAttribute("aria-label", "Rodapé");
       PAGINAS.slice(2).forEach((p) => { const a = link(p); a.textContent = p.t; nav.append(a); });
-      rod.append(nav, el("p", null, "Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual só se inspira na urna eletrônica. Não é recomendação de voto."));
+      const legal = el("p", "site-rod-legal"), lic = el("a", null, "Licença PolyForm Strict"), cred = el("a", null, "ver créditos");
+      lic.href = LICENCA; lic.rel = "noopener"; cred.href = "/creditos/"; if (ehAtual(cred.getAttribute("href"))) cred.setAttribute("aria-current", "page");
+      const img = el("span", null, "Imagens: "); img.append(cred);
+      legal.append(el("span", null, "© 2026 André Leal"), lic, img, el("span", null, `Atualizado em ${ATUALIZADO}`));
+      rod.append(nav, el("p", null, "Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual só se inspira na urna eletrônica. Não é recomendação de voto."), legal);
     }
   }
   // ---------- som da urna, sintetizado no navegador (nenhuma gravação é usada). O de confirmação foi recriado a partir de

@@ -36,6 +36,16 @@
 .site-rod nav{display:flex;flex-wrap:wrap;gap:0 1.4rem}
 .site-rod a{color:#F5F5F0;font-weight:700;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .site-rod p{margin:0;line-height:1.55;max-width:46em}
+.site-rod .site-rod-legal{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1.4rem;max-width:none;padding-top:10px;border-top:1px solid #45433D;color:#A9A69C;font-size:.84rem}
+.site-rod .site-rod-legal a{display:inline;min-height:0;font-weight:400;color:#E3DED1;text-decoration:underline;text-underline-offset:3px}
+/* página de erro (404): o número aparece nas mesmas caixas dos dígitos da urna */
+.erro-pagina{padding-top:1.4rem;min-height:calc(100vh - 22rem)}
+.erro-numero{display:flex;align-items:center;gap:6px;margin:.9rem 0 .2rem}
+.erro-numero span{display:inline-flex;align-items:center;justify-content:center;width:2.6rem;height:3.4rem;border:3px solid var(--tinta);border-radius:5px;font-size:2.1rem;font-weight:700;color:var(--tinta)}
+.erro-numero i{display:inline-block;width:3px;height:2.6rem;margin-left:3px;background:var(--tinta)}
+.mov .erro-numero i{animation:pisca-erro 1s steps(1) infinite}
+@keyframes pisca-erro{50%{opacity:0}}
+.erro-pagina .erro-links{margin-top:1.4rem}
 /* páginas de conteúdo */
 .pagina{max-width:74rem;margin:0 auto;padding:1rem 1rem 0}
 .pagina-estreita{max-width:44rem}

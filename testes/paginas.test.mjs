@@ -4,8 +4,27 @@ import { servidorEstatico, navegador, verificador, executandoDireto } from "./aj
 
 export async function testarPaginas() {
   const s = await servidorEstatico(), b = await navegador(), v = verificador("Páginas"), erros = [];
-  const paginas = ["/", "/ideologias/", "/ideologias/social-democrata/", "/ideologias/fascista/", "/perguntas-frequentes/", "/creditos/", "/codigo-aberto/", "/metodologia.html", "/termos.html"];
+  const paginas = ["/", "/ideologias/", "/ideologias/social-democrata/", "/ideologias/fascista/", "/perguntas-frequentes/", "/creditos/", "/codigo-aberto/", "/sobre/", "/404.html", "/metodologia.html", "/termos.html"];
   v.confere(fs.readdirSync("public/ideologias").filter((d) => fs.existsSync(`public/ideologias/${d}/index.html`)).length === 21, "deveria haver 21 páginas de ideologia");
+
+  // rodapé: a data de "Atualizado em" é a da entrada mais recente do CHANGELOG
+  const dataLog = (fs.readFileSync("CHANGELOG.md", "utf8").match(/^## .*\((\d{1,2} de \S+ de \d{4})\)/m) || [])[1];
+  v.confere(dataLog && fs.readFileSync("public/js/navegacao.js", "utf8").includes(`const ATUALIZADO = "${dataLog}"`), `data do rodapé deveria ser a do CHANGELOG (${dataLog})`);
+  // security.txt (RFC 9116): contato e validade, que precisa estar a mais de 30 dias de vencer
+  const sec = fs.readFileSync("public/.well-known/security.txt", "utf8"), vence = Date.parse((sec.match(/^Expires: (.+)$/m) || [])[1]);
+  v.confere(/^Contact: https:\/\//m.test(sec), "security.txt deveria ter Contact");
+  v.confere(vence - Date.now() > 30 * 864e5, "security.txt vence em menos de 30 dias: atualize o Expires");
+  // 404 fora dos buscadores e do sitemap; imagem de compartilhamento pra cada ideologia; dados estruturados válidos
+  v.confere(fs.readFileSync("public/404.html", "utf8").includes('name="robots" content="noindex"') && !fs.readFileSync("public/sitemap.xml", "utf8").includes("404"), "404 deveria ficar fora dos buscadores");
+  for (const d of fs.readdirSync("public/ideologias").filter((d) => fs.existsSync(`public/ideologias/${d}/index.html`))) {
+    const h = fs.readFileSync(`public/ideologias/${d}/index.html`, "utf8");
+    v.confere(h.includes(`/img/og/${d}.png"`) && fs.existsSync(`public/img/og/${d}.png`), `${d}: faltando a imagem de compartilhamento`);
+  }
+  for (const arq of ["public/index.html", "public/ideologias/index.html", "public/ideologias/fascista/index.html"]) {
+    const m = fs.readFileSync(arq, "utf8").match(/<script type="application\/ld\+json">(.*?)<\/script>/s);
+    let ok = false; try { ok = !!JSON.parse(m[1])["@graph"].length; } catch (e) {}
+    v.confere(ok, `${arq}: dados estruturados (JSON-LD) faltando ou inválidos`);
+  }
 
   // todos os links internos de todas as páginas apontam pra algo que existe
   const pg = await b.newPage({ viewport: { width: 390, height: 844 } });
