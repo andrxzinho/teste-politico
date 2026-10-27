@@ -852,14 +852,6 @@
    "fonte": "https://images-na.ssl-images-amazon.com/images/P/853591188X.01.L.jpg",
    "isbn": "9788535911886"
   },
-  "sobre-a-tirania-timothy-snyder": {
-   "t": "Sobre a tirania",
-   "a": "Timothy Snyder",
-   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8535929185.01.L.jpg",
-   "isbn": "9788535929188",
-   "edicao": "Companhia das Letras, 2017",
-   "titulo_ed": "Sobre a tirania"
-  },
   "psicologia-das-multidoes-gustave-le-bon": {
    "t": "Psicologia das multidões",
    "a": "Gustave Le Bon",
@@ -1293,14 +1285,6 @@
    "edicao": "Companhia das Letras, 2018",
    "titulo_ed": "O novo Iluminismo"
   },
-  "os-anjos-bons-da-nossa-natureza-steven-pinker": {
-   "t": "Os anjos bons da nossa natureza",
-   "a": "Steven Pinker",
-   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8535922326.01.L.jpg",
-   "isbn": "9788535922325",
-   "edicao": "Companhia das Letras, 2017",
-   "titulo_ed": "Os anjos bons da nossa natureza"
-  },
   "progresso-dez-razoes-para-acreditar-no-futuro-johan-norberg": {
    "t": "Progresso: dez razões para acreditar no futuro",
    "a": "Johan Norberg",
@@ -1455,14 +1439,6 @@
    "isbn": "9788532660374",
    "edicao": "Vozes De Bolso, 2019",
    "titulo_ed": "Os direitos do homem - Ed. Bolso"
-  },
-  "historia-da-sexualidade-i-a-vontade-de-saber-michel-foucault": {
-   "t": "História da sexualidade I: a vontade de saber",
-   "a": "Michel Foucault",
-   "fonte": "https://images-na.ssl-images-amazon.com/images/P/8577534502.01.L.jpg",
-   "isbn": "9788577534500",
-   "edicao": "Paz & Terra, 2020",
-   "titulo_ed": "História da sexualidade: A vontade do saber (Vol. 1)"
   },
   "identidade-e-violencia-amartya-sen": {
    "t": "Identidade e violência",
@@ -1670,13 +1646,6 @@
    "isbn": "9788575591512",
    "edicao": "Boitempo, 2010",
    "titulo_ed": "Critica da filosofia do direito de Hegel"
-  },
-  "the-price-of-inequality-joseph-stiglitz": {
-   "t": "The Price of Inequality",
-   "a": "Joseph Stiglitz",
-   "ol": "https://openlibrary.org/works/OL16797715W",
-   "titulo_ol": "The Price of Inequality",
-   "fonte": "https://covers.openlibrary.org/b/id/9325339-M.jpg"
   },
   "who-are-we-the-challenges-to-america-s-national-identity-samuel-huntin": {
    "t": "Who Are We? The Challenges to America's National Identity",

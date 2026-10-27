@@ -29,11 +29,11 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 
 - [x] **Livros:** correções da auditoria aplicadas e um link conferido em cada obra, no resultado e nas páginas das
       ideologias (23/10/2026). Detalhes no topo de `docs/AUDITORIA-LIVROS.md`.
-- [ ] **Livros, equilíbrio das listas:** trocar uma crítica de Liberal clássico/contra, de Conservador/contra e de Direita
-      nacional-conservadora/contra por críticas de outro campo, um dos dois Pinker e uma repetição em
-      Anarcocapitalista/contra. Nenhum título substituto foi conferido ainda.
-- [ ] **Livros, Oakeshott:** confirmar a edição brasileira de *Conservadorismo* (ISBN 9788592649081), que reúne o ensaio
-      "Ser conservador", e trocar o item *Sobre ser conservador*, que hoje aparece sem link.
+- [x] **Livros, equilíbrio das listas** (27/10/2026): Scruton no lugar de Stiglitz (Liberal clássico/contra), Mill no
+      lugar de Foucault (Conservador/contra), Mises no lugar de Snyder (Direita nacional-conservadora/contra), Fukuyama no
+      lugar de um dos Pinker (Liberal progressista) e Olson no lugar da repetição de Polanyi (Anarcocapitalista/contra).
+- [x] **Livros, Oakeshott** (27/10/2026): *Conservadorismo* (Âyiné, 2020), que reúne "Ser conservador", com link.
+- [ ] **Capas dos seis livros novos:** a Open Library não tem essas edições brasileiras; os itens aparecem sem capa.
 - [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
       23/10/2026.
 - [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.
