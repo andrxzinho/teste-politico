@@ -1,6 +1,9 @@
 # Histórico de versões
 
 ## Livros (27 de outubro de 2026)
+- Link principal de cada livro passou a ser informativo: Wikipédia em português (69 obras), em inglês (44) ou Open
+  Library (23), cada um aberto e conferido. A loja (Amazon ou Estante Virtual) virou um segundo link, menor e
+  identificado como loja. 25 obras continuam só com o link de loja, por falta de página informativa encontrada.
 - Capas de oito livros que estavam sem: seis edições brasileiras (Fukuyama, Scruton, Oakeshott, Mill, Mises e Olson) e as
   edições originais digitalizadas de Gentile e Plekhanov (Internet Archive, domínio público), com crédito.
 - O relatório em PDF deixou de dizer "Teste político 2026".
