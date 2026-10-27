@@ -1,6 +1,8 @@
 # Histórico de versões
 
 ## Chaves e banco (27 de outubro de 2026)
+- Exclusão automática no fim do estudo: a partir de 31 de dezembro de 2027 a coleta para e a tarefa diária apaga todos
+  os dados do estudo e os backups, como prometem os termos de uso.
 - O site passou a usar uma chave própria nova do Supabase; as chaves antigas foram desativadas e a senha do banco, trocada.
 
 ## Posição do fascismo na economia (26 de outubro de 2026)

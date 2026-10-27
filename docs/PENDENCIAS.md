@@ -13,8 +13,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Variáveis de ambiente no Vercel:** só as cinco que o site usa, todas Sensitive e só em Production (23/10/2026).
 - [ ] **Textos a conferir com fonte atual:** licença-paternidade (X25), marco temporal (C21) e a etapa do acordo
       Mercosul–União Europeia (N21).
-- [ ] **Prazo de guarda dos dados:** os termos prometem apagar os dados do estudo até 31/12/2027. Decidir se a exclusão
-      será automática (tarefa agendada) ou feita pelo responsável, e anotar a data.
+- [x] **Prazo de guarda dos dados:** exclusão automática em 31/12/2027: a coleta para e a tarefa diária apaga os dados
+      e os backups (27/10/2026). Ver `docs/DADOS-E-PRIVACIDADE.md`.
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
 - [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
 - [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).
