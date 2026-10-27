@@ -112,6 +112,10 @@ export const banco = {
     if (MEMORIA) { M.backups.set(dia, conteudo); return; }
     await rest("backups?on_conflict=dia", { metodo: "POST", corpo: [{ dia, conteudo }], prefer: "return=minimal,resolution=merge-duplicates" });
   },
+  async apagarBackups() {
+    if (MEMORIA) { M.backups.clear(); return; }
+    await rest("backups?dia=not.is.null", { metodo: "DELETE", prefer: "return=minimal" });
+  },
   async listarBackups() {
     if (MEMORIA) return [...M.backups.keys()].sort().reverse();
     return (await rest("backups?select=dia&order=dia.desc")).dados.map((b) => b.dia);

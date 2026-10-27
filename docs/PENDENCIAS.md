@@ -14,8 +14,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Textos conferidos com fonte atual** (27/10/2026): licença-paternidade (X25, Lei 15.371/2026), marco temporal
       (C21, decisão do STF de dezembro de 2025 e PEC 48 na Câmara) e acordo Mercosul–União Europeia (N21, assinado em
       janeiro de 2026 e em vigor provisório desde maio). Conferir de novo se o acordo ou a PEC avançarem.
-- [ ] **Prazo de guarda dos dados:** os termos prometem apagar os dados do estudo até 31/12/2027. Decidir se a exclusão
-      será automática (tarefa agendada) ou feita pelo responsável, e anotar a data.
+- [x] **Prazo de guarda dos dados:** exclusão automática em 31/12/2027: a coleta para e a tarefa diária apaga os dados
+      e os backups (27/10/2026). Ver `docs/DADOS-E-PRIVACIDADE.md`.
 - [ ] **Backup fora do Supabase:** baixar pelo painel, de tempos em tempos, uma cópia dos dados pra guardar fora do projeto.
 - [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
 - [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).
@@ -30,11 +30,11 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 
 - [x] **Livros:** correções da auditoria aplicadas e um link conferido em cada obra, no resultado e nas páginas das
       ideologias (23/10/2026). Detalhes no topo de `docs/AUDITORIA-LIVROS.md`.
-- [ ] **Livros, equilíbrio das listas:** trocar uma crítica de Liberal clássico/contra, de Conservador/contra e de Direita
-      nacional-conservadora/contra por críticas de outro campo, um dos dois Pinker e uma repetição em
-      Anarcocapitalista/contra. Nenhum título substituto foi conferido ainda.
-- [ ] **Livros, Oakeshott:** confirmar a edição brasileira de *Conservadorismo* (ISBN 9788592649081), que reúne o ensaio
-      "Ser conservador", e trocar o item *Sobre ser conservador*, que hoje aparece sem link.
+- [x] **Livros, equilíbrio das listas** (27/10/2026): Scruton no lugar de Stiglitz (Liberal clássico/contra), Mill no
+      lugar de Foucault (Conservador/contra), Mises no lugar de Snyder (Direita nacional-conservadora/contra), Fukuyama no
+      lugar de um dos Pinker (Liberal progressista) e Olson no lugar da repetição de Polanyi (Anarcocapitalista/contra).
+- [x] **Livros, Oakeshott** (27/10/2026): *Conservadorismo* (Âyiné, 2020), que reúne "Ser conservador", com link.
+- [ ] **Capas dos seis livros novos:** a Open Library não tem essas edições brasileiras; os itens aparecem sem capa.
 - [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
       23/10/2026.
 - [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.

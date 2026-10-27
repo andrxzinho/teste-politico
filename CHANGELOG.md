@@ -1,8 +1,12 @@
 # Histórico de versões
 
-## Chaves e banco (27 de outubro de 2026)
+## Conteúdo, dados e chaves (27 de outubro de 2026)
 - Explicações atualizadas com fatos de 2025 e 2026: lei que amplia a licença-paternidade, decisão do STF sobre o marco
   temporal e a PEC no Congresso, e a assinatura e o início provisório do acordo Mercosul–União Europeia.
+- Leituras: cinco críticas e uma obra trocadas pra equilibrar os lados e tirar repetições, e o ensaio de Oakeshott
+  com edição brasileira e link. Todas as edições e links conferidos.
+- Exclusão automática no fim do estudo: a partir de 31 de dezembro de 2027 a coleta para e a tarefa diária apaga todos
+  os dados do estudo e os backups, como prometem os termos de uso.
 - O site passou a usar uma chave própria nova do Supabase; as chaves antigas foram desativadas e a senha do banco, trocada.
 
 ## Posição do fascismo na economia (26 de outubro de 2026)

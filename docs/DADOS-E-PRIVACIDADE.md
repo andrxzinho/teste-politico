@@ -29,6 +29,13 @@ Progresso do teste, histórico de resultados, código de comparação de amigos 
 - O painel esconde cruzamentos com menos de 5 pessoas e exporta planilhas sem identificadores.
 - Dados de teste ficam separados dos reais.
 
+## Fim do estudo
+
+O estudo termina em 31 de dezembro de 2027 (`FIM_ESTUDO` em `servidor/comum.mjs`). A partir desse dia, o servidor
+responde que a coleta está desligada (o convite pra participar some do site) e a tarefa diária `/api/backup` apaga todos
+os resultados e avisos, reais e de teste, e todos os backups, sem guardar cópia. Isso acontece sozinho, sem ninguém
+precisar fazer nada.
+
 ## Se o projeto for oficializado
 
 Os dados são anônimos desde o envio, mas antes de divulgar em larga escala ou publicar análises vale revisar os termos com
