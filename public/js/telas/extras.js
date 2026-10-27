@@ -89,8 +89,9 @@ function montarResumo(){
     const pc=el("span",null,p<1?"menos de 1%":p+"%");if(p>=1){pc.dataset.conta=p;pc.dataset.sufixo="%"}
     a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a)});
   prox.append(linhaDistante());
-  // destaques: afinidade forte com extremos e a principal tensão
-  const dest=[];
+  // destaques: presidente mais perto, afinidade forte com extremos e a principal tensão
+  const dest=[],pr1=(candRanked.pres||[])[0];
+  if(pr1)dest.push(`Entre os presidentes desde 1985, você está mais perto de ${pr1.n} (${pr1.st}), com compatibilidade ${matchLab(pr1.match).toLowerCase()}.`);
   Object.keys(EXT).filter(g=>R.extAsked&&R.extAsked[g]&&R.ext[g]>=GATE).forEach(g=>dest.push(`Afinidade forte com ${EXT[g].n.toLowerCase()}: índice ${R.ext[g]} de 100.`));
   if(ultimasTensoes.length)dest.push(ultimasTensoes[0][1]);
   if(dest.length){const d=bloco("Destaques","blocoDestaques");const ul=el("ul","destaques");dest.forEach(x=>ul.append(el("li",null,x)));d.append(ul)}

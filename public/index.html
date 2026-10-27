@@ -71,7 +71,7 @@
     <ol class="passos">
       <li><b>1</b><span><strong>Responda</strong>Frases curtas, uma por tela, com teclas como as da urna.</span></li>
       <li><b>2</b><span><strong>Veja onde você fica</strong>Sua posição em 6 eixos, com a faixa provável de cada um, e a ideologia que melhor explica suas respostas.</span></li>
-      <li><b>3</b><span><strong>Compare</strong>Com as 21 ideologias, com amigos, com pensadores e com os partidos.</span></li>
+      <li><b>3</b><span><strong>Compare</strong>Com as 21 ideologias, com amigos, com presidentes desde 1985 e com pensadores.</span></li>
     </ol>
   </section>
   <section class="home-fonte" aria-labelledby="fonte-t">
@@ -91,7 +91,7 @@
     <b>O que é enviado</b>
     <ul><li>Sua ideologia e sua posição aproximada em cada eixo (uma faixa, não o número exato)</li><li>Sua resposta a cada frase</li><li>Quais explicações você abriu e quanto tempo levou</li><li>Como você se define politicamente, se responder</li><li>Faixa de idade e estado, só se você informar</li></ul>
     <b>O que nunca é enviado</b>
-    <ul class="no"><li>Nome, e-mail, IP, navegador ou localização</li><li>Sua compatibilidade com partidos</li></ul>
+    <ul class="no"><li>Nome, e-mail, IP, navegador ou localização</li><li>Sua compatibilidade com presidentes e partidos</li></ul>
   </div></div></details></div>
   <label class="field">Faixa de idade (opcional)
     <select id="cAge"><option value="">Prefiro não dizer</option><option value="<18">Menos de 18</option><option value="18-24">18 a 24</option><option value="25-34">25 a 34</option><option value="35-44">35 a 44</option><option value="45-59">45 a 59</option><option value="60+">60 ou mais</option></select>
@@ -136,7 +136,7 @@
   <h1 class="display">Quase lá</h1>
   <p class="lede">Duas perguntas rápidas e opcionais antes do resultado.</p>
   <h2 class="subhead">Quanto cada tema pesa no seu voto?</h2>
-  <p class="small">Isso só muda a compatibilidade com os partidos.</p>
+  <p class="small">Isso só muda a compatibilidade com presidentes e partidos.</p>
   <div id="impOut" style="margin-top:.5rem"></div>
   <h2 class="subhead">Como você se define?</h2>
   <p class="small">Serve pra comparar o que você acha com o que o teste diz.</p>
@@ -212,12 +212,12 @@
     <details class="acc" id="a-extremos"><summary><span class="acc-t">Termômetro dos extremos</span><span class="acc-s" id="s-extremos"></span></summary><div class="acc-in">
     <p class="small" style="margin-top:0">Junta duas coisas: o quanto você concordou com as frases que definem cada extremo e a sua posição nos eixos. O resultado é um índice de 0 a 100, não uma chance. A partir de 50, a afinidade é forte.</p>
     <div class="box" id="thermoOut"></div></div></details>
-    <details class="acc" id="a-candidatos"><summary><span class="acc-t">Partidos</span><span class="acc-s" id="s-candidatos"></span></summary><div class="acc-in">
-    <p class="small" style="margin-top:0">Quais partidos estão mais perto das suas posições. Na eleição pra deputado e vereador, o voto conta primeiro pro partido (a legenda).</p>
+    <details class="acc" id="a-candidatos"><summary><span class="acc-t">Presidentes e partidos</span><span class="acc-s" id="s-candidatos"></span></summary><div class="acc-in">
+    <p class="small" style="margin-top:0">Quais presidentes desde 1985 e quais partidos estão mais perto das suas posições.</p>
     <div id="candNote"></div>
     <div class="tabs" role="tablist" id="candTabs"></div>
     <div id="candOut"></div>
-    <details class="method"><summary>Como a compatibilidade foi calculada</summary><p class="fine">A posição de cada partido foi estimada pela classificação ideológica dos partidos feita por cientistas políticos brasileiros em 2022 (Bolognesi, Ribeiro, Codato e Silva, 2025) e pelo que o partido fez em governos, votações e alianças. O critério é o mesmo pra todos. A compatibilidade usa os eixos Economia, Liberdade × Ordem, Costumes e Brasil × Mundo, com o peso que você deu a cada tema. Não é recomendação de voto.</p></details></div></details>
+    <details class="method"><summary>Como a compatibilidade foi calculada</summary><p class="fine">A posição de cada presidente foi estimada pelo que fez no governo, e não pelo que dizia em campanha. A de cada partido, pela classificação ideológica dos partidos feita por cientistas políticos brasileiros em 2022 (Bolognesi, Ribeiro, Codato e Silva, 2025) e pelo que o partido fez em governos, votações e alianças. O critério é o mesmo pra todos. A compatibilidade usa os eixos Economia, Liberdade × Ordem, Costumes e Brasil × Mundo, com o peso que você deu a cada tema. Não é recomendação de voto.</p></details></div></details>
     <details class="acc" id="a-notas"><summary><span class="acc-t">Precisão e observações</span><span class="acc-s" id="s-notas"></span></summary><div class="acc-in"><div id="resNotes" class="notes"></div><p class="small corrigir-linha">Clicou errado em alguma frase? <button type="button" class="text-btn" data-corrigir>Corrigir respostas</button></p></div></details>
     <details class="acc" id="a-hist"><summary><span class="acc-t">Seus resultados anteriores</span><span class="acc-s" id="s-hist"></span></summary><div class="acc-in"><p class="small">Ficam salvos só neste aparelho.</p><div class="box" id="histOut"></div></div></details>
   </div>

@@ -23,7 +23,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Respostas ao acaso:** deixaram de sair como "Centrista, confiança alta" (cálculo, versão 3, 25/10/2026).
 - [x] **Linguagem simples** no site inteiro, menos nos termos de uso (25/10/2026).
 - [x] **Candidatos depois do 2º turno** atualizados (26/10/2026) e retirados em 27/10/2026, com o "2026" do nome.
-- [ ] **Presidentes desde 1985** no resultado, no lugar dos candidatos (proposta aprovada; em rascunho).
+- [ ] **Presidentes desde 1985** no resultado, no lugar dos candidatos (em rascunho, aguardando aprovação das posições).
+- [ ] **Fotos dos presidentes:** o Wikimedia recusou os pedidos (excesso de pedidos); por enquanto aparecem as iniciais.
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
 - [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de
