@@ -20,6 +20,9 @@ export const UFS = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS",
 export const ESPECTROS = ["Esquerda","Centro-esquerda","Centro","Centro-direita","Direita","Não me identifico com nenhum"];
 export const CONFIANCAS = ["alta","media","baixa"];
 export const hoje = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10); // dia no horário de Brasília
+// fim do estudo prometido nos termos de uso: a partir deste dia a coleta para e a tarefa diária apaga os dados
+export const FIM_ESTUDO = () => process.env.FIM_ESTUDO || "2027-12-31";
+export const estudoEncerrado = () => hoje() >= FIM_ESTUDO();
 // Publicação oficial = dados reais; versões de pré-visualização e localhost = área de teste.
 // No Vercel, VERCEL_ENV diz qual é qual; fora dele (testes locais), vale o endereço: rascunhos com "--" e localhost são teste.
 // No site oficial, a área de teste só é usada com uma sessão de teste aberta pelo painel (ver abaixo).

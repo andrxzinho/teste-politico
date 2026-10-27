@@ -2,7 +2,7 @@
 // Não existe nome, IP, navegador nem horário: só o dia e respostas em faixas, numa chave com nome aleatório.
 import Motor, { ITENS } from "../motor.mjs";
 import { banco } from "../banco.mjs";
-import { FRASES_NOVAS_V2, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
+import { FRASES_NOVAS_V2, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, estudoEncerrado, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
 
 const inicio = () => process.env.COLETA_INICIO || "2026-10-01";
 const nul = (v, lista) => v === null || v === undefined || lista.includes(v);
@@ -20,14 +20,14 @@ function eixosDasRespostas(resp, pesos) {
 export default async (req) => {
   // no máximo 30 pedidos por minuto por visitante
   if (await passouDoLimite(req, "coletar")) return Response.json({ ok: false, motivo: "Muitos envios seguidos. Espere um minuto." }, { status: 429, headers: SEM_CACHE });
-  const ativo = hoje() >= inicio();
+  const ativo = hoje() >= inicio() && !estudoEncerrado();
   if (req.method === "GET" && new URL(req.url).searchParams.has("desafio")) return Response.json(await emitirDesafio(), { headers: SEM_CACHE });
   if (req.method === "GET") {
     const sessao = await sessaoValida(req.headers.get("x-sessao-teste"));
     return Response.json({ ativo, teste: !ehProducao(req) || sessao, sessao }, { headers: SEM_CACHE });
   }
   if (req.method !== "POST") return new Response("Método não permitido", { status: 405 });
-  if (!ativo) return Response.json({ ok: false, motivo: "A coleta ainda não começou." }, { status: 403 });
+  if (!ativo) return Response.json({ ok: false, motivo: estudoEncerrado() ? "O estudo terminou." : "A coleta ainda não começou." }, { status: 403 });
   // o site só envia do próprio endereço: recusa envios disparados por páginas de outros sites no navegador de quem as visita
   // (os avisos de início e saída não têm prova anti-robô). Pedidos sem esse cabeçalho (navegadores antigos) continuam valendo.
   const site = req.headers.get("sec-fetch-site");

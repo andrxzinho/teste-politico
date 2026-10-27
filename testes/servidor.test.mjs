@@ -81,6 +81,17 @@ export async function testarServidor() {
   const outro = { ...normais[0], envio: randomUUID() }, dup = { ...normais[1], envio: randomUUID() };
   const [s3, d3] = await enviar(outro); const [s4] = await enviar(dup, d3);
   v.confere(s3 === 200 && s4 === 429, `o mesmo desafio não deveria valer pra dois envios diferentes (${s3}, ${s4})`);
+  // 6. fim do estudo: a coleta para e a tarefa diária apaga todos os dados e backups
+  process.env.FIM_ESTUDO = "2000-01-01";
+  const g = await (await coletar(new Request(U, { headers: { "x-forwarded-for": "203.0.113.50" } }))).json();
+  v.confere(g.ativo === false, "depois do fim do estudo a coleta deveria estar desligada");
+  const fim = await backup(new Request("https://testepolitico.vercel.app/api/backup", { headers: { authorization: "Bearer " + process.env.CRON_SECRET } }));
+  const jf = await fim.json();
+  v.confere(fim.status === 200 && jf.encerrado === true && jf.apagados > 0, "a tarefa diária deveria apagar os dados no fim do estudo");
+  v.confere((await registros("real")).length === 0 && (await registros("teste")).length === 0, "no fim do estudo não pode sobrar nenhum resultado");
+  const lf = await (await painel(new Request(P + "?backups", { headers: H(process.env.PAINEL_SENHA) }))).json();
+  v.confere(lf.backups.length === 0, "no fim do estudo não pode sobrar nenhum backup");
+  delete process.env.FIM_ESTUDO;
   Date.now = agora;
   return v.fim();
 }
