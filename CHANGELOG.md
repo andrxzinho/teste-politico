@@ -1,5 +1,8 @@
 # Histórico de versões
 
+## Chaves e banco (27 de outubro de 2026)
+- O site passou a usar uma chave própria nova do Supabase; as chaves antigas foram desativadas e a senha do banco, trocada.
+
 ## Posição do fascismo na economia (26 de outubro de 2026)
 - A posição típica do fascismo na economia passou de 0 (centro) pra 25 (centro-direita): o fascismo manteve a
   propriedade privada e a aliança com grandes empresários, combateu sindicatos independentes e o socialismo, mesmo com

@@ -1,13 +1,12 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 26 de outubro de 2026.
+Última revisão: 27 de outubro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
-- [ ] **Segurança e privacidade:** as correções no código estão no ar desde 25/10/2026, e o site usa uma chave própria
-      nova desde 26/10/2026. Falta o responsável rodar o SQL no Supabase (passado a ele diretamente, fora do
-      repositório), desativar as chaves antigas (legacy) e trocar a senha do banco.
+- [x] **Segurança e privacidade:** correções no código no ar desde 25/10/2026; SQL rodado no Supabase, chave própria
+      nova do site, chaves antigas (legacy) desativadas e senha do banco trocada (27/10/2026).
 - [ ] **Não desinstalar a integração Supabase–Vercel:** o projeto do Supabase foi criado pelo Vercel, e desinstalar a
       integração apaga a organização inteira do Supabase, com o banco e os backups (que ficam no mesmo banco). As
       variáveis que ela cria no Vercel (SUPABASE_SECRET_KEY, POSTGRES_* e outras) não são usadas pelo site.
