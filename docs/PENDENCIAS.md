@@ -43,8 +43,9 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       lugar de Foucault (Conservador/contra), Mises no lugar de Snyder (Direita nacional-conservadora/contra), Fukuyama no
       lugar de um dos Pinker (Liberal progressista) e Olson no lugar da repetição de Polanyi (Anarcocapitalista/contra).
 - [x] **Livros, Oakeshott** (27/10/2026): *Conservadorismo* (Âyiné, 2020), que reúne "Ser conservador", com link.
-- [x] **Capas:** oito das onze que faltavam (27/10/2026). Continuam sem capa *A terceira via* (Giddens, Record, 1998),
-      *Populações meridionais do Brasil* (Oliveira Vianna, 1938) e *O Estado moderno* (Miguel Reale, 1934).
+- [x] **Capas:** dez das onze que faltavam (27 e 28/10/2026). *A terceira via* com a capa da edição em inglês (Open
+      Library) e *Populações meridionais do Brasil* com a das Edições do Senado Federal. Continua sem capa só *O Estado
+      moderno* (Miguel Reale, 1934): não há imagem da capa em livraria nem em acervo, só fotos de exemplares usados à venda.
 - [x] **Links informativos dos livros** (27/10/2026).
 - [ ] **Sete livros só com link de loja:** O que há de errado com o mundo (Chesterton, Ecclesiae: site bloqueia acesso
       automático), O que é conservadorismo (Scruton) e A política da prudência (Kirk), da É Realizações (site fora do ar

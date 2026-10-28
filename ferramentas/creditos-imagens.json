@@ -1543,6 +1543,19 @@
    "a": "Gøsta Esping-Andersen",
    "ol": "https://openlibrary.org/works/OL1974801W",
    "titulo_ol": "The three worlds of welfare capitalism"
+  },
+  "a-terceira-via-anthony-giddens": {
+   "t": "A terceira via",
+   "a": "Anthony Giddens",
+   "ol": "https://openlibrary.org/works/OL38099W",
+   "titulo_ol": "The Third Way",
+   "fonte": "https://covers.openlibrary.org/b/id/483088-L.jpg"
+  },
+  "populacoes-meridionais-do-brasil-oliveira-vianna": {
+   "t": "Populações meridionais do Brasil",
+   "a": "Oliveira Vianna",
+   "fonte": "https://livraria.senado.leg.br/product/populacoes-meridionais-do-brasil/",
+   "edicao": "Edições do Senado Federal, volume 27"
   }
  }
 }

@@ -8,6 +8,8 @@
   sumido (A guerra de guerrilhas, de Che Guevara), que saiu; o livro continua com o link da Wikipédia.
 - Fonte do site com cache de 30 dias, em vez de um ano sem revalidar.
 - README com capturas de tela atuais e documentação atualizada.
+- Capas de A terceira via (Giddens, edição em inglês) e Populações meridionais do Brasil (Oliveira Vianna, Edições do
+  Senado Federal). Saíram estilos que sobraram da caixa de 2º turno dos candidatos de 2026.
 
 ## Cálculo, versão 4 (28 de outubro de 2026)
 - Meio ambiente virou um tema próprio no resultado ("proteção ambiental primeiro" × "produção e obras primeiro"). As
