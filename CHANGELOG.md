@@ -1,5 +1,13 @@
 # Histórico de versões
 
+## Compartilhar (28 de outubro de 2026)
+- O bloco "Compartilhar e comparar" virou um botão só, "Compartilhar resultado", que abre uma janela com o formato da
+  imagem (Story 9:16, Retrato 4:5, Quadrado 1:1 e Paisagem 16:9), a prévia e quatro opções: WhatsApp, Instagram, X e
+  copiar o texto. WhatsApp e X abrem com o texto e o link de comparação; o Instagram recebe a imagem no formato
+  escolhido (no celular pela lista de aplicativos, no computador baixando a imagem). A imagem segue o tema do site.
+- A parte de comparar (seu código, copiar link e colar o link de alguém) fica logo abaixo do botão, no mesmo bloco.
+- Saíram Facebook, Threads, Telegram, TikTok, o "Enviar link" e os quatro cartões de formato do bloco.
+
 ## Manutenção (28 de outubro de 2026)
 - Revisão do código de tudo que mudou desde a versão 1.0.0. O servidor passou a conferir os envios de páginas antigas
   com a conta da versão 3 de verdade (antes, uma aproximação que podia recusar envios legítimos). A planilha do estudo

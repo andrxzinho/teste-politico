@@ -1,5 +1,5 @@
-// Compartilhar: imagem em forma de urna em quatro formatos (story 9:16, retrato 4:5, quadrado 1:1 e paisagem 16:9),
-// tema claro ou escuro, com QR code pro link de comparação; atalhos pros aplicativos e cópia de link e texto.
+// Compartilhar: imagem em forma de urna em quatro formatos (story 9:16, retrato 4:5, quadrado 1:1 e paisagem 16:9), no
+// tema do site, com QR code pro link de comparação; janela com WhatsApp, Instagram, X e cópia do texto.
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 // ---------- imagem pra compartilhar (1080x1920)
 let shareData=null,shareFile=null,shareUrl=null;
@@ -118,80 +118,39 @@ async function prepareShare(){shareFile=null;if(shareUrl){URL.revokeObjectURL(sh
   try{const blob=await buildImage({...shareData,link:myLink()},shOp);if(!blob)return false;shareFile=new File([blob],`resultado-teste-politico-${shOp.formato}.png`,{type:"image/png"});shareUrl=URL.createObjectURL(blob);
     $("shImg").src=shareUrl;$("shImg").dataset.formato=shOp.formato;$("shSave").href=shareUrl;$("shSave").download=shareFile.name;return true}catch(e){console.error(e);return false}}
 const shareSheet=$("shareSheet");
+// a imagem segue o tema do site (o escolhido no menu ou, sem escolha, o do aparelho)
+const temaSite=()=>{const t=document.documentElement.dataset.theme;return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro"};
+const notaFormato=()=>{const f=FORMATOS[shOp.formato];$("shNote").textContent=`${f.nome}: ${f.uso}.`};
 async function mostrarImagem(){
-  $("shNote").textContent="Gerando a imagem...";$("shImg").classList.add("hidden");$("shLoad").classList.remove("hidden");$("shSave").classList.add("hidden");$("shShare").classList.add("hidden");
+  $("shNote").textContent="";$("shImg").classList.add("hidden");$("shLoad").classList.remove("hidden");$("shSave").classList.add("hidden");
   const ok=await prepareShare();$("shLoad").classList.add("hidden");
   if(!ok){$("shNote").textContent="Não deu pra gerar a imagem agora. Feche e tente de novo.";return}
-  $("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden");
-  const can=navigator.canShare&&navigator.canShare({files:[shareFile]});$("shShare").classList.toggle("hidden",!can);
-  const f=FORMATOS[shOp.formato];$("shNote").textContent=`${f.nome}: ${f.uso}.`+(can?" Em \"Compartilhar imagem\", escolha o aplicativo (pro story do Instagram: Instagram, depois Stories).":" Se o botão de salvar não funcionar, toque e segure na imagem.")}
-// abre a janela da imagem já no formato escolhido
+  $("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden");notaFormato()}
+// janela de compartilhar: o formato da imagem (proporção) e os quatro jeitos de compartilhar
 async function abrirImagem(formato){if(formato&&formato!==shOp.formato){shOp.formato=formato;shareFile=null}
-  shareSheet.querySelectorAll("[data-formato]").forEach(o=>o.setAttribute("aria-pressed",String(o.dataset.formato===shOp.formato)));
+  const tema=temaSite();if(tema!==shOp.tema){shOp.tema=tema;shareFile=null}
+  shareSheet.querySelectorAll("button[data-formato]").forEach(o=>o.setAttribute("aria-pressed",String(o.dataset.formato===shOp.formato)));$("shAviso").textContent="";
   if(typeof shareSheet.showModal==="function")shareSheet.showModal();else shareSheet.setAttribute("open","");
-  $("shZap").href="https://wa.me/?text="+encodeURIComponent(textoCompartilhar());$("shAviso").textContent="";
-  if(!shareFile)await mostrarImagem();else{$("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden")}}
-// opções: refazem a imagem
-// única opção da imagem: tema claro ou escuro (formato story, com todas as informações)
-shareSheet.querySelectorAll("[data-tema]").forEach(b=>b.onclick=()=>{shOp.tema=b.dataset.tema;shareSheet.querySelectorAll("[data-tema]").forEach(o=>o.setAttribute("aria-pressed",String(o===b)));mostrarImagem()});
-shareSheet.querySelectorAll("[data-formato]").forEach(b=>b.onclick=()=>{shOp.formato=b.dataset.formato;shareSheet.querySelectorAll("[data-formato]").forEach(o=>o.setAttribute("aria-pressed",String(o===b)));mostrarImagem()});
-
-// bloco "Compartilhar e comparar" do resumo: os aplicativos que levam o link e os formatos da imagem (cada um diz onde funciona melhor)
-const APPS=[
-  ["WhatsApp",(t,u)=>`https://wa.me/?text=${encodeURIComponent(t)}`],
-  ["X (Twitter)",(t,u)=>`https://twitter.com/intent/tweet?text=${encodeURIComponent(t.replace(u,"").trim())}&url=${encodeURIComponent(u)}`],
-  ["Facebook",(t,u)=>`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`],
-  ["Threads",(t,u)=>`https://www.threads.net/intent/post?text=${encodeURIComponent(t)}`],
-  ["Telegram",(t,u)=>`https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t.replace(u,"").trim())}`]];
-// Instagram e TikTok não aceitam link pronto: abrem uma janela explicando e publicam a imagem em story
-const REDES_IMAGEM={
-  instagram:{n:"Instagram",site:"https://www.instagram.com/",onde:"nos Stories"},
-  tiktok:{n:"TikTok",site:"https://www.tiktok.com/upload",onde:"como foto ou story"}};
-let miniaturasFeitas=false;
-function montarPartilha(){
-  const box=$("partilhaOut");box.innerHTML="";miniaturasFeitas=false;
-  box.append(el("p","rotulo","Mandar por um aplicativo"));
-  const apps=el("div","apps");const t=textoCompartilhar(),u=myLink();
-  APPS.forEach(([n,f])=>{const a=el("a","secondary app",n);a.href=f(t,u);a.target="_blank";a.rel="noopener";apps.append(a)});
-  Object.entries(REDES_IMAGEM).forEach(([k,r])=>{const b=el("button","secondary app",r.n);b.type="button";b.dataset.rede=k;b.setAttribute("aria-haspopup","dialog");b.onclick=()=>abrirRede(k);apps.append(b)});
-  const bt=el("button","secondary app app-copiar","Copiar texto");bt.type="button";
-  bt.onclick=async()=>{try{await navigator.clipboard.writeText(textoCompartilhar());bt.textContent="Texto copiado"}catch(e){bt.textContent="Não deu pra copiar"}setTimeout(()=>bt.textContent="Copiar texto",2000)};
-  apps.append(bt);box.append(apps);
-  box.append(el("p","rotulo","Ou publicar a imagem do resultado"));
-  const fs=el("div","formatos");
-  Object.entries(FORMATOS).forEach(([k,f])=>{const b=el("button","formato");b.type="button";b.dataset.f=k;
-    const m=el("span","formato-molde");m.style.aspectRatio=`${f.w} / ${f.h}`;m.setAttribute("aria-hidden","true");
-    const tx=el("span","formato-txt");tx.append(el("b",null,f.nome),el("small",null,f.uso));b.append(m,tx);b.onclick=()=>abrirImagem(k);fs.append(b)});
-  box.append(fs);
-  // miniaturas: a imagem de verdade de cada formato, desenhada em segundo plano quando o bloco aparece
-  const fazer=()=>{if(miniaturasFeitas)return;miniaturasFeitas=true;desenharMiniaturas(fs)};
-  if("IntersectionObserver"in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();fazer()}},{rootMargin:"300px"});io.observe(fs)}else fazer();
-}
-async function desenharMiniaturas(fs){
-  for(const b of fs.querySelectorAll(".formato")){const k=b.dataset.f,m=b.querySelector(".formato-molde");
-    try{const blob=await buildImage({...shareData,link:myLink()},{...shOp,formato:k,tema:"claro"});if(!blob)continue;
-      const i=document.createElement("img");i.alt="";i.src=URL.createObjectURL(blob);i.onload=()=>m.classList.add("pronta");m.append(i)}catch(e){}}
-}
-const redeSheet=$("redeSheet");
-function abrirRede(k){const r=REDES_IMAGEM[k],celular=matchMedia("(pointer:coarse)").matches;redeSheet.dataset.rede=k;
-  $("redeTitle").textContent=`Compartilhar no ${r.n}`;
-  $("redeTexto").textContent=`O ${r.n} não aceita link pronto vindo de outro site, então o jeito é publicar a imagem do resultado ${r.onde}.`;
-  $("redeComo").textContent=celular?`Ao continuar, o celular abre a lista de aplicativos com a imagem já pronta: escolha ${r.n}. Depois, se quiser, cole o link de comparação (ele é copiado junto) como texto ou adesivo de link.`
-    :`Ao continuar, a imagem é baixada no seu computador e o ${r.n} abre numa aba nova pra você publicar. O link de comparação é copiado, pra você colar na legenda ou na bio.`;
-  $("redeIr").textContent=celular?`Continuar no ${r.n}`:`Baixar imagem e abrir o ${r.n}`;
-  if(typeof redeSheet.showModal==="function")redeSheet.showModal();else redeSheet.setAttribute("open","")}
-$("redeIr").onclick=async()=>{const r=REDES_IMAGEM[redeSheet.dataset.rede];closeDlg(redeSheet);await publicarImagem(r)};
-$("redeCancelar").onclick=$("redeClose").onclick=()=>closeDlg(redeSheet);redeSheet.addEventListener("click",e=>{if(e.target===redeSheet)closeDlg(redeSheet)});
-// no celular, o compartilhar do sistema (com a imagem em story); no computador, baixa a imagem e abre o site da rede
-async function publicarImagem(r){
-  shOp.formato="story";shareFile=null;await prepareShare();
-  try{await navigator.clipboard.writeText(myLink())}catch(e){}
-  if(shareFile&&navigator.canShare&&navigator.canShare({files:[shareFile]})){try{await navigator.share({files:[shareFile],text:textoImagem()});return}catch(e){if(e&&e.name==="AbortError")return}}
-  if(shareUrl){const a=document.createElement("a");a.href=shareUrl;a.download=shareFile?shareFile.name:"resultado-teste-politico.png";document.body.append(a);a.click();a.remove()}
-  window.open(r.site,"_blank","noopener");
-}
-$("shShare").onclick=async()=>{try{await navigator.share({files:[shareFile],text:textoImagem(),title:"Meu resultado no Teste Político"})}catch(e){}};
-async function copiar(t,msg){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.append(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}$("shAviso").textContent=msg}
-$("shLink").onclick=()=>copiar(myLink(),"Link de comparação copiado.");
-$("shTexto").onclick=()=>copiar(textoImagem(),"Texto copiado, com o link pra comparar.");
+  if(!shareFile)await mostrarImagem();else{$("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden");notaFormato()}}
+shareSheet.querySelectorAll("button[data-formato]").forEach(b=>b.onclick=()=>{if(b.dataset.formato===shOp.formato&&shareFile)return;shOp.formato=b.dataset.formato;
+  shareSheet.querySelectorAll("button[data-formato]").forEach(o=>o.setAttribute("aria-pressed",String(o===b)));mostrarImagem()});
+$("abrirPartilha").onclick=()=>abrirImagem();
+async function copiar(t){try{await navigator.clipboard.writeText(t);return true}catch(e){const a=document.createElement("textarea");a.value=t;document.body.append(a);a.select();let ok=false;try{ok=document.execCommand("copy")}catch(_){}a.remove();return ok}}
+const aviso=t=>{$("shAviso").textContent=t};
+function baixarImagem(){if(!shareUrl)return;const a=document.createElement("a");a.href=shareUrl;a.download=shareFile?shareFile.name:"resultado-teste-politico.png";document.body.append(a);a.click();a.remove()}
+// WhatsApp e X recebem o texto com o link (que mostra a prévia do resultado). O Instagram não aceita link vindo de outro
+// site, então recebe a imagem no formato escolhido: no celular pela lista de aplicativos do sistema; no computador, a imagem
+// é baixada e o Instagram abre numa aba nova. Os endereços abrem direto no clique (sem esperar nada antes), pra o
+// navegador não bloquear a aba nova.
+const REDES={
+  whatsapp:()=>{window.open("https://wa.me/?text="+encodeURIComponent(textoCompartilhar()),"_blank","noopener");aviso("Abrindo o WhatsApp com o texto e o seu link de comparação.")},
+  x:()=>{const u=myLink();window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(textoCompartilhar().replace(u,"").trim())}&url=${encodeURIComponent(u)}`,"_blank","noopener");aviso("Abrindo o X com o texto e o seu link de comparação.")},
+  instagram:()=>{if(!shareFile){aviso("Espere a imagem ficar pronta e toque de novo.");return}
+    copiar(myLink());
+    if(navigator.canShare&&navigator.canShare({files:[shareFile]})){navigator.share({files:[shareFile],text:textoImagem()}).catch(()=>{});
+      aviso("Escolha o Instagram na lista (pro story: Instagram, depois Stories). O link de comparação foi copiado, se quiser colar como adesivo de link.");return}
+    window.open("https://www.instagram.com/","_blank","noopener");baixarImagem();
+    aviso("A imagem foi baixada e o Instagram abriu numa aba nova. O link de comparação foi copiado, pra colar na legenda.")},
+  texto:async()=>{aviso(await copiar(textoCompartilhar())?"Texto copiado, com o link pra comparar. É só colar onde quiser.":"Não deu pra copiar. Tente de novo.")}};
+shareSheet.querySelectorAll("[data-rede]").forEach(b=>b.onclick=()=>REDES[b.dataset.rede]());
 $("shClose").onclick=()=>closeDlg(shareSheet);shareSheet.addEventListener("click",e=>{if(e.target===shareSheet)closeDlg(shareSheet)});

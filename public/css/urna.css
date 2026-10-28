@@ -465,14 +465,6 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 @media print{#results .acc-list{display:grid!important}.ver-completo{display:none!important}}
 
 /* ---------- compartilhar ---------- */
-.sh-opcoes{display:grid;gap:.7rem;margin-top:.8rem}
-.sh-op > span{display:block;margin-bottom:.35rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grafite)}
-.sh-op .check{margin-top:.2rem;display:inline-flex;margin-right:1.2rem}
-.sh-acoes{margin-top:1.1rem}
-.sh-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-top:.9rem}
-.sh-links .secondary{min-height:2.9rem;font-size:.86rem;padding:.4rem;text-decoration:none}
-.shimg[data-formato="paisagem"]{max-width:100%}
-.shimg[data-formato="quadrado"],.shimg[data-formato="retrato"]{max-width:340px}
 
 
 .resumo-acoes{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
@@ -576,27 +568,45 @@ body[data-tela="results"] .menu-btn{display:none}
 .box > .item-foto:first-child,.box > div > .item-foto:first-child{border-top:0}
 .item-foto > .item{flex:1;min-width:0;border-top:0}
 /* compartilhar e comparar */
-#partilhaOut .rotulo,.partilha-passo > .rotulo{margin:1.1rem 0 .5rem}
+.partilha-passo > .rotulo{margin:1.1rem 0 .5rem}
+.partilha-botao{min-height:62px;margin:.4rem 0 0;font-size:1.05rem}
+.partilha-botao .pb-txt{display:inline-flex;align-items:center;gap:.55rem}
+.partilha-botao svg{flex:none}
+/* a parte de comparar fica colada logo abaixo do botão, na mesma caixa */
+.partilha-comparar{margin-top:.9rem;padding:.2rem .9rem .9rem;border-radius:8px;border:1px solid var(--linha);background:var(--gaveta)}
+.partilha-comparar > .small:first-child{margin:.7rem 0 0}
+.partilha-codigo{display:flex;flex-wrap:wrap;gap:.6rem;align-items:stretch}
+.partilha-codigo .code{flex:1 1 12rem;margin:0;display:flex;align-items:center;justify-content:center}
+.partilha-codigo .secondary{flex:0 0 auto;margin:0;min-height:3rem;padding-left:1.4rem;padding-right:1.4rem}
+@media (max-width:480px){.partilha-codigo .secondary{flex:1 1 100%}}
+/* janela de compartilhar: proporções, prévia e os quatro jeitos de compartilhar */
+.sh-formatos{margin-top:.9rem}
+.sh-formatos button{display:flex;flex-direction:column;align-items:center;gap:.2rem;padding:.5rem .2rem .45rem;min-width:0}
+.sh-formatos b{font-size:.8rem;line-height:1.1}
+.sh-formatos small{font-size:.7rem;font-weight:400;opacity:.85}
+.prop{display:block;border:2px solid currentColor;border-radius:3px;margin-bottom:.15rem}
+.prop-story{width:12px;height:21px}.prop-retrato{width:17px;height:21px}.prop-quadrado{width:19px;height:19px}.prop-paisagem{width:26px;height:15px;margin-top:3px;margin-bottom:.4rem}
+.sh-previa{display:grid;place-items:center;margin-top:.9rem;min-height:12rem}
+.sh-previa .shimg{width:auto;max-width:100%;max-height:min(44vh,26rem);margin:0;box-shadow:0 0 0 1px var(--linha)}
+.sh-previa .sh-carregando{margin:0;width:min(100%,14rem);height:min(44vh,26rem);aspect-ratio:auto}
+.sh-uso{text-align:center;margin:.6rem 0 0!important;font-size:.8rem!important;color:var(--grafite)}
+.sh-redes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-top:.9rem}
+.sh-rede{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;min-height:4.6rem;padding:.55rem .25rem;border-radius:10px;border:1px solid var(--gaveta-borda);background:var(--gaveta);color:var(--tinta);font:700 .78rem var(--font);line-height:1.15;text-align:center;cursor:pointer}
+.sh-rede:hover{border-color:var(--tinta)}
+.sh-rede:active{transform:translateY(2px)}
+.sh-rede[data-rede="whatsapp"] svg{color:#25D366}
+.sh-rede[data-rede="instagram"] svg{color:#E1306C}
+.sh-aviso{min-height:1.2em;margin:.6rem 0 0!important;text-align:center;font-size:.82rem!important}
+.sh-aviso:empty{display:none}
+.sh-baixar{display:block;width:max-content;margin:.7rem auto 0;font-size:.82rem;color:var(--grafite);text-underline-offset:3px}
+.sh-baixar.hidden{display:none}
+@media (max-width:360px){.sh-redes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .partilha-passo .code{margin-top:0}
 .partilha-amigo{margin-top:1.3rem;padding-top:.2rem;border-top:1px solid var(--linha)}
 .partilha-amigo .small{margin:.1rem 0 0}
 .partilha-amigo .inrow{margin-top:.6rem}
 #friendOut:empty{display:none}
 #friendOut .card{margin-top:.9rem!important}
-.formatos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
-.formato{min-width:0;width:100%;display:flex;gap:.7rem;align-items:center;text-align:left;padding:.65rem;border-radius:8px;border:1px solid var(--linha);background:var(--visor);color:var(--tinta);min-height:84px}
-.formato:hover{border-color:var(--tinta)}
-.formato-molde{flex:none;height:64px;max-width:96px;border-radius:4px;overflow:hidden;background:#2B2A27;box-shadow:0 0 0 1px var(--linha);position:relative}
-.formato-molde img{display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
-.formato-molde.pronta img{opacity:1}
-.formato-txt{display:flex;flex-direction:column;gap:.15rem;min-width:0;flex:1;white-space:normal;overflow-wrap:anywhere}
-.formato-txt b{font-size:.92rem}
-.formato-txt small{font-size:.76rem;line-height:1.35;color:var(--grafite)}
-.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(8.5rem,100%),1fr));gap:.5rem}
-.apps .app{min-height:2.9rem;font-size:.86rem;text-decoration:none;padding:.4rem .5rem;margin:0;width:100%;display:flex;align-items:center;justify-content:center;text-align:center}
-.seg-formatos{flex-wrap:wrap}
-.seg-formatos button{flex:1 1 40%}
-@media (max-width:560px){.formatos{grid-template-columns:minmax(0,1fr)}.formato{min-height:0}}
 .indice-sep{margin-top:1rem!important}
 .item.livro.com-capa .capa-tipo b,.item.livro.com-capa .capa-tipo small{color:var(--tecla-txt);margin:0;font-size:.5rem;display:-webkit-box}
 .item.livro.com-capa .capa-tipo small{font-size:.45rem;opacity:1}

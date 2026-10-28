@@ -39,7 +39,7 @@ export async function testarInterface() {
     v.confere((await pg.locator("#resumo .eixo-tipico").count()) === 6 && (await pg.locator("#resumo .resumo-ideo").count()) === 3 && (await pg.locator("#resumo #leitOut .livro").count()) === 4 && (await pg.locator("#resumo #pensOut .pensador").count()) >= 4, `${modo}: o resumo deveria ter 6 eixos, 3 ideologias, pensadores e leituras com 4 obras por aba`);
     v.confere(await pg.evaluate("[...$('resumo').children].map(e=>e.id).join(',')").then((o) => /blocoPensadores,blocoLeituras,blocoPartilha,blocoCorrigir$/.test(o)), `${modo}: o resumo deveria seguir a ordem pensadores, leituras, compartilhar e comparar`);
     v.confere((await pg.locator("#resumo .code").count()) === 1 && (await pg.locator("#results .acc-list #friendIn").count()) === 0, `${modo}: a comparação com amigos deveria aparecer uma vez só, no resumo`);
-    v.confere((await pg.locator("#partilhaOut .formato").count()) === 4 && (await pg.locator("#partilhaOut .app").count()) === 8, `${modo}: compartilhar deveria ter 4 formatos e os aplicativos`);
+    v.confere((await pg.locator("#blocoPartilha #abrirPartilha").count()) === 1 && (await pg.locator("#blocoPartilha .sh-rede, #blocoPartilha a[href*='wa.me']").count()) === 0 && (await pg.locator("#shareSheet button[data-formato]").count()) === 4 && JSON.stringify(await pg.evaluate("[...document.querySelectorAll('#shareSheet [data-rede]')].map(b=>b.dataset.rede)")) === '["whatsapp","instagram","x","texto"]', `${modo}: compartilhar deveria ser um botão só, com 4 formatos e WhatsApp, Instagram, X e copiar texto na janela`);
     v.confere(await pg.evaluate("document.querySelector('#resumo .code').textContent===myLink().split('comparar=')[1]"), `${modo}: o código de comparação deveria aparecer no resumo, igual ao do link`);
     await pg.click("#verCompleto");
     v.confere(await pg.evaluate("$('results').classList.contains('completo')&&getComputedStyle(document.querySelector('#results .acc-list')).display!=='none'"), `${modo}: "Ver resultado completo" deveria abrir as seções`);
@@ -74,20 +74,26 @@ export async function testarInterface() {
       v.confere(await pg.evaluate("Math.abs($('blocoPartilha').getBoundingClientRect().top)<300"), "Compartilhar e comparar deveria levar ao bloco de compartilhar e comparar");
     }
     if (modo === "full") {
-      await pg.click("#partilhaOut .formato");
-      await pg.waitForFunction("!!shareFile", null, { timeout: 6000 });
+      await pg.click("#abrirPartilha");
+      await pg.waitForFunction("$('shareSheet').open&&!!shareFile&&!$('shImg').classList.contains('hidden')", null, { timeout: 6000 });
       v.confere((await pg.evaluate("shareFile.size")) > 50000, "imagem de compartilhar vazia ou pequena demais");
       const dims = () => pg.evaluate("new Promise(r=>{const i=new Image();i.onload=()=>r([i.width,i.height]);i.src=shareUrl})");
       v.confere(JSON.stringify(await dims()) === "[1080,1920]", "imagem padrão deveria ser story (1080 × 1920)");
-      const antes = await pg.evaluate("shareFile.size"); await pg.click('#shareSheet [data-tema="escuro"]'); await pg.waitForTimeout(1500);
-      v.confere((await pg.evaluate("shareFile.size")) !== antes, "tema escuro deveria mudar a imagem");
       for (const [f, wh] of [["retrato", "[1080,1350]"], ["quadrado", "[1080,1080]"], ["paisagem", "[1600,900]"]]) {
         await pg.click(`#shareSheet [data-formato="${f}"]`); await pg.waitForFunction(`shOp.formato==="${f}"&&!!shareFile&&shareFile.name.includes("${f}")`, null, { timeout: 6000 });
         v.confere(JSON.stringify(await dims()) === wh, `imagem ${f} deveria ter ${wh}`);
       }
-      v.confere(/^https:\/\/wa\.me\/\?text=.*comparar%3D/.test(await pg.evaluate("$('shZap').href")), "WhatsApp deveria levar o texto com o link de comparação");
-      await pg.click("#shLink"); await pg.waitForTimeout(150);
-      v.confere(/copiado/i.test(await pg.evaluate("$('shAviso').textContent")), "copiar o link deveria avisar que copiou");
+      // WhatsApp e X abrem com o texto e o link de comparação; copiar texto avisa que copiou
+      await pg.evaluate("window.__abertos=[];window.open=(u)=>{window.__abertos.push(u);return null}");
+      await pg.click('#shareSheet [data-rede="whatsapp"]'); await pg.click('#shareSheet [data-rede="x"]');
+      const abertos = await pg.evaluate("window.__abertos");
+      v.confere(/^https:\/\/wa\.me\/\?text=.*comparar%3D/.test(abertos[0] || "") && /^https:\/\/twitter\.com\/intent\/tweet\?text=.*&url=.*comparar%3D/.test(abertos[1] || ""), "WhatsApp e X deveriam abrir com o texto e o link de comparação");
+      await pg.click('#shareSheet [data-rede="texto"]'); await pg.waitForTimeout(150);
+      v.confere(/copiado/i.test(await pg.evaluate("$('shAviso').textContent")), "copiar o texto deveria avisar que copiou");
+      // Instagram no computador: abre o Instagram e baixa a imagem no formato escolhido
+      const baixou = pg.waitForEvent("download", { timeout: 5000 }).catch(() => null);
+      await pg.click('#shareSheet [data-rede="instagram"]');
+      v.confere((await pg.evaluate("window.__abertos.at(-1)")) === "https://www.instagram.com/" && /paisagem/.test((await baixou)?.suggestedFilename() || ""), "Instagram no computador deveria abrir o Instagram e baixar a imagem do formato escolhido");
       await pg.keyboard.press("Escape");
       await pg.fill("#friendIn", "codigo-invalido"); await pg.click("#friendGo");
       v.confere(/não parece válido/.test(await pg.evaluate("$('friendErr').textContent")), "código inválido deveria ser recusado");

@@ -44,7 +44,7 @@ function results(){
   renderResumo();renderEixos();renderExtremos();renderCands();renderPensadores();
   if(!st.hist){saveHistory(top);st.hist=true}st.done=true;save();
   renderComparar();
-  shareData={top,two:!!two,ranked,s:R.s,ext:R.ext,extAsked:R.extAsked,cand:candRanked,modo:nomeModo(st.mode),conf:lv[0]};shareFile=null;prepareShare();montarPartilha();
+  shareData={top,two:!!two,ranked,s:R.s,ext:R.ext,extAsked:R.extAsked,cand:candRanked,modo:nomeModo(st.mode),conf:lv[0]};shareFile=null;prepareShare();
   setupStats();show("results");fitTitle();requestAnimationFrame(ajustarCapa);
 }
 // computador: o cartão da esquerda fica fixo enquanto a página rola. Se for mais alto que a tela, ele rola junto até
