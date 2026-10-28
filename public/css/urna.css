@@ -195,7 +195,7 @@ dialog.sheet[open]{animation:rise .2s ease-out}
 .res{padding-top:.3rem}
 .cover{margin-top:.6rem}
 .cover .kicker{margin-bottom:.5rem}
-.res .display{font-size:clamp(2rem,9.5vw,2.8rem);overflow-wrap:anywhere;hyphens:auto}
+.res .display{font-size:clamp(2rem,9.5vw,2.8rem);overflow-wrap:normal;hyphens:manual} /* fitTitle diminui a letra até a palavra mais longa caber */
 .chip{display:inline-flex;align-items:center;gap:.55rem;margin-top:.8rem;padding:.4rem 0;border:0;background:none;font-size:.88rem;font-weight:700;color:var(--tinta)}
 .chip i{display:inline-block;width:3.6rem;height:.7rem;background:linear-gradient(90deg,var(--marca) 0 30%,transparent 30% 35%,var(--marca) 35% 65%,transparent 65% 70%,var(--marca) 70% 100%)}
 .chip.mid i{background:linear-gradient(90deg,var(--alerta) 0 30%,transparent 30% 35%,var(--alerta) 35% 65%,transparent 65% 70%,var(--linha) 70% 100%)}
@@ -488,6 +488,7 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .indice{display:none}
 @media (min-width:1360px){
   body[data-tela="results"] .wrap{max-width:84rem}
+  body[data-tela="results"] .site-cab{padding-left:max(16px,calc((100vw - 82rem)/2));padding-right:max(12px,calc((100vw - 82rem)/2))} /* mesma borda do resultado */
   #results{grid-template-columns:23rem minmax(0,1fr) 13rem}
   #results > .indice{grid-column:3;grid-row:1 / span 20;position:sticky;top:76px;display:flex;flex-direction:column;gap:2px;padding-left:1rem;border-left:2px solid var(--linha)}
   .indice .rotulo{margin:0 0 .5rem}

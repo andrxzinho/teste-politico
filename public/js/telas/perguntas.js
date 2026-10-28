@@ -22,7 +22,7 @@ function render(){
   $("backBtn").style.visibility=st.cur===0?"hidden":"visible";
   // tela de abertura de cada bloco
   if(b>=0&&st.cur===st.bs[b]&&!st.seen.includes(b)){
-    const [nm,ds]=BLK[st.bk[b]];visorNum(b+1,true,st.bs.length);$("vRod").textContent="Aperte o botão abaixo pra começar o bloco.";$("qof").textContent="de "+st.bs.length;
+    const [nm,ds]=BLK[st.bk[b]];visorNum(b+1,true,st.bs.length);$("vRod").textContent=matchMedia("(hover: none) and (pointer: coarse)").matches?"Toque no botão abaixo pra começar o bloco.":"Aperte Enter ou o botão abaixo pra começar o bloco.";$("qof").textContent="de "+st.bs.length;
     desenharBarra();direcao();$("tag").textContent="";$("tag").style.display="none";$("tbTag").classList.add("hidden");
     fecharTermo();$("stmt").textContent=nm;$("blkDesc").textContent=ds;$("blkDesc").classList.remove("hidden");
     $("dil").classList.add("hidden");$("explainBtn").classList.add("hidden");$("skipBtn").classList.add("hidden");
@@ -46,7 +46,8 @@ function render(){
   shownAt=Date.now();
   for(const e of [$("qcard"),box]){e.classList.remove("enter");void e.offsetWidth;e.classList.add("enter")}
   focarPergunta();
-  {const n=box.querySelectorAll("button.ans").length,tm=$("stmt").querySelector(".termo");$("vRod").textContent=(n?`Aperte uma tecla de 1 a ${n}.`:"")+(tm?" Toque nos termos sublinhados pra ver o que significam.":"")}
+  {const n=box.querySelectorAll("button.ans").length,tm=$("stmt").querySelector(".termo");const toque=matchMedia("(hover: none) and (pointer: coarse)").matches;
+    $("vRod").textContent=(n?(toque?"Toque numa resposta.":`Aperte uma tecla de 1 a ${n}.`):"")+(tm?` ${toque?"Toque":"Clique"} nos termos sublinhados pra ver o que significam.`:"")}
 }
 // leitor de tela: quando o botão apertado some (nova pergunta), o foco vai pro enunciado, que é lido em seguida
 function focarPergunta(){const a=document.activeElement;if(!interagiu||$("quiz").classList.contains("hidden"))return;
@@ -103,8 +104,10 @@ function marcarTermos(alvo,texto){
   let pos=0;const usados=new Set();
   achados.forEach(a=>{if(a.ini<pos||usados.has(a.i))return;usados.add(a.i);
     if(a.ini>pos)alvo.append(document.createTextNode(texto.slice(pos,a.ini)));
-    const b=el("button","termo",texto.slice(a.ini,a.fim));b.type="button";b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","glossa");
-    b.onclick=e=>{e.stopPropagation();abrirTermo(a.i,b)};alvo.append(b);pos=a.fim});
+    // span com papel de botão (e não <button>): assim um termo longo quebra no fim da linha como o resto do texto
+    const b=el("span","termo",texto.slice(a.ini,a.fim));b.setAttribute("role","button");b.tabIndex=0;b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","glossa");
+    b.onclick=e=>{e.stopPropagation();abrirTermo(a.i,b)};
+    b.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();abrirTermo(a.i,b)}};alvo.append(b);pos=a.fim});
   if(pos<texto.length)alvo.append(document.createTextNode(texto.slice(pos)));
 }
 function abrirTermo(i,b){const g=GLOSSARIO[i],box=$("glossa"),aberto=!box.classList.contains("hidden")&&box.dataset.i===String(i);

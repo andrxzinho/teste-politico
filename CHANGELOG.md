@@ -1,6 +1,13 @@
 # Histórico de versões
 
 ## Design e acessibilidade (27 de outubro de 2026)
+- Celular: o botão "Fazer o teste" aparece no cabeçalho, pra dar pra começar sem rolar a página.
+- O nome da ideologia no resultado não quebra mais com hífen no meio da palavra: a letra diminui até caber.
+- Termos sublinhados do glossário quebram no fim da linha como o resto da frase, em vez de pular inteiros pra linha de
+  baixo.
+- Em telas largas, o cabeçalho do resultado acompanha a largura do resultado, sem desalinhar.
+- A dica da pergunta muda conforme o aparelho: "Toque numa resposta" no celular, "Aperte uma tecla de 1 a 5" no
+  computador.
 - Livros: 18 dos 25 que estavam só com link de loja ganharam a página do livro na editora (ou no Ipea, no Instituto
   Mises Brasil e na Wikipédia), todas abertas e conferidas. Edições corrigidas pelas páginas das editoras: Marshall
   (Unesp, 2021, e não 2026) e Harvey (Loyola, 2008, e não 2014).
