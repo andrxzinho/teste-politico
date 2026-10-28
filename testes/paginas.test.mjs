@@ -51,6 +51,9 @@ export async function testarPaginas() {
   v.confere(/^Fascista em relação a Comunista: .*mais à direita na economia/.test(await pg.evaluate("document.querySelector('#comparacao .comp-texto').textContent")), "comparar: texto das diferenças errado");
   await pg.click("#trocar");
   v.confere(await pg.evaluate("location.search==='?a=comunista&b=fascista'&&document.querySelector('.comp-legenda').textContent.startsWith('Comunista')"), "comparar: trocar deveria inverter a ordem e o endereço");
+  await pg.goto(s.url + "/ideologias/comparar/?a=toString&b=constructor"); await pg.waitForTimeout(150);
+  v.confere((await pg.locator("#comparacao .eixo-tipico").count()) === 5, "comparar: endereço com nome inválido deveria cair nas ideologias padrão");
+  await pg.goto(s.url + "/ideologias/comparar/?a=comunista&b=fascista"); await pg.waitForTimeout(150);
   await pg.selectOption("#ideoB", "comunista");
   v.confere(/diferentes/.test(await pg.evaluate("document.getElementById('comparacao').textContent")), "comparar: a mesma ideologia dos dois lados deveria pedir duas diferentes");
   // menu: abre, fecha com Esc, tecla 2 leva às ideologias, foco volta ao botão

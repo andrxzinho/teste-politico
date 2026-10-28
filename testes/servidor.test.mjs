@@ -62,7 +62,7 @@ export async function testarServidor() {
   const cab = csv.split("\n")[0];
   v.confere(csv.trim().split("\n").length - 1 === 9, "planilha deveria ter 9 linhas");
   v.confere(!/envio|"env"|"ip"|"dia"|"data"/i.test(cab), "planilha não pode ter código de envio, IP ou data");
-  v.confere(cab.endsWith('"semente_ordem"') && /,"\d+"\r?$/m.test(csv), "planilha deveria ter a semente da ordem das frases");
+  v.confere(cab.endsWith('"semente_ordem","versao_calculo"') && /,"\d+","4"\r?$/m.test(csv), "planilha deveria ter a semente da ordem das frases");
 
   v.confere((await contagem("real")) === 9, "contagem de pessoas deveria ser 9 (a continuação não conta de novo)");
 

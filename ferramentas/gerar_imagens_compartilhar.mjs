@@ -6,13 +6,11 @@
 import fs from "node:fs";
 import vm from "node:vm";
 import { chromium } from "playwright";
+import { slug, esc } from "./comum.mjs";
 
 const ctx = {}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync("public/js/dados/ideologias.js", "utf8") + ";globalThis.D={IDEO,IDEO_GRUPOS,IDEO_RESUMO};", ctx);
 const { IDEO, IDEO_GRUPOS, IDEO_RESUMO } = ctx.D;
-// mesmo slug de ferramentas/gerar_paginas.mjs (importar de lá rodaria o gerador inteiro)
-const slug = (n) => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const fonte = fs.readFileSync("public/fonts/arimo-latin.woff2").toString("base64");
 
 // mesmo desenho do mapa da página inicial (heroMap em public/js/principal.js), com as cores do tema claro

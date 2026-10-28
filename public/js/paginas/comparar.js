@@ -6,8 +6,8 @@
   const selA = document.getElementById("ideoA"), selB = document.getElementById("ideoB"), out = document.getElementById("comparacao");
   const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
   const q = new URLSearchParams(location.search);
-  if (porSlug[q.get("a")]) selA.value = q.get("a");
-  if (porSlug[q.get("b")]) selB.value = q.get("b");
+  if (Object.hasOwn(porSlug, q.get("a") || "")) selA.value = q.get("a");
+  if (Object.hasOwn(porSlug, q.get("b") || "")) selB.value = q.get("b");
   // se vier só a primeira (link "Comparar com outra ideologia") e ela for igual à segunda padrão, a segunda passa a ser a vizinha da lista
   if (selA.value === selB.value) selB.selectedIndex = (selA.selectedIndex + 1) % selB.options.length;
 

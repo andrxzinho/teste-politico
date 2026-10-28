@@ -169,7 +169,7 @@ function renderEixos(){
   if(solo.length||fora.length){const c=el("div","card box");c.append(el("p","small","Fora dos eixos: estes temas dividem as pessoas de um jeito que não cabe em nenhum eixo, por isso aparecem separados."));
     // meio ambiente: posição própria, que conta pra ideologia mas não entra na média de Brasil × Mundo
     fora.forEach(key=>{const f=FORA_EIXO[key],v=sub[key].v,e=el("div","axis fora"),row=el("div","row");
-      row.append(el("b",null,f.nome),el("span",null,v<=-40?f.left:v<=-12?f.left+" (moderado)":v<12?"Centro":v<40?f.right+" (moderado)":f.right));
+      row.append(el("b",null,f.nome),el("span",null,band(v,key)));
       const en=el("div","ends");en.append(el("span",null,f.left),el("span",null,f.right));e.append(row,scaleNode(v),en);c.append(e)});
     solo.forEach(o=>{const d=el("div","why-item");d.append(el("p",null,`${o.solo}: ${o.t}`),el("span",null,"Você: "+ansLabel(o,st.ans[o.id])));c.append(d)});so.append(c)}
   const b=$("axesTxt");b.setAttribute("aria-expanded","false");b.textContent="Ver explicação de cada eixo";

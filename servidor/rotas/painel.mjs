@@ -116,9 +116,9 @@ function agrega(rs, eventos, legado) {
 
 function csv(rs) {
   // exportação anônima: sem dia, idade e estado, em ordem embaralhada
-  const cab = ["modo","veio_de","ideologia",...EIXOS.map((k) => "eixo_" + k),...EXTREMOS.map((k) => "extremo_" + k),"tempo","confianca","desempate","contradicoes","autoid_espectro","autoid_ideologia","respostas_" + IDS.join("|"),"explicacoes_abertas","semente_ordem"];
+  const cab = ["modo","veio_de","ideologia",...EIXOS.map((k) => "eixo_" + k),...EXTREMOS.map((k) => "extremo_" + k),"tempo","confianca","desempate","contradicoes","autoid_espectro","autoid_ideologia","respostas_" + IDS.join("|"),"explicacoes_abertas","semente_ordem","versao_calculo"];
   const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const linhas = rs.map((r) => [NOME_MODO[r.m] || "padrao", r.de ? NOME_MODO[r.de] : "", IDEOLOGIAS[r.i], ...r.ax, ...r.ex, r.t, r.cf, r.tb ? "sim" : "nao", r.inc, r.se, r.si != null ? IDEOLOGIAS[r.si] : "", r.r, (r.x || []).join(" "), r.or ?? ""].map(esc).join(","));
+  const linhas = rs.map((r) => [NOME_MODO[r.m] || "padrao", r.de ? NOME_MODO[r.de] : "", IDEOLOGIAS[r.i], ...r.ax, ...r.ex, r.t, r.cf, r.tb ? "sim" : "nao", r.inc, r.se, r.si != null ? IDEOLOGIAS[r.si] : "", r.r, (r.x || []).join(" "), r.or ?? "", r.cv ?? 1].map(esc).join(","));
   for (let i = linhas.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [linhas[i], linhas[j]] = [linhas[j], linhas[i]]; }
   return "\ufeff" + [cab.map(esc).join(","), ...linhas].join("\n");
 }

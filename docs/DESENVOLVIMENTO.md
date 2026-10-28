@@ -58,13 +58,18 @@ BANCO=memoria npm test
 | `npm run test:perfis` | Perfis sintéticos no núcleo (sem navegador): propriedades que as regras do código declaram. Defeitos conhecidos aparecem como PENDENTE e não contam como falha |
 | `npm run test:numeros` | Os números publicados na metodologia, nas perguntas frequentes, na página inicial e no README batem com o código (perguntas por modo, ideologias, `CALIB`) |
 | `npm run test:cliques` | Todos os botões e links de cada tela, no celular e no computador |
-| `npm run test:interface` | Os 3 modos no navegador: teclas, número da pergunta, FIM, 9 seções do resultado, imagem, códigos de comparação, retomar, aviso ao trocar de modo e nada rolando pros lados em 320 e 1280 px, claro e escuro |
-| `npm run test:paginas` | As 21 páginas de ideologia existem, nenhum link interno quebrado, menu (abrir, Esc, tecla numerada), tema salvo entre páginas, filtro da lista e nada rolando pros lados em 320, 768 e 1280 px |
+| `npm run test:interface` | Os 3 modos no navegador: teclas, número da pergunta, FIM, as 11 seções do resultado completo, perto e longe de cada ideologia, onde você difere da sua, gráfico da evolução, imagem, códigos de comparação, retomar, aviso ao trocar de modo e nada rolando pros lados em 320 e 1280 px, claro e escuro |
+| `npm run test:paginas` | As 21 páginas de ideologia e a de comparar existem e funcionam, nenhum link interno quebrado, menu (abrir, Esc, tecla numerada), tema salvo entre páginas, filtro da lista e nada rolando pros lados em 320, 768 e 1280 px |
 | `npm run test:acessibilidade` | axe-core (WCAG 2.1 A e AA) no início, consentimento, pergunta, resultado, páginas de ideologia, perguntas frequentes e metodologia, nos dois temas |
-| `npm run test:servidor` | Envios gerados pelo site, continuação de modo, recusa de dados inválidos e adulterados, senha do painel, contas do painel, planilha e compactação |
+| `npm run test:servidor` | Envios gerados pelo site, continuação de modo, envio de página antiga (versão 3), recusa de dados inválidos e adulterados, senha do painel, contas do painel, planilha (com a semente da ordem e a versão do cálculo) e compactação |
 
 Se uma mudança na lógica for **intencional**, rode `npm run test:atualizar`, revise a diferença da referência no git e
 explique a mudança no histórico. Mudanças só visuais nunca devem alterar a referência.
+
+**Links dos livros:** `npm run links` abre todos os links de `public/js/dados/leituras.js` (o informativo e o da loja).
+Falha só quando um link sumiu (404, 410 ou endereço inexistente); lojas e a Wikipédia às vezes recusam robôs, e isso
+aparece como aviso. O GitHub Actions roda essa conferência no dia 3 de cada mês (`.github/workflows/links.yml`) e
+também dá pra rodar pela aba Actions; se falhar, o GitHub avisa o dono do repositório por e-mail.
 
 ## Publicação
 

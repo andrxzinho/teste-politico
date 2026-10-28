@@ -59,6 +59,11 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       Os tempos (9/18/30 min) continuam estimativas: medir a mediana real no painel.
 - [x] **Resultado:** probabilidade e semelhança com nomes diferentes. Feito em 23/10/2026. Os eixos que aproximam ou
       afastam já aparecem em "Comparar com uma ideologia"; nas páginas das ideologias entrou o que separa cada vizinha.
+- [x] **Links dos livros conferidos todo mês** pelo GitHub (`.github/workflows/links.yml`), desde 28/10/2026.
+- [ ] **Verificador de estilo do código (lint):** avaliado e deixado de fora por enquanto. Os arquivos do site
+      compartilham variáveis globais entre si (sem módulos), e um verificador como o ESLint precisaria de uma lista
+      manual de centenas delas; os testes já carregam todos os arquivos e acusam erros de sintaxe e nomes repetidos.
+      Vale a pena se o site passar a usar módulos.
 - [x] **Funções novas** (28/10/2026): perto e longe de cada ideologia no resumo, "Onde você difere da sua ideologia",
       gráfico da evolução nos resultados anteriores e a página `/ideologias/comparar/`.
 - [x] **Quantidade de perguntas:** decidido em 23/10/2026 pelo responsável: **manter as quantidades atuais**. Reavaliar

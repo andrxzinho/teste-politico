@@ -74,7 +74,7 @@ var Motor = (function () {
     anc.forEach(function (a) {
       var alvo = a.s ? [a.k + "." + a.s] : Object.keys(subsDoEixo[a.k]);
       if (!alvo.length) alvo = [a.k + ".-"]; // eixo sem nenhuma frase de concordância respondida: a escolha vira a posição do eixo
-      alvo.forEach(function (key) { if (!subs[key]) subs[key] = { p: 0, w: 0, n: 0 }; subs[key].p += a.x / (a.se * a.se); subs[key].w += 1 / (a.se * a.se); subsDoEixo[a.k][key] = 1; });
+      alvo.forEach(function (key) { if (!subs[key]) subs[key] = { p: 0, w: 0, n: 0 }; subs[key].p += a.x / (a.se * a.se); subs[key].w += 1 / (a.se * a.se); if (fora.indexOf(key) < 0) subsDoEixo[a.k][key] = 1; });
     });
     var sub = {}, raw = {}, se = {}, s = {}, ci = {}, hw = {};
     Object.keys(subs).forEach(function (key) { sub[key] = { v: clamp(subs[key].p / subs[key].w, -100, 100), se: 1 / Math.sqrt(subs[key].w), n: subs[key].n }; });

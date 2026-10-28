@@ -1,5 +1,14 @@
 # Histórico de versões
 
+## Manutenção (28 de outubro de 2026)
+- Revisão do código de tudo que mudou desde a versão 1.0.0. O servidor passou a conferir os envios de páginas antigas
+  com a conta da versão 3 de verdade (antes, uma aproximação que podia recusar envios legítimos). A planilha do estudo
+  ganhou a versão do cálculo de cada resposta. A página de comparar não quebra mais com nomes inválidos no endereço.
+- Conferência mensal dos links dos livros no GitHub (`npm run links`). A primeira rodada achou um link de loja que tinha
+  sumido (A guerra de guerrilhas, de Che Guevara), que saiu; o livro continua com o link da Wikipédia.
+- Fonte do site com cache de 30 dias, em vez de um ano sem revalidar.
+- README com capturas de tela atuais e documentação atualizada.
+
 ## Cálculo, versão 4 (28 de outubro de 2026)
 - Meio ambiente virou um tema próprio no resultado ("proteção ambiental primeiro" × "produção e obras primeiro"). As
   frases sobre desmatamento, BR-319, Acordo de Paris e Margem Equatorial saíram da média de Brasil × Mundo, onde

@@ -2,7 +2,7 @@
 // ano de publicação: anos antes de Cristo aparecem como "c. 340 a.C."
 const anoObra=a=>a<0?`c. ${-a} a.C.`:String(a);
 const EIXOS5=["E","A","C","N","D"];
-const slugIdeo=n=>n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const slugIdeo=n=>slugFoto(n); // mesmo endereço das páginas /ideologias/<nome>/
 const nomeSub=key=>{const [k,s]=key.split(".");return FORA_EIXO[key]?FORA_EIXO[key].nome:(SUBS[k]||{})[s]||key};
 const distancia=d=>Math.abs(d)<15?"Perto":Math.abs(d)<35?"Um pouco diferente":"Longe";
 const posEsc=v=>(Math.max(-100,Math.min(100,v))+100)/2;

@@ -10,11 +10,14 @@ const VAL = { a: -2, b: -1, c: 0, d: 1, e: 2 };
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 // Recalcula cada eixo a partir das respostas com o mesmo motor do site (servidor/motor.mjs, gerado de
 // public/js/nucleo/motor.js). Serve pra recusar envios com eixos inventados que não batem com as respostas.
-// opcoes.fora = [] refaz a conta como na versão 3 (meio ambiente dentro de Brasil × Mundo), pra páginas abertas antes da 4.
-function eixosDasRespostas(resp, pesos, opcoes) {
+// Páginas abertas antes da versão 4 calculam como na versão 3: as frases de meio ambiente em "soberania" (dentro de
+// Brasil × Mundo) e o desconto do plano de saúde em "Estado e mercado".
+const SUBTEMA_V3 = { N14: "sob", N17: "sob", X41: "sob", X43: "sob", K10: "sob", K11: "sob", E22: "est" };
+const ITENS_V3 = { ...ITENS, ...Object.fromEntries(Object.entries(SUBTEMA_V3).map(([id, s]) => [id, { ...ITENS[id], s }])) };
+function eixosDasRespostas(resp, pesos, v3 = false) {
   const A = {};
   IDS.forEach((id, j) => { const ch = resp[j]; if (ch in VAL) A[id] = VAL[ch]; else if (ch === "x") A[id] = "x"; });
-  const r = Motor.calcular(A, ITENS, IDS, pesos, opcoes);
+  const r = v3 ? Motor.calcular(A, ITENS_V3, IDS, pesos, { fora: [] }) : Motor.calcular(A, ITENS, IDS, pesos);
   return EIXOS.map((k) => r.raw[k]);
 }
 
@@ -90,7 +93,8 @@ export default async (req) => {
   // os eixos enviados precisam bater com as respostas (margem pro arredondamento em faixas de 20 e pra pesos desatualizados)
   const pesos = (await banco.lerConfig("config/pesos"))?.pesos || {};
   const bate = (calc) => !ax.some((v, j) => Math.abs(v - calc[j]) > 30);
-  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(b.calculo !== 4 && bate(eixosDasRespostas(b.respostas, pesos, { fora: [] })))) return new Response("Os eixos não batem com as respostas", { status: 422 });
+  // páginas antigas: aceita se bater com a versão 4 ou com a conta da versão 3
+  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(b.calculo !== 4 && bate(eixosDasRespostas(b.respostas, pesos, true)))) return new Response("Os eixos não batem com as respostas", { status: 422 });
 
   const reg = { m: modo, i, ax, ex, t: b.tempo, r: b.respostas, x: expl, id: b.idade ?? null, uf: b.uf ?? null,
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,

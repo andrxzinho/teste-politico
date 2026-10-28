@@ -7,7 +7,8 @@
 // lambda: quanto a classificação confia nas diferenças entre subtemas dos perfis (1 = totalmente, 0 = só a posição do eixo)
 // temp: temperatura da probabilidade (versão 4). Divide a evidência antes de virar porcentagem, pra que a chance mostrada
 // da 1ª ideologia fique perto da taxa de acerto quando os perfis teóricos estão errados em cerca de 20 pontos
-// (simulação em docs/METODOLOGIA.md). Não muda a ordem das ideologias, só o quanto a 1ª se destaca.
+// (simulação em docs/METODOLOGIA.md). Não muda a ordem das ideologias, mas a 1ª se destaca menos: "entre duas", o
+// desempate e a confiança, que usam essas chances, passam a acontecer um pouco mais.
 const CLS={tau:25,lambda:.5,contraste:1.5,marcadoras:.8,temp:1.5};
 // posição típica de uma ideologia num subtema: entre a do eixo e a do perfil (lambda); nos subtemas fora do eixo
 // (meio ambiente), é a do próprio perfil, porque a posição do eixo não diz nada sobre eles
@@ -15,7 +16,7 @@ const tipicaSub=(o,i)=>{const pf=PERFIS[o.n]||[],key=SUBT[i];if(Motor.CFG.fora.i
 // Concordância esperada com as frases que definem cada extremo: a própria ideologia concorda (+1,5) e todas as outras
 // discordam igualmente (-1,5). Isso só separa o extremo das demais, sem favorecer nenhuma ideologia não extrema.
 // Vale igual pros quatro extremos, à esquerda e à direita.
-const marcaEsperada=(o,g)=>o.g===g?1.5:-1.5; // escolhidos pelo pior caso entre dois geradores de respondentes (MUDANCAS-v6.md)
+const marcaEsperada=(o,g)=>o.g===g?1.5:-1.5; // escolhidos pelo pior caso entre dois geradores de respondentes (docs/METODOLOGIA.md, seção 10)
 function compute(A){
   const mk={com:[],anq:[],fas:[],anc:[],eco:[]};let unsure=0,asked=0,noop=0;const ids=seq();
   for(const id of ids){const o=ITEMS[id],v=A[id];if(v==="g"||v===undefined)continue;asked++;
@@ -89,6 +90,6 @@ function compute(A){
 function axisNow(k){return Motor.calcular(st.ans,ITEMS,seq(),WEIGHTS).raw[k]}
 function gateOK(id){const o=ITEMS[id];if(!gated(o))return true;const sc=axisNow(o.k);
   return o.m.some(g=>g!=="eco"&&EXTP[g]&&EXTP[g][o.k]!==undefined&&Math.sign(EXTP[g][o.k])===Math.sign(sc)&&Math.abs(sc)>=GATE_AX)}
-function band(v,k){const a=AX[k];if(v<=-40)return a.left;if(v<=-12)return a.left+" (moderado)";if(v<12)return "Centro";if(v<40)return a.right+" (moderado)";return a.right}
+function band(v,k){const a=FORA_EIXO[k]||AX[k];if(v<=-40)return a.left;if(v<=-12)return a.left+" (moderado)";if(v<12)return "Centro";if(v<40)return a.right+" (moderado)";return a.right}
 const short=(v,k)=>band(v,k).replace(" (moderado)",", moderado");
 

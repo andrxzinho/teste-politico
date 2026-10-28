@@ -3,6 +3,7 @@
 //   além de sitemap.xml e robots.txt. Rode da raiz do projeto: npm run paginas
 import fs from "node:fs";
 import vm from "node:vm";
+import { slug, esc } from "./comum.mjs";
 
 const SITE = "https://testepolitico.vercel.app";
 const REPO = "https://github.com/andrxzinho/teste-politico";
@@ -15,8 +16,6 @@ const anoObra = (a) => (a < 0 ? `c. ${-a} a.C.` : String(a));
 const edicao = (x) => (x ? `<p class="livro-ed">${x.ed ? `<span>${esc(x.ed)}</span>` : ""}${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.onde)}</a>` : ""}${x.loja ? `<a class="loja" href="${esc(x.loja)}" target="_blank" rel="noopener">Loja: ${esc(x.lojaNome)}</a>` : ""}</p>` : "");
 const livros = (l) => l.map(([t, a, ano, d, x]) => `<div class="livro"><b>${esc(t)}</b><small>${esc(a)}, ${anoObra(ano)}</small><p>${esc(d)}</p>${edicao(x)}</div>`).join("");
 
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-export const slug = (n) => n.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const grupoDe = (n) => (IDEO_GRUPOS.find(([, l]) => l.includes(n)) || ["Outras"])[0];
 const EIXOS = ["E", "A", "C", "N", "D"];
 // mesmas faixas do resultado (band em public/js/nucleo/calculo.js), pra página e resultado darem o mesmo nome à mesma posição

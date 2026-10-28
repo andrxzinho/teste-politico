@@ -1,0 +1,22 @@
+name: Links dos livros
+
+# Uma vez por mês (dia 3, de manhã no horário de Brasília) e quando for pedido pela aba Actions.
+# Se algum link tiver sumido (404), a execução falha e o GitHub avisa o dono do repositório por e-mail.
+on:
+  schedule:
+    - cron: "17 11 3 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm run links

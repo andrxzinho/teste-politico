@@ -1,7 +1,7 @@
 // Janelas de informação e calibração exibida (CALIB, INFO).
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 // ---------- janelas de informação da abertura
-// Medido em simulações (ver MUDANCAS-v6.md): acerto da ideologia por modo e por nível de confiança, e repetição no reteste.
+// Medido em simulações (ver docs/METODOLOGIA.md, seção 10): acerto da ideologia por modo e por nível de confiança, e repetição no reteste.
 const CALIB={"quick":{"frases":"cerca de 65","acerto":0.925,"top2":0.968,"reteste":0.903,"conf":{"alta":{"parte":0.778,"acerto":0.949},"media":{"parte":0.187,"acerto":0.819},"baixa":{"parte":0.036,"acerto":0.944}}},"full":{"frases":"cerca de 135","acerto":0.954,"top2":0.988,"reteste":0.96,"conf":{"alta":{"parte":0.895,"acerto":0.978},"media":{"parte":0.101,"acerto":0.745},"baixa":{"parte":0.004,"acerto":1}}},"deep":{"frases":"cerca de 210","acerto":0.978,"top2":0.986,"reteste":0.966,"conf":{"alta":{"parte":0.905,"acerto":0.985},"media":{"parte":0.087,"acerto":0.909},"baixa":{"parte":0.008,"acerto":1}}}}; // média dos geradores A e B, 1.008 respondentes por modo
 const de100=x=>x>=.995?"mais de 99 de cada 100":Math.round(x*100)+" de cada 100";
 const INFO={

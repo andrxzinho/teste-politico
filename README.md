@@ -51,10 +51,13 @@ segurança, costumes, o Brasil no mundo, democracia e instituições, e recebe:
 - a sua posição em **seis eixos**, cada um com a faixa provável (a margem de erro da posição);
 - as **ideologias que melhor explicam as suas respostas**, entre 21 tradições políticas, com a probabilidade relativa
   de cada uma dentro do modelo e um indicador de confiança (alta, média ou baixa);
+- em que eixos você fica perto ou longe de cada ideologia, e em que frases você difere da sua;
 - as tensões e possíveis contradições nas suas respostas;
 - a compatibilidade estimada com os presidentes desde 1985, os partidos, pensadores e figuras históricas;
 - leituras recomendadas a favor e contra a tradição mais próxima;
-- uma imagem e um link para comparar o resultado com amigos.
+- uma imagem e um link para comparar o resultado com amigos, e a evolução dos seus resultados no mesmo aparelho.
+
+Fora do teste, cada ideologia tem uma página própria, e dá pra [comparar duas lado a lado](https://testepolitico.vercel.app/ideologias/comparar/).
 
 <table>
 <tr>
@@ -78,10 +81,11 @@ segurança, costumes, o Brasil no mundo, democracia e instituições, e recebe:
 | | |
 |---|---|
 | **Modos** | Essencial, Padrão e Aprofundado: cerca de 65, 135 e 210 frases (exatamente 62–70, 130–141 e 207–218, conforme as respostas, mais até 6 de desempate no Essencial e no Padrão). Cada modo inclui as frases do anterior. |
-| **Eixos** | Economia, Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições. |
-| **Classificação** | Para cada ideologia, o modelo compara a sua posição em cada subtema com a posição típica daquela tradição, levando em conta a margem de erro. A porcentagem é a **probabilidade relativa dentro do modelo**, não uma medida de quanto você "é" daquela ideologia. |
+| **Eixos** | Economia, Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições. Meio ambiente, armas e medidas numa epidemia aparecem à parte. |
+| **Classificação** | Para cada ideologia, o modelo compara a sua posição em cada subtema com a posição típica daquela tradição, levando em conta a margem de erro. A porcentagem é a **probabilidade relativa dentro do modelo**, calibrada por simulação, não uma medida de quanto você "é" daquela ideologia. |
 | **Extremos** | Comunismo, anarquismo, fascismo e anarcocapitalismo só aparecem quando você concorda com as frases que definem cada um. |
 | **Consistência** | Pares de frases opostas, simetria partidária (a mesma situação com o lado trocado), tendência a concordar com tudo e respostas no automático reduzem a confiança. |
+| **Ordem das frases** | Os blocos vêm sempre na mesma sequência; dentro de cada um, a ordem é sorteada pra cada pessoa. |
 | **Confiança** | Junta a probabilidade da primeira ideologia, a precisão dos eixos e a consistência. Diz quão claro o resultado ficou dentro do modelo, não se o teste acertou. |
 
 A [metodologia](https://testepolitico.vercel.app/metodologia.html) explica o cálculo e os limites. As simulações usadas
@@ -151,7 +155,8 @@ BANCO=memoria npm test            # todos os testes
 | `npm run test:cliques` | Todos os botões e links de cada tela, no celular e no computador |
 
 A cada envio na `main` e em cada pull request, o GitHub Actions roda todos os testes, o `npm audit` e a conferência de
-que as páginas geradas (`npm run paginas`) e as listas do servidor (`npm run listas`) estão em dia com os dados.
+que as páginas geradas (`npm run paginas`) e as listas do servidor (`npm run listas`) estão em dia com os dados. Uma vez
+por mês, ele também abre todos os links dos livros (`npm run links`) e avisa o dono do repositório se algum sumiu.
 
 Os testes conferem se o código faz o que promete. Eles **não** mostram que o teste acerta a ideologia de pessoas reais.
 
@@ -164,13 +169,14 @@ public/                 site estático, publicado como está
   js/dados/             frases, ideologias, presidentes e partidos, pensadores, leituras e glossário
   js/telas/             perguntas, resultado, partidos, comparar, compartilhar...
   js/servicos/          envio ao estudo, imagem de compartilhar, fotos e capas
+  js/paginas/           filtro da lista de ideologias e comparação de duas ideologias
   ideologias/ ...       páginas geradas (npm run paginas)
   img/p, img/l          fotos de pessoas e capas de livros (créditos em /creditos/)
 api/                    funções do Vercel (porta de entrada)
 servidor/               rotas, acesso ao banco e listas compartilhadas
 supabase/esquema.sql    tabelas, permissões e funções do banco
 testes/                 testes automáticos
-ferramentas/            geração de páginas, listas e imagens, servidor local e redirecionamento do endereço antigo
+ferramentas/            geração de páginas, listas e imagens, conferência dos links, servidor local e redirecionamento do endereço antigo
 docs/                   metodologia, arquitetura, privacidade, desenvolvimento e auditorias
 ```
 

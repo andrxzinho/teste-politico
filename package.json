@@ -19,7 +19,8 @@
     "test:acessibilidade": "node testes/acessibilidade.test.mjs",
     "test:cliques": "node testes/cliques.test.mjs",
     "test:perfis": "node testes/perfis.test.mjs",
-    "test:numeros": "node testes/numeros.test.mjs"
+    "test:numeros": "node testes/numeros.test.mjs",
+    "links": "node ferramentas/conferir_links.mjs"
   },
   "engines": {
     "node": ">=20"

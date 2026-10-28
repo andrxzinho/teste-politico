@@ -11,12 +11,14 @@ o servidor só recebe os envios de quem aceita participar do estudo.
 | `index.html` | Todas as telas (abertura, consentimento, perguntas, desempate, importância, FIM, resultado, janelas) |
 | `css/urna.css` | Estilo |
 | `js/nucleo/motor.js` | Cálculo dos eixos (ver Metodologia, seção 4). O mesmo arquivo roda no servidor |
-| `js/dados/frases.js`, `ideologias.js`, `candidatos.js` | Dados: frases (`DATA`), ideologias (`IDEO`), partidos (`CAND`) |
-| `js/nucleo/base.js`, `estado.js`, `calculo.js` | Montagem da lista de frases, estado do teste, classificação e confiança |
+| `js/dados/frases.js`, `ideologias.js`, `candidatos.js` | Dados: frases (`DATA`, com os 16 subtemas em `SUBT` e o perfil de cada ideologia em `PERFIS`), ideologias (`IDEO`), presidentes e partidos (`CAND`) |
+| `js/nucleo/base.js`, `estado.js`, `calculo.js` | Montagem da lista de frases, estado do teste (com a semente da ordem das frases), classificação e confiança |
 | `js/telas/*.js` | Perguntas, início, resultado, partidos, comparação, janelas, visor da urna |
 | `js/servicos/estudo.js`, `imagem.js` | Envio pro estudo e imagem de compartilhar |
 | `js/principal.js` | Abertura e ligação dos botões |
 | `painel.html`, `js/painel.js` | Painel administrativo |
+| `metodologia.html`, `termos.html` | Páginas de texto |
+| `og-urna.png`, `img/og/` | Imagens de prévia do link (1200 × 630): a geral e uma por ideologia |
 
 **Navegação e páginas.** `js/navegacao.js` é carregado no `<head>` de todas as páginas públicas: aplica o tema escolhido
 (salvo no aparelho) antes de desenhar a página e monta o cabeçalho, o menu (teclas numeradas de 1 a 6, Esc fecha, foco
@@ -27,8 +29,6 @@ faixas e diferenças de cada par) num bloco JSON dentro dela, e `js/paginas/comp
 
 Os arquivos de `js/` são scripts comuns, carregados em ordem por `index.html`, e compartilham o mesmo escopo. A ordem
 importa: dados, depois núcleo, depois telas e serviços, e `principal.js` por último.
-| `metodologia.html`, `termos.html` | Páginas de texto |
-| `og.png` | Imagem de prévia do link (1200 × 630) |
 
 O estado do teste fica no `localStorage` do aparelho: progresso, histórico de resultados, código de um amigo e a
 preferência de som. Nada disso sai do aparelho.
@@ -69,9 +69,12 @@ guarda tudo em memória pros testes. `servidor/motor.mjs` é **gerado** a partir
 ### Envio de um resultado
 
 1. O site pede um desafio (`GET /api/coletar?desafio`) e resolve uma prova de trabalho leve (16 bits, menos de 1 segundo).
-2. Envia o resultado (`POST`, versão 6) com o código de envio aleatório e a prova.
+2. Envia o resultado (`POST`, versão 6, com `calculo: 4` e a semente da ordem das frases) com o código de envio
+   aleatório e a prova.
 3. O servidor valida formato e tamanho, confere a prova (cada desafio vale uma vez), **recalcula os eixos com o mesmo
-   motor** e recusa o envio se os eixos informados não baterem (tolerância de 30 pontos).
+   motor** e recusa o envio se os eixos informados não baterem (tolerância de 30 pontos). Envios de páginas abertas
+   antes da versão 4 chegam sem as 2 frases novas (completadas com "não mostrada") e também são conferidos com a conta
+   da versão 3.
 4. Grava o registro. O código de envio evita duplicatas se a conexão cair.
 
 Respostas são gravadas como texto, um caractere por frase na ordem de `CANON`: `a` a `e` = −2 a +2, `x` = sem opinião,
