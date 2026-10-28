@@ -63,7 +63,7 @@ function pick(v){if(onIntro()||v===null)return;somTecla();const id=seq()[st.cur]
   const i=nextIdx();if(i<seq().length){st.cur=i;save();render();window.scrollTo(0,0);return}save();afterLast()}
 function afterLast(){
   if(!st.tbAsked){st.tbAsked=true;const r=compute(st.ans);
-    if(r.two&&tbUseful(r)){const tb=pickTb(r);if(tb.length){st.tb=tb;save();
+    if(r.two&&st.mode!=="deep"&&tbUseful(r)){const tb=pickTb(r);if(tb.length){st.tb=tb;save();
       $("tbText").textContent=`Suas respostas ficaram muito perto de duas ideologias: ${r.ranked[0].n} e ${r.ranked[1].n}. Responda mais ${tb.length} perguntas, escolhidas pra separar as duas.`;show("tbintro");return}}}
   save();showImp();
 }

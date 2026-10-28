@@ -77,7 +77,7 @@ segurança, costumes, o Brasil no mundo, democracia e instituições, e recebe:
 
 | | |
 |---|---|
-| **Modos** | Essencial, Padrão e Aprofundado: cerca de 65, 135 e 210 frases (exatamente 62–70, 128–139 e 205–216, conforme as respostas, mais até 6 de desempate). Cada modo inclui as frases do anterior. |
+| **Modos** | Essencial, Padrão e Aprofundado: cerca de 65, 135 e 210 frases (exatamente 62–70, 130–141 e 207–218, conforme as respostas, mais até 6 de desempate no Essencial e no Padrão). Cada modo inclui as frases do anterior. |
 | **Eixos** | Economia, Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições. |
 | **Classificação** | Para cada ideologia, o modelo compara a sua posição em cada subtema com a posição típica daquela tradição, levando em conta a margem de erro. A porcentagem é a **probabilidade relativa dentro do modelo**, não uma medida de quanto você "é" daquela ideologia. |
 | **Extremos** | Comunismo, anarquismo, fascismo e anarcocapitalismo só aparecem quando você concorda com as frases que definem cada um. |

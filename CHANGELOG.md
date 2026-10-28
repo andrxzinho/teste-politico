@@ -1,5 +1,21 @@
 # Histórico de versões
 
+## Cálculo, versão 4 (28 de outubro de 2026)
+- Meio ambiente virou um tema próprio no resultado ("proteção ambiental primeiro" × "produção e obras primeiro"). As
+  frases sobre desmatamento, BR-319, Acordo de Paris e Margem Equatorial saíram da média de Brasil × Mundo, onde
+  defender o meio ambiente empurrava a pessoa pro lado "global". Ele continua contando na escolha da ideologia, com uma
+  posição típica de cada uma.
+- A porcentagem da ideologia ficou calibrada: o teste desconta a chance de a própria teoria estar errada. A ordem das
+  ideologias não muda; a porcentagem da primeira cai uns 5 pontos em média, e "entre duas" aparece um pouco mais.
+- Eixo Instituições mais equilibrado: no Essencial, a frase sobre bancos e empresários entrou no lugar da frase sobre a
+  imprensa, e o Padrão e o Aprofundado ganharam duas frases (Lava Jato e Banco Central).
+- A ordem das frases dentro de cada bloco passou a ser sorteada pra cada pessoa. O estudo grava a semente do sorteio
+  (termos de uso, versão 3.5).
+- O Aprofundado não faz mais perguntas de desempate.
+- A frase sobre o desconto do plano de saúde no Imposto de Renda passou pro tema "Impostos".
+- A metodologia dizia "Cálculo: versão 6"; a versão em uso era a 3, e agora é a 4.
+- Simulação: acerto de 94,2% → 92,5% (Essencial), 96,4% → 95,4% (Padrão) e 96,2% → 97,8% (Aprofundado).
+
 ## Funções novas no resultado e nas ideologias (28 de outubro de 2026)
 - Resultado: cada uma das 3 ideologias mais parecidas diz em que dois eixos você fica mais perto dela e em qual fica
   mais longe (e pra que lado).

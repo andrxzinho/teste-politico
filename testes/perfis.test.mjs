@@ -31,7 +31,7 @@ function carregar(semente = 1) {
   c.globalThis = c;
   vm.createContext(c);
   const fonte = ARQUIVOS.map((f) => fs.readFileSync(path.join(RAIZ, f), "utf8")).join("\n;\n")
-    + "\n;globalThis.__T={get st(){return st},set st(v){st=v},ITEMS,PAIRS,IDEO,EXTP,GATE,INSUFICIENTE,Motor,compute,fresh,gated,gateOK,escolha};";
+    + "\n;globalThis.__T={get st(){return st},set st(v){st=v},ITEMS,PAIRS,IDEO,EXTP,GATE,INSUFICIENTE,Motor,compute,fresh,gated,gateOK,escolha,order,CLS,SUBT,PERFIS,FORA_EIXO};";
   vm.runInContext(fonte, c, { filename: "nucleo-do-site.js" });
   return c.__T;
 }
@@ -206,6 +206,28 @@ export async function testarPerfis() {
     v.confere(numeros(fora).every(Number.isFinite) && Object.values(fora.s).every((x) => Math.abs(x) <= 100), `entrada fora da escala/${m}: o cálculo devia limitar a posição a [-100,100]`);
   }
 
+  // 7. versão 4 do cálculo
+  // ordem das frases: a mesma semente dá a mesma ordem; sementes diferentes mudam a ordem dentro dos blocos, não os blocos
+  for (const m of modos) {
+    const a = T.order(m, null, 123), b = T.order(m, null, 123), c = T.order(m, null, 456);
+    v.confere(JSON.stringify(a) === JSON.stringify(b), `ordem/${m}: a mesma semente deveria dar a mesma ordem`);
+    v.confere(JSON.stringify(a.L) !== JSON.stringify(c.L) && JSON.stringify(a.bk) === JSON.stringify(c.bk) && [...a.L].sort().join() === [...c.L].sort().join(), `ordem/${m}: outra semente deveria mudar só a ordem dentro dos blocos`);
+    v.confere(Number.isInteger(T.fresh(m).semente), `ordem/${m}: o teste novo deveria guardar a semente`);
+  }
+  // meio ambiente: posição própria, fora da média de Brasil × Mundo, e as frases dele não mexem nos outros eixos
+  for (const m of modos) {
+    const amb = (o) => (o.k === "N" && o.s === "amb" ? 2 * -o.d : o.f === "l" || o.f === "c" ? "x" : 0);
+    responder(T, m, amb);
+    const r = T.compute(T.st.ans);
+    v.confere(r.sub["N.amb"] && r.sub["N.amb"].v <= -40 && r.s.N === 0, `meio ambiente/${m}: deveria ter posição própria (veio ${r.sub["N.amb"]?.v}) sem mexer em Brasil × Mundo (veio ${r.s.N})`);
+  }
+  v.confere(T.SUBT.length === 16 && Object.values(T.PERFIS).every((p) => p.length === 16), "perfis deveriam ter os 16 subtemas");
+  // temperatura: com T maior, a 1ª ideologia fica com chance menor, mas a ordem não muda
+  {
+    const r1 = responder(T, "full", PERFIS_SINT.moderado), t0 = T.CLS.temp;
+    T.CLS.temp = 1; const r0 = T.compute(T.st.ans); T.CLS.temp = t0;
+    v.confere(JSON.stringify(r0.ranked.map((o) => o.n)) === JSON.stringify(r1.ranked.map((o) => o.n)) && r1.P1 < r0.P1, `temperatura: deveria baixar a chance da 1ª (${r0.P1} → ${r1.P1}) sem mudar a ordem`);
+  }
   console.log(`  ${pendentes} propriedade(s) pendente(s), documentadas em docs/AUDITORIA-METODOLOGIA.md`);
   return v.fim();
 }

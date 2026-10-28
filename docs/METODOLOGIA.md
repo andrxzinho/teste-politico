@@ -10,13 +10,18 @@ Este documento explica como as respostas viram um resultado. A versão para o p�
 | E | Economia | Mais Estado | Mais mercado | impostos e benefícios, trabalho, Estado e mercado |
 | A | Liberdade × Ordem | Mais liberdade | Mais ordem | polícia e punição, escolhas pessoais, vigilância e internet |
 | C | Costumes | Progressista | Conservador | família e gênero, religião, diversidade |
-| N | Brasil × Mundo | Global | Nacional | comércio, soberania e clima, imigração e cultura |
+| N | Brasil × Mundo | Global | Nacional | comércio, soberania e cooperação, imigração e cultura |
 | D | Democracia | Mais compromisso democrático | Aceita ruptura | regras, ruptura, oposição |
 | S | Instituições | Confia | Desconfia | (sem subtemas) |
 
 Cada eixo vai de −100 a +100. O eixo Instituições aparece no resultado, mas não entra na escolha da ideologia, porque a
 desconfiança existe em todos os lados. Armas e as medidas numa epidemia ficam fora dos eixos: no Brasil esses temas não
 se encaixam em nenhum deles (o sinal partidário de cada um é diferente do resto do eixo), e as respostas aparecem à parte.
+**Meio ambiente** (desde a versão 4) é um subtema com posição própria (`N.amb`, de "proteção ambiental primeiro" a
+"produção e obras primeiro"): as frases sobre desmatamento, BR-319, Acordo de Paris e Margem Equatorial e dois
+contrastes. Ele não entra na média de Brasil × Mundo nem recebe as escolhas forçadas do eixo inteiro (`Motor.CFG.fora`),
+mas entra na escolha da ideologia com o perfil de cada uma sem mistura com a posição do eixo. Antes, defender o meio
+ambiente empurrava a pessoa pro lado "global".
 
 ## 2. Tipos de pergunta
 
@@ -30,15 +35,17 @@ se encaixam em nenhum deles (o sinal partidário de cada um é diferente do rest
 
 Em cada eixo, as frases de concordância puxam em número parecido pra cada lado, pra que quem tende a concordar com tudo
 não caia sempre no mesmo lado. Pares de frases opostas ficam separados (uma no bloco do tema, outra no bloco final).
-Nas perguntas de escolha e contraste, metade das pessoas vê as opções em ordem invertida.
+Nas perguntas de escolha e contraste, metade das pessoas vê as opções em ordem invertida. Os blocos vêm sempre na mesma
+sequência; a ordem das frases dentro de cada bloco é sorteada pra cada pessoa a partir de uma semente (versão 4), que vai
+junto com o resultado do estudo e permite refazer a ordem (`order(modo, ja, semente)` em `js/nucleo/estado.js`).
 
 ## 3. Modos
 
 | Modo | Nível | Frases (varia com o filtro dos extremos) | Escolhas forçadas | Contrastes |
 |---|---|---|---|---|
 | Essencial | 1 | 62 a 70 | 8 | 10 |
-| Padrão | 2 | 128 a 139 | 16 | 10 |
-| Aprofundado | 3 | 205 a 216 | 16 | 24 |
+| Padrão | 2 | 130 a 141 | 16 | 10 |
+| Aprofundado | 3 | 207 a 218 | 16 | 24 |
 
 Cada frase tem um nível (`lv`); um modo mostra todas as frases de nível igual ou menor. O Aprofundado acrescenta frases
 graduadas (uma moderada e uma radical de cada lado por subtema) e o banco de desempate.
@@ -66,12 +73,13 @@ opinião).
 
 ## 5. Escolha da ideologia
 
-- **Perfis por subtema:** cada ideologia tem uma posição típica em cada um dos 15 subtemas, baseada em teoria política.
+- **Perfis por subtema:** cada ideologia tem uma posição típica em cada um dos 16 subtemas (15 dos eixos e meio ambiente), baseada em teoria política.
   Como é uma hipótese ainda não conferida com dados reais, o cálculo usa o perfil pela metade (λ = 0,5), a meio caminho
   entre o subtema e a posição da ideologia no eixo.
 - **Probabilidade:** em cada subtema, a distância entre a pessoa e o perfil é medida em relação à margem da pessoa mais a
   variação natural dentro da tradição (τ = 25). Somam-se as evidências dos contrastes (logística, inclinação 1,5) e das
-  frases dos extremos (a ideologia extrema espera +1,5, todas as outras −1,5; σ = 0,8).
+  frases dos extremos (a ideologia extrema espera +1,5, todas as outras −1,5; σ = 0,8). A soma é dividida pela
+  temperatura (T = 1,5, ver seção 10) antes de virar probabilidade.
 - **Filtros:** um extremo só entra na disputa se a adesão às suas frases, combinada com a posição nos eixos, chegar a 50.
   Concordar em média ("concordo") já vale 2/3 da adesão. O ecologismo usa três frases sobre floresta e clima.
 - **Filtro das extremas:** a Extrema esquerda e a Extrema direita só disputam se a concordância média com as frases de
@@ -83,8 +91,9 @@ opinião).
   política, radical não quer dizer antidemocrático.
 - **Rótulo duplo:** quando a segunda ideologia tem pelo menos 60% da probabilidade da primeira.
 - **Desempate:** nesse caso, se algum eixo que separa as duas tiver diferença ponderada de 20 ou mais entre as posições
-  típicas e meia-largura de faixa de 12 ou mais, o teste faz até 5 (Essencial) ou 6 perguntas extras desses eixos. No
-  Aprofundado podem ser menos (só há frases de desempate livres pros eixos E e D). Pros pares mais confundidos
+  típicas e meia-largura de faixa de 12 ou mais, o teste faz até 5 (Essencial) ou 6 (Padrão) perguntas extras desses
+  eixos. No Aprofundado não há desempate (versão 4): quase não sobravam frases livres, só de economia e democracia, e
+  numa simulação com 504 respondentes ele só tinha uma pergunta útil 2 vezes. Pros pares mais confundidos
   (Conservador × Democracia cristã, Conservador × Direita nacional-conservadora), a diferença ponderada fica abaixo de 20
   e o desempate não dispara (ver `docs/AUDITORIA-METODOLOGIA.md`, M4 e M5).
 - **Empate total** (por exemplo, sem nenhuma resposta): vence a ideologia mais próxima do centro democrático.
@@ -144,11 +153,14 @@ usando dois geradores:
 
 | Modo | Acerto | Certa entre as 2 primeiras | Mesma ideologia no reteste |
 |---|---|---|---|
-| Essencial | 94,2% | 98,4% | 93,3% |
-| Padrão | 96,4% | 98,2% | 96,4% |
-| Aprofundado | 96,4% | 98,4% | 96,0% |
+| Essencial | 92,5% | 96,8% | 90,3% |
+| Padrão | 95,4% | 98,8% | 96,0% |
+| Aprofundado | 97,8% | 98,6% | 96,6% |
 
-Média dos dois geradores, 1.008 respondentes por modo, com o cálculo da versão 2 (23/10/2026). Antes dela, os números
+Média dos dois geradores, 1.008 respondentes por modo, com o cálculo da versão 4 (28/10/2026). Na versão 3 eram 94,2%,
+96,4% e 96,2% de acerto. A queda no Essencial (cerca de 1 ponto numa amostra maior, de 2.016 respondentes) vem da troca
+de lugar do meio ambiente: com menos frases em soberania, Conservador, Direita nacional-conservadora e Extrema direita se
+confundem um pouco mais. No Aprofundado, o acerto subiu. Na versão 2, os números
 eram 95,2%, 97,8% e 97,6% de acerto. A queda vem quase toda da Extrema esquerda e da Extrema direita (de 100% pra cerca de
 85%): o simulador supõe que quem é dessas tradições não concorda com as frases de revolução e de golpe, que definem os
 extremos, e com isso parte deles não passa pelo filtro de ruptura. Com pessoas reais, isso só se resolve com dados.
@@ -156,8 +168,15 @@ extremos, e com isso parte deles não passa pelo filtro de ruptura. Com pessoas 
 site exibe; `testes/paginas.test.mjs` confere que a metodologia pública mostra esses mesmos números arredondados.
 
 **Sensibilidade (experimento da auditoria):** com os perfis "verdadeiros" dos simulados perturbados em 20 pontos por
-subtema e o cálculo intacto, o acerto cai pra 78% (Essencial) e 86% (Padrão), e a probabilidade média da 1ª ideologia
-continua acima de 0,86. Ou seja, a probabilidade exibida é confiante demais quando os perfis teóricos estão errados.
+subtema e o cálculo da versão 2 intacto, o acerto caía pra 78% (Essencial) e 86% (Padrão), e a probabilidade média da 1ª
+ideologia continuava acima de 0,86.
+
+**Calibração (versão 4).** Refeito com o cálculo da versão 3 (gerador B, 2.268 respondentes por modo, três sementes): com
+perfis errados em 20 pontos, a probabilidade já estava quase calibrada (erro médio de calibração de 2 a 3 pontos); com 35
+pontos, ficava confiante demais (10 a 14 pontos: dizia 98% em casos que acertavam 85%). A temperatura (`CLS.temp` em `js/nucleo/calculo.js`) divide a evidência antes de virar probabilidade. Com 1,5, o pior caso dos dois cenários fica em 3
+a 9 pontos, contra 14 sem ela e 12 com 2. Ela não muda a ordem das ideologias; a parte com "entre duas" sobe de cerca de
+6% pra 10%, e a probabilidade média da 1ª cai uns 5 pontos. Quanto a teoria erra só se sabe com dados reais: a
+temperatura deve ser reestimada quando houver respostas suficientes.
 
 ## 11. Limites
 

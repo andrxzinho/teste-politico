@@ -26,9 +26,14 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Presidentes desde 1985** no resultado, no lugar dos candidatos, com foto (27/10/2026).
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
-- [ ] **Metodologia, o que ficou de fora:** subtemas do Essencial com uma frase só (exige mudar a quantidade de
-      perguntas), banco de desempate do Aprofundado, equilíbrio do eixo Instituições, ordem das frases por pessoa e,
-      com dados reais, dimensionalidade dos eixos e calibração da probabilidade.
+- [x] **Versão 4 do cálculo** (28/10/2026): eixo Instituições mais equilibrado, ordem das frases por pessoa, sem desempate
+      no Aprofundado, meio ambiente fora de Brasil × Mundo e probabilidade calibrada (T = 1,5). Ver o topo de
+      `docs/AUDITORIA-METODOLOGIA.md`.
+- [ ] **Metodologia, o que ainda depende de dados reais:** subtemas do Essencial com uma frase só (exige mudar a
+      quantidade de perguntas), dimensionalidade dos eixos (Liberdade × Ordem, Costumes e Brasil × Mundo andam juntos),
+      reestimar a temperatura da probabilidade e conferir as posições típicas em meio ambiente.
+- [ ] **Meio ambiente nas páginas das ideologias:** a posição típica em meio ambiente ainda não aparece nas páginas de
+      cada ideologia nem na página de comparar, só no resultado.
 
 ## Auditoria pedida em 23/10/2026
 
