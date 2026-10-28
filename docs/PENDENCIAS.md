@@ -45,12 +45,14 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Livros, Oakeshott** (27/10/2026): *Conservadorismo* (Âyiné, 2020), que reúne "Ser conservador", com link.
 - [x] **Capas:** dez das onze que faltavam (27 e 28/10/2026). *A terceira via* com a capa da edição em inglês (Open
       Library) e *Populações meridionais do Brasil* com a das Edições do Senado Federal. Continua sem capa só *O Estado
-      moderno* (Miguel Reale, 1934): não há imagem da capa em livraria nem em acervo, só fotos de exemplares usados à venda.
+      moderno* (Miguel Reale, 1934), com a foto de um exemplar à venda (28/10/2026). Todos os 162 livros têm capa.
 - [x] **Links informativos dos livros** (27/10/2026).
-- [ ] **Sete livros só com link de loja:** O que há de errado com o mundo (Chesterton, Ecclesiae: site bloqueia acesso
-      automático), O que é conservadorismo (Scruton) e A política da prudência (Kirk), da É Realizações (site fora do ar
-      na conferência), A terceira via (Giddens), Quatro ensaios sobre a liberdade (Berlin), O homem e o Estado (Maritain)
-      e O Estado moderno (Reale), que não têm página de editora nem artigo na Wikipédia.
+- [x] **Link de compra da Amazon como principal** (28/10/2026), a pedido do responsável: 161 dos 162 livros, cada página
+      aberta e conferida. O link informativo (Wikipédia, editora ou Open Library) virou o segundo link. Onde não há
+      edição brasileira à venda, o link é da edição original (Hayek, Maritain, Spengler, Kautsky, Miliband e outros).
+      Só *O Estado moderno* (Reale) continua com a Estante Virtual, sem página na Amazon. Sete livros seguem sem link
+      informativo (Chesterton, Scruton, Kirk, Giddens, Berlin, Maritain e Reale), só com o de compra.
+- [ ] **Revisão dos livros:** o responsável quer reformular algumas coisas nas leituras depois.
 - [x] **Metodologia e Perguntas frequentes** com índice lateral fixo (`css/documento.css` + `js/sumario.js`). Feito em
       23/10/2026.
 - [x] **Página Código-fonte público** reorganizada (arquivos, como rodar, testes, licença). Feito em 23/10/2026.

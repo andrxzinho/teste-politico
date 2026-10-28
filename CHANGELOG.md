@@ -8,6 +8,9 @@
   sumido (A guerra de guerrilhas, de Che Guevara), que saiu; o livro continua com o link da Wikipédia.
 - Fonte do site com cache de 30 dias, em vez de um ano sem revalidar.
 - README com capturas de tela atuais e documentação atualizada.
+- Livros: o link principal passou a ser o de compra na Amazon (161 dos 162, cada página aberta e conferida). A página
+  da Wikipédia, da editora ou do Open Library virou o segundo link. Onde não há edição brasileira à venda, o link é da
+  edição original. Com a capa de O Estado moderno (Reale), todos os livros têm capa.
 - Capas de A terceira via (Giddens, edição em inglês) e Populações meridionais do Brasil (Oliveira Vianna, Edições do
   Senado Federal). Saíram estilos que sobraram da caixa de 2º turno dos candidatos de 2026.
 

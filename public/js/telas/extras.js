@@ -86,9 +86,11 @@ function mostrarLeituras(){
   L[leiturasAba].forEach(([t,a,ano,d,x])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));if(x)tx.append(linhaEdicao(x));it.append(capaLivro(t,a),tx);out.append(it)})}
 // edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
 // edição citada, link informativo (Wikipédia, editora ou Open Library) e, menor, a loja (mesma linha em ferramentas/gerar_paginas.mjs)
+// com Amazon, o link de compra vem primeiro e o informativo fica como segundo link, menor (como nas páginas das ideologias)
 function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
-  if(x.link){const a=el("a",null,x.onde);a.href=x.link;a.target="_blank";a.rel="noopener";p.append(a)}
-  if(x.loja){const a=el("a","loja",`Loja: ${x.lojaNome}`);a.href=x.loja;a.target="_blank";a.rel="noopener";p.append(a)}return p}
+  const ln=(u,t,c)=>{const a=el("a",c,t);a.href=u;a.target="_blank";a.rel="noopener";p.append(a)};
+  if(x.loja&&x.lojaNome==="Amazon"){ln(x.loja,"Comprar na Amazon");if(x.link)ln(x.link,x.onde,"secundario")}
+  else{if(x.link)ln(x.link,x.onde);if(x.loja)ln(x.loja,`Loja: ${x.lojaNome}`,"secundario")}return p}
 
 // 4. relatório em PDF (impressão do navegador): abre todas as seções e volta como estava depois
 function relatorioPDF(){

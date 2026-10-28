@@ -12,8 +12,12 @@ vm.runInContext(fs.readFileSync("public/js/dados/ideologias.js", "utf8") + ";" +
 const { AX, IDEO, IDEO_GRUPOS, IDEO_RESUMO, LEITURAS } = ctx.D;
 const EXTREMOS = ["Comunista", "Anarquista", "Anarcocapitalista", "Fascista", "Extrema direita", "Extrema esquerda"];
 const anoObra = (a) => (a < 0 ? `c. ${-a} a.C.` : String(a));
-// edição citada e link conferido de cada livro, como no resultado (linhaEdicao em public/js/telas/extras.js)
-const edicao = (x) => (x ? `<p class="livro-ed">${x.ed ? `<span>${esc(x.ed)}</span>` : ""}${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.onde)}</a>` : ""}${x.loja ? `<a class="loja" href="${esc(x.loja)}" target="_blank" rel="noopener">Loja: ${esc(x.lojaNome)}</a>` : ""}</p>` : "");
+// edição citada e links de cada livro, como no resultado (linhaEdicao em public/js/telas/extras.js): com Amazon, o link
+// de compra vem primeiro e o informativo fica como segundo link
+const lnk = (u, t, c = "") => `<a${c ? ` class="${c}"` : ""} href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`;
+const edicao = (x) => (x ? `<p class="livro-ed">${x.ed ? `<span>${esc(x.ed)}</span>` : ""}${x.loja && x.lojaNome === "Amazon"
+  ? lnk(x.loja, "Comprar na Amazon") + (x.link ? lnk(x.link, x.onde, "secundario") : "")
+  : (x.link ? lnk(x.link, x.onde) : "") + (x.loja ? lnk(x.loja, `Loja: ${x.lojaNome}`, "secundario") : "")}</p>` : "");
 const livros = (l) => l.map(([t, a, ano, d, x]) => `<div class="livro"><b>${esc(t)}</b><small>${esc(a)}, ${anoObra(ano)}</small><p>${esc(d)}</p>${edicao(x)}</div>`).join("");
 
 const grupoDe = (n) => (IDEO_GRUPOS.find(([, l]) => l.includes(n)) || ["Outras"])[0];

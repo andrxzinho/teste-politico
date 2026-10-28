@@ -66,7 +66,7 @@ BANCO=memoria npm test
 Se uma mudança na lógica for **intencional**, rode `npm run test:atualizar`, revise a diferença da referência no git e
 explique a mudança no histórico. Mudanças só visuais nunca devem alterar a referência.
 
-**Links dos livros:** `npm run links` abre todos os links de `public/js/dados/leituras.js` (o informativo e o da loja).
+**Links dos livros:** `npm run links` abre todos os links de `public/js/dados/leituras.js` (o de compra e o informativo).
 Falha só quando um link sumiu (404, 410 ou endereço inexistente); lojas e a Wikipédia às vezes recusam robôs, e isso
 aparece como aviso. O GitHub Actions roda essa conferência no dia 3 de cada mês (`.github/workflows/links.yml`) e
 também dá pra rodar pela aba Actions; se falhar, o GitHub avisa o dono do repositório por e-mail.

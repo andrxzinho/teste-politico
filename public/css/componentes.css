@@ -130,7 +130,7 @@
 .livro-ed{display:flex;flex-wrap:wrap;gap:.15rem .7rem;align-items:baseline;margin:.45rem 0 0!important;font-size:.8rem!important;line-height:1.4;color:var(--grafite)}
 .livro-ed a{color:var(--tinta);font-weight:700;text-underline-offset:2px}
 .livro-ed a::after{content:" ↗";font-weight:400}
-.livro-ed a.loja{font-weight:400;color:var(--grafite);font-size:.95em}
+.livro-ed a.secundario{font-weight:400;color:var(--grafite);font-size:.95em}
 /* comparar duas ideologias: a primeira é o quadrado verde (como nas páginas de cada ideologia), a segunda o círculo vazado */
 .comparar{max-width:44rem}
 .marca-a,.marca-b{display:inline-block;flex:none;width:14px;height:14px;box-sizing:border-box;vertical-align:-2px;margin-right:.4rem}

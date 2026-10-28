@@ -5,6 +5,9 @@ Data: 23 de outubro de 2026.
 
 ## Situação: aplicada em 23 de outubro de 2026
 
+- **28/10/2026:** o link principal de cada livro passou a ser o de compra na Amazon (161 de 162, páginas conferidas),
+  e o informativo virou o segundo link. Onde não há edição brasileira à venda, é a edição original.
+
 - **Correções aplicadas:** anos (Lênin 1918, Luxemburgo 1899, Lomborg 1998, De Maistre 1796, *A controvérsia do
   planejamento* 1977), títulos (*Os fundamentos da liberdade* no lugar do posfácio de Hayek, *Crítica da filosofia do
   direito de Hegel*, *The Extreme Centre*, *O Estado moderno* com o subtítulo), as três justificativas e o "mostra" ×
