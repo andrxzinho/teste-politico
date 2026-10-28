@@ -1,5 +1,18 @@
 # Histórico de versões
 
+## Funções novas no resultado e nas ideologias (28 de outubro de 2026)
+- Resultado: cada uma das 3 ideologias mais parecidas diz em que dois eixos você fica mais perto dela e em qual fica
+  mais longe (e pra que lado).
+- Resultado completo: seção nova "Onde você difere da sua ideologia", com até 4 frases (uma por tema) em que você
+  respondeu do lado oposto à posição típica da ideologia mais parecida. A posição típica é a estimativa que o teste já
+  usa no cálculo, não uma pesquisa com pessoas reais, e a seção diz isso. O cálculo não mudou.
+- "Seus resultados anteriores": com dois ou mais testes salvos no aparelho, um gráfico por eixo mostra a posição do
+  primeiro, dos do meio e do mais recente, com uma seta no sentido da mudança e o resumo em texto.
+- Página nova `/ideologias/comparar/`: escolha duas ideologias e veja lado a lado a posição de cada uma nos eixos, em
+  que se separam, em que ficam perto e o resumo de cada uma. Atalho "Comparar com outra ideologia" na página de cada
+  ideologia e link na lista. O endereço guarda a escolha, pra dar pra compartilhar.
+- Nomes de eixo no meio de frase em minúsculas ("mais perto em economia"), menos "Brasil × Mundo".
+
 ## Design e acessibilidade (27 de outubro de 2026)
 - Celular: o botão "Fazer o teste" aparece no cabeçalho, pra dar pra começar sem rolar a página.
 - O nome da ideologia no resultado não quebra mais com hífen no meio da palavra: a letra diminui até caber.

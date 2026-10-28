@@ -4,8 +4,8 @@ import { servidorEstatico, navegador, verificador, executandoDireto } from "./aj
 
 export async function testarPaginas() {
   const s = await servidorEstatico(), b = await navegador(), v = verificador("Páginas"), erros = [];
-  const paginas = ["/", "/ideologias/", "/ideologias/social-democrata/", "/ideologias/fascista/", "/perguntas-frequentes/", "/creditos/", "/codigo-aberto/", "/sobre/", "/404.html", "/metodologia.html", "/termos.html"];
-  v.confere(fs.readdirSync("public/ideologias").filter((d) => fs.existsSync(`public/ideologias/${d}/index.html`)).length === 21, "deveria haver 21 páginas de ideologia");
+  const paginas = ["/", "/ideologias/", "/ideologias/comparar/", "/ideologias/social-democrata/", "/ideologias/fascista/", "/perguntas-frequentes/", "/creditos/", "/codigo-aberto/", "/sobre/", "/404.html", "/metodologia.html", "/termos.html"];
+  v.confere(fs.readdirSync("public/ideologias").filter((d) => d !== "comparar" && fs.existsSync(`public/ideologias/${d}/index.html`)).length === 21, "deveria haver 21 páginas de ideologia");
 
   // rodapé: a data de "Atualizado em" é a da entrada mais recente do CHANGELOG
   const dataLog = (fs.readFileSync("CHANGELOG.md", "utf8").match(/^## .*\((\d{1,2} de \S+ de \d{4})\)/m) || [])[1];
@@ -16,7 +16,7 @@ export async function testarPaginas() {
   v.confere(vence - Date.now() > 30 * 864e5, "security.txt vence em menos de 30 dias: atualize o Expires");
   // 404 fora dos buscadores e do sitemap; imagem de compartilhamento pra cada ideologia; dados estruturados válidos
   v.confere(fs.readFileSync("public/404.html", "utf8").includes('name="robots" content="noindex"') && !fs.readFileSync("public/sitemap.xml", "utf8").includes("404"), "404 deveria ficar fora dos buscadores");
-  for (const d of fs.readdirSync("public/ideologias").filter((d) => fs.existsSync(`public/ideologias/${d}/index.html`))) {
+  for (const d of fs.readdirSync("public/ideologias").filter((d) => d !== "comparar" && fs.existsSync(`public/ideologias/${d}/index.html`))) {
     const h = fs.readFileSync(`public/ideologias/${d}/index.html`, "utf8");
     v.confere(h.includes(`/img/og/${d}.png"`) && fs.existsSync(`public/img/og/${d}.png`), `${d}: faltando a imagem de compartilhamento`);
   }
@@ -44,6 +44,15 @@ export async function testarPaginas() {
   await pg.goto(s.url + "/ideologias/social-democrata/"); await pg.waitForTimeout(150);
   v.confere((await pg.locator(".livro").count()) === 8, "página de ideologia deveria ter 8 leituras (4 por dentro, 4 críticas)");
   v.confere((await pg.locator('a[href="/?ideologia=social-democrata"]').count()) === 1, "página de ideologia deveria ter o atalho pra comparar");
+  // comparar duas ideologias: link na página de cada uma, escolha pelo endereço, troca de ordem e de ideologia
+  await pg.click('a[href="/ideologias/comparar/?a=social-democrata"]'); await pg.waitForURL("**/ideologias/comparar/**");
+  v.confere(await pg.evaluate("ideoA.value==='social-democrata'&&ideoB.value!=='social-democrata'&&document.querySelectorAll('#comparacao .eixo-tipico').length===5"), "comparar: deveria abrir com a ideologia da página e 5 eixos");
+  await pg.goto(s.url + "/ideologias/comparar/?a=fascista&b=comunista"); await pg.waitForTimeout(150);
+  v.confere(/^Fascista em relação a Comunista: .*mais à direita na economia/.test(await pg.evaluate("document.querySelector('#comparacao .comp-texto').textContent")), "comparar: texto das diferenças errado");
+  await pg.click("#trocar");
+  v.confere(await pg.evaluate("location.search==='?a=comunista&b=fascista'&&document.querySelector('.comp-legenda').textContent.startsWith('Comunista')"), "comparar: trocar deveria inverter a ordem e o endereço");
+  await pg.selectOption("#ideoB", "comunista");
+  v.confere(/diferentes/.test(await pg.evaluate("document.getElementById('comparacao').textContent")), "comparar: a mesma ideologia dos dois lados deveria pedir duas diferentes");
   // menu: abre, fecha com Esc, tecla 2 leva às ideologias, foco volta ao botão
   await pg.goto(s.url + "/"); await pg.waitForTimeout(150);
   await pg.click(".menu-btn");

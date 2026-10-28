@@ -7,6 +7,8 @@ function ideoMaisDistante(){return IDEO.map(o=>({n:o.n,m:agree(R.s,AXK.map(k=>o.
 function linhaDistante(){const d=ideoMaisDistante(),p=el("p","distante");p.append(el("span","rotulo","Mais distante de você"));
   const a=el("a",null,d.n);a.href="/ideologias/"+slugIdeo(d.n)+"/";p.append(a,document.createTextNode(": de todas as 21, é a ideologia cuja posição típica fica mais longe das suas respostas nos eixos."));return p}
 const probLab=p=>p>=50?"Muito provável":p>=20?"Provável":p>=5?"Possível":"Pouco provável";
+// nome do eixo no meio da frase: minúsculo, menos o "Brasil" de Brasil × Mundo
+const eixoMin=k=>k==="N"?AX.N.name:AX[k].name.toLowerCase();
 function item(name,pct,o={}){const e=el("div","item"+(o.cls?" "+o.cls:""));e.innerHTML=`<div class="row"><b></b><span>${o.plab?probLab(pct):o.lab?matchLab(pct):o.indice?pct+" de 100":pct+"%"}</span></div><div class="bar"><i style="width:${pct}%"></i></div>`;e.querySelector("b").textContent=name;if(o.note)e.append(el("small",null,o.note));return e}
 function moreBlock(box,nodes,n,more,less="Ver menos",count=true){box.innerHTML="";nodes.slice(0,n).forEach(x=>box.append(x));if(nodes.length<=n)return;
   const rest=el("div","hidden");nodes.slice(n).forEach(x=>rest.append(x));box.append(rest);
@@ -154,7 +156,7 @@ function renderEixos(){
   const {s,sub}=R,hl=$("highlights");hl.innerHTML="";const lines=[];
   ["E","A","C","N","D"].forEach(k=>{const ks=Object.keys(SUBS[k]).filter(x=>sub[k+"."+x]&&sub[k+"."+x].n>=2);if(ks.length<2)return;
     ks.sort((a,b)=>sub[k+"."+b].v-sub[k+"."+a].v);const hi=ks[0],lo=ks[ks.length-1],vh=sub[k+"."+hi].v,vl=sub[k+"."+lo].v;
-    if(vh-vl>=50&&vh>=15&&vl<=-15)lines.push(`Em ${AX[k].name.toLowerCase()}, suas respostas vão pro lado “${AX[k].right.toLowerCase()}” em ${SUBS[k][hi].toLowerCase()} e pro lado “${AX[k].left.toLowerCase()}” em ${SUBS[k][lo].toLowerCase()}.`)});
+    if(vh-vl>=50&&vh>=15&&vl<=-15)lines.push(`Em ${eixoMin(k)}, suas respostas vão pro lado “${AX[k].right.toLowerCase()}” em ${SUBS[k][hi].toLowerCase()} e pro lado “${AX[k].left.toLowerCase()}” em ${SUBS[k][lo].toLowerCase()}.`)});
   if(lines.length){const d=el("div","note highlight");d.style.marginTop="0";d.style.marginBottom="1rem";d.append(el("b",null,"Destaques"));lines.forEach(t=>d.append(el("p",null,t)));d.querySelectorAll("p").forEach(p=>p.style.margin=".35rem 0 0");hl.append(d)}
   const out=$("axesOut");out.innerHTML="";out.classList.remove("open");
   AXK6.forEach(k=>{const v=s[k],e=el("div","axis"),row=el("div","row");row.append(el("b",null,AX[k].name),el("span",null,band(v,k)));e.append(row,scaleNode(v,undefined,R.ci[k]));

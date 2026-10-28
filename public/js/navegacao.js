@@ -26,7 +26,7 @@
     { h: "/termos.html", t: "Privacidade e termos" },
   ];
   // data da última atualização, mostrada no rodapé: a mesma da entrada mais recente do CHANGELOG.md (conferido nos testes)
-  const ATUALIZADO = "27 de outubro de 2026";
+  const ATUALIZADO = "28 de outubro de 2026";
   const LICENCA = "https://github.com/andrxzinho/teste-politico/blob/main/LICENSE";
   const caminho = () => location.pathname.replace(/index\.html$/, "");
   const ehAtual = (h) => !h.includes("#") && (h === "/" ? caminho() === "/" : caminho().startsWith(h.replace(/\/$/, "")));

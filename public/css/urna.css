@@ -296,7 +296,8 @@ details.method .fine{margin-top:.5rem}
 .legend{display:flex;gap:1.1rem;font-size:.82rem;color:var(--grafite);margin:.6rem 0 .3rem;font-weight:700}
 .legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:.35rem;vertical-align:-1px;background:var(--confirma);border:1.5px solid var(--tinta)}
 .legend span.f::before{background:var(--visor);border:2.5px solid var(--corrige);border-radius:50%}
-.hist-item{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-top:1px solid var(--linha)}
+.hist-item{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.15rem 1rem;padding:.7rem 0;border-top:1px solid var(--linha)}
+.hist-item b{font-size:1rem;line-height:1.3}
 .hist-item:first-child{border-top:0}
 .hist-item span{font-size:.84rem;color:var(--grafite)}
 .prof{padding:0}
@@ -452,6 +453,7 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 .resumo-ideo span{font-size:.86rem;font-weight:700;color:var(--grafite)}
 .resumo-ideo i{grid-column:1 / -1;display:block;height:6px;background:var(--linha)}
 .resumo-ideo i::before{content:"";display:block;height:100%;width:var(--p);background:var(--marca)}
+.ideo-eixos{margin:.35rem 0 .2rem;font-size:.84rem;line-height:1.45;color:var(--grafite)}
 .destaques{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
 .destaques li{position:relative;padding-left:1.2rem;font-size:.93rem;line-height:1.45}
 .destaques li::before{content:"";position:absolute;left:0;top:.45em;width:.55rem;height:.55rem;border-radius:2px;background:var(--marca)}
@@ -614,3 +616,21 @@ body[data-tela="results"] .menu-btn{display:none}
 #candOut{margin-top:.8rem}
 /* títulos que recebem foco pelo código (troca de tela, nova pergunta): sem contorno, já que não são clicáveis */
 [tabindex="-1"]:focus{outline:none}
+.diverge-frase{margin:0 0 .3rem;font-weight:700;line-height:1.4}
+.item.diverge + .item.diverge{margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--linha)}
+/* evolução dos eixos em "Seus resultados anteriores" */
+.evo{margin:.4rem 0 1rem;display:grid;gap:.7rem}
+.evo .small{margin:0}
+.evo-eixo{max-width:34rem}
+.evo-eixo .topo{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 .6rem;font-size:.88rem}
+.evo-eixo .topo span{color:var(--grafite)}
+@media (max-width:640px){.evo-eixo .topo{display:block}.evo-eixo .topo span{display:block;font-size:.84rem}}
+.evo-eixo .pontas{display:flex;justify-content:space-between;font-size:.72rem;color:var(--grafite)}
+.evo-svg{display:block;width:100%;height:auto;overflow:visible}
+.evo-trilho{stroke:var(--linha);stroke-width:4;stroke-linecap:round}
+.evo-centro{stroke:var(--tinta);stroke-width:1.5}
+.evo-seta{stroke:var(--grafite);stroke-width:1.5}
+.evo-ponta{fill:var(--grafite)}
+.evo-pri{fill:none;stroke:var(--tinta);stroke-width:2}
+.evo-meio{fill:var(--grafite);opacity:.55}
+.evo-ult{fill:var(--marca);stroke:var(--card);stroke-width:2}

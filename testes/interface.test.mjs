@@ -43,7 +43,11 @@ export async function testarInterface() {
     v.confere(await pg.evaluate("document.querySelector('#resumo .code').textContent===myLink().split('comparar=')[1]"), `${modo}: o código de comparação deveria aparecer no resumo, igual ao do link`);
     await pg.click("#verCompleto");
     v.confere(await pg.evaluate("$('results').classList.contains('completo')&&getComputedStyle(document.querySelector('#results .acc-list')).display!=='none'"), `${modo}: "Ver resultado completo" deveria abrir as seções`);
-    v.confere((await pg.locator("#results details.acc").count()) === 10, `${modo}: resultado completo deveria ter 10 seções`);
+    v.confere((await pg.locator("#results details.acc").count()) === 11, `${modo}: resultado completo deveria ter 11 seções`);
+    // perto e longe de cada uma das 3 ideologias do resumo
+    v.confere(await pg.evaluate("[...document.querySelectorAll('#resumo .resumo-ideo + .ideo-eixos')].filter(e=>/^Mais perto em .+ e .+\\. (Mais longe em .+: você fica mais pro lado “.+”\\.|Não fica longe em nenhum eixo\\.)$/.test(e.textContent)).length===3"), `${modo}: cada ideologia do resumo deveria dizer onde fica mais perto e mais longe`);
+    // onde você difere da sua ideologia: no máximo 4 frases, uma por tema, sempre do lado oposto à posição típica
+    v.confere(await pg.evaluate("(()=>{const d=divergencias(R.ranked[0]);return d.length<=4&&new Set(d.map(x=>x.sub)).size===d.length&&d.every(x=>Math.sign(x.v)===-Math.sign(x.tip)&&Math.abs(x.tip)>=.75)&&document.querySelectorAll('#divergeOut .item').length===d.length&&$('t-diverge').textContent.includes(R.ranked[0].n)})()"), `${modo}: "onde você difere" deveria listar só frases do lado oposto, uma por tema`);
     v.confere(await pg.evaluate("[...document.querySelectorAll('#results .acc-list > details.acc')].slice(0,2).map(d=>d.id).join()") === "a-perfil,a-porque", `${modo}: "Por que deu esse resultado" deveria vir logo depois do perfil`);
     v.confere((await pg.evaluate("$('ideo').textContent")).length > 3, `${modo}: ideologia vazia`);
     v.confere(/^Mais perto: .+; partido /.test(await pg.evaluate("$('s-candidatos').textContent")), `${modo}: resumo sem o presidente e o partido mais perto`);
@@ -55,6 +59,11 @@ export async function testarInterface() {
     v.confere((await pg.locator("#leitOut .livro").count()) === 4, `${modo}: leituras deveriam mostrar 4 obras por aba`);
     v.confere((await pg.locator("#tensOut .item").count()) >= 1, `${modo}: tensões deveria ter pelo menos um item`);
     if (modo === "quick") {
+      // evolução: com 2 ou mais resultados salvos, um gráfico por eixo; com 1, nenhum
+      await pg.evaluate("localStorage.setItem(HKEY,JSON.stringify([{d:'2026-10-02',m:'quick',n:'A',s:{E:40,A:0,C:0,N:0,D:0,I:0}},{d:'2026-09-01',m:'full',n:'B',s:{E:-40,A:0,C:2,N:0,D:0,I:0}}]));renderHistory()");
+      v.confere(await pg.evaluate("document.querySelectorAll('#histOut .evo-eixo svg').length===6&&/de esquerda pra direita/.test(document.querySelector('#histOut .evo-eixo').textContent)&&document.querySelectorAll('#histOut .evo-eixo')[2].textContent.includes('sem mudança grande')"), "o gráfico de evolução deveria mostrar os 6 eixos e o sentido da mudança");
+      await pg.evaluate("localStorage.setItem(HKEY,JSON.stringify([{d:'2026-10-02',m:'quick',n:'A',s:{E:40}}]));renderHistory()");
+      v.confere((await pg.locator("#histOut .evo").count()) === 0, "com um resultado só, não deveria haver gráfico de evolução");
       await pg.evaluate("window.__imprimiu=0;window.print=()=>{window.__imprimiu++;window.__abertas=[...document.querySelectorAll('#results details.acc')].every(d=>d.open);dispatchEvent(new Event('afterprint'))}");
       await pg.evaluate("setCompleto(false);window.print=()=>{window.__imprimiu++;window.__abertas=[...document.querySelectorAll('#results details.acc')].every(d=>d.open)&&$('results').classList.contains('completo');dispatchEvent(new Event('afterprint'))}");
       await pg.click("#pdfBtn"); await pg.waitForTimeout(200);

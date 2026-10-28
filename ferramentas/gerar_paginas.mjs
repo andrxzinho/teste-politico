@@ -29,8 +29,8 @@ function rotulo(v, k) {
 }
 // o que separa uma ideologia de uma vizinha: os eixos com diferença de 15 pontos ou mais, do maior pro menor
 const DIFERE = { E: ["mais à esquerda na economia", "mais à direita na economia"], A: ["dá mais peso à liberdade", "dá mais peso à ordem"], D: ["com mais compromisso democrático", "aceita mais rupturas com a democracia"] };
-function diferenca(o, v) {
-  const ds = EIXOS.map((k) => [k, (o.p[k] ?? 0) - (v.p[k] ?? 0)]).filter(([, d]) => Math.abs(d) >= 15).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 2);
+function diferenca(o, v, max = 2) {
+  const ds = EIXOS.map((k) => [k, (o.p[k] ?? 0) - (v.p[k] ?? 0)]).filter(([, d]) => Math.abs(d) >= 15).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, max);
   if (!ds.length) return "posições típicas muito parecidas. O teste separa as duas só em poucos subtemas.";
   // nos costumes e no Brasil × Mundo, quando as duas estão do mesmo lado, "menos progressista" diz melhor que "mais conservadora"
   const ADJ = { C: ["progressista", "conservadora", "nos costumes"], N: ["aberta à cooperação com o mundo", "nacionalista", ""] };
@@ -107,7 +107,7 @@ const urls = ["/", "/metodologia.html", "/termos.html"];
       hasDefinedTerm: IDEO.map((o) => ({ "@type": "DefinedTerm", name: o.n, description: IDEO_RESUMO[o.n], url: `${SITE}/ideologias/${slug(o.n)}/` })) },
       trilhaLd([["Início", "/"], ["Ideologias", "/ideologias/"]])],
     corpo: `<h1 class="titulo-pagina">As 21 ideologias</h1>
-<p class="intro-pagina">As tradições políticas que o teste compara com as suas respostas. Toque numa pra ver o que ela defende, onde fica em cada eixo e quais são as vizinhas (as mais parecidas com ela).</p>
+<p class="intro-pagina">As tradições políticas que o teste compara com as suas respostas. Toque numa pra ver o que ela defende, onde fica em cada eixo e quais são as vizinhas (as mais parecidas com ela). Ou <a href="/ideologias/comparar/">compare duas lado a lado</a>.</p>
 <div class="filtros" role="group" aria-label="Filtrar por família">${filtros}</div>
 <p class="contagem" aria-live="polite">${IDEO.length} ideologias</p>
 <div class="lista-ideo">
@@ -144,7 +144,7 @@ ${eixos}
 <h2 class="rotulo-secao">Ideologias vizinhas</h2>
 <div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
 <ul class="lista-pagina diferencas">${viz.map((v) => `<li>Comparada com <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
-<div class="acoes-pagina"><a class="ok" href="/?ideologia=${slug(n)}">Comparar com o meu resultado</a><a class="branco" href="/#modos">Fazer o teste</a></div>
+<div class="acoes-pagina"><a class="ok" href="/?ideologia=${slug(n)}">Comparar com o meu resultado</a><a class="branco" href="/ideologias/comparar/?a=${slug(n)}">Comparar com outra ideologia</a></div>
 </div>
 <div class="ideo-livros">
 <h2 class="rotulo-secao">Pra entender por dentro</h2>
@@ -158,6 +158,40 @@ ${eixos}
 </div>`,
   }));
   urls.push(`/ideologias/${slug(n)}/`);
+}
+
+// comparar duas ideologias lado a lado: a página traz os dados prontos (posições, faixas e diferenças de cada par,
+// calculadas aqui com as mesmas funções das páginas de cada ideologia) e public/js/paginas/comparar.js só monta a tela
+{
+  const PADRAO = ["social-democrata", "liberal-classico"];
+  const dados = {
+    eixos: EIXOS.map((k) => ({ k, nome: AX[k].name, esq: AX[k].left, dir: AX[k].right })),
+    ideo: IDEO.map((o) => ({ n: o.n, s: slug(o.n), g: grupoDe(o.n), r: IDEO_RESUMO[o.n], p: Object.fromEntries(EIXOS.map((k) => [k, o.p[k] ?? 0])), f: Object.fromEntries(EIXOS.map((k) => [k, rotulo(o.p[k] ?? 0, k)])) })),
+    dif: Object.fromEntries(IDEO.flatMap((a) => IDEO.filter((b) => b !== a).map((b) => [`${slug(a.n)}|${slug(b.n)}`, diferenca(a, b, 5)]))),
+  };
+  const opcoes = (sel) => IDEO_GRUPOS.map(([g, l]) => `<optgroup label="${esc(g)}">${l.map((n) => `<option value="${slug(n)}"${slug(n) === sel ? " selected" : ""}>${esc(n)}</option>`).join("")}</optgroup>`).join("");
+  gravar("public/ideologias/comparar/index.html", pagina({
+    caminho: "/ideologias/comparar/", titulo: "Comparar duas ideologias | Teste político",
+    descricao: "Escolha duas das 21 ideologias do teste e veja lado a lado onde cada uma fica nos eixos, em que ficam perto e em que se separam.",
+    scripts: ["/js/paginas/comparar.js"],
+    dados: [SITE_LD, { "@type": "WebPage", "@id": `${SITE}/ideologias/comparar/`, url: `${SITE}/ideologias/comparar/`, name: "Comparar duas ideologias", inLanguage: "pt-BR", isPartOf: { "@id": `${SITE}/#site` }, author: AUTOR },
+      trilhaLd([["Início", "/"], ["Ideologias", "/ideologias/"], ["Comparar", "/ideologias/comparar/"]])],
+    corpo: `<div class="comparar">
+<nav class="trilha" aria-label="Você está em"><a href="/ideologias/">Ideologias</a> / Comparar</nav>
+<h1 class="titulo-pagina">Comparar duas ideologias</h1>
+<p class="intro-pagina">Escolha duas tradições pra ver onde cada uma fica nos eixos, em que ficam perto e em que se separam. As posições são as típicas que o teste usa como referência.</p>
+<form class="comparar-escolha" action="/ideologias/comparar/" method="get">
+<label class="escolha-a"><span><i class="marca-a" aria-hidden="true"></i>Primeira</span><select name="a" id="ideoA">${opcoes(PADRAO[0])}</select></label>
+<button type="button" id="trocar" class="trocar" aria-label="Trocar a ordem das duas">⇄</button>
+<label class="escolha-b"><span><i class="marca-b" aria-hidden="true"></i>Segunda</span><select name="b" id="ideoB">${opcoes(PADRAO[1])}</select></label>
+<noscript><button type="submit">Comparar</button></noscript>
+</form>
+<div id="comparacao" aria-live="polite"></div>
+<noscript><p class="intro-pagina">Esta página precisa de JavaScript pra montar a comparação. Sem ele, veja a página de cada ideologia na <a href="/ideologias/">lista</a>.</p></noscript>
+<script type="application/json" id="dados-comparar">${JSON.stringify(dados).replace(/</g, "\\u003c")}</script>
+</div>`,
+  }));
+  urls.push("/ideologias/comparar/");
 }
 
 // perguntas frequentes: agrupadas por tema, no mesmo formato dos termos e da metodologia (sumário lateral fixo)

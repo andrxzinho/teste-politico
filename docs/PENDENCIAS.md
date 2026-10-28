@@ -1,7 +1,7 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 27 de outubro de 2026.
+Última revisão: 28 de outubro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
@@ -54,6 +54,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       Os tempos (9/18/30 min) continuam estimativas: medir a mediana real no painel.
 - [x] **Resultado:** probabilidade e semelhança com nomes diferentes. Feito em 23/10/2026. Os eixos que aproximam ou
       afastam já aparecem em "Comparar com uma ideologia"; nas páginas das ideologias entrou o que separa cada vizinha.
+- [x] **Funções novas** (28/10/2026): perto e longe de cada ideologia no resumo, "Onde você difere da sua ideologia",
+      gráfico da evolução nos resultados anteriores e a página `/ideologias/comparar/`.
 - [x] **Quantidade de perguntas:** decidido em 23/10/2026 pelo responsável: **manter as quantidades atuais**. Reavaliar
       só com dados reais.
 

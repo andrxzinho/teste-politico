@@ -13,7 +13,7 @@ function cartaoPensador(pf,rot){
   const bar=el("div","bar"),i=el("i");i.style.width=pf.m+"%";bar.append(i);
   txt.append(topo,el("small","pens-quem",`${pf.r}, ${pf.a}`),bar);cab.append(fotoPessoa(pf.n),txt);
   d.append(cab,el("p",null,pf.j));
-  const eixos=AXK.filter(k=>pf.p[k]!==null&&pf.p[k]!==undefined).map(k=>AX[k].name.toLowerCase());
+  const eixos=AXK.filter(k=>pf.p[k]!==null&&pf.p[k]!==undefined).map(k=>eixoMin(k));
   if(eixos.length<AXK.length)d.append(el("small","pens-eixos",`Comparado em: ${eixos.join(", ")}.`));
   return d;
 }

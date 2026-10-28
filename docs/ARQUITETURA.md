@@ -22,7 +22,8 @@ o servidor só recebe os envios de quem aceita participar do estudo.
 (salvo no aparelho) antes de desenhar a página e monta o cabeçalho, o menu (teclas numeradas de 1 a 6, Esc fecha, foco
 preso no menu) e o rodapé a partir de uma única lista de páginas. As páginas de ideologias e de perguntas frequentes são
 HTML estático gerado por `ferramentas/gerar_paginas.mjs` a partir de `js/dados/ideologias.js` (`IDEO`, `IDEO_GRUPOS`,
-`IDEO_RESUMO`), junto com `sitemap.xml` e `robots.txt`.
+`IDEO_RESUMO`), junto com `sitemap.xml` e `robots.txt`. A página `/ideologias/comparar/` leva os dados prontos (posições,
+faixas e diferenças de cada par) num bloco JSON dentro dela, e `js/paginas/comparar.js` só monta a comparação escolhida.
 
 Os arquivos de `js/` são scripts comuns, carregados em ordem por `index.html`, e compartilham o mesmo escopo. A ordem
 importa: dados, depois núcleo, depois telas e serviços, e `principal.js` por último.

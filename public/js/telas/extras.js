@@ -12,11 +12,21 @@ function linhaComparada(nome,voce,outro,faixa){
   if(Array.isArray(faixa)){const c=el("span","ci");c.style.left=posEsc(faixa[0])+"%";c.style.width=Math.max(1,posEsc(faixa[1])-posEsc(faixa[0]))+"%";sc.append(c)}
   const a=el("i");a.style.left=posEsc(voce)+"%";const b=el("i","fr");b.style.left=posEsc(outro)+"%";sc.append(a,b);w.append(row,sc);return w}
 
+// o que aproxima e o que afasta você de uma ideologia: os 2 eixos com a menor distância até a posição típica dela e o
+// de maior distância, com o lado pra onde você fica (mesmas distâncias de "Comparar com uma ideologia")
+function aproximaAfasta(o){
+  const dif=EIXOS5.map(k=>({k,d:R.s[k]-(o.p[k]||0)})).sort((a,b)=>Math.abs(a.d)-Math.abs(b.d));
+  const nome=x=>eixoMin(x.k),perto=dif.slice(0,2),longe=dif[dif.length-1];
+  const p1=`Mais perto em ${nome(perto[0])} e ${nome(perto[1])}.`;
+  if(Math.abs(longe.d)<15)return `${p1} Não fica longe em nenhum eixo.`;
+  const lado=(longe.d<0?AX[longe.k].left:AX[longe.k].right).toLowerCase();
+  return `${p1} Mais longe em ${nome(longe)}: você fica mais pro lado “${lado}”.`}
+
 // 1. comparar com qualquer ideologia, eixo por eixo e subtema por subtema
 function compararIdeologia(nome){
   const box=$("compIdeoOut");box.innerHTML="";const o=IDEO.find(x=>x.n===nome);if(!o||!R)return;
   const dif=EIXOS5.map(k=>({k,d:R.s[k]-(o.p[k]||0)}));
-  const pertos=dif.filter(x=>Math.abs(x.d)<15).map(x=>AX[x.k].name.toLowerCase()),longes=dif.filter(x=>Math.abs(x.d)>=35).map(x=>AX[x.k].name.toLowerCase());
+  const pertos=dif.filter(x=>Math.abs(x.d)<15).map(x=>eixoMin(x.k)),longes=dif.filter(x=>Math.abs(x.d)>=35).map(x=>eixoMin(x.k));
   const lista=a=>a.length>1?a.slice(0,-1).join(", ")+" e "+a[a.length-1]:a[0];
   const p=el("p","highlight");
   p.textContent=pertos.length&&longes.length?`Você fica perto da posição típica de ${nome} em ${lista(pertos)}, e longe em ${lista(longes)}.`:pertos.length?`Você fica perto da posição típica de ${nome} em ${lista(pertos)}, e não fica longe em nenhum eixo.`:longes.length?`Você fica longe da posição típica de ${nome} em ${lista(longes)}.`:`Você fica a uma distância média de ${nome} em todos os eixos.`;
@@ -27,6 +37,28 @@ function compararIdeologia(nome){
   det.append(subs);const ver=el("a","more-btn","Ver o que "+nome+" defende");ver.href="/ideologias/"+slugIdeo(nome)+"/";
   box.append(p,leg,eixos,det,ver)}
 
+// 2b. onde você foge do típico da sua ideologia: frases de concordância em que você e alguém típico dela ficariam em
+// lados opostos. A resposta típica é estimada pela posição típica da ideologia no subtema da frase (a mesma que a
+// classificação usa: eixo + lambda × diferença do perfil), convertida na escala de resposta como faz o motor (50 por ponto).
+function divergencias(o){
+  const pf=PERFIS[o.n]||[],porSub=new Map();
+  for(const id of seq()){const it=ITEMS[id],v=st.ans[id];
+    if(!it||typeof v!=="number"||!it.sc||escolha(it)||it.f==="d"||v===0)continue;
+    const i=SUBT.indexOf(it.k+"."+it.s);if(i<0||pf[i]==null||o.p[it.k]==null)continue;
+    const mu=o.p[it.k]+CLS.lambda*(pf[i]-o.p[it.k]),tip=Math.max(-2,Math.min(2,mu*it.d/50));
+    if(Math.sign(v)===Math.sign(tip)||Math.abs(tip)<.75)continue;
+    const x={id,v,tip,dist:Math.abs(v-tip),sub:it.k+"."+it.s};const ant=porSub.get(x.sub);if(!ant||x.dist>ant.dist)porSub.set(x.sub,x)}
+  return [...porSub.values()].sort((a,b)=>b.dist-a.dist).slice(0,4)}
+function mostrarDivergencias(){
+  const o=R.ranked[0],out=$("divergeOut");out.innerHTML="";$("t-diverge").textContent=`Onde você difere de ${o.n}`;
+  const lista=divergencias(o),rot=v=>(OPTS_A.find(x=>x[0]===v)||[,""])[1];
+  out.append(el("p","small",`Frases em que você respondeu do lado oposto à posição típica de ${o.n}. Essa posição é uma estimativa do teste, a partir de onde essa tradição fica em cada tema, e não vem de uma pesquisa com pessoas reais. Ninguém concorda com tudo da própria tradição: isso só mostra onde as suas ideias fogem do padrão dela.`));
+  if(!lista.length){out.append(el("p","note",`Em nenhuma frase você ficou do lado oposto à posição típica de ${o.n}. Nas frases que você respondeu, suas respostas seguem o padrão dela.`));$("s-diverge").textContent="Nenhuma frase do lado oposto";return 0}
+  const box=el("div","box");lista.forEach(x=>{const d=el("div","item diverge");
+    const tipo=(x.tip>0?"concordar":"discordar")+(Math.abs(x.tip)>=1.5?" totalmente":"");
+    d.append(el("p","diverge-frase",ITEMS[x.id].t),el("p","small",`Você: ${rot(x.v).toLowerCase()}. Posição típica de ${o.n}: ${tipo}.`));box.append(d)});
+  out.append(box);$("s-diverge").textContent=`${lista.length} ${lista.length===1?"frase":"frases"} do lado oposto`;return lista.length}
+
 let ultimasTensoes=[];
 // 2. tensões e posições incomuns (comparadas com as 21 tradições, não com outras pessoas)
 function tensoesIncomuns(){
@@ -36,7 +68,7 @@ function tensoesIncomuns(){
     itens.push(["Posição incomum",`Em ${nomeSub(x.key).toLowerCase()}, você fica bem mais pro lado "${lado.toLowerCase()}" do que qualquer uma das 21 tradições. A mais próxima é ${x.n}.`])}
   let pior=null;for(let i=0;i<EIXOS5.length;i++)for(let j=i+1;j<EIXOS5.length;j++){const a=EIXOS5[i],b=EIXOS5[j];
     const md=Math.min(...IDEO.map(o=>Math.hypot(R.s[a]-(o.p[a]||0),R.s[b]-(o.p[b]||0))));if(!pior||md>pior.md)pior={a,b,md}}
-  if(pior&&pior.md>=35)itens.push(["Combinação rara",`Você combina ${band(R.s[pior.a],pior.a).toLowerCase()} em ${AX[pior.a].name.toLowerCase()} com ${band(R.s[pior.b],pior.b).toLowerCase()} em ${AX[pior.b].name.toLowerCase()}. Nenhuma das 21 tradições costuma ter essa combinação.`]);
+  if(pior&&pior.md>=35)itens.push(["Combinação rara",`Você combina ${band(R.s[pior.a],pior.a).toLowerCase()} em ${eixoMin(pior.a)} com ${band(R.s[pior.b],pior.b).toLowerCase()} em ${eixoMin(pior.b)}. Nenhuma das 21 tradições costuma ter essa combinação.`]);
   ultimasTensoes=itens.slice();
   if(!itens.length)itens.push(["Sem tensões fortes","Suas posições se combinam de um jeito comum entre as tradições políticas. Nenhuma combinação é rara e nenhum tema fica muito fora do padrão."]);
   itens.forEach(([t,x])=>{const d=el("div","item");d.append(el("b",null,t),el("p",null,x));out.append(d)});
@@ -71,6 +103,7 @@ function renderExtras(){
   sel.value=R.ranked[1]?R.ranked[1].n:R.ranked[0].n;sel.onchange=()=>compararIdeologia(sel.value);compararIdeologia(sel.value);
   $("s-compideo").textContent="Escolha qualquer uma das 21 e veja eixo por eixo";
   const n=tensoesIncomuns();$("s-tensoes").textContent=n?`${n} ${n===1?"ponto":"pontos"} fora do padrão das tradições`:"Nenhuma tensão forte";
+  mostrarDivergencias();
   leiturasIdeo=R.ranked[0].n;leiturasAba="favor";mostrarLeituras();
   montarResumo();setCompleto(false);
   if($("friendOut").children.length)setTimeout(()=>irParaBloco("blocoPartilha"),400)} // chegou por link de amigo: mostra a comparação
@@ -89,7 +122,7 @@ function montarResumo(){
   prox.append(el("p","small nota-prob","A porcentagem é a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Não é o quanto você concorda com ela."));
   R.ranked.slice(0,3).forEach(o=>{const a=el("a","resumo-ideo");a.href="/ideologias/"+slugIdeo(o.n)+"/";const p=Math.round(o.prob*100);
     const pc=el("span",null,p<1?"menos de 1%":p+"%");if(p>=1){pc.dataset.conta=p;pc.dataset.sufixo="%"}
-    a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a)});
+    a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a,el("p","ideo-eixos",aproximaAfasta(o)))});
   prox.append(linhaDistante());
   // destaques: presidente mais perto, afinidade forte com extremos e a principal tensão
   const dest=[],pr1=(candRanked.pres||[])[0];
