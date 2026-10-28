@@ -9,10 +9,10 @@ function studyPayload(){
   const {s,ext,ranked,margin,inc}=R,r10=v=>Math.round(v/10)*10,b20=v=>Math.max(-100,Math.min(100,Math.round(v/20)*20));
   const code=v=>v===undefined||v===null||v==="g"?"_":v==="x"||v==="n"?"x":"abcde"[v+2];
   const min=(Date.now()-(st.study.t0||Date.now()))/60000,tempo=min<5?"<5":min<10?"5-10":min<15?"10-15":min<20?"15-20":min<30?"20-30":"30+";
-  return {v:6,calculo:3,tipo:"resultado",sessao:SESSAO?SESSAO.token:undefined,modo:st.mode,de:st.study.de||undefined,ideologia:ranked[0].n,eixos:Object.fromEntries(AXK6.map(k=>[k,b20(s[k])])),
+  return {v:6,calculo:4,tipo:"resultado",sessao:SESSAO?SESSAO.token:undefined,modo:st.mode,de:st.study.de||undefined,ideologia:ranked[0].n,eixos:Object.fromEntries(AXK6.map(k=>[k,b20(s[k])])),
     extremos:Object.fromEntries(["com","anq","fas","anc"].map(g=>[g,R.extAsked[g]?r10(ext[g]):null])),tempo,respostas:CANON.map(id=>code(st.ans[id])).join(""),
     explicacoes:st.study.exp.slice(0,CANON.length),idade:st.study.idade||null,uf:st.study.uf||null,
-    autoid:{espectro:st.si.esp||null,ideologia:st.si.ide||null},confianca:R.conf,desempate:st.tb.length>0,inconsistencias:inc.length,envio:st.study.id||(st.study.id=novoId()),inicio:!!st.study.ini};
+    autoid:{espectro:st.si.esp||null,ideologia:st.si.ide||null},confianca:R.conf,desempate:st.tb.length>0,inconsistencias:inc.length,envio:st.study.id||(st.study.id=novoId()),inicio:!!st.study.ini,ordem:Number.isInteger(st.semente)?st.semente:null};
 }
 async function setupStats(){
   const blk=$("statsBlock"),msg=$("statsMsg"),btn=$("statsBtn");blk.classList.add("hidden");btn.classList.add("hidden");btn.disabled=false;$("statsMaiorWrap").classList.add("hidden");

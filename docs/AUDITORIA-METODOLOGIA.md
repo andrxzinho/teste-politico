@@ -4,6 +4,24 @@ Data: 23/10/2026. Escopo: `public/js/dados/frases.js`, `ideologias.js`, `candida
 `public/js/telas/resultado.js`, `extras.js`, `janelas.js`, `candidatos.js`, `pensadores.js`, `perguntas.js`, `public/index.html`,
 `public/metodologia.html`, `public/perguntas-frequentes/index.html`, `README.md`, `docs/METODOLOGIA.md`, `testes/`.
 
+## Situação: versão 4 do cálculo (28 de outubro de 2026)
+
+Aprovado pelo responsável pelo projeto. Simulação antes e depois em `docs/METODOLOGIA.md`, seção 10.
+
+- **M6 (Instituições):** no Essencial, S1 (bancos e empresários) entrou no lugar de S2 (imprensa); no Padrão e no
+  Aprofundado entraram Z21 (Lava Jato) e Z22 (Banco Central), duas desconfianças mais comuns na esquerda. O eixo não
+  entra na escolha da ideologia.
+- **M9 (ordem):** a ordem das frases dentro de cada bloco é sorteada por pessoa, com uma semente gravada no envio do
+  estudo. Efeito colateral (B3): a maior sequência de respostas iguais, que desconta a consistência, passa a depender
+  da ordem de cada pessoa.
+- **M5 (desempate do Aprofundado):** em vez de um banco novo, o Aprofundado deixou de ter desempate. Numa simulação com
+  504 respondentes, ele terminava "entre duas" em 2 a 5% dos casos e só tinha uma pergunta útil 2 vezes.
+- **A5 (meio ambiente):** subtema próprio (`N.amb`), fora da média de Brasil × Mundo, com posição típica de cada
+  ideologia; a soberania do Ecologista foi de −95 pra −70. Os eixos parecidos continuam (depende de dados).
+- **Proposta 4 da seção 6.6 (calibração):** temperatura T = 1,5. Refeita com o cálculo da versão 3, a calibração já era
+  boa com perfis errados em 20 pontos; o excesso de confiança aparece com 35 pontos. T = 1,5 é o meio-termo.
+- **B4:** E22 (desconto do plano de saúde no IR) passou de "Estado e mercado" pra "Impostos".
+
 ## Situação: versão 2 do cálculo (23 de outubro de 2026)
 
 O responsável pelo projeto autorizou as correções. Simulação antes e depois em `testes/ajuda/comparar_simulacao.mjs`;

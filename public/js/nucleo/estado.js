@@ -1,12 +1,15 @@
 // Estado do teste (st), ordem das frases, salvar e retomar.
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 // ---------- estado
-function order(mode,ja){
-  let sd=mode==="quick"?20261104:20261101;const rnd=()=>{sd=(sd*1664525+1013904223)%4294967296;return sd/4294967296};
+// semente: sorteada pra cada pessoa no começo do teste (versão 4), pra que a ordem das frases dentro de cada bloco varie
+// de uma pessoa pra outra. Com a mesma semente e o mesmo modo, a ordem é sempre a mesma (o estudo grava a semente).
+// Testes começados antes da versão 4 já têm a ordem salva e não mudam.
+function order(mode,ja,semente){
+  let sd=Number.isInteger(semente)?semente:mode==="quick"?20261104:20261101;const rnd=()=>{sd=(sd*1664525+1013904223)%4294967296;return sd/4294967296};
   const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
   const lvl=MODOS[mode].lv,use=o=>(o.lv||2)<=lvl&&!(ja&&ja.has(o.id));
   // nos pares de simetria (mesma situação com lados trocados), cada pessoa recebe uma das versões no fim, por sorteio
-  const late=new Set();PAIRS.forEach(p=>{if(p.t==="simetria")late.add(Math.random()<.5?p.a:p.b)});
+  const late=new Set();PAIRS.forEach(p=>{if(p.t==="simetria")late.add(rnd()<.5?p.a:p.b)});
   const L=[],bs=[],bk=[],last=[];
   for(const k of AXK6){const main=[],gt=[];
     for(const o of [...Q[k],...(lvl>=3?POOL.filter(o=>o.k===k):[]),...EXTRA.filter(o=>o.k===k&&!escolha(o))]){if(!use(o))continue;if(o.lt||late.has(o.id)){last.push(o.id);continue}(gated(o)?gt:main).push(o.id)}
@@ -19,14 +22,15 @@ function order(mode,ja){
   return {L,bs,bk};
 }
 function aprofundar(){const prox=PROX[st.mode];if(!prox)return;
-  const ja=new Set(Object.keys(st.ans).filter(id=>st.ans[id]!=="g")),antes=seq().filter(id=>ja.has(id)),o=order(prox,ja);
+  const ja=new Set(Object.keys(st.ans).filter(id=>st.ans[id]!=="g")),antes=seq().filter(id=>ja.has(id)),o=order(prox,ja,st.semente);
   Object.assign(st,{mode:prox,base:[...antes,...o.L],bs:o.bs.map(x=>x+antes.length),bk:o.bk,seen:[],tb:[],tbAsked:false,cur:antes.length,done:false,hist:false});
   if(st.study.sent){st.study.de=st.study.de||(prox==="full"?"quick":"full");st.study.sent=false}
   save();R=null;show("quiz");render()}
 function novoId(){try{return crypto.randomUUID()}catch(e){const b=crypto.getRandomValues(new Uint8Array(16));b[6]=b[6]&15|64;b[8]=b[8]&63|128;const h=[...b].map(x=>x.toString(16).padStart(2,"0")).join("");return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`}}
 // inv: metade das pessoas vê as opções das perguntas de escolha em ordem invertida, pra que a tendência de escolher a
 // primeira ou a última opção não empurre ninguém sistematicamente pra um lado
-function fresh(mode){const o=order(mode);return {mode,inv:Math.random()<.5,base:o.L,bs:o.bs,bk:o.bk,seen:[],tm:{},tb:[],tbAsked:false,cur:0,ans:{},imp:{E:"normal",A:"normal",C:"normal",N:"normal"},
+function novaSemente(){try{return crypto.getRandomValues(new Uint32Array(1))[0]}catch(e){return Math.floor(Math.random()*4294967296)}}
+function fresh(mode){const semente=novaSemente(),o=order(mode,null,semente);return {mode,semente,inv:Math.random()<.5,base:o.L,bs:o.bs,bk:o.bk,seen:[],tm:{},tb:[],tbAsked:false,cur:0,ans:{},imp:{E:"normal",A:"normal",C:"normal",N:"normal"},
   study:{ok:false,minor:false,idade:"",uf:"",t0:Date.now(),exp:[],sent:false,id:novoId(),ini:false},si:{esp:"",ide:""},done:false,hist:false}}
 let st=fresh("full"),busy=false;
 const seq=()=>st.base.concat(st.tb);

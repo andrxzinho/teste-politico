@@ -14,6 +14,8 @@
 //    Com mais âncoras, o limite é mais largo.
 // 4. Posição de cada subtema: média × fator combinada com as âncoras, cada uma pesando pela sua precisão.
 // 5. Eixo: média dos subtemas, cada subtema com o mesmo peso. Faixa provável: ±1,28 margem de erro (80%).
+//    Subtemas fora do eixo (CFG.fora: meio ambiente) têm posição própria, mas não entram na média do eixo nem recebem
+//    as escolhas forçadas do eixo inteiro.
 var Motor = (function () {
   var EIXOS = ["E", "A", "C", "N", "D", "S"];
   var CFG = {
@@ -21,12 +23,15 @@ var Motor = (function () {
     seEscadaSub: 32,    // margem de uma escolha forçada de subtema
     seEscadaEixo: 42,   // margem de uma escolha forçada do eixo inteiro, aplicada a cada subtema dele
     estilo: 0.3,        // erro de estilo que não diminui com mais frases: fração da própria média (soma-se à margem)
-    denMin: 1200, encolhe: 5000, gMin: 0.8, gMax: 1.3, gMinAmplo: 0.6, gMaxAmplo: 1.6, ancorasAmplo: 8
+    denMin: 1200, encolhe: 5000, gMin: 0.8, gMax: 1.3, gMinAmplo: 0.6, gMaxAmplo: 1.6, ancorasAmplo: 8,
+    fora: ["N.amb"]     // subtemas com posição própria, fora da média do eixo (desde a versão 4 do cálculo)
   };
   function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
   function chaveSub(o) { return o.k + "." + (o.s || "-"); }
-  function calcular(A, itens, ids, pesos) {
+  // opcoes.fora troca a lista de subtemas fora do eixo (o servidor usa [] pra conferir envios da versão 3)
+  function calcular(A, itens, ids, pesos, opcoes) {
     pesos = pesos || {};
+    var fora = opcoes && opcoes.fora ? opcoes.fora : CFG.fora;
     var soma = {}, peso = {}, qtd = {}, quad = {}, subsDoEixo = {};
     EIXOS.forEach(function (k) { subsDoEixo[k] = {}; });
     ids.forEach(function (id) {
@@ -34,7 +39,7 @@ var Motor = (function () {
       if (!o || typeof v !== "number" || !o.sc) return;
       var key = chaveSub(o), w = id[0] === "P" ? 1 : (pesos[id] || 1), x = v * o.d * 50;
       soma[key] = (soma[key] || 0) + x * w; peso[key] = (peso[key] || 0) + w; qtd[key] = (qtd[key] || 0) + 1; quad[key] = (quad[key] || 0) + x * x * w;
-      subsDoEixo[o.k][key] = 1;
+      if (fora.indexOf(key) < 0) subsDoEixo[o.k][key] = 1;
     });
     var media = {}, mse = {};
     Object.keys(soma).forEach(function (key) {

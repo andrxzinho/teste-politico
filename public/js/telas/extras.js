@@ -3,7 +3,7 @@
 const anoObra=a=>a<0?`c. ${-a} a.C.`:String(a);
 const EIXOS5=["E","A","C","N","D"];
 const slugIdeo=n=>n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-const nomeSub=key=>{const [k,s]=key.split(".");return (SUBS[k]||{})[s]||key};
+const nomeSub=key=>{const [k,s]=key.split(".");return FORA_EIXO[key]?FORA_EIXO[key].nome:(SUBS[k]||{})[s]||key};
 const distancia=d=>Math.abs(d)<15?"Perto":Math.abs(d)<35?"Um pouco diferente":"Longe";
 const posEsc=v=>(Math.max(-100,Math.min(100,v))+100)/2;
 function linhaComparada(nome,voce,outro,faixa){
@@ -45,7 +45,7 @@ function divergencias(o){
   for(const id of seq()){const it=ITEMS[id],v=st.ans[id];
     if(!it||typeof v!=="number"||!it.sc||escolha(it)||it.f==="d"||v===0)continue;
     const i=SUBT.indexOf(it.k+"."+it.s);if(i<0||pf[i]==null||o.p[it.k]==null)continue;
-    const mu=o.p[it.k]+CLS.lambda*(pf[i]-o.p[it.k]),tip=Math.max(-2,Math.min(2,mu*it.d/50));
+    const mu=tipicaSub(o,i),tip=Math.max(-2,Math.min(2,mu*it.d/50));
     if(Math.sign(v)===Math.sign(tip)||Math.abs(tip)<.75)continue;
     const x={id,v,tip,dist:Math.abs(v-tip),sub:it.k+"."+it.s};const ant=porSub.get(x.sub);if(!ant||x.dist>ant.dist)porSub.set(x.sub,x)}
   return [...porSub.values()].sort((a,b)=>b.dist-a.dist).slice(0,4)}
@@ -64,7 +64,7 @@ let ultimasTensoes=[];
 function tensoesIncomuns(){
   const out=$("tensOut");out.innerHTML="";const itens=[];
   const inc=SUBT.map((key,i)=>{const s=R.sub[key];if(!s||!s.n)return null;let m=null;IDEO.forEach(o=>{const pv=(PERFIS[o.n]||[])[i];if(pv==null)return;const d=Math.abs(s.v-pv);if(!m||d<m.d)m={d,n:o.n}});return m&&{key,v:s.v,...m}}).filter(Boolean).sort((a,b)=>b.d-a.d);
-  for(const x of inc.filter(x=>x.d>=25).slice(0,2)){const k=x.key[0],lado=x.v<0?AX[k].left:AX[k].right;
+  for(const x of inc.filter(x=>x.d>=25).slice(0,2)){const k=x.key[0],ax=FORA_EIXO[x.key]||AX[k],lado=x.v<0?ax.left:ax.right;
     itens.push(["Posição incomum",`Em ${nomeSub(x.key).toLowerCase()}, você fica bem mais pro lado "${lado.toLowerCase()}" do que qualquer uma das 21 tradições. A mais próxima é ${x.n}.`])}
   let pior=null;for(let i=0;i<EIXOS5.length;i++)for(let j=i+1;j<EIXOS5.length;j++){const a=EIXOS5[i],b=EIXOS5[j];
     const md=Math.min(...IDEO.map(o=>Math.hypot(R.s[a]-(o.p[a]||0),R.s[b]-(o.p[b]||0))));if(!pior||md>pior.md)pior={a,b,md}}

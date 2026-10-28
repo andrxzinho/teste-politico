@@ -2,7 +2,7 @@
 // Não existe nome, IP, navegador nem horário: só o dia e respostas em faixas, numa chave com nome aleatório.
 import Motor, { ITENS } from "../motor.mjs";
 import { banco } from "../banco.mjs";
-import { FRASES_NOVAS_V2, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, estudoEncerrado, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
+import { FRASES_NOVAS_V2, FRASES_NOVAS_V4, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, estudoEncerrado, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
 
 const inicio = () => process.env.COLETA_INICIO || "2026-10-01";
 const nul = (v, lista) => v === null || v === undefined || lista.includes(v);
@@ -10,10 +10,11 @@ const VAL = { a: -2, b: -1, c: 0, d: 1, e: 2 };
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 // Recalcula cada eixo a partir das respostas com o mesmo motor do site (servidor/motor.mjs, gerado de
 // public/js/nucleo/motor.js). Serve pra recusar envios com eixos inventados que não batem com as respostas.
-function eixosDasRespostas(resp, pesos) {
+// opcoes.fora = [] refaz a conta como na versão 3 (meio ambiente dentro de Brasil × Mundo), pra páginas abertas antes da 4.
+function eixosDasRespostas(resp, pesos, opcoes) {
   const A = {};
   IDS.forEach((id, j) => { const ch = resp[j]; if (ch in VAL) A[id] = VAL[ch]; else if (ch === "x") A[id] = "x"; });
-  const r = Motor.calcular(A, ITENS, IDS, pesos);
+  const r = Motor.calcular(A, ITENS, IDS, pesos, opcoes);
   return EIXOS.map((k) => r.raw[k]);
 }
 
@@ -59,7 +60,9 @@ export default async (req) => {
   const ANTIGOS = { "Esquerda radical": "Extrema esquerda", "Direita radical": "Extrema direita" };
   if (Object.hasOwn(ANTIGOS, b.ideologia)) b.ideologia = ANTIGOS[b.ideologia];
   if (b.autoid && Object.hasOwn(ANTIGOS, b.autoid.ideologia)) b.autoid.ideologia = ANTIGOS[b.autoid.ideologia];
-  if (typeof b.respostas === "string" && b.respostas.length === IDS.length - FRASES_NOVAS_V2) b.respostas += "_".repeat(FRASES_NOVAS_V2);
+  // e páginas abertas antes da versão 4 mandam sem as 2 frases novas de Instituições
+  for (const falta of [FRASES_NOVAS_V4, FRASES_NOVAS_V4 + FRASES_NOVAS_V2])
+    if (typeof b.respostas === "string" && b.respostas.length === IDS.length - falta) b.respostas += "_".repeat(falta);
 
   const i = IDEOLOGIAS.indexOf(b.ideologia);
   const ax = EIXOS.map((k) => b.eixos?.[k]);
@@ -77,6 +80,8 @@ export default async (req) => {
     Number.isInteger(b.inconsistencias) && b.inconsistencias >= 0 && b.inconsistencias <= 20 &&
     typeof b.envio === "string" && UUID.test(b.envio) &&
     (b.inicio === undefined || typeof b.inicio === "boolean") &&
+    // semente da ordem das frases (versão 4): com ela e o modo, dá pra refazer a ordem em que as frases apareceram
+    (b.ordem === undefined || b.ordem === null || (Number.isInteger(b.ordem) && b.ordem >= 0 && b.ordem <= 4294967295)) &&
     // quem continuou de um modo menor manda de qual modo veio, e esse modo precisa ser menor que o atual
     (b.de === undefined || b.de === null || (typeof b.de === "string" && Object.hasOwn(MODO, b.de) && ["quick", "full", "deep"].indexOf(b.de) < ["quick", "full", "deep"].indexOf(b.modo)));
   if (!valido) return new Response("Dados inválidos", { status: 400 });
@@ -84,14 +89,15 @@ export default async (req) => {
   if (motivo) return Response.json({ ok: false, motivo }, { status: 429, headers: SEM_CACHE });
   // os eixos enviados precisam bater com as respostas (margem pro arredondamento em faixas de 20 e pra pesos desatualizados)
   const pesos = (await banco.lerConfig("config/pesos"))?.pesos || {};
-  const calc = eixosDasRespostas(b.respostas, pesos);
-  if (ax.some((v, j) => Math.abs(v - calc[j]) > 30)) return new Response("Os eixos não batem com as respostas", { status: 422 });
+  const bate = (calc) => !ax.some((v, j) => Math.abs(v - calc[j]) > 30);
+  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(b.calculo !== 4 && bate(eixosDasRespostas(b.respostas, pesos, { fora: [] })))) return new Response("Os eixos não batem com as respostas", { status: 422 });
 
   const reg = { m: modo, i, ax, ex, t: b.tempo, r: b.respostas, x: expl, id: b.idade ?? null, uf: b.uf ?? null,
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,
     cf: b.confianca, tb: b.desempate, inc: b.inconsistencias, ci: b.inicio ?? null, env: b.envio, de: b.de ? MODO[b.de] : null,
     // versão do cálculo que classificou o resultado (2 = com o filtro das extremas e as frases reescritas em 23/10/2026)
-    cv: [2, 3].includes(b.calculo) ? b.calculo : 1 };
+    // 4 = com meio ambiente fora de Brasil × Mundo, a probabilidade calibrada e a ordem das frases por pessoa (28/10/2026)
+    cv: [2, 3, 4].includes(b.calculo) ? b.calculo : 1, or: Number.isInteger(b.ordem) ? b.ordem : null };
   // o código do envio é aleatório e gerado no aparelho: se a pessoa reenviar (conexão caiu no meio), não duplica.
   // Quem continua num modo maior grava um segundo registro com o mesmo código; o painel conta só o mais completo.
   const chave = b.de ? `${b.envio}~${modo}` : b.envio;
