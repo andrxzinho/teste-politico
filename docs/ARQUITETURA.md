@@ -11,6 +11,7 @@ o servidor só recebe os envios de quem aceita participar do estudo.
 | `index.html` | Todas as telas (abertura, consentimento, perguntas, desempate, importância, FIM, resultado, janelas) |
 | `css/urna.css` | Estilo |
 | `js/nucleo/motor.js` | Cálculo dos eixos (ver Metodologia, seção 4). O mesmo arquivo roda no servidor |
+| `js/dados/variantes.js` | As 4 correntes de cada ideologia (`VARIANTES`), com descrição e posição nos eixos; não entram no cálculo |
 | `js/dados/frases.js`, `ideologias.js`, `candidatos.js` | Dados: frases (`DATA`, com os 16 subtemas em `SUBT` e o perfil de cada ideologia em `PERFIS`), ideologias (`IDEO`), presidentes e partidos (`CAND`) |
 | `js/nucleo/base.js`, `estado.js`, `calculo.js` | Montagem da lista de frases, estado do teste (com a semente da ordem das frases), classificação e confiança |
 | `js/telas/*.js` | Perguntas, início, resultado, partidos, comparação, janelas, visor da urna |

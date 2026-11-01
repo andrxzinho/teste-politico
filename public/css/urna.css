@@ -611,6 +611,7 @@ body[data-tela="results"] .menu-btn{display:none}
 .item.livro.com-capa .capa-tipo b,.item.livro.com-capa .capa-tipo small{color:var(--tecla-txt);margin:0;font-size:.5rem;display:-webkit-box}
 .item.livro.com-capa .capa-tipo small{font-size:.45rem;opacity:1}
 .resumo-bloco .nota-prob{margin:0 0 .7rem;line-height:1.45}
+.resumo-bloco .nota-centro{margin:-.3rem 0 .8rem;padding:.55rem .7rem;border-left:3px solid var(--marca);background:var(--gaveta);border-radius:0 6px 6px 0;line-height:1.45}
 #candOut{margin-top:.8rem}
 /* títulos que recebem foco pelo código (troca de tela, nova pergunta): sem contorno, já que não são clicáveis */
 [tabindex="-1"]:focus{outline:none}
@@ -632,3 +633,13 @@ body[data-tela="results"] .menu-btn{display:none}
 .evo-pri{fill:none;stroke:var(--tinta);stroke-width:2}
 .evo-meio{fill:var(--grafite);opacity:.55}
 .evo-ult{fill:var(--marca);stroke:var(--card);stroke-width:2}
+
+/* correntes mais parecidas (variantes das ideologias) */
+.correntes{margin:1rem 0 .4rem;padding-top:.8rem;border-top:1px solid var(--linha)}
+.correntes .rotulo{margin:0 0 .5rem}
+.corrente{display:grid;gap:.1rem;padding:.6rem .75rem;margin-bottom:.45rem;border-radius:8px;border:1px solid var(--gaveta-borda);background:var(--gaveta);color:var(--tinta);text-decoration:none}
+.corrente:hover{border-color:var(--tinta)}
+.corrente b{font-size:.95rem}
+.corrente small{font-size:.76rem;color:var(--grafite)}
+.corrente span{font-size:.86rem;line-height:1.45}
+.correntes > .small{margin:.4rem 0 0}

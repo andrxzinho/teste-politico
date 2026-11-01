@@ -87,6 +87,17 @@ function mostrarLeituras(){
 // edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
 // edição citada, link informativo (Wikipédia, editora ou Open Library) e, menor, a loja (mesma linha em ferramentas/gerar_paginas.mjs)
 // com Amazon, o link de compra vem primeiro e o informativo fica como segundo link, menor (como nas páginas das ideologias)
+// correntes (variantes) mais parecidas com a pessoa, por distância nos 5 eixos, só entre as ideologias que passaram pelos
+// filtros (as correntes de um extremo só aparecem pra quem passou pelo filtro dele)
+function correntesParecidas(){
+  const disputam=new Set(R.ranked.map(o=>o.n)),ks=["E","A","C","N","D"];
+  const lista=Object.entries(VARIANTES).filter(([pai])=>disputam.has(pai)).flatMap(([pai,vs])=>vs.map(v=>({...v,pai,dist:Math.hypot(...ks.map(k=>R.s[k]-v.p[k]))})))
+    .sort((a,b)=>a.dist-b.dist).slice(0,3);
+  const box=el("div","correntes");box.append(el("p","rotulo","Correntes mais parecidas com você"));
+  lista.forEach(v=>{const a=el("a","corrente");a.href=`/ideologias/${slugIdeo(v.pai)}/#correntes`;
+    a.append(el("b",null,v.n),el("small",null,`Corrente da ideologia ${v.pai}`),el("span",null,v.d));box.append(a)});
+  box.append(el("p","small","Correntes são linhas dentro de cada ideologia. Elas não mudam o resultado: só mostram, entre as 84, as que ficam mais perto das suas posições."));
+  return box}
 function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
   const ln=(u,t,c)=>{const a=el("a",c,t);a.href=u;a.target="_blank";a.rel="noopener";p.append(a)};
   if(x.loja&&x.lojaNome==="Amazon"){ln(x.loja,"Comprar na Amazon");if(x.link)ln(x.link,x.onde,"secundario")}
@@ -122,9 +133,13 @@ function montarResumo(){
   eixos.append(ex);
   const prox=bloco("Ideologias que melhor explicam suas respostas","blocoIdeologias");
   prox.append(el("p","small nota-prob","A porcentagem é a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Não é o quanto você concorda com ela."));
+  // regra do centro (versão 5): na média ficaria no meio, mas é forte em algum eixo
+  if(R.centroForte&&R.centroForte.length){const fortes=R.centroForte.map(k=>`${eixoMin(k)} (${short(R.s[k],k).toLowerCase()})`);
+    prox.append(el("p","small nota-centro",`Na média, suas respostas ficam perto do centro, mas você tem posição forte em ${fortes.length>1?fortes.slice(0,-1).join(", ")+" e "+fortes.at(-1):fortes[0]}. Por isso o resultado não é Centrista: o teste mostra a tradição mais próxima levando isso em conta.`))}
   R.ranked.slice(0,3).forEach(o=>{const a=el("a","resumo-ideo");a.href="/ideologias/"+slugIdeo(o.n)+"/";const p=Math.round(o.prob*100);
     const pc=el("span",null,p<1?"menos de 1%":p+"%");if(p>=1){pc.dataset.conta=p;pc.dataset.sufixo="%"}
     a.append(el("b",null,o.n),pc);const b=el("i");b.style.setProperty("--p",Math.max(2,p)+"%");a.append(b);prox.append(a,el("p","ideo-eixos",aproximaAfasta(o)))});
+  prox.append(correntesParecidas());
   prox.append(linhaDistante());
   // destaques: presidente mais perto, afinidade forte com extremos e a principal tensão
   const dest=[],pr1=(candRanked.pres||[])[0];

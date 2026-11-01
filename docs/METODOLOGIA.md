@@ -89,6 +89,16 @@ opinião).
   democracia (média 0) não leva a elas. Antes do filtro, quem ficava no meio-termo nesse eixo e estava perto delas nos
   outros eixos recebia "radical" com confiança alta. O nome "radical" virou "extrema" pelo mesmo motivo: na ciência
   política, radical não quer dizer antidemocrático.
+- **Filtro do centro (versão 5):** o Centrista só disputa com quem fica a menos de 30 pontos do centro em Economia,
+  Liberdade × Ordem, Costumes e Brasil × Mundo (`CENTRO_MAX` em `js/nucleo/base.js`). Antes, quem era forte num eixo e
+  oposto noutro caía no Centrista só porque o centro fica no meio de todas as ideologias. Nos 46 resultados reais do
+  estudo até 1/11/2026, os Centristas caíram de 13 pra 8: os 5 que saíram tinham uma posição forte (por exemplo, economia
+  em −43) e foram pra Social-democrata (3), Social-liberal e Democracia cristã. Na simulação, o acerto não mudou e os
+  Centristas simulados continuam Centrista em 92% (Essencial) e 100% (Padrão e Aprofundado) dos casos; com 25 pontos o
+  acerto já caía. Quando o Centrista ficaria em 1º sem o filtro, o resultado explica que a pessoa é forte em algum eixo.
+- **Correntes:** cada ideologia tem 4 correntes (`js/dados/variantes.js`, 84 no total), com uma posição típica nos 5
+  eixos. Elas não entram no cálculo: o resultado mostra as 3 mais perto da pessoa, por distância nos eixos, só entre as
+  ideologias que passaram pelos filtros.
 - **Rótulo duplo:** quando a segunda ideologia tem pelo menos 60% da probabilidade da primeira.
 - **Desempate:** nesse caso, se algum eixo que separa as duas tiver diferença ponderada de 20 ou mais entre as posições
   típicas e meia-largura de faixa de 12 ou mais, o teste faz até 5 (Essencial) ou 6 (Padrão) perguntas extras desses
@@ -153,11 +163,11 @@ usando dois geradores:
 
 | Modo | Acerto | Certa entre as 2 primeiras | Mesma ideologia no reteste |
 |---|---|---|---|
-| Essencial | 92,5% | 96,8% | 90,3% |
-| Padrão | 95,4% | 98,8% | 96,0% |
+| Essencial | 92,5% | 96,4% | 91,9% |
+| Padrão | 95,4% | 98,8% | 95,8% |
 | Aprofundado | 97,8% | 98,6% | 96,6% |
 
-Média dos dois geradores, 1.008 respondentes por modo, com o cálculo da versão 4 (28/10/2026). Na versão 3 eram 94,2%,
+Média dos dois geradores, 1.008 respondentes por modo, com o cálculo da versão 5 (1/11/2026), igual à 4 no acerto. Na versão 3 eram 94,2%,
 96,4% e 96,2% de acerto. A queda no Essencial (cerca de 1 ponto numa amostra maior, de 2.016 respondentes) vem da troca
 de lugar do meio ambiente: com menos frases em soberania, Conservador, Direita nacional-conservadora e Extrema direita se
 confundem um pouco mais. No Aprofundado, o acerto subiu. Na versão 2, os números
