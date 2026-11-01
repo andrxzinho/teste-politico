@@ -26,7 +26,7 @@
     { h: "/termos.html", t: "Privacidade e termos" },
   ];
   // data da última atualização, mostrada no rodapé: a mesma da entrada mais recente do CHANGELOG.md (conferido nos testes)
-  const ATUALIZADO = "28 de outubro de 2026";
+  const ATUALIZADO = "1 de novembro de 2026";
   const LICENCA = "https://github.com/andrxzinho/teste-politico/blob/main/LICENSE";
   const caminho = () => location.pathname.replace(/index\.html$/, "");
   const ehAtual = (h) => !h.includes("#") && (h === "/" ? caminho() === "/" : caminho().startsWith(h.replace(/\/$/, "")));
@@ -145,6 +145,9 @@
   }
   function revelarPagina() { revelar(".lista-ideo .cartao, .livros .livro, .vizinhas > *, .faq details, .sec, .eixos-tipicos .eixo-tipico, .pagina .rotulo-secao"); }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { montar(); revelarPagina(); }); else { montar(); revelarPagina(); }
+  // com âncora no endereço (ex.: #correntes), o navegador pula pra ela antes de o cabeçalho existir; depois de montar,
+  // pula de novo pra o título não ficar escondido embaixo do cabeçalho fixo
+  const ancora = () => { const id = decodeURIComponent(location.hash.slice(1)), alvo = id && document.getElementById(id); if (alvo) alvo.scrollIntoView({ block: "start" }); };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { montar(); revelarPagina(); ancora(); }); else { montar(); revelarPagina(); ancora(); }
   window.TP_NAV = { aplicarTema, fecharMenu: () => fundo && !fundo.hidden && fechar(), revelar, contar, calmo, som };
 })();

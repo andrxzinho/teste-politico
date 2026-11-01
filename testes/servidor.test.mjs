@@ -43,7 +43,7 @@ export async function testarServidor() {
   const antigo = { ...base, envio: randomUUID(), ideologia: "Esquerda radical" };
   v.confere((await enviar(antigo))[0] === 200, "envio com o nome antigo de uma ideologia deveria ser aceito");
   // versão 4: semente da ordem gravada; página aberta antes dela (sem as 2 frases novas e sem semente) continua aceita
-  v.confere(Number.isInteger(base.ordem) && base.calculo === 4, "o site deveria mandar a semente da ordem e a versão 4 do cálculo");
+  v.confere(Number.isInteger(base.ordem) && base.calculo === 5, "o site deveria mandar a semente da ordem e a versão 5 do cálculo");
   v.confere((await bruto(JSON.stringify({ ...base, envio: randomUUID(), ordem: -1 }))) === 400, "semente da ordem inválida deveria ser recusada");
   const v3 = { ...base, envio: randomUUID(), calculo: 3, respostas: base.respostas.slice(0, -2) }; delete v3.ordem;
   v.confere((await enviar(v3))[0] === 200, "envio de página da versão 3 (sem as frases novas) deveria ser aceito");
@@ -62,7 +62,7 @@ export async function testarServidor() {
   const cab = csv.split("\n")[0];
   v.confere(csv.trim().split("\n").length - 1 === 9, "planilha deveria ter 9 linhas");
   v.confere(!/envio|"env"|"ip"|"dia"|"data"/i.test(cab), "planilha não pode ter código de envio, IP ou data");
-  v.confere(cab.endsWith('"semente_ordem","versao_calculo"') && /,"\d+","4"\r?$/m.test(csv), "planilha deveria ter a semente da ordem das frases");
+  v.confere(cab.endsWith('"semente_ordem","versao_calculo"') && /,"\d+","5"\r?$/m.test(csv), "planilha deveria ter a semente da ordem das frases");
 
   v.confere((await contagem("real")) === 9, "contagem de pessoas deveria ser 9 (a continuação não conta de novo)");
 

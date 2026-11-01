@@ -43,6 +43,7 @@ export async function testarPaginas() {
   }
   await pg.goto(s.url + "/ideologias/social-democrata/"); await pg.waitForTimeout(150);
   v.confere((await pg.locator(".livro").count()) === 8, "página de ideologia deveria ter 8 leituras (4 por dentro, 4 críticas)");
+  v.confere((await pg.locator("#correntes + .intro-pagina + .correntes-lista li").count()) === 4, "página de ideologia deveria listar as 4 correntes");
   v.confere((await pg.locator('a[href="/?ideologia=social-democrata"]').count()) === 1, "página de ideologia deveria ter o atalho pra comparar");
   // comparar duas ideologias: link na página de cada uma, escolha pelo endereço, troca de ordem e de ideologia
   await pg.click('a[href="/ideologias/comparar/?a=social-democrata"]'); await pg.waitForURL("**/ideologias/comparar/**");

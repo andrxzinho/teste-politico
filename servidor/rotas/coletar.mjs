@@ -94,14 +94,15 @@ export default async (req) => {
   const pesos = (await banco.lerConfig("config/pesos"))?.pesos || {};
   const bate = (calc) => !ax.some((v, j) => Math.abs(v - calc[j]) > 30);
   // páginas antigas: aceita se bater com a versão 4 ou com a conta da versão 3
-  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(b.calculo !== 4 && bate(eixosDasRespostas(b.respostas, pesos, true)))) return new Response("Os eixos não batem com as respostas", { status: 422 });
+  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(!(b.calculo >= 4) && bate(eixosDasRespostas(b.respostas, pesos, true)))) return new Response("Os eixos não batem com as respostas", { status: 422 });
 
   const reg = { m: modo, i, ax, ex, t: b.tempo, r: b.respostas, x: expl, id: b.idade ?? null, uf: b.uf ?? null,
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,
     cf: b.confianca, tb: b.desempate, inc: b.inconsistencias, ci: b.inicio ?? null, env: b.envio, de: b.de ? MODO[b.de] : null,
     // versão do cálculo que classificou o resultado (2 = com o filtro das extremas e as frases reescritas em 23/10/2026)
     // 4 = com meio ambiente fora de Brasil × Mundo, a probabilidade calibrada e a ordem das frases por pessoa (28/10/2026)
-    cv: [2, 3, 4].includes(b.calculo) ? b.calculo : 1, or: Number.isInteger(b.ordem) ? b.ordem : null };
+    // 5 = com o filtro do centro (1/11/2026); os eixos são os mesmos da 4
+    cv: [2, 3, 4, 5].includes(b.calculo) ? b.calculo : 1, or: Number.isInteger(b.ordem) ? b.ordem : null };
   // o código do envio é aleatório e gerado no aparelho: se a pessoa reenviar (conexão caiu no meio), não duplica.
   // Quem continua num modo maior grava um segundo registro com o mesmo código; o painel conta só o mais completo.
   const chave = b.de ? `${b.envio}~${modo}` : b.envio;

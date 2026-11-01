@@ -1,5 +1,14 @@
 # Histórico de versões
 
+## Cálculo, versão 5, e correntes das ideologias (1 de novembro de 2026)
+- O Centrista só entra na disputa pra quem fica perto do centro em todos os eixos (menos de 30 pontos pra cada lado em
+  economia, liberdade × ordem, costumes e Brasil × Mundo). Antes, quem era forte num eixo e oposto noutro caía no
+  Centrista só porque o centro fica no meio de tudo. Nos 46 resultados reais do estudo, os Centristas cairiam de 13 pra
+  8. Na simulação, o acerto não mudou. Quando o Centrista ficaria em 1º sem a regra, o resultado explica por quê.
+- Correntes: cada uma das 21 ideologias ganhou 4 correntes (84 no total), como trotskismo, social-democracia nórdica,
+  ordoliberalismo, fusionismo e integralismo. O resultado mostra as 3 mais perto das suas posições, e a página de cada
+  ideologia lista as suas. Elas não mudam o cálculo.
+
 ## Compartilhar (28 de outubro de 2026)
 - O bloco "Compartilhar e comparar" virou um botão só, "Compartilhar resultado", que abre uma janela com o formato da
   imagem (Story 9:16, Retrato 4:5, Quadrado 1:1 e Paisagem 16:9), a prévia e quatro opções: WhatsApp, Instagram, X e

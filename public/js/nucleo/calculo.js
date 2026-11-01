@@ -9,7 +9,7 @@
 // da 1ª ideologia fique perto da taxa de acerto quando os perfis teóricos estão errados em cerca de 20 pontos
 // (simulação em docs/METODOLOGIA.md). Não muda a ordem das ideologias, mas a 1ª se destaca menos: "entre duas", o
 // desempate e a confiança, que usam essas chances, passam a acontecer um pouco mais.
-const CLS={tau:25,lambda:.5,contraste:1.5,marcadoras:.8,temp:1.5};
+const CLS={tau:25,lambda:.5,contraste:1.5,marcadoras:.8,temp:1.5,centroMax:CENTRO_MAX};
 // posição típica de uma ideologia num subtema: entre a do eixo e a do perfil (lambda); nos subtemas fora do eixo
 // (meio ambiente), é a do próprio perfil, porque a posição do eixo não diz nada sobre eles
 const tipicaSub=(o,i)=>{const pf=PERFIS[o.n]||[],key=SUBT[i];if(Motor.CFG.fora.includes(key))return pf[i];const b=o.p[key[0]];return b+CLS.lambda*(pf[i]-b)};
@@ -43,8 +43,14 @@ function compute(A){
   // uma intervenção militar, a direita): cada extrema é medida pelas rupturas do próprio lado mais as sem lado.
   const rupDe=l=>{const v=ids.filter(id=>{const o=ITEMS[id];return o.k==="D"&&o.s==="rup"&&!escolha(o)&&(!o.ld||o.ld===l)&&typeof A[id]==="number"}).map(id=>A[id]*ITEMS[id].d);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0};
   const ruptura={e:rupDe("e"),d:rupDe("d")};
-  const elig=ll.filter(q=>(!q.o.g||ext[q.o.g]>=GATE)&&(!q.o.rup||ruptura[q.o.rup]>=RUP_GATE)),T=CLS.temp,mx=Math.max(...elig.map(q=>q.L)),tot=elig.reduce((a,q)=>a+Math.exp((q.L-mx)/T),0);
+  // Centrista só disputa com quem está perto do centro em todos os eixos que definem as ideologias (versão 5). Antes,
+  // quem era forte num eixo e oposto noutro (esquerda na economia e conservador nos costumes, por exemplo) caía no
+  // Centrista só porque o centro fica no meio de tudo, e não porque a pessoa fosse de centro.
+  const noCentro=["E","A","C","N"].every(k=>Math.abs(s[k])<CLS.centroMax);
+  const elig=ll.filter(q=>(!q.o.g||ext[q.o.g]>=GATE)&&(!q.o.rup||ruptura[q.o.rup]>=RUP_GATE)&&(q.o.n!=="Centrista"||noCentro)),T=CLS.temp,mx=Math.max(...elig.map(q=>q.L)),tot=elig.reduce((a,q)=>a+Math.exp((q.L-mx)/T),0);
   const dc=o=>Math.hypot(o.p.E,o.p.A,o.p.C,o.p.N,o.p.D+65); // distância da posição típica ao centro democrático
+  // o Centrista teria ficado em 1º sem a regra acima: o resultado explica que a pessoa é forte em algum eixo
+  const qc=ll.find(q=>q.o.n==="Centrista"),centroForte=!noCentro&&qc&&qc.L>=mx?["E","A","C","N"].filter(k=>Math.abs(s[k])>=CLS.centroMax):null;
   let ranked=elig.map(q=>{const p=Math.exp((q.L-mx)/T)/tot;return {...q.o,prob:p,match:Math.round(p*100),z:q.z}}).sort((a,b)=>(b.prob-a.prob)||(dc(a)-dc(b)));
   if(!ranked.length)ranked=[{...IDEO.find(o=>o.n==="Centrista"),prob:1,match:100,z:0}];
   const margin=ranked[1]?Math.round((ranked[0].prob-ranked[1].prob)*100):99,two=!!ranked[1]&&ranked[1].prob>=.6*ranked[0].prob;
@@ -84,7 +90,7 @@ function compute(A){
   if(respondeu<=.5)conf="baixa";else if(respondeu<.75&&conf==="alta")conf="media";
   if(neutro>=.8||Math.abs(aquiesc)>=1)conf="baixa";else if(naoDif&&conf==="alta")conf="media";
   if(espalhado>=ESPALHADO_BAIXA)conf="baixa";else if(espalhado>=ESPALHADO_MEDIA&&conf==="alta")conf="media";
-  return {s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop,neutro,aquiesc,naoDif,espalhado,ruptura};
+  return {centroForte,s,gam,ancoras:M.ancoras,se:M.se,two,P1,sub,ext,extAsked:asked_,ranked,margin,unsure:ur,noop:nr,inc,weak,acq,ten,sym,ci,hw,hwAvg,cons,checked,flat,fast,conf,prec,lab,respondeu,perguntas:asked,semOpiniao:noop,neutro,aquiesc,naoDif,espalhado,ruptura};
 }
 // posição provisória num eixo, usada pra decidir se as frases de um extremo aparecem
 function axisNow(k){return Motor.calcular(st.ans,ITEMS,seq(),WEIGHTS).raw[k]}

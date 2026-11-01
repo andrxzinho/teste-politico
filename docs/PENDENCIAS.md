@@ -1,7 +1,7 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 28 de outubro de 2026.
+Última revisão: 1 de novembro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
@@ -26,6 +26,10 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [x] **Presidentes desde 1985** no resultado, no lugar dos candidatos, com foto (27/10/2026).
 - [x] **Propostas da auditoria da metodologia:** versão 2 do cálculo (23/10/2026). O que foi aplicado está no topo de
       `docs/AUDITORIA-METODOLOGIA.md`.
+- [x] **Versão 5 do cálculo e correntes** (1/11/2026): filtro do centro (perfis mistos não caem mais no Centrista) e 84
+      correntes dentro das 21 ideologias, no resultado e nas páginas. Países ficaram de fora, por decisão do responsável.
+- [ ] **Eixos novos** (religião, federalismo, militarismo...): só com os dados do estudo, pra não mudar as frases no meio
+      da coleta.
 - [x] **Versão 4 do cálculo** (28/10/2026): eixo Instituições mais equilibrado, ordem das frases por pessoa, sem desempate
       no Aprofundado, meio ambiente fora de Brasil × Mundo e probabilidade calibrada (T = 1,5). Ver o topo de
       `docs/AUDITORIA-METODOLOGIA.md`.

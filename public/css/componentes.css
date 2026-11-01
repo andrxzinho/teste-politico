@@ -162,3 +162,10 @@
   .comp-grade{display:grid;grid-template-columns:minmax(0,34rem) minmax(0,1fr);gap:3rem;align-items:start}
   .comp-lado > .rotulo-secao:first-child{margin-top:1.6rem}
 }
+/* correntes de cada ideologia (variantes) */
+.correntes-lista{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.correntes-lista li{display:grid;gap:.15rem;padding:.65rem .8rem;border-radius:8px;background:var(--gaveta);border:1px solid var(--gaveta-borda)}
+.correntes-lista b{font-size:.95rem}
+.correntes-lista span{font-size:.88rem;line-height:1.45;color:var(--grafite)}
+/* âncoras das páginas (ex.: /ideologias/x/#correntes): o título não fica escondido embaixo do cabeçalho fixo */
+html{scroll-padding-top:96px}

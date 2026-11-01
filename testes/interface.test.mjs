@@ -46,6 +46,8 @@ export async function testarInterface() {
     v.confere((await pg.locator("#results details.acc").count()) === 11, `${modo}: resultado completo deveria ter 11 seções`);
     // perto e longe de cada uma das 3 ideologias do resumo
     v.confere(await pg.evaluate("[...document.querySelectorAll('#resumo .resumo-ideo + .ideo-eixos')].filter(e=>/^Mais perto em .+ e .+\\. (Mais longe em .+: você fica mais pro lado “.+”\\.|Não fica longe em nenhum eixo\\.)$/.test(e.textContent)).length===3"), `${modo}: cada ideologia do resumo deveria dizer onde fica mais perto e mais longe`);
+    // correntes mais parecidas: 3, cada uma com link pra página da ideologia
+    v.confere(await pg.evaluate("document.querySelectorAll('#resumo .correntes a.corrente').length===3&&[...document.querySelectorAll('#resumo a.corrente')].every(a=>/\\/ideologias\\/[a-z-]+\\/#correntes$/.test(a.getAttribute('href')))"), `${modo}: o resumo deveria mostrar as 3 correntes mais parecidas, com link`);
     // onde você difere da sua ideologia: no máximo 4 frases, uma por tema, sempre do lado oposto à posição típica
     v.confere(await pg.evaluate("(()=>{const d=divergencias(R.ranked[0]);return d.length<=4&&new Set(d.map(x=>x.sub)).size===d.length&&d.every(x=>Math.sign(x.v)===-Math.sign(x.tip)&&Math.abs(x.tip)>=.75)&&document.querySelectorAll('#divergeOut .item').length===d.length&&$('t-diverge').textContent.includes(R.ranked[0].n)})()"), `${modo}: "onde você difere" deveria listar só frases do lado oposto, uma por tema`);
     v.confere(await pg.evaluate("[...document.querySelectorAll('#results .acc-list > details.acc')].slice(0,2).map(d=>d.id).join()") === "a-perfil,a-porque", `${modo}: "Por que deu esse resultado" deveria vir logo depois do perfil`);

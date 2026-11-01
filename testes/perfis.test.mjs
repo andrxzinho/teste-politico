@@ -228,6 +228,14 @@ export async function testarPerfis() {
     T.CLS.temp = 1; const r0 = T.compute(T.st.ans); T.CLS.temp = t0;
     v.confere(JSON.stringify(r0.ranked.map((o) => o.n)) === JSON.stringify(r1.ranked.map((o) => o.n)) && r1.P1 < r0.P1, `temperatura: deveria baixar a chance da 1ª (${r0.P1} → ${r1.P1}) sem mudar a ordem`);
   }
+  // 8. versão 5: filtro do centro. Perfil misto (esquerda na economia, conservador nos costumes) não cai no Centrista;
+  // quem está perto do centro em tudo continua Centrista
+  for (const m of modos) {
+    const misto = responder(T, m, gerador({ E: -45, A: 10, C: 20, N: 0, D: -65, S: 0 }));
+    v.confere(misto.ranked[0].n !== "Centrista" && misto.ranked.every((o) => o.n !== "Centrista"), `centro/${m}: perfil misto não deveria disputar como Centrista (deu ${misto.ranked[0].n})`);
+    const centro = resultados[m + ":centrista"];
+    v.confere(centro.ranked[0].n === "Centrista", `centro/${m}: perfil de centro deveria continuar Centrista (deu ${centro.ranked[0].n})`);
+  }
   console.log(`  ${pendentes} propriedade(s) pendente(s), documentadas em docs/AUDITORIA-METODOLOGIA.md`);
   return v.fim();
 }

@@ -26,8 +26,8 @@
     <p class="legal-rotulo">Metodologia</p>
     <h1>Como o teste funciona</h1>
     <ul class="legal-datas">
-      <li><b>Última atualização:</b> 28 de outubro de 2026</li>
-      <li><b>Cálculo:</b> versão 4 (desde 28 de outubro de 2026)</li>
+      <li><b>Última atualização:</b> 1º de novembro de 2026</li>
+      <li><b>Cálculo:</b> versão 5 (desde 1º de novembro de 2026)</li>
     </ul>
   </div>
 
@@ -161,6 +161,7 @@
         <p>Os perfis por subtema são uma hipótese. Por isso, o teste só leva metade dessas diferenças em conta: a posição usada fica a meio caminho entre o perfil do subtema e a posição da ideologia no eixo inteiro.</p>
         <ul>
           <li><b>Contrastes:</b> cada resposta de contraste aumenta a chance da ideologia que fica do lado da frase escolhida.</li>
+          <li><b>Centro:</b> o Centrista só entra na disputa se você ficar perto do centro em todos os eixos: menos de 30 pontos pra cada lado em economia, liberdade × ordem, costumes e Brasil × Mundo. Quem é forte num eixo e oposto noutro vai pra tradição mais próxima, e o resultado explica por quê. Antes dessa regra, perfis assim caíam no Centrista só porque o centro fica no meio de tudo.</li>
           <li><b>Extremos:</b> comunismo, anarquismo, fascismo e anarcocapitalismo só entram na disputa se duas coisas acontecerem. Você precisa concordar, em média, com as frases que definem aquele extremo. E a sua posição nos eixos também precisa combinar com ele. Marcar "Concordo" na maioria dessas frases já pode bastar; "Concordo totalmente" conta mais. O ecologismo também depende de três frases sobre floresta e desmatamento (numa delas, sobre asfaltar a BR-319, concordar conta contra).</li>
           <li><b>Frases que definem os extremos</b> também contam como pista. A ideologia extrema concorda com elas, e todas as outras discordam na mesma medida. Isso separa, por exemplo, quem é fascista de quem é de extrema direita. Vale igual pros quatro extremos.</li>
           <li><b>Eixo Democracia:</b> todas as tradições democráticas, da esquerda à direita, têm a mesma posição típica nesse eixo. Na prática, ele só separa essas tradições da Extrema esquerda, da Extrema direita e dos extremos, que no modelo aceitam romper com a democracia.</li>
@@ -220,7 +221,7 @@
         <div class="tabela-wrap"><table class="tabela">
           <thead><tr><th>Modo</th><th>Ideologia certa em 1º</th><th>Certa entre as 2 primeiras</th><th>Mesma ideologia ao refazer</th></tr></thead>
           <tbody>
-            <tr><td>Essencial</td><td>93 de 100</td><td>97 de 100</td><td>90 de 100</td></tr>
+            <tr><td>Essencial</td><td>93 de 100</td><td>96 de 100</td><td>92 de 100</td></tr>
             <tr><td>Padrão</td><td>95 de 100</td><td>99 de 100</td><td>96 de 100</td></tr>
             <tr><td>Aprofundado</td><td>98 de 100</td><td>99 de 100</td><td>97 de 100</td></tr>
           </tbody>
@@ -236,7 +237,7 @@
         <p>Uma revisão completa do método, com os problemas encontrados e propostas de correção, está publicada no repositório (<a href="https://github.com/andrxzinho/teste-politico/blob/main/docs/AUDITORIA-METODOLOGIA.md" rel="noopener">auditoria da metodologia</a>). Os pontos principais:</p>
         <ul>
           <li><b>Sem validação com pessoas reais.</b> A direção de cada frase, as posições típicas das ideologias e os perfis por subtema foram definidos pelo autor, com base em teoria política. Nada disso foi calculado a partir de dados.</li>
-          <li><b>Meio-termo vira centro.</b> Quem responde quase tudo no meio continua recebendo Centrista, agora com confiança baixa e um aviso. Nesse caso, o rótulo diz pouco.</li>
+          <li><b>Meio-termo vira centro.</b> Quem responde quase tudo no meio continua recebendo Centrista, com confiança baixa e um aviso. Nesse caso, o rótulo diz pouco. Perfis fortes num eixo e opostos noutro já não caem no Centrista (versão 5).</li>
           <li><b>Eixos parecidos.</b> No modelo, uma ideologia que fica de um lado em Liberdade × Ordem quase sempre fica do mesmo lado em Costumes e em Brasil × Mundo. Por isso a mesma informação acaba contando três vezes. A calibração das chances (versão 4) compensa parte disso na porcentagem, mas corrigir de verdade depende de dados de pessoas reais.</li>
           <li><b>Subtemas desequilibrados.</b> No Essencial, alguns subtemas têm uma frase só, ou frases que puxam todas pro mesmo lado. Nesses subtemas, a tendência de concordar com tudo pesa no resultado.</li>
           <li><b>Contexto da época.</b> Várias frases tratam de assuntos de 2022 a 2026 (urnas, inelegibilidade, bloqueios, redes sociais). O jeito como elas são lidas pode mudar com o tempo.</li>

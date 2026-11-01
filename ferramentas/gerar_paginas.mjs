@@ -8,8 +8,8 @@ import { slug, esc } from "./comum.mjs";
 const SITE = "https://testepolitico.vercel.app";
 const REPO = "https://github.com/andrxzinho/teste-politico";
 const ctx = {}; vm.createContext(ctx);
-vm.runInContext(fs.readFileSync("public/js/dados/ideologias.js", "utf8") + ";" + fs.readFileSync("public/js/dados/leituras.js", "utf8") + ";globalThis.D={AX,IDEO,IDEO_GRUPOS,IDEO_RESUMO,LEITURAS};", ctx);
-const { AX, IDEO, IDEO_GRUPOS, IDEO_RESUMO, LEITURAS } = ctx.D;
+vm.runInContext(["ideologias", "leituras", "variantes"].map((f) => fs.readFileSync(`public/js/dados/${f}.js`, "utf8")).join(";") + ";globalThis.D={AX,IDEO,IDEO_GRUPOS,IDEO_RESUMO,LEITURAS,VARIANTES};", ctx);
+const { AX, IDEO, IDEO_GRUPOS, IDEO_RESUMO, LEITURAS, VARIANTES } = ctx.D;
 const EXTREMOS = ["Comunista", "Anarquista", "Anarcocapitalista", "Fascista", "Extrema direita", "Extrema esquerda"];
 const anoObra = (a) => (a < 0 ? `c. ${-a} a.C.` : String(a));
 // edição citada e links de cada livro, como no resultado (linhaEdicao em public/js/telas/extras.js): com Amazon, o link
@@ -144,6 +144,9 @@ for (const o of IDEO) {
 ${eixos}
 </div>
 <p class="intro-pagina" style="margin-top:.6rem;font-size:.88rem">É onde ficaria alguém típico dessa tradição. O teste usa esse ponto como referência. Pessoas da mesma ideologia ficam espalhadas em volta dele.</p>
+<h2 class="rotulo-secao" id="correntes">Correntes</h2>
+<p class="intro-pagina" style="font-size:.88rem;margin-bottom:.6rem">Linhas diferentes dentro da mesma tradição. No resultado do teste aparecem as três correntes mais perto das suas posições.</p>
+<ul class="correntes-lista">${VARIANTES[n].map((v) => `<li><b>${esc(v.n)}</b><span>${esc(v.d)}</span></li>`).join("")}</ul>
 <h2 class="rotulo-secao">Ideologias vizinhas</h2>
 <div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
 <ul class="lista-pagina diferencas">${viz.map((v) => `<li>Comparada com <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
