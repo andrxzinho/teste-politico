@@ -1,6 +1,22 @@
 # Histórico de versões
 
-## Cálculo, versão 5, e correntes das ideologias (1 de novembro de 2026)
+## Auditoria geral (1º de novembro de 2026)
+- Escala 6x1: a emenda de outubro de 2026 acabou com ela. As duas frases antigas, que falavam do fim como proposta,
+  saíram do teste, e entraram duas novas no lugar (voltar a permitir, ou manter o fim). Na simulação, o acerto não mudou.
+- Fatos corrigidos nas explicações: cotas (quilombolas desde 2023), Banco Central, licença-paternidade e acordo
+  Mercosul–União Europeia.
+- O servidor recusa resultado cuja ideologia não bate com as respostas. Limite de pedidos mais alto pra quem abre o site
+  pela rede de celular, painel com limite geral de tentativas, e o site continua no ar se o banco falhar.
+- Backup diário com a cópia fiel de cada registro.
+- Corrigir respostas mostra também as do modo anterior; o resultado salvo é refeito quando os pesos chegam; dados
+  antigos no aparelho não travam mais o teste.
+- Termos (versão 3.6), metodologia e perguntas frequentes atualizados: presidentes e partidos, pares de coerência,
+  correntes, prazos do desafio anti-robô e do limite de pedidos.
+- Textos mais fáceis de ler fora das frases do teste, e rótulos dos subtemas iguais em todo o site.
+- Imagem de compartilhamento na metodologia e nos termos. Código de conduta no repositório.
+- Relatório completo em `docs/AUDITORIA-GERAL.md`.
+
+## Cálculo, versão 5, e correntes das ideologias (1º de novembro de 2026)
 - O Centrista só entra na disputa pra quem fica perto do centro em todos os eixos (menos de 30 pontos pra cada lado em
   economia, liberdade × ordem, costumes e Brasil × Mundo). Antes, quem era forte num eixo e oposto noutro caía no
   Centrista só porque o centro fica no meio de tudo. Nos 46 resultados reais do estudo, os Centristas cairiam de 13 pra

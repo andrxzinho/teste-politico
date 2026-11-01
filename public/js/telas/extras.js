@@ -82,7 +82,7 @@ function mostrarLeituras(){
   if(R.two){const t=el("div","tabs");t.setAttribute("role","tablist");t.setAttribute("aria-label","Ideologia");[R.ranked[0].n,R.ranked[1].n].forEach(x=>{const b=el("button",null,x);b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",String(x===n));b.onclick=()=>{leiturasIdeo=x;mostrarLeituras()};t.append(b)});out.append(t)}
   const abas=el("div","tabs");abas.setAttribute("role","tablist");abas.setAttribute("aria-label","Leituras");[["favor","Pra entender por dentro"],["contra","Pra entender as críticas"]].forEach(([k,t])=>{const b=el("button",null,t);b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",String(k===leiturasAba));b.onclick=()=>{leiturasAba=k;mostrarLeituras()};abas.append(b)});out.append(abas);
   const ext=["Comunista","Anarquista","Anarcocapitalista","Fascista","Extrema direita","Extrema esquerda"].includes(n);
-  out.append(el("p","small",leiturasAba==="favor"?(ext?`Fontes históricas e textos de referência de ${n}, pra entender o que essa tradição defendeu. Não é recomendação.`:`Obras que ajudam a entender ${n} como os próprios defensores a entendem.`):"As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio."));
+  out.append(el("p","small",leiturasAba==="favor"?(ext?`Textos históricos e de referência dessa tradição, pra entender o que ela defendeu. Não é recomendação.`:`Livros de quem defende essa tradição, pra ver como os próprios defensores pensam.`):"As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio."));
   L[leiturasAba].forEach(([t,a,ano,d,x])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));if(x)tx.append(linhaEdicao(x));it.append(capaLivro(t,a),tx);out.append(it)})}
 // edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
 // edição citada, link informativo (Wikipédia, editora ou Open Library) e, menor, a loja (mesma linha em ferramentas/gerar_paginas.mjs)
@@ -96,7 +96,7 @@ function correntesParecidas(){
   const box=el("div","correntes");box.append(el("p","rotulo","Correntes mais parecidas com você"));
   lista.forEach(v=>{const a=el("a","corrente");a.href=`/ideologias/${slugIdeo(v.pai)}/#correntes`;
     a.append(el("b",null,v.n),el("small",null,`Corrente da ideologia ${v.pai}`),el("span",null,v.d));box.append(a)});
-  box.append(el("p","small","Correntes são linhas dentro de cada ideologia. Elas não mudam o resultado: só mostram, entre as 84, as que ficam mais perto das suas posições."));
+  box.append(el("p","small","Correntes são linhas dentro de cada ideologia. Elas não mudam o resultado: só mostram, entre as correntes das ideologias que disputam o seu resultado, as que ficam mais perto das suas posições."));
   return box}
 function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
   const ln=(u,t,c)=>{const a=el("a",c,t);a.href=u;a.target="_blank";a.rel="noopener";p.append(a)};
@@ -119,7 +119,8 @@ function renderExtras(){
   mostrarDivergencias();
   leiturasIdeo=R.ranked[0].n;leiturasAba="favor";mostrarLeituras();
   montarResumo();setCompleto(false);
-  if($("friendOut").children.length)setTimeout(()=>irParaBloco("blocoPartilha"),400)} // chegou por link de amigo: mostra a comparação
+  // chegou agora por um link de amigo (?comparar=): leva até a comparação, uma vez só. Um código salvo de antes não rola a página.
+  if(window.TP_AMIGO&&$("friendOut").children.length){window.TP_AMIGO=false;setTimeout(()=>irParaBloco("blocoPartilha"),400)}}
 
 // resumo do resultado: o principal à vista; o completo abre pela tecla "Ver resultado completo"
 function setCompleto(on){const r=$("results"),b=$("verCompleto");r.classList.toggle("completo",on);b.textContent=on?"Ver só o resumo":"Ver resultado completo";b.setAttribute("aria-expanded",String(on))}

@@ -50,6 +50,11 @@ export const banco = {
     if (MEMORIA) return M.resultados.filter((r) => r.conjunto === conjunto && naFaixa(r.dia, de, ate)).map((r) => ({ ...r.dados, dia: r.dia }));
     return (await tudo(`resultados?select=dia,dados&conjunto=eq.${conjunto}${periodo(de, ate)}&order=id`)).map((r) => ({ ...r.dados, dia: r.dia }));
   },
+  // cópia fiel pro backup: todos os registros, com a chave (inclusive o menor de quem continuou de modo)
+  async resultadosCrus(conjunto) {
+    if (MEMORIA) return M.resultados.filter((r) => r.conjunto === conjunto).map((r) => ({ dia: r.dia, chave: r.chave, dados: r.dados }));
+    return await tudo(`resultados?select=dia,chave,dados&conjunto=eq.${conjunto}&order=id`);
+  },
   // [{ dia, tipo, modo, pos, n }]
   async eventos(conjunto, de, ate) {
     if (MEMORIA) return M.eventos.filter((e) => e.conjunto === conjunto && naFaixa(e.dia, de, ate)).map(({ conjunto: _, ...e }) => e);
@@ -68,11 +73,7 @@ export const banco = {
     if (conjunto === "real") await rest("desafios_usados?marca=neq.", { metodo: "DELETE", prefer: "return=minimal" });
     return (a.total || 0) + (b.total || 0);
   },
-  // usado só na migração: apaga os avisos de início e saída de um conjunto pra regravar a partir da exportação
-  async apagarEventos(conjunto) {
-    if (MEMORIA) { M.eventos = M.eventos.filter((e) => e.conjunto !== conjunto); return; }
-    await rest(`eventos?conjunto=eq.${conjunto}`, { metodo: "DELETE", prefer: "return=minimal" });
-  },
+
   // configuração (segredos, credencial do painel, pesos): valores JSON por chave
   async lerConfig(chave) {
     if (MEMORIA) return M.config.has(chave) ? JSON.parse(M.config.get(chave)) : null;

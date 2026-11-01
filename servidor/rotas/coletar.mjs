@@ -2,7 +2,7 @@
 // Não existe nome, IP, navegador nem horário: só o dia e respostas em faixas, numa chave com nome aleatório.
 import Motor, { ITENS } from "../motor.mjs";
 import { banco } from "../banco.mjs";
-import { FRASES_NOVAS_V2, FRASES_NOVAS_V4, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, estudoEncerrado, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
+import { FRASES_NOVAS_V2, FRASES_NOVAS_V4, FRASES_NOVAS_V5, IDEO_POS, IDEOLOGIAS, EIXOS, EXTREMOS, IDS, TEMPOS, IDADES, UFS, ESPECTROS, CONFIANCAS, hoje, estudoEncerrado, ehProducao, sessaoValida, emitirDesafio, conferirProva, passouDoLimite, SEM_CACHE } from "../comum.mjs";
 
 const inicio = () => process.env.COLETA_INICIO || "2026-10-01";
 const nul = (v, lista) => v === null || v === undefined || lista.includes(v);
@@ -22,8 +22,10 @@ function eixosDasRespostas(resp, pesos, v3 = false) {
 }
 
 export default async (req) => {
-  // no máximo 30 pedidos por minuto por visitante
-  if (await passouDoLimite(req, "coletar")) return Response.json({ ok: false, motivo: "Muitos envios seguidos. Espere um minuto." }, { status: 429, headers: SEM_CACHE });
+  // limite por visitante: a consulta de estado (feita a cada página aberta) tem um limite próprio e mais alto, porque numa
+  // operadora de celular muita gente sai pelo mesmo endereço; envios e desafios continuam com 30 por minuto
+  const estado = req.method === "GET" && !new URL(req.url).searchParams.has("desafio");
+  if (await passouDoLimite(req, estado ? "coletar-estado" : "coletar", estado ? 240 : 30)) return Response.json({ ok: false, motivo: "Muitos envios seguidos. Espere um minuto." }, { status: 429, headers: SEM_CACHE });
   const ativo = hoje() >= inicio() && !estudoEncerrado();
   if (req.method === "GET" && new URL(req.url).searchParams.has("desafio")) return Response.json(await emitirDesafio(), { headers: SEM_CACHE });
   if (req.method === "GET") {
@@ -54,7 +56,7 @@ export default async (req) => {
   // avisos de início e saída: só contam, sem nenhum dado da pessoa
   if (b.tipo === "inicio" || b.tipo === "saida") {
     const pos = b.tipo === "saida" ? b.pos : 0;
-    if (!Number.isInteger(pos) || pos < 0 || pos > 400) return new Response("Dados inválidos", { status: 400 });
+    if (!Number.isInteger(pos) || pos < (b.tipo === "saida" ? 1 : 0) || pos > 400) return new Response("Dados inválidos", { status: 400 });
     await banco.inserirEvento(conj, hoje(), b.tipo, modo, pos);
     return Response.json({ ok: true }, { headers: SEM_CACHE });
   }
@@ -63,8 +65,8 @@ export default async (req) => {
   const ANTIGOS = { "Esquerda radical": "Extrema esquerda", "Direita radical": "Extrema direita" };
   if (Object.hasOwn(ANTIGOS, b.ideologia)) b.ideologia = ANTIGOS[b.ideologia];
   if (b.autoid && Object.hasOwn(ANTIGOS, b.autoid.ideologia)) b.autoid.ideologia = ANTIGOS[b.autoid.ideologia];
-  // e páginas abertas antes da versão 4 mandam sem as 2 frases novas de Instituições
-  for (const falta of [FRASES_NOVAS_V4, FRASES_NOVAS_V4 + FRASES_NOVAS_V2])
+  // e páginas abertas antes da versão 4 (ou da 5) mandam sem as frases novas do fim da lista
+  for (const falta of [FRASES_NOVAS_V5, FRASES_NOVAS_V5 + FRASES_NOVAS_V4, FRASES_NOVAS_V5 + FRASES_NOVAS_V4 + FRASES_NOVAS_V2])
     if (typeof b.respostas === "string" && b.respostas.length === IDS.length - falta) b.respostas += "_".repeat(falta);
 
   const i = IDEOLOGIAS.indexOf(b.ideologia);
@@ -94,7 +96,13 @@ export default async (req) => {
   const pesos = (await banco.lerConfig("config/pesos"))?.pesos || {};
   const bate = (calc) => !ax.some((v, j) => Math.abs(v - calc[j]) > 30);
   // páginas antigas: aceita se bater com a versão 4 ou com a conta da versão 3
-  if (!bate(eixosDasRespostas(b.respostas, pesos)) && !(!(b.calculo >= 4) && bate(eixosDasRespostas(b.respostas, pesos, true)))) return new Response("Os eixos não batem com as respostas", { status: 422 });
+  const calc4 = eixosDasRespostas(b.respostas, pesos), calc3 = !(b.calculo >= 4) ? eixosDasRespostas(b.respostas, pesos, true) : null;
+  if (!bate(calc4) && !(calc3 && bate(calc3))) return new Response("Os eixos não batem com as respostas", { status: 422 });
+  // a ideologia enviada precisa estar entre as 8 mais perto dos eixos calculados das respostas (nos resultados reais e em
+  // 6 mil simulados, a do resultado nunca passou da 5ª). Isso recusa resultados inventados, como respostas neutras com
+  // "Fascista", sem precisar refazer a classificação inteira no servidor.
+  const perto = (ax) => Object.entries(IDEO_POS).map(([n, p]) => [n, Math.hypot(...p.map((v, j) => v - ax[j]))]).sort((x, y) => x[1] - y[1]).slice(0, 8).map((x) => x[0]);
+  if (![calc4, calc3].some((ax) => ax && perto(ax).includes(b.ideologia))) return new Response("A ideologia não bate com as respostas", { status: 422 });
 
   const reg = { m: modo, i, ax, ex, t: b.tempo, r: b.respostas, x: expl, id: b.idade ?? null, uf: b.uf ?? null,
     se: b.autoid?.espectro ?? null, si: b.autoid?.ideologia ? IDEOLOGIAS.indexOf(b.autoid.ideologia) : null,

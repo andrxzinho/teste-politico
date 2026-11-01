@@ -56,6 +56,17 @@ export async function testarNumeros() {
   }
   // o Aprofundado não pode ser anunciado como "o mais preciso" enquanto não acertar mais que o Padrão
   if (CALIB.deep.acerto <= CALIB.full.acerto) v.confere(!/mais preciso/i.test(ini), 'a página inicial não deveria chamar o Aprofundado de "o mais preciso"');
+  // as perguntas frequentes citam o acerto do Padrão: o mesmo número de CALIB
+  const faqPadrao = (faq.match(/no modo Padrão, a ideologia certa aparece em primeiro em cerca de (\d+) de cada 100/) || [])[1];
+  v.confere(faqPadrao === String(Math.round(CALIB.full.acerto * 100)), `perguntas frequentes deveriam dizer ${Math.round(CALIB.full.acerto * 100)} de cada 100 no Padrão (dizem ${faqPadrao})`);
+
+  // listas do formulário do estudo: as opções do site precisam ser as mesmas que o servidor aceita, senão o envio é recusado
+  const srv = ler("servidor/comum.mjs"), lista = (nome) => JSON.parse(srv.match(new RegExp(`export const ${nome} = (\\[.*?\\]);`))[1]);
+  const opcoes = (id) => [...ini.match(new RegExp(`<select id="${id}">(.*?)</select>`, "s"))[1].matchAll(/<option(?: value="([^"]*)")?>([^<]*)<\/option>/g)].map((m) => m[1] ?? m[2]).filter((x) => x && x !== "<18");
+  v.confere(JSON.stringify(opcoes("cAge")) === JSON.stringify(lista("IDADES")), "as faixas de idade do site deveriam ser as mesmas do servidor");
+  v.confere(JSON.stringify(opcoes("siEsp")) === JSON.stringify(lista("ESPECTROS")), "as opções de espectro do site deveriam ser as mesmas do servidor");
+  const ufsSite = JSON.parse(ler("public/js/telas/inicio.js").match(/const UFS=(\[.*?\]);/)[1]);
+  v.confere(JSON.stringify(ufsSite) === JSON.stringify(lista("UFS")), "os estados do site deveriam ser os mesmos do servidor");
   return v.fim();
 }
 if (executandoDireto(import.meta.url)) process.exitCode = (await testarNumeros()) ? 1 : 0;

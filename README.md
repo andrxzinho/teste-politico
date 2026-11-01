@@ -203,6 +203,8 @@ Achou uma frase enviesada, um dado errado ou um problema no site?
 para frases ou dados. Para propor uma mudança no código, leia o [CONTRIBUTING.md](CONTRIBUTING.md) (regras de
 neutralidade e o que não pode mudar sem proposta prévia) e rode os testes antes de abrir o pull request.
 
+Quem participa segue o [código de conduta](CODE_OF_CONDUCT.md): discutir ideias, não pessoas, com respeito a todos os lados.
+
 Falhas de segurança ou privacidade **não** devem ir para um aviso público: veja o [SECURITY.md](SECURITY.md).
 
 ## Licença

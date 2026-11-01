@@ -56,7 +56,7 @@ $("descartarBtn").onclick=()=>{if(!confirm(`Descartar as respostas do modo ${nom
   try{localStorage.removeItem(KEY)}catch(e){}st=fresh("full");retomarVisivel(false);$("modos").scrollIntoView({block:"start"})};
 document.addEventListener("keydown",e=>{if($("quiz").classList.contains("hidden")||sheet.open||shareSheet.open||infoSheet.open)return;if(e.key==="?"){if(!onIntro()&&!escolha(ITEMS[seq()[st.cur]]))openSheet();return}if(busy)return;if(onIntro()){if(e.key==="Enter"){const b=$("answers").querySelector("button");if(b)b.click()}return}const i="12345".indexOf(e.key);if(i>=0)pick(escolha(ITEMS[seq()[st.cur]])?(()=>{const b=$("answers").querySelectorAll("button.ans")[i];return b?+b.dataset.v:null})():[2,1,0,-1,-2][i])});
 // link de comparação recebido
-{const m=location.search.match(/[?&]comparar=([0-9a-z]+)/i);if(m){const fr=decode(m[1]);if(fr){try{localStorage.setItem(FKEY,encode(fr.n,fr.s,fr.m))}catch(e){}
+{const m=location.search.match(/[?&]comparar=([0-9a-z]+)/i);if(m){const fr=decode(m[1]);if(fr){window.TP_AMIGO=true;try{localStorage.setItem(FKEY,encode(fr.n,fr.s,fr.m))}catch(e){}
   cartaoAmigo(fr)}else{const b=$("friendBanner");b.className="note";b.textContent="O link de comparação que você abriu está incompleto ou foi copiado errado. Por isso, não deu pra mostrar o resultado de quem mandou. Peça o link de novo. Ou, quando terminar o teste, cole o link ou o código no bloco \"Compartilhar e comparar\" do seu resultado."}}}
 // resultado de quem mandou o link, visível mesmo antes de fazer o teste
 function cartaoAmigo(fr){const b=$("friendBanner");b.innerHTML="";b.className="note amigo";
@@ -75,6 +75,8 @@ window.addEventListener("hashchange",irParaModos);irParaModos();
 // teclas de ação ao lado do visor do resultado (computador) repassam o toque pras de baixo
 document.querySelectorAll("[data-clica]").forEach(b=>b.onclick=()=>$(b.dataset.clica).click());
 if(load()){if(st.done)results();else showResume()}
+// se houver pesos por frase, o resultado aberto antes de eles chegarem é recalculado com eles (hoje não há pesos)
+pesosProntos.then(()=>{if(Object.keys(WEIGHTS).length&&st.done&&R&&!$("results").classList.contains("hidden"))results()});
 // vindo da página de uma ideologia (?ideologia=): com teste terminado, abre a comparação; sem, convida a fazer o teste
 // (roda depois de carregar o teste salvo, pra saber se ele já terminou)
 {const m=location.search.match(/[?&]ideologia=([a-z0-9-]+)/);const o=m&&IDEO.find(x=>slugIdeo(x.n)===m[1]);

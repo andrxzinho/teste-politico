@@ -14,6 +14,8 @@ export async function testarAcessibilidade({ detalhar = true } = {}) {
     ["corrigir respostas", "/", `st=fresh('full');${RESPONDER}(-1);save();results();abrirCorrecao();document.querySelectorAll('.ed-frase')[0].click()`],
     ["ideologia", "/ideologias/social-democrata/", null], ["lista", "/ideologias/", null], ["sobre", "/sobre/", null], ["página não encontrada", "/404.html", null],
     ["perguntas frequentes", "/perguntas-frequentes/", "document.querySelectorAll('details').forEach(d=>d.open=true)"], ["metodologia", "/metodologia.html", "document.querySelectorAll('details').forEach(d=>d.open=true)"],
+    ["comparar ideologias", "/ideologias/comparar/?a=comunista&b=fascista", null], ["termos", "/termos.html", null], ["créditos", "/creditos/", null], ["código-fonte", "/codigo-aberto/", null],
+    ["janela de compartilhar", "/", `st=fresh('full');${RESPONDER}(-1);abrirImagem()`],
   ];
   for (const tema of ["light", "dark"]) for (const [nome, url, js] of telas) {
     const pg = await b.newPage({ viewport: { width: 390, height: 844 }, colorScheme: tema, reducedMotion: "reduce" }); // sem animações: o contraste é medido nas cores finais

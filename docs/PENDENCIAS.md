@@ -1,7 +1,7 @@
 # Pendências
 
 Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir cada item (e registre no CHANGELOG).
-Última revisão: 1 de novembro de 2026.
+Última revisão: 1º de novembro de 2026.
 
 ## Decisões que dependem do responsável pelo projeto
 
@@ -38,6 +38,19 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
       reestimar a temperatura da probabilidade e conferir as posições típicas em meio ambiente.
 - [ ] **Meio ambiente nas páginas das ideologias:** a posição típica em meio ambiente ainda não aparece nas páginas de
       cada ideologia nem na página de comparar, só no resultado.
+
+## Auditoria geral de 1/11/2026
+
+Relatório em `docs/AUDITORIA-GERAL.md`. O que foi corrigido está lá e no CHANGELOG. Fica pendente:
+
+- [ ] **Tópico do GitHub:** tirar `eleicoes-2026` (Settings, Topics). Só o responsável consegue.
+- [ ] **Opcional:** proteger a `main` no GitHub e ligar as conferências de publicação no Vercel.
+- [ ] **Fusão PSDB–Podemos:** sem confirmação do TSE até 1/11/2026. Os dois continuam no teste; juntar quando for
+      confirmada.
+- [ ] **Texto das frases do teste:** 25 frases dá pra simplificar, mas mudar o texto no meio do estudo deixa as
+      respostas de antes e de depois incomparáveis. Fazer depois do estudo ou entre ciclos de coleta.
+- [ ] **Descrições das leituras:** cerca de 20 com frases longas, junto com a revisão dos livros.
+- [ ] **Escala 6x1:** a jornada cai pra 40 horas em dezembro de 2027. Conferir a explicação das frases Z23 e Z24 nessa data.
 
 ## Auditoria pedida em 23/10/2026
 

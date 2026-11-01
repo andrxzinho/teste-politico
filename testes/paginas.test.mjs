@@ -8,7 +8,7 @@ export async function testarPaginas() {
   v.confere(fs.readdirSync("public/ideologias").filter((d) => d !== "comparar" && fs.existsSync(`public/ideologias/${d}/index.html`)).length === 21, "deveria haver 21 páginas de ideologia");
 
   // rodapé: a data de "Atualizado em" é a da entrada mais recente do CHANGELOG
-  const dataLog = (fs.readFileSync("CHANGELOG.md", "utf8").match(/^## .*\((\d{1,2} de \S+ de \d{4})\)/m) || [])[1];
+  const dataLog = (fs.readFileSync("CHANGELOG.md", "utf8").match(/^## .*\((\d{1,2}º? de \S+ de \d{4})\)/m) || [])[1];
   v.confere(dataLog && fs.readFileSync("public/js/navegacao.js", "utf8").includes(`const ATUALIZADO = "${dataLog}"`), `data do rodapé deveria ser a do CHANGELOG (${dataLog})`);
   // security.txt (RFC 9116): contato e validade, que precisa estar a mais de 30 dias de vencer
   const sec = fs.readFileSync("public/.well-known/security.txt", "utf8"), vence = Date.parse((sec.match(/^Expires: (.+)$/m) || [])[1]);

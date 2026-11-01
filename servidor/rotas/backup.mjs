@@ -14,8 +14,9 @@ export default async (req) => {
     await banco.apagarBackups(); await banco.faxina();
     return Response.json({ ok: true, encerrado: true, apagados }, { headers: SEM_CACHE });
   }
-  const rs = await registros("real"), evs = await eventos("real");
-  await banco.gravarBackup(hoje(), { gerado: new Date().toISOString(), registros: rs, eventos: evs });
+  // cópia fiel: todos os registros com a chave (o de quem continuou de modo também), pra dar pra restaurar tudo
+  const crus = await banco.resultadosCrus("real"), evs = await eventos("real"), pessoas = (await registros("real")).length;
+  await banco.gravarBackup(hoje(), { gerado: new Date().toISOString(), versao: 2, resultados: crus, eventos: evs });
   await banco.faxina();
-  return Response.json({ ok: true, resultados: rs.length, eventos: evs.length }, { headers: SEM_CACHE });
+  return Response.json({ ok: true, resultados: crus.length, pessoas, eventos: evs.length }, { headers: SEM_CACHE });
 };

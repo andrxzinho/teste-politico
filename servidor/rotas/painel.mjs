@@ -28,13 +28,12 @@ async function autorizado(req) {
   if (!c) return new Response("Crie a credencial no painel primeiro.", { status: 503 });
   const auth = req.headers.get("authorization") || "";
   const enviada = auth.startsWith("Bearer ") ? auth.slice(7) : "";
-  if (!enviada || !confere(enviada, c)) {
-    // além do limite por visitante, um limite geral de tentativas erradas por minuto, que não depende do endereço
-    const falhas = await banco.contarPedido("painel-falhas", Math.floor(Date.now() / 60e3));
-    await espera(1200);
-    if (falhas > 60) return new Response("Muitas tentativas erradas. Espere um minuto.", { status: 429 });
-    return new Response("Credencial inválida", { status: 401 });
-  }
+  // além do limite por visitante, um limite geral de 60 tentativas por minuto, que não depende do endereço. Ele vale
+  // antes de conferir a senha: passando do limite, nem a senha certa entra naquele minuto, então usar muitos endereços
+  // não ajuda a adivinhar.
+  const tentativas = await banco.contarPedido("painel-tentativas", Math.floor(Date.now() / 60e3)).catch(() => 0);
+  if (tentativas > 60) return new Response("Muitas tentativas. Espere um minuto.", { status: 429 });
+  if (!enviada || !confere(enviada, c)) { await espera(1200); return new Response("Credencial inválida", { status: 401 }); }
   return null;
 }
 const conta = (o, k) => { o[k] = (o[k] || 0) + 1; };
@@ -65,9 +64,8 @@ function qualidade(rs) {
     const tot = mat.map((row) => row.reduce((a, b) => a + b, 0));
     const vi = itens.map((_, j) => varr(mat.map((row) => row[j]))), vt = varr(tot), K = itens.length;
     const alfa = vt ? (K / (K - 1)) * (1 - vi.reduce((a, b) => a + b, 0) / vt) : null;
-    const corr = (x, y) => { const mx = media(x), my = media(y); let sxy = 0, sx = 0, sy = 0; x.forEach((v, i) => { sxy += (v - mx) * (y[i] - my); sx += (v - mx) ** 2; sy += (y[i] - my) ** 2; }); return sx && sy ? sxy / Math.sqrt(sx * sy) : 0; };
     res[k] = { n, alfa: alfa === null ? null : Math.round(alfa * 100) / 100,
-      itens: itens.map((id, j) => ({ id, r: Math.round(corr(mat.map((row) => row[j]), tot.map((t, i) => t - mat[i][j])) * 100) / 100 })) };
+      itens: itens.map((id, j) => ({ id, r: Math.round(correlacao(mat.map((row) => row[j]), tot.map((t, i) => t - mat[i][j])) * 100) / 100 })) };
   }
   return res;
 }

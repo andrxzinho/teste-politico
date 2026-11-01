@@ -96,14 +96,6 @@
 .acoes-pagina .ok::before{content:"CONFIRMA";font-size:.62rem;letter-spacing:.12em;opacity:.8}
 .acoes-pagina .branco{background:var(--branco);box-shadow:inset 0 0 0 1px var(--branco-borda),0 5px 0 var(--branco-sombra);color:#151513}
 .acoes-pagina a:active{transform:translateY(4px);box-shadow:0 1px 0 #000}
-.faq details{margin-bottom:.6rem;border-radius:8px;background:var(--gaveta);border:1px solid var(--gaveta-borda)}
-.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:56px;padding:.6rem .7rem .6rem .9rem;font-weight:700}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";flex:none;width:2.2rem;height:2.1rem;display:grid;place-items:center;border-radius:5px;background:#1A1A18;color:#F5F5F0;font-size:1.2rem;box-shadow:0 4px 0 #000;margin-bottom:4px}
-.faq details[open] summary::after{content:"−";transform:translateY(3px);box-shadow:0 1px 0 #000}
-.faq details > div{margin:0 .55rem .6rem;padding:.8rem .85rem;border-radius:6px;background:var(--visor);border:1px solid var(--linha);line-height:1.55}
-.faq details > div p{margin:0 0 .6rem}
-.faq details > div p:last-child{margin:0}
 :focus-visible{outline:3px solid var(--confirma);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.menu{animation:none}}
 .pular{position:absolute;left:-999px;top:0;z-index:50;padding:.6rem .9rem;background:var(--confirma);color:#151513;font-weight:700}

@@ -21,10 +21,10 @@ function order(mode,ja,semente){
   if(esc.length||con.length){bs.push(L.length);bk.push("R");L.push(...esc,...con)}
   return {L,bs,bk};
 }
-function aprofundar(){const prox=PROX[st.mode];if(!prox)return;
+function aprofundar(){const prox=PROX[st.mode],modoAntes=st.mode;if(!prox)return;
   const ja=new Set(Object.keys(st.ans).filter(id=>st.ans[id]!=="g")),antes=seq().filter(id=>ja.has(id)),o=order(prox,ja,st.semente);
   Object.assign(st,{mode:prox,base:[...antes,...o.L],bs:o.bs.map(x=>x+antes.length),bk:o.bk,seen:[],tb:[],tbAsked:false,cur:antes.length,done:false,hist:false});
-  if(st.study.sent){st.study.de=st.study.de||(prox==="full"?"quick":"full");st.study.sent=false}
+  if(st.study.sent){st.study.de=modoAntes;st.study.sent=false}
   save();R=null;show("quiz");render()}
 function novoId(){try{return crypto.randomUUID()}catch(e){const b=crypto.getRandomValues(new Uint8Array(16));b[6]=b[6]&15|64;b[8]=b[8]&63|128;const h=[...b].map(x=>x.toString(16).padStart(2,"0")).join("");return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`}}
 // inv: metade das pessoas vê as opções das perguntas de escolha em ordem invertida, pra que a tendência de escolher a
@@ -35,7 +35,13 @@ function fresh(mode){const semente=novaSemente(),o=order(mode,null,semente);retu
 let st=fresh("full"),busy=false;
 const seq=()=>st.base.concat(st.tb);
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.base)&&Array.isArray(s.bs)&&s.base.every(id=>ITEMS[id])&&(s.tb||[]).every(id=>ITEMS[id])){st=s;return true}}catch(e){}return false}
+// estado salvo: só é usado se tiver o formato esperado (um estado quebrado faria a página travar ao abrir)
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");
+  if(s&&MODOS[s.mode]&&Array.isArray(s.base)&&Array.isArray(s.bs)&&Array.isArray(s.bk)&&s.ans&&typeof s.ans==="object"&&s.study&&typeof s.study==="object"&&s.base.every(id=>ITEMS[id])&&(s.tb||[]).every(id=>ITEMS[id])){
+    s.tb=s.tb||[];s.si=s.si||{esp:"",ide:""};
+    // nomes antigos (antes da versão 2 do cálculo) na autoidentificação
+    const ANT={"Esquerda radical":"Extrema esquerda","Direita radical":"Extrema direita"};if(ANT[s.si.ide])s.si.ide=ANT[s.si.ide];
+    st=s;return true}}catch(e){}return false}
 function show(id){for(const s of ["intro","consent","quiz","tbintro","imp","results"])$(s).classList.toggle("hidden",s!==id);document.body.dataset.tela=id;botaoCabecalho(id);const t=$(id);t.classList.remove("entra");void t.offsetWidth;t.classList.add("entra");window.scrollTo(0,0);
   // teclado e leitor de tela: a cada troca de tela (depois que a pessoa já interagiu), o foco vai pro título da tela nova
   if(interagiu){const h=[...t.querySelectorAll("h1,h2")].find(x=>x.offsetParent!==null);if(h)focarSemRolar(h)}}

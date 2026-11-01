@@ -80,12 +80,12 @@
 .mov .revela.visto .resumo-ideo i::before,.mov details[open] .item .bar i{transform-origin:left;animation:mov-cresce .7s var(--mov-assenta) .1s both}
 .mov .revela.visto .resumo-ideo:nth-of-type(2) i::before{animation-delay:.18s}.mov .revela.visto .resumo-ideo:nth-of-type(3) i::before{animation-delay:.26s}
 /* gavetas: o conteúdo desce suave; o sinal da tecla gira */
-.mov details.acc[open] > .acc-in,.mov .faq details[open] > div,.mov .info-body details[open] > :not(summary){animation:mov-sobe .3s var(--mov-assenta) both}
-details.acc > summary::after,.faq summary::after{transition:transform var(--mov-curta) ease-out,box-shadow var(--mov-curta) ease-out}
+.mov details.acc[open] > .acc-in,.mov .info-body details[open] > :not(summary){animation:mov-sobe .3s var(--mov-assenta) both}
+details.acc > summary::after{transition:transform var(--mov-curta) ease-out,box-shadow var(--mov-curta) ease-out}
 @supports (interpolate-size:allow-keywords){
   :root{interpolate-size:allow-keywords}
-  .mov details.acc::details-content,.mov .faq details::details-content{height:0;overflow:clip;transition:height .32s var(--mov-assenta),content-visibility .32s allow-discrete}
-  .mov details.acc[open]::details-content,.mov .faq details[open]::details-content{height:auto}
+  .mov details.acc::details-content{height:0;overflow:clip;transition:height .32s var(--mov-assenta),content-visibility .32s allow-discrete}
+  .mov details.acc[open]::details-content{height:auto}
 }
 /* barra de leitura do resultado */
 .leitura{position:fixed;left:0;top:0;z-index:30;height:3px;width:100%;background:var(--marca);transform:scaleX(var(--lido,0));transform-origin:left;pointer-events:none}
@@ -100,11 +100,11 @@ body:not([data-tela="results"]) .leitura{display:none}
 
 /* ---------- mouse (só computador): cartões levantam, setas andam; teclas continuam afundando ---------- */
 @media (hover:hover) and (pointer:fine){
-  .cartao,.resumo-ideo,.livro,details.acc,.faq details{transition:transform .22s var(--mov-assenta),box-shadow .22s var(--mov-assenta),border-color .22s}
+  .cartao,.resumo-ideo,.livro,details.acc{transition:transform .22s var(--mov-assenta),box-shadow .22s var(--mov-assenta),border-color .22s}
   .cartao:hover,.livro:hover{transform:translateY(-3px);box-shadow:0 6px 0 var(--gaveta-borda)}
   .cartao::after{transition:transform .22s var(--mov-assenta)}
   .cartao:hover::after{transform:translateX(4px)}
-  details.acc:not([open]):hover,.faq details:not([open]):hover{transform:translateY(-2px);border-color:var(--tinta)}
+  details.acc:not([open]):hover{transform:translateY(-2px);border-color:var(--tinta)}
   .resumo-ideo:hover b{text-decoration:underline;text-underline-offset:3px}
   .site-nav a,.menu-item{transition:color .15s,background-color .15s}
 }

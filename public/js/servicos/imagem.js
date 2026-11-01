@@ -15,7 +15,7 @@ const FORMATOS={
 // biblioteca do QR code (MIT, em js/vendor) só é carregada quando a janela abre
 let qrPronto=null;
 function carregarQR(){if(window.qrcode)return Promise.resolve(true);if(qrPronto)return qrPronto;
-  qrPronto=new Promise(r=>{const sc=document.createElement("script");sc.src="/js/vendor/qrcode.js";sc.onload=()=>r(!!window.qrcode);sc.onerror=()=>r(false);document.head.append(sc)});return qrPronto}
+  qrPronto=new Promise(r=>{const sc=document.createElement("script");sc.src="/js/vendor/qrcode.js";sc.onload=()=>r(!!window.qrcode);sc.onerror=()=>{qrPronto=null;sc.remove();r(false)};document.head.append(sc)});return qrPronto} // se falhar, tenta de novo na próxima imagem
 function desenharQR(x,texto,X,Y,T,fundo,tinta){if(!window.qrcode)return false;try{const q=qrcode(0,"M");q.addData(texto);q.make();const n=q.getModuleCount(),m=4,lado=T/(n+2*m);
   x.fillStyle=fundo;x.fillRect(X,Y,T,T);x.fillStyle=tinta;for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))x.fillRect(X+(c+m)*lado,Y+(r+m)*lado,Math.ceil(lado),Math.ceil(lado));return true}catch(e){return false}}
 async function buildImage(d,op=shOp){
@@ -114,16 +114,19 @@ async function desenharPaisagem(d,op){
 function perfilCompartilhar(){return shareData.two?`entre ${shareData.top.n} e ${shareData.ranked[1].n}`:shareData.top.n}
 function textoCompartilhar(){return `Meu resultado no Teste Político: ${perfilCompartilhar()}. O teste mede seis eixos, mostra o grau de confiança do resultado e não recomenda voto. Faça o seu e compare com o meu: ${myLink()}`}
 function textoImagem(){return `Meu resultado no Teste Político: ${perfilCompartilhar()}. Faça o seu e compare com o meu: ${myLink()}`}
-async function prepareShare(){shareFile=null;if(shareUrl){URL.revokeObjectURL(shareUrl);shareUrl=null}
-  try{const blob=await buildImage({...shareData,link:myLink()},shOp);if(!blob)return false;shareFile=new File([blob],`resultado-teste-politico-${shOp.formato}.png`,{type:"image/png"});shareUrl=URL.createObjectURL(blob);
-    $("shImg").src=shareUrl;$("shImg").dataset.formato=shOp.formato;$("shSave").href=shareUrl;$("shSave").download=shareFile.name;return true}catch(e){console.error(e);return false}}
+// cada geração tem um número: se a pessoa trocar de formato antes de a imagem anterior ficar pronta, só a última vale
+let geracaoImagem=0;
+async function prepareShare(){const g=++geracaoImagem;shareFile=null;if(shareUrl){URL.revokeObjectURL(shareUrl);shareUrl=null}
+  try{const op={...shOp},blob=await buildImage({...shareData,link:myLink()},op);if(g!==geracaoImagem)return false;if(!blob)return false;
+    shareFile=new File([blob],`resultado-teste-politico-${op.formato}.png`,{type:"image/png"});shareUrl=URL.createObjectURL(blob);
+    $("shImg").src=shareUrl;$("shImg").dataset.formato=op.formato;$("shSave").href=shareUrl;$("shSave").download=shareFile.name;return true}catch(e){console.error(e);return false}}
 const shareSheet=$("shareSheet");
 // a imagem segue o tema do site (o escolhido no menu ou, sem escolha, o do aparelho)
 const temaSite=()=>{const t=document.documentElement.dataset.theme;return t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro"};
 const notaFormato=()=>{const f=FORMATOS[shOp.formato];$("shNote").textContent=`${f.nome}: ${f.uso}.`};
 async function mostrarImagem(){
   $("shNote").textContent="";$("shImg").classList.add("hidden");$("shLoad").classList.remove("hidden");$("shSave").classList.add("hidden");
-  const ok=await prepareShare();$("shLoad").classList.add("hidden");
+  const g=geracaoImagem+1,ok=await prepareShare();if(g!==geracaoImagem)return;$("shLoad").classList.add("hidden");
   if(!ok){$("shNote").textContent="Não deu pra gerar a imagem agora. Feche e tente de novo.";return}
   $("shImg").classList.remove("hidden");$("shSave").classList.remove("hidden");notaFormato()}
 // janela de compartilhar: o formato da imagem (proporção) e os quatro jeitos de compartilhar

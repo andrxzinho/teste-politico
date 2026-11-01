@@ -11,6 +11,9 @@ function opcoesFrase(o){
 // frases que a pessoa de fato viu e respondeu (as de extremo que não abriram ficam de fora)
 function frasesRespondidas(){
   const ids=seq(),grupos=[];
+  // quem continuou num modo maior: as respostas do modo anterior ficam antes do primeiro bloco do modo atual
+  const antes=ids.slice(0,st.bs[0]||0).filter(id=>st.ans[id]!==undefined&&st.ans[id]!=="g");
+  if(antes.length)grupos.push(["Respondidas no modo anterior",antes]);
   st.bs.forEach((ini,b)=>{const fim=b+1<st.bs.length?st.bs[b+1]:st.base.length;
     const it=ids.slice(ini,fim).filter(id=>st.ans[id]!==undefined&&st.ans[id]!=="g");
     if(it.length)grupos.push([BLK[st.bk[b]][0],it])});

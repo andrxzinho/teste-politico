@@ -4,9 +4,10 @@
 function evt(tipo,extra={}){if(!st.study.ok||st.study.minor)return;const b=JSON.stringify({v:6,tipo,modo:st.mode,sessao:SESSAO?SESSAO.token:undefined,...extra});
   try{if(tipo==="saida"&&navigator.sendBeacon){navigator.sendBeacon("/api/coletar",new Blob([b],{type:"text/plain"}));return}
     fetch("/api/coletar",{method:"POST",headers:{"content-type":"application/json"},body:b,keepalive:true}).catch(()=>{})}catch(e){}}
-addEventListener("pagehide",()=>{if(!$("quiz").classList.contains("hidden")&&!st.done)evt("saida",{pos:st.cur+1})});
+// aviso de saída: um só por posição (recarregar a página ou trocar de aplicativo na mesma frase não conta de novo)
+addEventListener("pagehide",()=>{if($("quiz").classList.contains("hidden")||st.done)return;const pos=st.cur+1;if(st.study.saida===pos)return;st.study.saida=pos;save();evt("saida",{pos})});
 function studyPayload(){
-  const {s,ext,ranked,margin,inc}=R,r10=v=>Math.round(v/10)*10,b20=v=>Math.max(-100,Math.min(100,Math.round(v/20)*20));
+  const {s,ext,ranked,inc}=R,r10=v=>Math.round(v/10)*10,b20=v=>Math.max(-100,Math.min(100,Math.round(v/20)*20));
   const code=v=>v===undefined||v===null||v==="g"?"_":v==="x"||v==="n"?"x":"abcde"[v+2];
   const min=(Date.now()-(st.study.t0||Date.now()))/60000,tempo=min<5?"<5":min<10?"5-10":min<15?"10-15":min<20?"15-20":min<30?"20-30":"30+";
   return {v:6,calculo:5,tipo:"resultado",sessao:SESSAO?SESSAO.token:undefined,modo:st.mode,de:st.study.de||undefined,ideologia:ranked[0].n,eixos:Object.fromEntries(AXK6.map(k=>[k,b20(s[k])])),
@@ -26,7 +27,7 @@ async function setupStats(){
   btn.textContent="Participar e enviar";btn.classList.remove("hidden");btn.disabled=true;maior.onchange=()=>{btn.disabled=!maior.checked};
   btn.onclick=()=>{if(!maior.checked)return;wrap.classList.add("hidden");st.study.ok=true;save();sendStats()};
 }
-async function sendStats(){const msg=$("statsMsg"),btn=$("statsBtn");btn.classList.add("hidden");msg.textContent="Enviando seu resultado anônimo pro estudo. Isso leva cerca de meio minuto.";
+async function sendStats(){const msg=$("statsMsg"),btn=$("statsBtn");btn.classList.add("hidden");msg.textContent="Enviando seu resultado anônimo pro estudo. Isso leva alguns segundos.";
   try{if(!st.study.id){st.study.id=novoId();save()}
     const D=st.study.desafio;if(!D||Date.now()-D.t>6*864e5)await pegarDesafio();
     const D2=st.study.desafio;if(!D2)throw new Error("desafio");

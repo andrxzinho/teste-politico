@@ -16,6 +16,11 @@ c = c.replace(/export const IDS = \[.*?\];/s, `export const IDS = ${JSON.stringi
      .replace(/export const META = \{.*?\};/s, `export const META = ${JSON.stringify(META)};`);
 if (!c.includes("export const NAO_PONTUA")) c = c.replace(/(export const META = .*?;\n)/s, `$1// frases que não entram na média do eixo (marcadores de extremos fora do eixo Democracia e temas avulsos)\nexport const NAO_PONTUA = [];\n`);
 c = c.replace(/export const NAO_PONTUA = \[.*?\];/s, `export const NAO_PONTUA = ${JSON.stringify(NAO)};`);
+// posição típica de cada ideologia nos 5 eixos da classificação, pra conferir se a ideologia enviada combina com as respostas
+const IDEO = new Function(idx.replace(/^const DATA = \{.*?\};\n/ms, "") + ";return IDEO;")();
+const POS = Object.fromEntries(IDEO.map((o) => [o.n, ["E", "A", "C", "N", "D"].map((k) => o.p[k] ?? 0)]));
+if (!c.includes("export const IDEO_POS")) c = c.replace(/(export const NAO_PONTUA = .*?;\n)/s, `$1// posição típica de cada ideologia em E, A, C, N e D (gerada de public/js/dados/ideologias.js)\nexport const IDEO_POS = {};\n`);
+c = c.replace(/export const IDEO_POS = \{.*?\};/s, `export const IDEO_POS = ${JSON.stringify(POS)};`);
 fs.writeFileSync("servidor/comum.mjs", c);
 // motor do servidor: o mesmo arquivo do site, com as frases no formato que ele usa
 const ITENS = Object.fromEntries(ITEMS.map((o) => [o.id, { k: o.k, s: o.s || null, d: o.d, f: o.f, sc: scored(o) && !escolha(o), ...(o.f === "l" ? { v: o.v } : {}), ...(o.f === "c" ? { va: o.va, vb: o.vb } : {}), lv: o.lv || 2 }]));

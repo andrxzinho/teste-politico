@@ -31,7 +31,7 @@ function rotulo(v, k) {
   return AX[k].right;
 }
 // o que separa uma ideologia de uma vizinha: os eixos com diferença de 15 pontos ou mais, do maior pro menor
-const DIFERE = { E: ["mais à esquerda na economia", "mais à direita na economia"], A: ["dá mais peso à liberdade", "dá mais peso à ordem"], D: ["com mais compromisso democrático", "aceita mais rupturas com a democracia"] };
+const DIFERE = { E: ["mais à esquerda na economia", "mais à direita na economia"], A: ["dá mais peso à liberdade", "dá mais peso à ordem"], D: ["com mais compromisso democrático", "aceita mais quebrar as regras da democracia"] };
 function diferenca(o, v, max = 2) {
   const ds = EIXOS.map((k) => [k, (o.p[k] ?? 0) - (v.p[k] ?? 0)]).filter(([, d]) => Math.abs(d) >= 15).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, max);
   if (!ds.length) return "posições típicas muito parecidas. O teste separa as duas só em poucos subtemas.";
@@ -127,7 +127,7 @@ for (const o of IDEO) {
   const eixos = EIXOS.map((k) => `<div class="eixo-tipico"><div class="topo"><b>${esc(AX[k].name)}</b><span>${esc(rotulo(o.p[k] ?? 0, k))}</span></div><div class="trilho"><i style="left:${((o.p[k] ?? 0) + 100) / 2}%"></i></div><div class="pontas" aria-hidden="true"><span>${esc(AX[k].left)}</span><span>${esc(AX[k].right)}</span></div></div>`).join("\n");
   gravar(`public/ideologias/${slug(n)}/index.html`, pagina({
     caminho: `/ideologias/${slug(n)}/`, titulo: `${n}: o que defende | Teste político`,
-    descricao: `${IDEO_RESUMO[n]} Veja onde fica em cada eixo e as ideologias vizinhas.`,
+    descricao: `${IDEO_RESUMO[n]} Veja a posição nos eixos e as vizinhas.`,
     imagem: { url: `/img/og/${slug(n)}.png`, w: 1200, h: 630 },
     dados: [SITE_LD, {
       "@type": "WebPage", "@id": `${SITE}/ideologias/${slug(n)}/`, url: `${SITE}/ideologias/${slug(n)}/`, name: `${n}: o que defende`, description: IDEO_RESUMO[n], inLanguage: "pt-BR",
@@ -149,12 +149,12 @@ ${eixos}
 <ul class="correntes-lista">${VARIANTES[n].map((v) => `<li><b>${esc(v.n)}</b><span>${esc(v.d)}</span></li>`).join("")}</ul>
 <h2 class="rotulo-secao">Ideologias vizinhas</h2>
 <div class="vizinhas">${viz.map((v) => `<a href="/ideologias/${slug(v.n)}/">${esc(v.n)}</a>`).join("")}</div>
-<ul class="lista-pagina diferencas">${viz.map((v) => `<li>Comparada com <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
+<ul class="lista-pagina diferencas">${viz.map((v) => `<li>Em relação a <b>${esc(v.n)}</b>: ${esc(diferenca(o, v))}</li>`).join("")}</ul>
 <div class="acoes-pagina"><a class="ok" href="/?ideologia=${slug(n)}">Comparar com o meu resultado</a><a class="branco" href="/ideologias/comparar/?a=${slug(n)}">Comparar com outra ideologia</a></div>
 </div>
 <div class="ideo-livros">
 <h2 class="rotulo-secao">Pra entender por dentro</h2>
-<p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">${EXTREMOS.includes(n) ? `Fontes históricas e textos de referência de ${esc(n)}, pra entender o que essa tradição defendeu. Não é recomendação.` : `Obras que ajudam a entender ${esc(n)} como os próprios defensores a entendem.`}</p>
+<p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">${EXTREMOS.includes(n) ? `Textos históricos e de referência dessa tradição, pra entender o que ela defendeu. Não é recomendação.` : `Livros de quem defende essa tradição, pra ver como os próprios defensores pensam.`}</p>
 <div class="livros">${livros(LEITURAS[n].favor)}</div>
 <h2 class="rotulo-secao">Pra entender as críticas</h2>
 <p class="intro-pagina" style="font-size:.9rem;margin-bottom:.6rem">As críticas mais fortes, vindas de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o seu.</p>
@@ -209,10 +209,11 @@ const FAQ = [
     ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser que você seja moderado de verdade. Ou pode ser que ainda não tenha opinião formada sobre muitos temas. O teste não consegue saber qual das duas.", "Por isso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Olhe os eixos pra ver onde você pendeu pra algum lado."]],
     ["Por que o resultado pode mudar se eu refizer?", ["Algumas coisas deixam o resultado menos firme: muitas respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos. Além disso, quando duas ideologias estão próximas, mudar de ideia em poucas frases já pode trocar o resultado."]],
     ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta.", "O termômetro dos extremos mostra um índice de 0 a 100. Ele não é uma probabilidade (chance)."]],
+    ["O que são as correntes?", ["Cada ideologia tem 4 correntes, que são linhas diferentes dentro dela. Por exemplo, dentro do Social-democrata ficam a social-democracia nórdica e o trabalhismo.", "No resultado, o teste mostra as correntes mais perto das suas posições nos eixos, entre as ideologias que disputam o seu resultado. As correntes não mudam a ideologia que aparece pra você."]],
     ["A compatibilidade com presidentes e partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada presidente desde 1985, feita pelo que ele fez no governo, e de cada partido, feita pela classificação de cientistas políticos e pelo que o partido fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
   ]],
   ["teste", "Sobre o teste", [
-    ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 96 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
+    ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 95 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
     ["O teste é científico?", ["Ele usa técnicas da psicometria, a área que estuda como medir opiniões e traços de personalidade com questionários. Por exemplo: perguntas de escolha pra corrigir o jeito de responder, e pares de frases pra medir a coerência.", "Mas ainda não foi conferido com um grupo grande de pessoas reais. Isso depende dos dados do estudo."]],
     ["Quanto tempo leva?", ["Essencial: de 62 a 70 perguntas, uns 9 minutos. Padrão: de 130 a 141, uns 18 minutos. Aprofundado: de 207 a 218, uns 30 minutos. Os tempos são estimativas.", "O número de perguntas varia porque algumas frases só aparecem pra quem já está perto de um extremo.", "Dá pra pausar e continuar depois no mesmo aparelho. E quem termina um modo menor pode seguir pro próximo sem repetir nada."]],
     ["Qual modo devo escolher?", ["O Essencial dá uma ideia geral. O Padrão mede cada tema com mais detalhe e confere melhor se as suas respostas combinam entre si. O Aprofundado tem mais frases em cada tema, mas, nas simulações, não acerta a ideologia mais que o Padrão."]],
@@ -235,7 +236,7 @@ gravar("public/perguntas-frequentes/index.html", pagina({
   corpo: `<div class="legal-cab">
 <p class="legal-rotulo">Ajuda</p>
 <h1>Perguntas frequentes</h1>
-<ul class="legal-datas"><li><b>Última atualização:</b> 25 de outubro de 2026</li></ul>
+<ul class="legal-datas"><li><b>Última atualização:</b> 1º de novembro de 2026</li></ul>
 </div>
 <div class="resumo-legal">
 <h2>Não achou a resposta?</h2>
@@ -341,6 +342,7 @@ ${ARQ("public/js/dados/frases.js", "todas as frases, a direção e o eixo de cad
 ${ARQ("public/js/nucleo/motor.js", "como as respostas viram posição nos eixos, com a margem de erro.")}
 ${ARQ("public/js/nucleo/calculo.js", "a chance de cada ideologia, o filtro dos extremos, a confiança e a consistência.")}
 ${ARQ("public/js/dados/ideologias.js", "as 21 ideologias, a posição típica de cada uma e as descrições.")}
+${ARQ("public/js/dados/variantes.js", "as 4 correntes de cada ideologia, com a descrição e a posição típica nos eixos.")}
 </ul>
 <h3>O que aparece ao lado do resultado</h3>
 <ul>

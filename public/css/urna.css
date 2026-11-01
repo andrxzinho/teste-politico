@@ -17,7 +17,6 @@ a{color:inherit;text-underline-offset:3px}
 h1,h2,h3{margin:0;font-weight:700}
 .display{font-size:clamp(2rem,9vw,2.9rem);font-weight:700;line-height:1.04;letter-spacing:-.01em}
 .lede{margin:.8rem 0 0;font-size:1rem;color:var(--grafite)}
-.muted{color:var(--grafite)}
 .small{font-size:.86rem;color:var(--grafite);margin:.35rem 0 0}
 .fine{font-size:.82rem;color:var(--grafite);line-height:1.5}
 .kicker,.rotulo{margin:0;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grafite)}
@@ -467,8 +466,6 @@ body:is([data-tela="quiz"],[data-tela="consent"],[data-tela="tbintro"],[data-tel
 /* ---------- compartilhar ---------- */
 
 
-.resumo-acoes{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
-.resumo-acoes .secondary{min-height:2.9rem;font-size:.88rem;padding:.4rem}
 
 
 /* ---------- mais distante e índice do resultado ---------- */

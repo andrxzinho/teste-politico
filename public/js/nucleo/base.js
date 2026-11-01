@@ -54,9 +54,11 @@ const ONLINE=/^https?:$/.test(location.protocol);
 const SKEY="tp-sessao-teste",HOST_TEST=/--|^localhost$|^127\./.test(location.hostname);
 let SESSAO=null;try{const j=JSON.parse(localStorage.getItem(SKEY)||"null");if(j&&j.token&&j.exp>Date.now())SESSAO=j;else localStorage.removeItem(SKEY)}catch(e){}
 let TEST_MODE=HOST_TEST||!!SESSAO;
-const coleta=ONLINE?fetch("/api/coletar",{cache:"no-store",headers:SESSAO?{"x-sessao-teste":SESSAO.token}:{}}).then(r=>r.json()).then(j=>{if(SESSAO&&!j.sessao)sairTeste();if(j.teste&&!TEST_MODE){TEST_MODE=true;badgeTeste()}return !!j.ativo}).catch(()=>false):Promise.resolve(false);
+// a sessão de teste só é encerrada quando o servidor responde de fato que ela não vale (não por um erro ou limite de pedidos)
+const coleta=ONLINE?fetch("/api/coletar",{cache:"no-store",headers:SESSAO?{"x-sessao-teste":SESSAO.token}:{}}).then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{if(SESSAO&&ok&&j.sessao===false)sairTeste();if(ok&&j.teste&&!TEST_MODE){TEST_MODE=true;badgeTeste()}return ok&&!!j.ativo}).catch(()=>false):Promise.resolve(false);
 let WEIGHTS={};
-if(ONLINE)fetch("/api/pesos",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(j=>{WEIGHTS=j.pesos||{}}).catch(()=>{});
+// pesos por frase (hoje vazios); quando chegam (ou em 1,5 s), o resultado aberto é refeito com eles (principal.js)
+const pesosProntos=ONLINE?Promise.race([fetch("/api/pesos",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(j=>{WEIGHTS=j.pesos||{}}).catch(()=>{}),new Promise(r=>setTimeout(r,1500))]):Promise.resolve();
 function badgeTeste(){const old=document.querySelector(".testbadge");if(old)old.remove();if(!TEST_MODE||!ONLINE)return;
   const b=el("div","testbadge");b.setAttribute("role","status");b.append(el("span",null,SESSAO?`Modo teste até ${new Date(SESSAO.exp).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}`:"Modo teste"));
   b.title="Os resultados enviados daqui vão pra área de teste do painel";
