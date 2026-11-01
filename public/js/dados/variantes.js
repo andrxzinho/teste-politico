@@ -5,7 +5,7 @@
 // Parte do site carregada em ordem por index.html; os arquivos compartilham o mesmo escopo.
 const VARIANTES={
 "Comunista":[
- {n:"Marxismo-leninismo",d:"Partido de vanguarda, Estado socialista e economia planificada, na linha de Lênin.",p:{E:-95,A:65,C:-15,N:10,D:75}},
+ {n:"Marxismo-leninismo",d:"Um partido que se vê como guia dos trabalhadores, Estado socialista e economia planejada pelo governo, na linha de Lênin.",p:{E:-95,A:65,C:-15,N:10,D:75}},
  {n:"Trotskismo",d:"Revolução permanente e internacional, com crítica à burocracia do regime soviético.",p:{E:-95,A:40,C:-35,N:-40,D:60}},
  {n:"Maoísmo",d:"Revolução a partir do campo e luta de classes contínua, inspirada em Mao Tsé-tung.",p:{E:-90,A:70,C:-10,N:35,D:80}},
  {n:"Comunismo de conselhos",d:"Poder direto dos trabalhadores em conselhos, contra o partido único e o Estado centralizado.",p:{E:-90,A:-30,C:-40,N:-30,D:40}}],
@@ -15,10 +15,10 @@ const VARIANTES={
  {n:"Anarquismo individualista",d:"Autonomia de cada pessoa acima de qualquer autoridade, inclusive a do Estado.",p:{E:-40,A:-95,C:-60,N:-50,D:15}},
  {n:"Ecoanarquismo",d:"Comunidades pequenas e autônomas, em harmonia com a natureza, sem Estado.",p:{E:-75,A:-80,C:-60,N:-65,D:20}}],
 "Extrema esquerda":[
- {n:"Esquerda revolucionária",d:"Revolução para substituir o capitalismo, com as eleições vistas só como tática.",p:{E:-80,A:20,C:-50,N:-10,D:50}},
- {n:"Guevarismo",d:"Luta armada e guerrilha como caminho para a revolução, inspirado em Che Guevara.",p:{E:-85,A:35,C:-30,N:20,D:60}},
+ {n:"Esquerda revolucionária",d:"Revolução pra substituir o capitalismo, com as eleições vistas só como tática.",p:{E:-80,A:20,C:-50,N:-10,D:50}},
+ {n:"Guevarismo",d:"Luta armada e guerrilha como caminho pra revolução, inspirado em Che Guevara.",p:{E:-85,A:35,C:-30,N:20,D:60}},
  {n:"Esquerda anti-imperialista",d:"Prioridade à luta contra os Estados Unidos e as potências ocidentais, apoiando governos que as enfrentam.",p:{E:-70,A:30,C:-30,N:40,D:30}},
- {n:"Populismo de esquerda radical",d:"O povo contra as elites, aceitando passar por cima de instituições para fazer reformas rápidas.",p:{E:-60,A:10,C:-45,N:10,D:25}}],
+ {n:"Populismo de esquerda radical",d:"O povo contra as elites, aceitando passar por cima de instituições pra fazer reformas rápidas.",p:{E:-60,A:10,C:-45,N:10,D:25}}],
 "Socialista democrático":[
  {n:"Ecossocialismo",d:"Socialismo com prioridade à crise climática e à proteção da natureza.",p:{E:-70,A:-20,C:-55,N:-45,D:-65}},
  {n:"Socialismo de mercado",d:"Empresas públicas ou dos próprios trabalhadores competindo num mercado.",p:{E:-50,A:-10,C:-35,N:-20,D:-65}},
@@ -56,7 +56,7 @@ const VARIANTES={
  {n:"Centro tecnocrático",d:"Decisões baseadas em dados e em técnicos, com instituições fortes.",p:{E:10,A:10,C:-5,N:-15,D:-65}}],
 "Social-liberal":[
  {n:"Liberalismo igualitário",d:"Liberdade individual com redistribuição pra garantir oportunidades iguais (Rawls).",p:{E:0,A:-20,C:-35,N:-30,D:-65}},
- {n:"Ordoliberalismo",d:"Mercado com regras firmes e um Estado que impede monopólios, como na Alemanha do pós-guerra.",p:{E:25,A:5,C:-10,N:-20,D:-65}},
+ {n:"Ordoliberalismo",d:"Mercado com regras firmes e um Estado que impede uma só empresa de dominar um mercado, como na Alemanha do pós-guerra.",p:{E:25,A:5,C:-10,N:-20,D:-65}},
  {n:"Liberalismo cosmopolita",d:"Liberdades civis amplas, cooperação internacional e Estado social moderado.",p:{E:15,A:-30,C:-40,N:-45,D:-65}},
  {n:"Novo liberalismo",d:"O Estado garante saúde, educação e renda mínima pra que todos sejam livres de fato (Hobhouse).",p:{E:5,A:-15,C:-25,N:-25,D:-65}}],
 "Democracia cristã":[
@@ -80,8 +80,8 @@ const VARIANTES={
  {n:"Paleolibertarianismo",d:"Estado mínimo com valores tradicionais e desconfiança da globalização.",p:{E:80,A:-40,C:40,N:20,D:-65}},
  {n:"Libertarianismo civil",d:"Liberdades pessoais acima de tudo: drogas, armas, expressão e privacidade.",p:{E:55,A:-80,C:-40,N:-20,D:-65}}],
 "Anarcocapitalista":[
- {n:"Anarcocapitalismo rothbardiano",d:"Sociedade sem Estado baseada na propriedade privada e na não agressão (Rothbard).",p:{E:100,A:-85,C:10,N:-10,D:10}},
- {n:"Agorismo",d:"Construir uma economia paralela fora do controle do Estado.",p:{E:95,A:-90,C:-15,N:-30,D:20}},
+ {n:"Anarcocapitalismo rothbardiano",d:"Sociedade sem Estado baseada na propriedade privada e na regra de nunca usar a força contra quem não atacou ninguém (Rothbard).",p:{E:100,A:-85,C:10,N:-10,D:10}},
+ {n:"Agorismo",d:"Fazer negócios por fora do controle do Estado, sem impostos nem licenças, até o Estado perder a importância.",p:{E:95,A:-90,C:-15,N:-30,D:20}},
  {n:"Criptoanarquismo",d:"Criptografia e moedas digitais pra escapar do controle do Estado.",p:{E:90,A:-90,C:-20,N:-40,D:10}},
  {n:"Hoppeanismo",d:"Ordem sem Estado, com comunidades privadas e valores tradicionais (Hoppe).",p:{E:95,A:-60,C:45,N:25,D:20}}],
 "Liberal-conservador":[
@@ -102,10 +102,10 @@ const VARIANTES={
 "Extrema direita":[
  {n:"Intervencionismo militar",d:"Defende que as Forças Armadas assumam o poder.",p:{E:35,A:85,C:70,N:75,D:70}},
  {n:"Etnonacionalismo",d:"Nação definida pela origem étnica, com rejeição à imigração.",p:{E:25,A:70,C:75,N:95,D:50}},
- {n:"Tradicionalismo radical",d:"Rejeita a democracia liberal e defende uma ordem religiosa e hierárquica.",p:{E:20,A:75,C:95,N:70,D:50}},
+ {n:"Tradicionalismo radical",d:"Rejeita a democracia moderna, com eleições e liberdades individuais, e defende uma ordem religiosa e hierárquica.",p:{E:20,A:75,C:95,N:70,D:50}},
  {n:"Direita antissistema radical",d:"Desconfia das eleições e do Judiciário e aceita romper as regras pra tirar o \"sistema\" do poder.",p:{E:40,A:65,C:70,N:70,D:35}}],
 "Fascista":[
  {n:"Fascismo italiano",d:"Estado total, partido único e corporações, como na Itália de Mussolini.",p:{E:20,A:90,C:55,N:95,D:90}},
- {n:"Integralismo",d:"Versão brasileira dos anos 1930: \"Deus, pátria e família\", com Estado corporativo (Plínio Salgado).",p:{E:10,A:85,C:80,N:90,D:80}},
+ {n:"Integralismo",d:"Versão brasileira dos anos 1930: \"Deus, pátria e família\", com um Estado organizado por profissões em vez de partidos (Plínio Salgado).",p:{E:10,A:85,C:80,N:90,D:80}},
  {n:"Nacional-socialismo",d:"Racismo de Estado e totalitarismo da Alemanha nazista.",p:{E:15,A:95,C:70,N:100,D:95}},
  {n:"Falangismo",d:"Fascismo católico e nacionalista da Espanha de Franco.",p:{E:15,A:90,C:85,N:90,D:85}}]};

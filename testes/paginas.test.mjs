@@ -47,13 +47,13 @@ export async function testarPaginas() {
   v.confere((await pg.locator('a[href="/?ideologia=social-democrata"]').count()) === 1, "página de ideologia deveria ter o atalho pra comparar");
   // comparar duas ideologias: link na página de cada uma, escolha pelo endereço, troca de ordem e de ideologia
   await pg.click('a[href="/ideologias/comparar/?a=social-democrata"]'); await pg.waitForURL("**/ideologias/comparar/**");
-  v.confere(await pg.evaluate("ideoA.value==='social-democrata'&&ideoB.value!=='social-democrata'&&document.querySelectorAll('#comparacao .eixo-tipico').length===5"), "comparar: deveria abrir com a ideologia da página e 5 eixos");
+  v.confere(await pg.evaluate("ideoA.value==='social-democrata'&&ideoB.value!=='social-democrata'&&document.querySelectorAll('#comparacao .eixo-tipico').length===6"), "comparar: deveria abrir com a ideologia da página, 5 eixos e meio ambiente");
   await pg.goto(s.url + "/ideologias/comparar/?a=fascista&b=comunista"); await pg.waitForTimeout(150);
   v.confere(/^Fascista em relação a Comunista: .*mais à direita na economia/.test(await pg.evaluate("document.querySelector('#comparacao .comp-texto').textContent")), "comparar: texto das diferenças errado");
   await pg.click("#trocar");
   v.confere(await pg.evaluate("location.search==='?a=comunista&b=fascista'&&document.querySelector('.comp-legenda').textContent.startsWith('Comunista')"), "comparar: trocar deveria inverter a ordem e o endereço");
   await pg.goto(s.url + "/ideologias/comparar/?a=toString&b=constructor"); await pg.waitForTimeout(150);
-  v.confere((await pg.locator("#comparacao .eixo-tipico").count()) === 5, "comparar: endereço com nome inválido deveria cair nas ideologias padrão");
+  v.confere((await pg.locator("#comparacao .eixo-tipico").count()) === 6, "comparar: endereço com nome inválido deveria cair nas ideologias padrão");
   await pg.goto(s.url + "/ideologias/comparar/?a=comunista&b=fascista"); await pg.waitForTimeout(150);
   await pg.selectOption("#ideoB", "comunista");
   v.confere(/diferentes/.test(await pg.evaluate("document.getElementById('comparacao').textContent")), "comparar: a mesma ideologia dos dois lados deveria pedir duas diferentes");

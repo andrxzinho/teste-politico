@@ -1,5 +1,15 @@
 # Histórico de versões
 
+## Textos mais fáceis e meio ambiente nas páginas (1º de novembro de 2026)
+- 25 frases do teste reescritas pra ficar mais fáceis de ler, com o mesmo sentido (por exemplo, "Os bancos privados
+  deveriam ser estatizados" virou "O governo deveria tomar o controle dos bancos privados"). Respostas enviadas antes
+  desta data usaram o texto antigo: na análise do estudo, dá pra separar os dois grupos pela data do envio.
+- Descrições de 19 livros, de dois pensadores e de três presidentes mais curtas e diretas; siglas explicadas (CSN,
+  Telebras, PRN, Sudene, INSS) e menos termos técnicos nas correntes.
+- Termos, metodologia e perguntas frequentes com frases mais curtas; "modelo do teste" virou "regras do teste" e
+  "repositório" virou "GitHub do projeto".
+- A posição típica em meio ambiente aparece na página de cada ideologia e na página de comparar.
+
 ## Auditoria geral (1º de novembro de 2026)
 - Escala 6x1: a emenda de outubro de 2026 acabou com ela. As duas frases antigas, que falavam do fim como proposta,
   saíram do teste, e entraram duas novas no lugar (voltar a permitir, ou manter o fim). Na simulação, o acerto não mudou.

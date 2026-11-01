@@ -22,6 +22,13 @@ const livros = (l) => l.map(([t, a, ano, d, x]) => `<div class="livro"><b>${esc(
 
 const grupoDe = (n) => (IDEO_GRUPOS.find(([, l]) => l.includes(n)) || ["Outras"])[0];
 const EIXOS = ["E", "A", "C", "N", "D"];
+// meio ambiente: subtema com posição própria, fora dos eixos (FORA_EIXO em public/js/nucleo/base.js); a posição típica de
+// cada ideologia vem do perfil dela (PERFIS em public/js/dados/frases.js), a mesma que o cálculo usa
+const DATA = JSON.parse(fs.readFileSync("public/js/dados/frases.js", "utf8").split("\n").find((l) => l.startsWith("const DATA")).replace(/^const DATA = /, "").replace(/;\s*$/, ""));
+const FORA = vm.runInNewContext("(" + fs.readFileSync("public/js/nucleo/base.js", "utf8").match(/const FORA_EIXO=(\{.*?\});/)[1] + ")")["N.amb"];
+const ambDe = (n) => DATA.PERFIS[n][DATA.SUBT.indexOf("N.amb")];
+const AMB = { k: "amb", nome: `${FORA.nome} (fora dos eixos)`, esq: FORA.left, dir: FORA.right };
+const rotuloAmb = (v) => (v <= -40 ? FORA.left : v <= -12 ? `${FORA.left} (moderado)` : v < 12 ? "Centro" : v < 40 ? `${FORA.right} (moderado)` : FORA.right);
 // mesmas faixas do resultado (band em public/js/nucleo/calculo.js), pra página e resultado darem o mesmo nome à mesma posição
 function rotulo(v, k) {
   if (v <= -40) return AX[k].left;
@@ -124,7 +131,7 @@ ${cartoes}
 for (const o of IDEO) {
   const n = o.n, g = grupoDe(n);
   const viz = IDEO.filter((x) => x.n !== n).sort((a, b) => dist(o, a) - dist(o, b)).slice(0, 3);
-  const eixos = EIXOS.map((k) => `<div class="eixo-tipico"><div class="topo"><b>${esc(AX[k].name)}</b><span>${esc(rotulo(o.p[k] ?? 0, k))}</span></div><div class="trilho"><i style="left:${((o.p[k] ?? 0) + 100) / 2}%"></i></div><div class="pontas" aria-hidden="true"><span>${esc(AX[k].left)}</span><span>${esc(AX[k].right)}</span></div></div>`).join("\n");
+  const eixos = [...EIXOS.map((k) => `<div class="eixo-tipico"><div class="topo"><b>${esc(AX[k].name)}</b><span>${esc(rotulo(o.p[k] ?? 0, k))}</span></div><div class="trilho"><i style="left:${((o.p[k] ?? 0) + 100) / 2}%"></i></div><div class="pontas" aria-hidden="true"><span>${esc(AX[k].left)}</span><span>${esc(AX[k].right)}</span></div></div>`), `<div class="eixo-tipico"><div class="topo"><b>${esc(AMB.nome)}</b><span>${esc(rotuloAmb(ambDe(n)))}</span></div><div class="trilho"><i style="left:${(ambDe(n) + 100) / 2}%"></i></div><div class="pontas" aria-hidden="true"><span>${esc(AMB.esq)}</span><span>${esc(AMB.dir)}</span></div></div>`].join("\n");
   gravar(`public/ideologias/${slug(n)}/index.html`, pagina({
     caminho: `/ideologias/${slug(n)}/`, titulo: `${n}: o que defende | Teste político`,
     descricao: `${IDEO_RESUMO[n]} Veja a posição nos eixos e as vizinhas.`,
@@ -171,8 +178,8 @@ ${eixos}
 {
   const PADRAO = ["social-democrata", "liberal-classico"];
   const dados = {
-    eixos: EIXOS.map((k) => ({ k, nome: AX[k].name, esq: AX[k].left, dir: AX[k].right })),
-    ideo: IDEO.map((o) => ({ n: o.n, s: slug(o.n), g: grupoDe(o.n), r: IDEO_RESUMO[o.n], p: Object.fromEntries(EIXOS.map((k) => [k, o.p[k] ?? 0])), f: Object.fromEntries(EIXOS.map((k) => [k, rotulo(o.p[k] ?? 0, k)])) })),
+    eixos: [...EIXOS.map((k) => ({ k, nome: AX[k].name, esq: AX[k].left, dir: AX[k].right })), AMB],
+    ideo: IDEO.map((o) => ({ n: o.n, s: slug(o.n), g: grupoDe(o.n), r: IDEO_RESUMO[o.n], p: { ...Object.fromEntries(EIXOS.map((k) => [k, o.p[k] ?? 0])), amb: ambDe(o.n) }, f: { ...Object.fromEntries(EIXOS.map((k) => [k, rotulo(o.p[k] ?? 0, k)])), amb: rotuloAmb(ambDe(o.n)) } })),
     dif: Object.fromEntries(IDEO.flatMap((a) => IDEO.filter((b) => b !== a).map((b) => [`${slug(a.n)}|${slug(b.n)}`, diferenca(a, b, 5)]))),
   };
   const opcoes = (sel) => IDEO_GRUPOS.map(([g, l]) => `<optgroup label="${esc(g)}">${l.map((n) => `<option value="${slug(n)}"${slug(n) === sel ? " selected" : ""}>${esc(n)}</option>`).join("")}</optgroup>`).join("");
@@ -203,14 +210,14 @@ ${eixos}
 // perguntas frequentes: agrupadas por tema, no mesmo formato dos termos e da metodologia (sumário lateral fixo)
 const FAQ = [
   ["resultado", "Sobre o resultado", [
-    ["O que quer dizer a porcentagem ao lado de cada ideologia?", ["É a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Todas juntas somam 100%.", "Ela não mostra o quanto você concorda com a ideologia. Pra ver o quanto as suas posições se parecem com uma ideologia, use \"Comparar com uma ideologia\" no resultado completo."]],
-    ["O que significa confiança alta, média ou baixa?", ["Ela mostra o quanto o resultado ficou claro, dentro das regras do teste. Não diz se o teste acertou sobre você, porque isso ainda não foi conferido com pessoas reais.", "A confiança junta três coisas: o quanto a primeira ideologia ficou à frente das outras, a precisão da sua posição nos eixos (que depende de quantas frases você respondeu) e a coerência das suas respostas.", "Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe confiança alta."]],
+    ["O que quer dizer a porcentagem ao lado de cada ideologia?", ["É a chance de cada ideologia dentro das regras do teste, comparando as 21 entre si. Todas juntas somam 100%.", "Ela não mostra o quanto você concorda com a ideologia. Pra ver o quanto as suas posições se parecem com uma ideologia, use \"Comparar com uma ideologia\" no resultado completo."]],
+    ["O que significa confiança alta, média ou baixa?", ["Ela mostra o quanto o resultado ficou claro, dentro das regras do teste. Não diz se o teste acertou sobre você, porque isso ainda não foi conferido com pessoas reais.", "A confiança junta três coisas: quanto a primeira ideologia ficou à frente, quanto dá pra confiar na sua posição nos eixos (isso depende de quantas frases você respondeu) e quanto as suas respostas combinam entre si.", "Quem responde quase tudo no meio-termo, ou concorda (ou discorda) de quase tudo, não recebe confiança alta."]],
     ["Por que apareceram duas ideologias?", ["Quando a segunda ideologia tem pelo menos 60% da chance da primeira, o teste mostra as duas. Isso pode acontecer porque você está entre as duas tradições, ou porque o teste tem poucas frases que separam as duas. Às vezes ele faz algumas perguntas extras pra desempatar."]],
     ["Respondi quase tudo no meio-termo e deu Centrista. Isso quer dizer o quê?", ["Pode ser que você seja moderado de verdade. Ou pode ser que ainda não tenha opinião formada sobre muitos temas. O teste não consegue saber qual das duas.", "Por isso o resultado avisa que o rótulo diz pouco, e a confiança fica baixa. Olhe os eixos pra ver onde você pendeu pra algum lado."]],
     ["Por que o resultado pode mudar se eu refizer?", ["Algumas coisas deixam o resultado menos firme: muitas respostas no meio, muitos \"Não tenho opinião\" e os modos mais curtos. Além disso, quando duas ideologias estão próximas, mudar de ideia em poucas frases já pode trocar o resultado."]],
     ["Por que comunismo, fascismo e outros extremos quase nunca aparecem?", ["Os quatro extremos (comunismo, anarquismo, fascismo e anarcocapitalismo) só entram na disputa se você concordar com as frases que definem cada um. Estar longe do centro nos eixos não basta.", "O termômetro dos extremos mostra um índice de 0 a 100. Ele não é uma probabilidade (chance)."]],
     ["O que são as correntes?", ["Cada ideologia tem 4 correntes, que são linhas diferentes dentro dela. Por exemplo, dentro do Social-democrata ficam a social-democracia nórdica e o trabalhismo.", "No resultado, o teste mostra as correntes mais perto das suas posições nos eixos, entre as ideologias que disputam o seu resultado. As correntes não mudam a ideologia que aparece pra você."]],
-    ["A compatibilidade com presidentes e partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada presidente desde 1985, feita pelo que ele fez no governo, e de cada partido, feita pela classificação de cientistas políticos e pelo que o partido fez publicamente. As duas posições têm margem de erro. Por isso, diferenças pequenas não querem dizer muito."]],
+    ["A compatibilidade com presidentes e partidos é recomendação de voto?", ["Não. Ela compara a sua posição com uma estimativa da posição de cada presidente desde 1985 e de cada partido. A dos presidentes vem do que fizeram no governo. A dos partidos vem de uma classificação feita por cientistas políticos e do que cada partido fez. As duas posições podem ter erro. Por isso, diferenças pequenas não querem dizer muito."]],
   ]],
   ["teste", "Sobre o teste", [
     ["O teste é confiável?", ["Ainda não se sabe com pessoas reais. O cálculo foi testado com pessoas simuladas pelo computador, criadas a partir das posições típicas das 21 ideologias. Nessas simulações, no modo Padrão, a ideologia certa aparece em primeiro em cerca de 95 de cada 100 casos.", "Mas essas pessoas simuladas foram criadas com as mesmas posições que o teste usa pra classificar. Quando essas posições foram alteradas em cerca de 20 pontos, o acerto caiu pra cerca de 8 em 10 no Essencial. Com pessoas reais, o acerto deve ser menor. O resultado é uma aproximação, não um diagnóstico."]],
@@ -218,7 +225,7 @@ const FAQ = [
     ["Quanto tempo leva?", ["Essencial: de 62 a 70 perguntas, uns 9 minutos. Padrão: de 130 a 141, uns 18 minutos. Aprofundado: de 207 a 218, uns 30 minutos. Os tempos são estimativas.", "O número de perguntas varia porque algumas frases só aparecem pra quem já está perto de um extremo.", "Dá pra pausar e continuar depois no mesmo aparelho. E quem termina um modo menor pode seguir pro próximo sem repetir nada."]],
     ["Qual modo devo escolher?", ["O Essencial dá uma ideia geral. O Padrão mede cada tema com mais detalhe e confere melhor se as suas respostas combinam entre si. O Aprofundado tem mais frases em cada tema, mas, nas simulações, não acerta a ideologia mais que o Padrão."]],
     ["O que são os 6 eixos?", ["Eixos são os grandes temas em que o teste coloca você, cada um com duas pontas opostas. São seis: Economia (mais Estado ou mais mercado), Liberdade × Ordem, Costumes, Brasil × Mundo, Democracia e Instituições (confiança no sistema).", "Os cinco primeiros são divididos em subtemas (assuntos menores dentro do tema). Instituições não tem subtemas e não entra na escolha da ideologia. O resultado mostra a sua posição em cada eixo e a faixa provável, que é o trecho onde ela provavelmente está."]],
-    ["Quem decidiu onde fica cada ideologia?", ["O autor do projeto, a partir da teoria política. As posições estão publicadas no código e na página de cada ideologia, e serão revisadas com os dados do estudo. A auditoria publicada no repositório (uma revisão do método) aponta os pontos mais discutíveis."]],
+    ["Quem decidiu onde fica cada ideologia?", ["O autor do projeto, a partir da teoria política. As posições estão publicadas no código e na página de cada ideologia, e serão revisadas com os dados do estudo. A auditoria publicada no GitHub do projeto (uma revisão do método) aponta os pontos mais discutíveis."]],
   ]],
   ["dados", "Dados e privacidade", [
     ["Meus dados são enviados?", ["Só se você aceitar participar do estudo. E nada que identifique você é enviado: nunca vão nome, e-mail, IP (o endereço da sua conexão) ou localização. Quem informa ter menos de 18 anos faz o teste, mas nada é enviado.", "Dá pra fazer o teste inteiro sem participar. Os detalhes estão nos termos de uso e privacidade."]],
@@ -227,7 +234,7 @@ const FAQ = [
   ["projeto", "Sobre o projeto", [
     ["Quem fez o teste?", ["Projeto independente e sem fins lucrativos. Sem ligação com partidos, candidatos, governos ou a Justiça Eleitoral. O visual só se inspira na urna eletrônica, sem símbolos oficiais. Não é recomendação de voto."]],
     ["Posso ver o código?", ["Sim. O código-fonte (as instruções que fazem o site funcionar) está publicado no GitHub, inclusive as frases, o cálculo e os testes. Veja a página Código-fonte público."]],
-    ["Achei uma frase enviesada ou um erro. Como aviso?", ["Abra um aviso (uma \"issue\") no repositório do projeto no GitHub. Explique o problema e, se puder, mande a fonte. Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo SECURITY.md."]],
+    ["Achei uma frase enviesada ou um erro. Como aviso?", ["Abra um aviso (uma \"issue\") no GitHub, o site onde fica guardado o código do teste. Explique o problema e, se puder, mande a fonte. Falhas de segurança ou de privacidade não devem ser abertas em público: use o canal indicado no arquivo SECURITY.md."]],
   ]],
 ];
 gravar("public/perguntas-frequentes/index.html", pagina({
@@ -243,7 +250,7 @@ gravar("public/perguntas-frequentes/index.html", pagina({
 <ul>
 <li>A metodologia explica o cálculo, os eixos e os limites do teste.</li>
 <li>Os termos dizem o que é coletado de quem participa do estudo e o que nunca é.</li>
-<li>Dúvidas e sugestões podem ir pros avisos do repositório.</li>
+<li>Dúvidas e sugestões podem ir pros avisos do projeto no GitHub.</li>
 </ul>
 <div class="acoes-pagina acoes-pagina-linha"><a class="ok" href="/#modos">Fazer o teste</a><a class="branco" href="/metodologia.html">Ler a metodologia</a></div>
 </div>
@@ -259,7 +266,7 @@ ${FAQ.map(([id, t, ps]) => `<section id="${id}">
 <h2>${esc(t)}</h2>
 ${ps.map(([p, rs]) => `<h3>${esc(p)}</h3>\n${rs.map((r) => `<p>${esc(r)}</p>`).join("\n")}`).join("\n")}
 </section>`).join("\n")}
-<p class="legal-fim">Não achou a resposta? Veja a <a href="/metodologia.html">metodologia</a>, os <a href="/termos.html">termos de uso e privacidade</a> ou abra um aviso no <a href="${REPO}/issues" rel="noopener">repositório do projeto</a>.</p>
+<p class="legal-fim">Não achou a resposta? Veja a <a href="/metodologia.html">metodologia</a>, os <a href="/termos.html">termos de uso e privacidade</a> ou abra um aviso no <a href="${REPO}/issues" rel="noopener">GitHub do projeto</a>.</p>
 </div>
 </div>`,
 }));
@@ -290,7 +297,7 @@ gravar("public/creditos/index.html", pagina({
 <ul class="creditos">${linhasP}</ul>
 <h2 class="rotulo-secao">Capas de livros</h2>
 <ul class="creditos">${linhasL}</ul>
-<p class="intro-pagina">Encontrou uma imagem com crédito errado ou que não deveria estar aqui? Abra um aviso no <a href="${REPO}/issues" rel="noopener">repositório do projeto</a> e ela é corrigida ou removida.</p>
+<p class="intro-pagina">Encontrou uma imagem com crédito errado ou que não deveria estar aqui? Abra um aviso no <a href="${REPO}/issues" rel="noopener">GitHub do projeto</a> e ela é corrigida ou removida.</p>
 </div>`,
 }));
 urls.push("/creditos/");
@@ -442,7 +449,7 @@ gravar("public/sobre/index.html", pagina({
 <section id="quem">
 <h2>Quem faz</h2>
 <p>O teste é um projeto pessoal de André Leal. Não há empresa, instituto ou equipe por trás.</p>
-<p>As frases, as posições das ideologias e o cálculo foram escritos a partir da teoria política e de fontes públicas, e revisados em auditorias publicadas no repositório.</p>
+<p>As frases, as posições das ideologias e o cálculo foram escritos a partir da teoria política e de fontes públicas, e revisados em auditorias publicadas no GitHub do projeto.</p>
 </section>
 <section id="porque">
 <h2>Por que existe</h2>
@@ -456,7 +463,7 @@ gravar("public/sobre/index.html", pagina({
 <li><b>Sem ligação política:</b> o projeto não tem ligação com partidos, candidatos, governos, empresas ou a Justiça Eleitoral.</li>
 <li><b>Sem dinheiro de fora:</b> não recebe doações, patrocínio nem verba pública, e não tem anúncios.</li>
 <li><b>Sem rastreamento:</b> o site não usa cookies nem ferramentas de rastreamento, e o cálculo roda no seu aparelho.</li>
-<li><b>Mesmos critérios pra todos os lados:</b> as frases seguem regras de neutralidade publicadas no repositório, iguais pra esquerda, centro e direita.</li>
+<li><b>Mesmos critérios pra todos os lados:</b> as frases seguem regras de neutralidade publicadas no GitHub do projeto, iguais pra esquerda, centro e direita.</li>
 </ul>
 <p>O visual só se inspira na urna eletrônica, sem símbolos oficiais. O resultado não é recomendação de voto.</p>
 </section>
@@ -468,13 +475,13 @@ gravar("public/sobre/index.html", pagina({
 </section>
 <section id="contribuir">
 <h2>Como contribuir</h2>
-<p>Achou uma frase enviesada, um dado errado, um livro mal escolhido ou um problema no site? Abra um aviso (uma "issue") no repositório. Explique o problema e, se puder, mande a fonte.</p>
+<p>Achou uma frase enviesada, um dado errado, um livro mal escolhido ou um problema no site? Abra um aviso (uma "issue") no GitHub do projeto. Explique o problema e, se puder, mande a fonte.</p>
 <p>Antes de sugerir mudanças em frases ou no cálculo, leia as <a href="${REPO}/blob/main/CONTRIBUTING.md" rel="noopener">regras de contribuição</a>. Elas explicam os critérios de neutralidade e o que precisa de proposta antes.</p>
 <div class="acoes-pagina"><a class="ok" href="${REPO}/issues/new/choose" rel="noopener">Abrir um aviso</a></div>
 </section>
 <section id="contato">
 <h2>Contato</h2>
-<p>Dúvidas, sugestões e pedidos sobre os seus dados podem ser enviados pelos <a href="${REPO}/issues" rel="noopener">avisos do repositório</a>.</p>
+<p>Dúvidas, sugestões e pedidos sobre os seus dados podem ser enviados pelos <a href="${REPO}/issues" rel="noopener">avisos do projeto no GitHub</a>.</p>
 <p>Falhas de segurança ou de privacidade não devem ir pra um aviso público. Use o <a href="${REPO}/security/advisories/new" rel="noopener">relato privado do GitHub</a>, que só o responsável pelo projeto vê.</p>
 </section>
 </div>

@@ -84,9 +84,6 @@ function mostrarLeituras(){
   const ext=["Comunista","Anarquista","Anarcocapitalista","Fascista","Extrema direita","Extrema esquerda"].includes(n);
   out.append(el("p","small",leiturasAba==="favor"?(ext?`Textos históricos e de referência dessa tradição, pra entender o que ela defendeu. Não é recomendação.`:`Livros de quem defende essa tradição, pra ver como os próprios defensores pensam.`):"As críticas mais fortes, de lados diferentes. Conhecer o melhor argumento contrário ajuda a pensar melhor sobre o próprio."));
   L[leiturasAba].forEach(([t,a,ano,d,x])=>{const it=el("div","item livro com-capa"),tx=el("div");tx.append(el("b",null,t),el("small",null,`${a}, ${anoObra(ano)}`),el("p",null,d));if(x)tx.append(linhaEdicao(x));it.append(capaLivro(t,a),tx);out.append(it)})}
-// edição citada e link conferido de cada livro (Amazon, Estante Virtual ou, sem edição brasileira, a Wikipédia)
-// edição citada, link informativo (Wikipédia, editora ou Open Library) e, menor, a loja (mesma linha em ferramentas/gerar_paginas.mjs)
-// com Amazon, o link de compra vem primeiro e o informativo fica como segundo link, menor (como nas páginas das ideologias)
 // correntes (variantes) mais parecidas com a pessoa, por distância nos 5 eixos, só entre as ideologias que passaram pelos
 // filtros (as correntes de um extremo só aparecem pra quem passou pelo filtro dele)
 function correntesParecidas(){
@@ -98,6 +95,9 @@ function correntesParecidas(){
     a.append(el("b",null,v.n),el("small",null,`Corrente da ideologia ${v.pai}`),el("span",null,v.d));box.append(a)});
   box.append(el("p","small","Correntes são linhas dentro de cada ideologia. Elas não mudam o resultado: só mostram, entre as correntes das ideologias que disputam o seu resultado, as que ficam mais perto das suas posições."));
   return box}
+// edição citada e links de cada livro (mesma linha em ferramentas/gerar_paginas.mjs): com Amazon, o link de compra vem
+// primeiro e o informativo (Wikipédia, editora ou Open Library) fica como segundo link, menor; sem Amazon, o informativo
+// vem primeiro e a loja (Estante Virtual) fica em segundo
 function linhaEdicao(x){const p=el("p","livro-ed");if(x.ed)p.append(el("span",null,x.ed));
   const ln=(u,t,c)=>{const a=el("a",c,t);a.href=u;a.target="_blank";a.rel="noopener";p.append(a)};
   if(x.loja&&x.lojaNome==="Amazon"){ln(x.loja,"Comprar na Amazon");if(x.link)ln(x.link,x.onde,"secundario")}
@@ -133,7 +133,7 @@ function montarResumo(){
     const tr=el("div","trilho"),i=el("i");i.style.left=posEsc(R.s[k])+"%";tr.append(i);const pts=el("div","pontas");pts.setAttribute("aria-hidden","true");pts.append(el("span",null,AX[k].left),el("span",null,AX[k].right));d.append(topo,tr,pts);ex.append(d)});
   eixos.append(ex);
   const prox=bloco("Ideologias que melhor explicam suas respostas","blocoIdeologias");
-  prox.append(el("p","small nota-prob","A porcentagem é a chance de cada ideologia dentro do modelo do teste, comparando as 21 entre si. Não é o quanto você concorda com ela."));
+  prox.append(el("p","small nota-prob","A porcentagem é a chance de cada ideologia dentro das regras do teste, comparando as 21 entre si. Não é o quanto você concorda com ela."));
   // regra do centro (versão 5): na média ficaria no meio, mas é forte em algum eixo
   if(R.centroForte&&R.centroForte.length){const fortes=R.centroForte.map(k=>`${eixoMin(k)} (${short(R.s[k],k).toLowerCase()})`);
     prox.append(el("p","small nota-centro",`Na média, suas respostas ficam perto do centro, mas você tem posição forte em ${fortes.length>1?fortes.slice(0,-1).join(", ")+" e "+fortes.at(-1):fortes[0]}. Por isso o resultado não é Centrista: o teste mostra a tradição mais próxima levando isso em conta.`))}

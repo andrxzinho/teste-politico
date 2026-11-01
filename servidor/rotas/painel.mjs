@@ -7,7 +7,9 @@ import { createHash, timingSafeEqual, scryptSync, randomBytes } from "node:crypt
 import { IDEOLOGIAS, EIXOS, EXTREMOS, IDS, META, NAO_PONTUA, TEMPOS, IDADES, ESPECTROS, CONFIANCAS, hoje, registros, eventos, contagem, emitirSessao, encerrarSessoes, passouDoLimite, SESSAO_HORAS, SEM_CACHE } from "../comum.mjs";
 
 const CRED = "config/credencial", PESOS = "config/pesos";
-const MIN_GRUPO = 5;      // grupos com menos de 5 pessoas aparecem como "<5", pra ninguém ser reconhecido
+// cruzamentos com menos de 5 pessoas (idade × ideologia e autodefinição) aparecem como "<5", pra ninguém ser reconhecido;
+// as contagens simples por UF, idade e ideologia aparecem inteiras (o painel só é visto pelo responsável)
+const MIN_GRUPO = 5;
 const MIN_PESOS = 300;    // participantes dos modos Padrão e Aprofundado necessários pra calcular pesos
 const CONCORDANCIA_MIN = 0.7; // pesos só valem se duas metades dos dados derem correlações parecidas pra cada frase
 const h = (s) => createHash("sha256").update(String(s)).digest();

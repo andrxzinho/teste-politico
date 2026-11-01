@@ -69,10 +69,10 @@ enganoso em alguns casos), **pequena** (detalhe, texto ou organização).
 - Textos que ficam fora das frases do teste: argumentos a favor e contra mais diretos (X10, D5, C6, X38), explicação
   longa dividida (E0), "para" virou "pra" nas explicações, introdução das leituras mais clara e rótulos dos subtemas
   iguais em todo o site ("Impostos e benefícios", "Vigilância e internet").
-- Ficaram pra revisão dos livros (que o responsável já quer fazer): cerca de 20 descrições de leituras com frases longas.
-- **Não mudado de propósito:** o texto das próprias frases do teste (campo `t`). Mudar no meio do estudo deixaria as
-  respostas de antes e de depois incomparáveis. A auditoria achou 25 frases que dá pra simplificar; elas ficam como
-  pendência pra depois do estudo ou entre ciclos de coleta.
+- Descrições de 19 livros, de dois pensadores e de três presidentes, siglas explicadas e termos técnicos das correntes.
+- Meio ambiente na página de cada ideologia e na de comparar.
+- **Frases do teste:** as 25 mais difíceis também foram reescritas, com o mesmo sentido, depois que o responsável
+  confirmou que o estudo ainda não tinha sido divulgado.
 
 ## O que depende do responsável
 
@@ -80,4 +80,3 @@ enganoso em alguns casos), **pequena** (detalhe, texto ou organização).
 - Opcional: proteger a `main` e ligar as conferências de publicação no Vercel.
 - Domínio próprio, se quiser.
 - Fusão PSDB–Podemos: ainda não confirmada pelo TSE; os dois partidos continuam no teste até a confirmação.
-- Decidir quando reescrever as 25 frases do teste mais difíceis de ler.

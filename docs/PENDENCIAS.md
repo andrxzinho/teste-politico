@@ -36,8 +36,8 @@ Lista do que já foi identificado e ainda não foi feito. Atualize ao concluir c
 - [ ] **Metodologia, o que ainda depende de dados reais:** subtemas do Essencial com uma frase só (exige mudar a
       quantidade de perguntas), dimensionalidade dos eixos (Liberdade × Ordem, Costumes e Brasil × Mundo andam juntos),
       reestimar a temperatura da probabilidade e conferir as posições típicas em meio ambiente.
-- [ ] **Meio ambiente nas páginas das ideologias:** a posição típica em meio ambiente ainda não aparece nas páginas de
-      cada ideologia nem na página de comparar, só no resultado.
+- [x] **Meio ambiente nas páginas das ideologias:** a posição típica aparece na página de cada ideologia e na de
+      comparar (1/11/2026).
 
 ## Auditoria geral de 1/11/2026
 
@@ -45,11 +45,11 @@ Relatório em `docs/AUDITORIA-GERAL.md`. O que foi corrigido está lá e no CHAN
 
 - [ ] **Tópico do GitHub:** tirar `eleicoes-2026` (Settings, Topics). Só o responsável consegue.
 - [ ] **Opcional:** proteger a `main` no GitHub e ligar as conferências de publicação no Vercel.
-- [ ] **Fusão PSDB–Podemos:** sem confirmação do TSE até 1/11/2026. Os dois continuam no teste; juntar quando for
+- [ ] **Fusão PSDB–Podemos:** sem aprovação do TSE até 1/11/2026 (conferido de novo). Os dois continuam no teste; juntar quando for
       confirmada.
-- [ ] **Texto das frases do teste:** 25 frases dá pra simplificar, mas mudar o texto no meio do estudo deixa as
-      respostas de antes e de depois incomparáveis. Fazer depois do estudo ou entre ciclos de coleta.
-- [ ] **Descrições das leituras:** cerca de 20 com frases longas, junto com a revisão dos livros.
+- [x] **Texto das frases do teste:** as 25 mais difíceis reescritas em 1/11/2026, com o mesmo sentido. O responsável
+      liberou porque o estudo ainda não tinha sido divulgado. Envios anteriores usaram o texto antigo (separar pela data).
+- [x] **Descrições das leituras:** as 19 mais difíceis reescritas (1/11/2026).
 - [ ] **Escala 6x1:** a jornada cai pra 40 horas em dezembro de 2027. Conferir a explicação das frases Z23 e Z24 nessa data.
 
 ## Auditoria pedida em 23/10/2026
